@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoRecon AI — Employee Salary & Payroll Audit Report</title>
+    <title>AutoRecon AI — Employee Salary & Payroll Audit Desk</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,27 +11,10 @@
             theme: {
                 extend: {
                     colors: {
-                        pine: {
-                            800: '#1e2d25',
-                            900: '#131c17',
-                            950: '#0a110d'
-                        },
-                        sand: {
-                            100: '#f5eedc',
-                            200: '#ebd9b8',
-                            300: '#e5a95d',
-                            400: '#d48b38'
-                        },
-                        jade: {
-                            400: '#48e5c2',
-                            500: '#2ec4b6',
-                            600: '#269b90'
-                        },
-                        terracotta: {
-                            400: '#f28482',
-                            500: '#e76f51',
-                            600: '#d15335'
-                        }
+                        pine: { 800: '#1e2d25', 900: '#131c17', 950: '#0a110d' },
+                        sand: { 100: '#f5eedc', 200: '#ebd9b8', 300: '#e5a95d', 400: '#d48b38' },
+                        jade: { 400: '#48e5c2', 500: '#2ec4b6', 600: '#269b90' },
+                        terracotta: { 400: '#f28482', 500: '#e76f51', 600: '#d15335' }
                     }
                 }
             }
@@ -43,92 +26,174 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Distinctive Sapphire & Golden Cosmic Glow for Salary Hub */
+        :root {
+            --bg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 32, 25, 0.52) 40%, rgba(14, 22, 18, 0.68) 100%);
+            --border-glass: rgba(255, 255, 255, 0.14);
+            --text-primary: #f5eedc;
+            --text-secondary: #b5c4b8;
+        }
+
+        body {
+            background-color: #0a110d;
+            color: #f5eedc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding-bottom: 5rem;
+        }
+
+        #liveSalaryCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .pine-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(20, 32, 25, 0.65) 40%, rgba(14, 22, 18, 0.8) 100%);
+            backdrop-filter: blur(36px);
+            -webkit-backdrop-filter: blur(36px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 22px;
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .glass-btn {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 14px;
+            color: #f5eedc;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .glass-btn:hover {
+            border-color: rgba(229, 169, 93, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.65rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            border-radius: 9999px;
+        }
+
+        .badge-reconciled {
+            background: rgba(46, 196, 182, 0.18);
+            color: #48e5c2;
+            border: 1px solid rgba(46, 196, 182, 0.45);
+        }
+
+        .badge-delayed {
+            background: rgba(231, 111, 81, 0.18);
+            color: #f89d89;
+            border: 1px solid rgba(231, 111, 81, 0.45);
+        }
+
+        .badge-fee-mismatch {
+            background: rgba(229, 169, 93, 0.18);
+            color: #f7be78;
+            border: 1px solid rgba(229, 169, 93, 0.45);
+        }
+
+        .ambient-glow-orbs {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
         .salary-orb-1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(56, 189, 248, 0) 70%);
-            top: -100px;
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(90px);
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(56, 189, 248, 0) 70%);
+            top: -80px;
             right: 10%;
-            animation: orbFloat 22s infinite alternate ease-in-out;
         }
+
         .salary-orb-2 {
-            width: 650px;
-            height: 650px;
-            background: radial-gradient(circle, rgba(229, 169, 93, 0.3) 0%, rgba(229, 169, 93, 0) 70%);
-            bottom: -120px;
-            left: -80px;
-            animation: orbFloat 26s infinite alternate ease-in-out;
-        }
-        .salary-orb-3 {
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(168, 85, 247, 0) 70%);
-            top: 40%;
-            left: 30%;
-            animation: orbFloat 20s infinite alternate ease-in-out;
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            border-radius: 50%;
+            filter: blur(90px);
+            background: radial-gradient(circle, rgba(229, 169, 93, 0.25) 0%, rgba(229, 169, 93, 0) 70%);
+            bottom: -100px;
+            left: -50px;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-amber-600 selection:text-stone-950 pb-20">
+<body class="selection:bg-amber-600 selection:text-stone-950">
 
-    <!-- LIVE DISTINCTIVE SALARY BACKGROUND -->
-    <canvas id="liveSalaryCanvas" class="fixed inset-0 pointer-events-none -z-20 w-screen h-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none;"></canvas>
+    <!-- LIVE SAPPHIRE & GOLD COSMIC BACKGROUND -->
+    <canvas id="liveSalaryCanvas"></canvas>
     <div class="ambient-glow-orbs">
-        <div class="orb salary-orb-1"></div>
-        <div class="orb salary-orb-2"></div>
-        <div class="orb salary-orb-3"></div>
+        <div class="salary-orb-1"></div>
+        <div class="salary-orb-2"></div>
     </div>
 
-    <!-- Top Navigation Glass Header -->
-    <header class="glass-header sticky top-0 z-40">
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-40 bg-[#0c130f]/80 backdrop-blur-2xl border-b border-white/10 shadow-lg">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-3.5">
                 <div class="h-11 w-11 rounded-2xl bg-gradient-to-tr from-sky-400 to-sand-400 p-[1px] shadow-lg flex-shrink-0">
-                    <div class="w-full h-full bg-[#131c17]/90 rounded-[15px] flex items-center justify-center backdrop-blur-md">
-                        <i class="ph-fill ph-users-three text-sand-300 text-2xl"></i>
+                    <div class="w-full h-full bg-[#131c17]/95 rounded-[15px] flex items-center justify-center backdrop-blur-md">
+                        <i class="ph-fill ph-users-three text-sky-400 text-2xl"></i>
                     </div>
                 </div>
                 <div>
                     <div class="flex items-center space-x-2.5">
                         <span class="font-extrabold text-xl text-sand-100 tracking-tight" id="reportTitle">
-                            Salary & Payroll Audit Report
+                            Employee Salary & Payroll Desk
                         </span>
                         <span class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-sky-500/15 text-sky-400 border border-sky-500/30 font-mono">
-                            Employee Salary Session
+                            Salary Ingestion Hub
                         </span>
                     </div>
                     <div class="flex items-center space-x-2 text-xs text-sand-200/60 mt-0.5">
-                        <span id="reportFileName" class="text-sand-200 font-bold">Uploaded Salary CSV</span>
+                        <span id="reportFileName" class="text-sand-200 font-bold">sample-simple.csv</span>
                         <span>&middot;</span>
-                        <span id="reportBatchId" class="font-mono text-sand-200/70">Batch ID</span>
+                        <span id="reportBatchId" class="font-mono text-sand-200/70">Batch Active</span>
                         <span>&middot;</span>
                         <span id="reportTimestamp" class="text-sand-200/60">Live</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Header Actions -->
-            <div class="flex items-center space-x-3">
-                <a href="/" class="glass-btn px-3.5 py-2 text-xs font-semibold rounded-xl transition flex items-center space-x-1.5 shadow-sm">
+            <!-- Header Action Buttons -->
+            <div class="flex items-center space-x-2.5">
+                <a href="/" class="glass-btn px-3.5 py-2 text-xs font-semibold rounded-xl flex items-center space-x-1.5 shadow-sm">
                     <i class="ph-bold ph-arrow-left"></i>
                     <span>Main Dashboard</span>
                 </a>
-                <button onclick="window.print()" class="glass-btn px-3.5 py-2 text-xs font-semibold rounded-xl transition flex items-center space-x-1.5 shadow-sm">
-                    <i class="ph-bold ph-printer"></i>
-                    <span>Print / PDF</span>
-                </button>
-                <button onclick="openSalaryNoticeModal()" class="px-4 py-2 text-xs font-bold rounded-xl bg-terracotta-500/20 hover:bg-terracotta-500/30 text-terracotta-400 border border-terracotta-500/40 transition flex items-center space-x-1.5 shadow-sm">
+                <button onclick="openSalaryNoticeModal()" class="px-3.5 py-2 text-xs font-bold rounded-xl bg-terracotta-500/20 hover:bg-terracotta-500/30 text-terracotta-400 border border-terracotta-500/40 flex items-center space-x-1.5 shadow-sm transition">
                     <i class="ph-bold ph-envelope-open"></i>
                     <span>AI Delay Notice</span>
+                </button>
+                <button onclick="disburseAllFileSalaries()" class="px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-sky-400 to-sand-300 text-[#131c17] shadow-lg flex items-center space-x-1.5 active:scale-95 transition">
+                    <i class="ph-bold ph-lightning"></i>
+                    <span>Disburse All (IMPS)</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Viewport -->
-    <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    <!-- Main Content -->
+    <main class="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
         <!-- 3 Big Golden Numbers for This Uploaded Salary File -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -137,22 +202,22 @@
             <div class="pine-card p-6 flex flex-col justify-between">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2.5">
-                        <div class="p-2.5 rounded-xl bg-sand-300/15 text-sand-300 border border-sand-300/25">
+                        <div class="p-2.5 rounded-xl bg-sky-400/15 text-sky-400 border border-sky-400/25">
                             <i class="ph-bold ph-money text-xl"></i>
                         </div>
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-sand-200/70">Total Payroll CTC Ingested</span>
-                            <p class="text-xs text-sand-100 font-medium" id="statEmpCount">0 Employees</p>
+                            <p class="text-xs text-sand-100 font-medium" id="statEmpCount">10 Employees Ingested</p>
                         </div>
                     </div>
-                    <span class="badge-pill bg-sand-300/10 text-sand-300 border border-sand-300/30 text-[11px]">100% Ingested</span>
+                    <span class="badge-pill bg-sky-400/15 text-sky-300 border border-sky-400/30 text-[11px]">100% Ingested</span>
                 </div>
                 <div class="my-4">
-                    <div class="text-3xl font-black text-sand-100 font-mono" id="statGrossSalary">₹0.00</div>
+                    <div class="text-3xl font-black text-sand-100 font-mono" id="statGrossSalary">₹10,37,137.70</div>
                 </div>
                 <div class="pt-3 border-t border-[#25362c] text-xs text-sand-200/70 flex justify-between">
-                    <span>Source: <b class="text-sand-200" id="statSourceFile">File</b></span>
-                    <span>TDS (Sec 192): <b class="text-sand-300 font-mono" id="statTdsWithheld">₹0.00</b></span>
+                    <span>Source: <b class="text-sand-200" id="statSourceFile">sample-simple.csv</b></span>
+                    <span>TDS (Sec 192): <b class="text-sand-300 font-mono" id="statTdsWithheld">₹1,03,713.77</b></span>
                 </div>
             </div>
 
@@ -165,16 +230,16 @@
                         </div>
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-jade-300">Net Salaries Paid (Bank IMPS)</span>
-                            <p class="text-xs text-sand-100 font-medium" id="statDisbursedEmpCount">0 Transferred</p>
+                            <p class="text-xs text-sand-100 font-medium" id="statDisbursedEmpCount">4 of 10 Transferred</p>
                         </div>
                     </div>
-                    <span class="badge-pill badge-reconciled text-[11px]">Transferred</span>
+                    <span class="badge-pill badge-reconciled text-[11px]">Verified IMPS</span>
                 </div>
                 <div class="my-4">
-                    <div class="text-3xl font-black text-jade-400 font-mono" id="statTotalDisbursed">₹0.00</div>
+                    <div class="text-3xl font-black text-jade-400 font-mono" id="statTotalDisbursed">₹3,47,440.08</div>
                 </div>
                 <div class="pt-3 border-t border-[#25362c] text-xs text-sand-200/70 flex justify-between">
-                    <span>NEFT / IMPS Slips: <b class="text-jade-300 font-semibold">Verified UTRs</b></span>
+                    <span>IMPS Slips: <b class="text-jade-300 font-semibold">Matched UTRs</b></span>
                     <span>SLA: <b class="text-sand-200 font-medium">1st of Month</b></span>
                 </div>
             </div>
@@ -188,7 +253,7 @@
                         </div>
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-terracotta-400">Delayed Salaries (SLA Breach)</span>
-                            <p class="text-xs text-sand-100 font-medium" id="statDelayedEmpCount">0 Overdue</p>
+                            <p class="text-xs text-sand-100 font-medium" id="statDelayedEmpCount">3 Employees Overdue</p>
                         </div>
                     </div>
                     <button onclick="openSalaryNoticeModal()" class="text-xs font-bold text-terracotta-400 bg-terracotta-500/15 hover:bg-terracotta-500/25 px-3 py-1 rounded-full border border-terracotta-500/40 transition">
@@ -196,10 +261,10 @@
                     </button>
                 </div>
                 <div class="my-4">
-                    <div class="text-3xl font-black text-terracotta-400 font-mono" id="statDelayedAmount">₹0.00</div>
+                    <div class="text-3xl font-black text-terracotta-400 font-mono" id="statDelayedAmount">₹3,37,448.82</div>
                 </div>
                 <div class="pt-3 border-t border-[#25362c] text-xs text-sand-200/70 flex justify-between">
-                    <span>Pending Clearance: <b class="text-sand-300 font-mono" id="statPendingAmount">₹0.00</b></span>
+                    <span>Pending Clearance: <b class="text-sand-300 font-mono" id="statPendingAmount">₹2,87,801.07</b></span>
                     <span>Status: <b class="text-terracotta-400 font-bold">Action Required</b></span>
                 </div>
             </div>
@@ -213,44 +278,44 @@
                     <p class="text-xs text-sand-200/60 mt-0.5">Tracking Gross CTC ➔ Statutory TDS/PF Deductions ➔ Net Bank Disbursal</p>
                 </div>
                 <span class="badge-pill bg-sky-500/15 text-sky-300 border border-sky-500/30 text-xs">
-                    Standard TDS: <b>10% Sec 192 + PF 12%</b>
+                    Standard TDS: <b>10% Sec 192 + PF</b>
                 </span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="p-4 rounded-xl border border-[#25362c] bg-[#16221b]/80 backdrop-blur-md">
+                <div class="p-4 rounded-xl border border-[#25362c] bg-[#16221b]/80">
                     <div class="flex items-center space-x-2 text-xs font-bold text-sand-200 mb-2">
                         <span class="w-5 h-5 rounded-full bg-sand-400 text-[#131c17] flex items-center justify-center text-[10px] font-bold">1</span>
                         <span>Total Ingested Gross CTC</span>
                     </div>
-                    <div class="text-xl font-black text-sand-100 font-mono" id="trailGrossSalary">₹0.00</div>
+                    <div class="text-xl font-black text-sand-100 font-mono" id="trailGrossSalary">₹10,37,137.70</div>
                     <p class="text-xs text-sand-200/60 mt-1.5">Sum of all salaries from this uploaded file.</p>
                 </div>
 
-                <div class="p-4 rounded-xl border border-[#25362c] bg-[#16221b]/80 backdrop-blur-md">
+                <div class="p-4 rounded-xl border border-[#25362c] bg-[#16221b]/80">
                     <div class="flex items-center space-x-2 text-xs font-bold text-sand-200 mb-2">
                         <span class="w-5 h-5 rounded-full bg-sand-300 text-[#131c17] flex items-center justify-center text-[10px] font-bold">2</span>
                         <span>Statutory TDS & PF Withheld</span>
                     </div>
-                    <div class="text-xl font-black text-sand-300 font-mono" id="trailDeductions">₹0.00</div>
+                    <div class="text-xl font-black text-sand-300 font-mono" id="trailDeductions">₹1,36,447.73</div>
                     <p class="text-xs text-sand-200/60 mt-1.5">
-                        TDS (Sec 192): <b class="text-sand-200 font-mono" id="trailTds">₹0.00</b> | 
-                        PF: <b class="text-sand-200 font-mono" id="trailPf">₹0.00</b>
+                        TDS (Sec 192): <b class="text-sand-200 font-mono" id="trailTds">₹1,03,713.77</b> | 
+                        PF: <b class="text-sand-200 font-mono" id="trailPf">₹32,733.96</b>
                     </p>
                 </div>
 
-                <div class="p-4 rounded-xl border border-jade-500/30 bg-jade-500/[0.04] backdrop-blur-md">
+                <div class="p-4 rounded-xl border border-jade-500/30 bg-jade-500/[0.04]">
                     <div class="flex items-center space-x-2 text-xs font-bold text-jade-300 mb-2">
                         <span class="w-5 h-5 rounded-full bg-jade-400 text-[#131c17] flex items-center justify-center text-[10px] font-bold">3</span>
                         <span>Net Bank Payouts</span>
                     </div>
-                    <div class="text-xl font-black text-jade-400 font-mono" id="trailNetPayable">₹0.00</div>
+                    <div class="text-xl font-black text-jade-400 font-mono" id="trailNetPayable">₹9,00,689.97</div>
                     <p class="text-xs text-sand-200/70 mt-1.5">Net amount payable to employees' bank accounts.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Spacious 50/50 Visual Salary Graphs -->
+        <!-- Spacious Visual Salary Graphs -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="pine-card p-6 flex flex-col">
                 <div class="flex items-center justify-between mb-4">
@@ -258,7 +323,7 @@
                         <h3 class="text-xs font-bold uppercase tracking-wider text-sand-200">Salary Disbursal Status</h3>
                         <p class="text-[11px] text-sand-200/60 mt-0.5">Disbursed on-time vs Delayed SLA breach</p>
                     </div>
-                    <span class="badge-pill bg-sand-300/10 text-sand-300 font-mono text-xs" id="chartEmpCount">0 Employees</span>
+                    <span class="badge-pill bg-sky-400/10 text-sky-400 font-mono text-xs" id="chartEmpCount">10 Employees</span>
                 </div>
                 <div class="relative flex-1 flex items-center justify-center min-h-[260px]">
                     <canvas id="salaryDonutChart"></canvas>
@@ -284,13 +349,13 @@
             <div class="p-5 border-b border-[#22332a] flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h3 class="text-sm font-bold text-sand-100 flex items-center space-x-2">
-                        <i class="ph-bold ph-identification-card text-sand-300"></i>
+                        <i class="ph-bold ph-identification-card text-sky-400 text-base"></i>
                         <span>Employee Salary Register (From This CSV)</span>
                     </h3>
                     <p class="text-xs text-sand-200/60 mt-0.5">Parsed from uploaded file with automated TDS, PF and delay tracking</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="disburseAllFileSalaries()" class="px-4 py-2 bg-gradient-to-r from-sand-400 to-jade-400 text-[#131c17] rounded-xl font-bold text-xs shadow-md transition active:scale-95">
+                    <button onclick="disburseAllFileSalaries()" class="px-4 py-2 bg-gradient-to-r from-sky-400 via-sand-300 to-jade-400 text-[#131c17] rounded-xl font-bold text-xs shadow-md transition active:scale-95">
                         ⚡ 1-Click Disburse All Salaries
                     </button>
                 </div>
@@ -298,7 +363,7 @@
 
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs">
-                    <thead class="bg-[#131c17]/80 text-sand-200/70 uppercase font-bold text-[11px] border-b border-[#22332a]">
+                    <thead class="bg-[#131c17]/90 text-sand-200/70 uppercase font-bold text-[11px] border-b border-[#22332a]">
                         <tr>
                             <th class="px-5 py-3.5">Employee Name</th>
                             <th class="px-4 py-3.5">City & Email</th>
@@ -310,11 +375,7 @@
                         </tr>
                     </thead>
                     <tbody id="salaryTableBody" class="divide-y divide-[#22332a] text-sand-200">
-                        <tr>
-                            <td colspan="7" class="px-5 py-10 text-center text-sand-200/50">
-                                Loading salary records from this batch...
-                            </td>
-                        </tr>
+                        <!-- Populated by JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -323,7 +384,7 @@
 
     <!-- Modal: Salary Delay Notice -->
     <div id="salaryNoticeModal" class="hidden fixed inset-0 z-50 bg-[#0a110d]/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-[#16221b]/95 backdrop-blur-2xl border border-[#2b3d32] rounded-2xl max-w-xl w-full p-6 shadow-2xl">
+        <div class="bg-[#16221b] border border-[#2b3d32] rounded-2xl max-w-xl w-full p-6 shadow-2xl">
             <div class="flex items-center justify-between pb-3 border-b border-[#22332a]">
                 <h3 class="text-sm font-bold text-sand-100 flex items-center space-x-2">
                     <i class="ph-bold ph-envelope-open text-terracotta-400"></i>
@@ -355,14 +416,14 @@ Payroll & Finance Desk
         </div>
     </div>
 
-    <!-- Floating AI Chatbot Button (Rufus style) -->
+    <!-- Floating AI Chatbot Button -->
     <div id="aiChatWidgetWrapper" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-        <div id="floatingChatWindow" class="hidden mb-4 w-[420px] max-w-[94vw] h-[550px] bg-[#16221b]/95 backdrop-blur-2xl border border-sand-300/35 rounded-3xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300">
+        <div id="floatingChatWindow" class="hidden mb-4 w-[420px] max-w-[94vw] h-[550px] bg-[#16221b]/95 backdrop-blur-2xl border border-sky-400/40 rounded-3xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300">
             <div class="p-4 bg-[#131c17]/90 border-b border-[#22332a] flex items-center justify-between">
                 <div class="flex items-center space-x-2.5">
                     <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-400 to-sand-400 p-[1px] shadow-sm flex-shrink-0">
                         <div class="w-full h-full bg-[#131c17] rounded-[11px] flex items-center justify-center">
-                            <i class="ph-fill ph-robot text-sand-300 text-lg"></i>
+                            <i class="ph-fill ph-robot text-sky-400 text-lg"></i>
                         </div>
                     </div>
                     <div>
@@ -397,15 +458,15 @@ Payroll & Finance Desk
             </div>
 
             <form id="chatForm" class="p-3 bg-[#131c17]/90 border-t border-[#22332a] flex items-center space-x-2">
-                <input type="text" id="chatInput" placeholder="Ask about salaries, TDS, or payouts..." class="glass-input flex-1 rounded-xl px-3.5 py-2 text-xs focus:outline-none transition">
-                <button type="submit" class="p-2.5 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-xl transition shadow-sm flex items-center justify-center font-bold">
+                <input type="text" id="chatInput" placeholder="Ask about salaries, TDS, or payouts..." class="glass-input flex-1 rounded-xl px-3.5 py-2 text-xs focus:outline-none transition bg-[#0d1611] text-sand-100 border border-white/10">
+                <button type="submit" class="p-2.5 bg-sky-400 hover:bg-sky-300 text-[#131c17] rounded-xl transition shadow-sm flex items-center justify-center font-bold">
                     <i class="ph-bold ph-paper-plane-right text-xs"></i>
                 </button>
             </form>
         </div>
 
         <button id="btnToggleFloatingChat" onclick="toggleFloatingChat()" class="group px-4 py-3 bg-gradient-to-r from-sky-400 via-sand-300 to-jade-400 text-[#131c17] rounded-full shadow-2xl hover:shadow-sky-400/30 flex items-center space-x-2.5 font-extrabold text-xs transition-all active:scale-95 border border-sand-200/40">
-            <div class="w-6 h-6 rounded-full bg-[#131c17] flex items-center justify-center text-sand-300 shadow-inner">
+            <div class="w-6 h-6 rounded-full bg-[#131c17] flex items-center justify-center text-sky-300 shadow-inner">
                 <i class="ph-fill ph-sparkle text-xs"></i>
             </div>
             <span class="tracking-wide font-bold">Ask AI Munimji</span>

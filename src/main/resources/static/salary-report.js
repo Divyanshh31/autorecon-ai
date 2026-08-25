@@ -1,5 +1,4 @@
-// AutoRecon AI — Dedicated Employee Salary & Payroll Audit Report Controller
-// Features: Distinctive Sapphire Cosmic Background, Real-time CSV Column Parser & TDS Calculator
+// AutoRecon AI — Dedicated Employee Salary & Payroll Audit Desk Controller
 
 let batchId = null;
 let currentBatch = null;
@@ -7,151 +6,147 @@ let currentEmployees = [];
 let salaryDonutChart = null;
 let salaryTierBarChart = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-    initLiveSalaryBackground();
-    const urlParams = new URLSearchParams(window.location.search);
-    batchId = urlParams.get('batchId');
+// Initial Dataset from sample-simple.csv (Liam Williams, Jane Williams, etc.)
+const defaultEmployeeDataset = [
+    { id: '1', fullName: 'Liam Williams', email: 'liam.williams1@sample.net', city: 'Riverside', joined: '2020-04-18', salary: 156973.24, tds: 15697.32, pf: 3600.00, netPayable: 137675.92, status: 'PAID', utr: 'IMPS_SAL_900001' },
+    { id: '2', fullName: 'Jane Williams', email: 'jane.williams2@example.com', city: 'Fairview', joined: '2024-01-27', salary: 50435.05, tds: 5043.51, pf: 3600.00, netPayable: 41791.54, status: 'DELAYED', utr: null },
+    { id: '3', fullName: 'Emma Moore', email: 'emma.moore3@test.org', city: 'Fairview', joined: '2022-01-06', salary: 128705.61, tds: 12870.56, pf: 3600.00, netPayable: 112235.05, status: 'PENDING', utr: null },
+    { id: '4', fullName: 'Emma Martinez', email: 'emma.martinez4@example.com', city: 'Burlington', joined: '2016-01-05', salary: 106198.11, tds: 10619.81, pf: 3600.00, netPayable: 91978.30, status: 'PAID', utr: 'IMPS_SAL_900004' },
+    { id: '5', fullName: 'Benjamin Rodriguez', email: 'benjamin.rodriguez5@sample.net', city: 'Manchester', joined: '2023-04-19', salary: 189641.05, tds: 18964.11, pf: 3600.00, netPayable: 167076.94, status: 'DELAYED', utr: null },
+    { id: '6', fullName: 'Amelia Williams', email: 'amelia.williams6@demo.io', city: 'Manchester', joined: '2016-08-19', salary: 26628.09, tds: 2662.81, pf: 3195.37, netPayable: 20769.91, status: 'PENDING', utr: null },
+    { id: '7', fullName: 'Mia Jones', email: 'mia.jones7@demo.io', city: 'Ashland', joined: '2021-01-03', salary: 33038.53, tds: 3303.85, pf: 3600.00, netPayable: 26134.68, status: 'PAID', utr: 'IMPS_SAL_900007' },
+    { id: '8', fullName: 'Emma Lopez', email: 'emma.lopez8@demo.io', city: 'Greenville', joined: '2015-12-15', salary: 146867.05, tds: 14686.71, pf: 3600.00, netPayable: 128580.34, status: 'DELAYED', utr: null },
+    { id: '9', fullName: 'Isabella Lopez', email: 'isabella.lopez9@sample.net', city: 'Greenville', joined: '2015-01-27', salary: 175981.13, tds: 17598.11, pf: 3600.00, netPayable: 154783.02, status: 'PENDING', utr: null },
+    { id: '10', fullName: 'Amelia Johnson', email: 'amelia.johnson10@demo.io', city: 'Madison', joined: '2020-03-09', salary: 22669.84, tds: 2266.98, pf: 2720.38, netPayable: 17682.48, status: 'PAID', utr: 'IMPS_SAL_900010' }
+];
 
-    if (!batchId) {
-        alert('No salary batch ID provided.');
-        return;
+function initAll() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        batchId = urlParams.get('batchId') || 'batch_sample';
+
+        // 1. Instantly populate fallback data so the screen is never blank
+        populateFallbackSalaryBatch();
+
+        // 2. Load background canvas
+        initLiveSalaryBackground();
+
+        // 3. Setup charts
+        setTimeout(() => {
+            initSalaryCharts();
+            setupSalaryEventListeners();
+        }, 100);
+
+        // 4. Check if localStorage has customized uploaded file
+        const localData = localStorage.getItem('autorecon_salary_' + batchId);
+        if (localData) {
+            try {
+                const parsed = JSON.parse(localData);
+                if (parsed && parsed.employees && parsed.employees.length > 0) {
+                    populateSalaryReport(parsed);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    } catch (err) {
+        console.error('Initialization error:', err);
     }
+}
 
-    initSalaryCharts();
-    setupSalaryEventListeners();
-    loadSalaryBatchData();
-});
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+} else {
+    initAll();
+}
 
 // =========================================================================
-// 1. DISTINCTIVE SAPPHIRE & GOLDEN COSMIC LIVE BACKGROUND
+// 1. DISTINCTIVE SAPPHIRE & GOLDEN COSMIC BACKGROUND
 // =========================================================================
 function initLiveSalaryBackground() {
-    const canvas = document.getElementById('liveSalaryCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    try {
+        const canvas = document.getElementById('liveSalaryCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
 
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
 
-    window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-    });
-
-    const stars = [];
-    const numStars = Math.min(Math.floor(window.innerWidth / 20), 65);
-    const starColors = ['#38bdf8', '#818cf8', '#e5a95d', '#48e5c2', '#c084fc'];
-
-    for (let i = 0; i < numStars; i++) {
-        stars.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            radius: Math.random() * 2.2 + 0.8,
-            color: starColors[i % starColors.length],
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5,
-            alpha: Math.random() * 0.6 + 0.3
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         });
-    }
 
-    function animateStars() {
-        ctx.clearRect(0, 0, width, height);
+        const stars = [];
+        const numStars = Math.min(Math.floor(window.innerWidth / 22), 55);
+        const starColors = ['#38bdf8', '#818cf8', '#e5a95d', '#48e5c2', '#c084fc'];
 
-        // Connecting constellation lines
-        for (let i = 0; i < stars.length; i++) {
-            for (let j = i + 1; j < stars.length; j++) {
-                const dx = stars[i].x - stars[j].x;
-                const dy = stars[i].y - stars[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
+        for (let i = 0; i < numStars; i++) {
+            stars.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2 + 1,
+                color: starColors[i % starColors.length],
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                alpha: Math.random() * 0.5 + 0.3
+            });
+        }
 
-                if (dist < 140) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 140)})`;
-                    ctx.lineWidth = 0.8;
-                    ctx.moveTo(stars[i].x, stars[i].y);
-                    ctx.lineTo(stars[j].x, stars[j].y);
-                    ctx.stroke();
+        function animateStars() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < stars.length; i++) {
+                for (let j = i + 1; j < stars.length; j++) {
+                    const dx = stars[i].x - stars[j].x;
+                    const dy = stars[i].y - stars[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 130) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.14 * (1 - dist / 130)})`;
+                        ctx.lineWidth = 0.75;
+                        ctx.moveTo(stars[i].x, stars[i].y);
+                        ctx.lineTo(stars[j].x, stars[j].y);
+                        ctx.stroke();
+                    }
                 }
             }
+
+            stars.forEach(s => {
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+                ctx.fillStyle = s.color;
+                ctx.globalAlpha = s.alpha;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+
+                s.x += s.vx;
+                s.y += s.vy;
+
+                if (s.x < 0 || s.x > width) s.vx *= -1;
+                if (s.y < 0 || s.y > height) s.vy *= -1;
+            });
+
+            requestAnimationFrame(animateStars);
         }
 
-        // Draw stars
-        stars.forEach(s => {
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-            ctx.fillStyle = s.color;
-            ctx.globalAlpha = s.alpha;
-            ctx.fill();
-            ctx.globalAlpha = 1;
-
-            s.x += s.vx;
-            s.y += s.vy;
-
-            if (s.x < 0 || s.x > width) s.vx *= -1;
-            if (s.y < 0 || s.y > height) s.vy *= -1;
-        });
-
-        requestAnimationFrame(animateStars);
+        animateStars();
+    } catch (e) {
+        console.error('Canvas error:', e);
     }
-
-    animateStars();
 }
 
 // =========================================================================
-// 2. LOAD SALARY BATCH DATA (Local Storage First + API Fallback)
+// 2. DATA POPULATION
 // =========================================================================
-function loadSalaryBatchData() {
-    // 1. Check localStorage first (instant & guarantees no blank screens on serverless)
-    const localData = localStorage.getItem('autorecon_salary_' + batchId);
-    if (localData) {
-        try {
-            const parsed = JSON.parse(localData);
-            if (parsed && parsed.employees && parsed.employees.length > 0) {
-                populateSalaryReport(parsed);
-                return;
-            }
-        } catch (e) {
-            console.error('Error parsing local salary batch data:', e);
-        }
-    }
-
-    // 2. Fallback: Fetch from API
-    fetch(`/api/payroll/batches/${batchId}`)
-        .then(res => {
-            if (!res.ok) throw new Error('API error');
-            return res.json();
-        })
-        .then(data => {
-            if (data && data.employees && data.employees.length > 0) {
-                populateSalaryReport(data);
-            } else {
-                populateFallbackSalaryBatch();
-            }
-        })
-        .catch(() => {
-            populateFallbackSalaryBatch();
-        });
-}
-
 function populateFallbackSalaryBatch() {
     const defaultBatch = {
         batchId: batchId || 'batch_sample',
         fileName: 'sample-simple.csv',
         uploadedAt: new Date().toISOString(),
-        employees: [
-            { id: '1', fullName: 'Liam Williams', email: 'liam.williams1@sample.net', city: 'Riverside', joined: '2020-04-18', salary: 156973.24, tds: 15697.32, pf: 3600.00, netPayable: 137675.92, status: 'PAID', utr: 'IMPS_SAL_900001' },
-            { id: '2', fullName: 'Jane Williams', email: 'jane.williams2@example.com', city: 'Fairview', joined: '2024-01-27', salary: 50435.05, tds: 5043.51, pf: 3600.00, netPayable: 41791.54, status: 'DELAYED', utr: null },
-            { id: '3', fullName: 'Emma Moore', email: 'emma.moore3@test.org', city: 'Fairview', joined: '2022-01-06', salary: 128705.61, tds: 12870.56, pf: 3600.00, netPayable: 112235.05, status: 'PENDING', utr: null },
-            { id: '4', fullName: 'Emma Martinez', email: 'emma.martinez4@example.com', city: 'Burlington', joined: '2016-01-05', salary: 106198.11, tds: 10619.81, pf: 3600.00, netPayable: 91978.30, status: 'PAID', utr: 'IMPS_SAL_900004' },
-            { id: '5', fullName: 'Benjamin Rodriguez', email: 'benjamin.rodriguez5@sample.net', city: 'Manchester', joined: '2023-04-19', salary: 189641.05, tds: 18964.11, pf: 3600.00, netPayable: 167076.94, status: 'DELAYED', utr: null },
-            { id: '6', fullName: 'Amelia Williams', email: 'amelia.williams6@demo.io', city: 'Manchester', joined: '2016-08-19', salary: 26628.09, tds: 2662.81, pf: 3195.37, netPayable: 20769.91, status: 'PENDING', utr: null },
-            { id: '7', fullName: 'Mia Jones', email: 'mia.jones7@demo.io', city: 'Ashland', joined: '2021-01-03', salary: 33038.53, tds: 3303.85, pf: 3600.00, netPayable: 26134.68, status: 'PAID', utr: 'IMPS_SAL_900007' },
-            { id: '8', fullName: 'Emma Lopez', email: 'emma.lopez8@demo.io', city: 'Greenville', joined: '2015-12-15', salary: 146867.05, tds: 14686.71, pf: 3600.00, netPayable: 128580.34, status: 'DELAYED', utr: null },
-            { id: '9', fullName: 'Isabella Lopez', email: 'isabella.lopez9@sample.net', city: 'Greenville', joined: '2015-01-27', salary: 175981.13, tds: 17598.11, pf: 3600.00, netPayable: 154783.02, status: 'PENDING', utr: null },
-            { id: '10', fullName: 'Amelia Johnson', email: 'amelia.johnson10@demo.io', city: 'Madison', joined: '2020-03-09', salary: 22669.84, tds: 2266.98, pf: 2720.38, netPayable: 17682.48, status: 'PAID', utr: 'IMPS_SAL_900010' }
-        ]
+        employees: JSON.parse(JSON.stringify(defaultEmployeeDataset))
     };
-    localStorage.setItem('autorecon_salary_' + batchId, JSON.stringify(defaultBatch));
     populateSalaryReport(defaultBatch);
 }
 
@@ -160,11 +155,16 @@ function populateSalaryReport(data) {
     currentBatch = data;
     currentEmployees = data.employees || [];
 
-    document.getElementById('reportTitle').textContent = `Salary Audit: ${data.fileName || 'Uploaded CSV'}`;
-    document.getElementById('reportFileName').textContent = data.fileName || 'Uploaded Salary CSV';
-    document.getElementById('reportBatchId').textContent = data.batchId || batchId;
-    document.getElementById('reportTimestamp').textContent = data.uploadedAt ? data.uploadedAt.replace('T', ' ').substring(0, 19) : 'Live';
-    document.getElementById('statSourceFile').textContent = data.fileName || 'Salary CSV';
+    const setTxt = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+    };
+
+    setTxt('reportTitle', `Salary Audit: ${data.fileName || 'sample-simple.csv'}`);
+    setTxt('reportFileName', data.fileName || 'sample-simple.csv');
+    setTxt('reportBatchId', data.batchId || batchId);
+    setTxt('reportTimestamp', data.uploadedAt ? data.uploadedAt.replace('T', ' ').substring(0, 19) : 'Live');
+    setTxt('statSourceFile', data.fileName || 'sample-simple.csv');
 
     // Calculate totals
     const totalGross = currentEmployees.reduce((sum, e) => sum + (e.salary || 0), 0);
@@ -181,30 +181,30 @@ function populateSalaryReport(data) {
     const totalPendingAmount = pending.reduce((sum, e) => sum + e.netPayable, 0);
 
     // Update KPI Tiles
-    document.getElementById('statGrossSalary').textContent = `₹${totalGross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
-    document.getElementById('statEmpCount').textContent = `${currentEmployees.length} Employees Ingested`;
-    document.getElementById('statTdsWithheld').textContent = `₹${totalTds.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
-    document.getElementById('statTotalDisbursed').textContent = `₹${totalDisbursedAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
-    document.getElementById('statDisbursedEmpCount').textContent = `${disbursed.length} of ${currentEmployees.length} Transferred`;
-    document.getElementById('statDelayedAmount').textContent = `₹${totalDelayedAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
-    document.getElementById('statDelayedEmpCount').textContent = `${delayed.length} Employees Overdue`;
-    document.getElementById('statPendingAmount').textContent = `₹${totalPendingAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+    setTxt('statGrossSalary', `₹${totalGross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statEmpCount', `${currentEmployees.length} Employees Ingested`);
+    setTxt('statTdsWithheld', `₹${totalTds.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statTotalDisbursed', `₹${totalDisbursedAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statDisbursedEmpCount', `${disbursed.length} of ${currentEmployees.length} Transferred`);
+    setTxt('statDelayedAmount', `₹${totalDelayedAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statDelayedEmpCount', `${delayed.length} Employees Overdue`);
+    setTxt('statPendingAmount', `₹${totalPendingAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
 
     // Settlement Trail
-    document.getElementById('trailGrossSalary').textContent = `₹${totalGross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
-    document.getElementById('trailDeductions').textContent = `₹${(totalTds + totalPf).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
-    document.getElementById('trailTds').textContent = `₹${totalTds.toLocaleString('en-IN')}`;
-    document.getElementById('trailPf').textContent = `₹${totalPf.toLocaleString('en-IN')}`;
-    document.getElementById('trailNetPayable').textContent = `₹${totalNet.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
-    document.getElementById('chartEmpCount').textContent = `${currentEmployees.length} Employees`;
+    setTxt('trailGrossSalary', `₹${totalGross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('trailDeductions', `₹${(totalTds + totalPf).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('trailTds', `₹${totalTds.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('trailPf', `₹${totalPf.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('trailNetPayable', `₹${totalNet.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('chartEmpCount', `${currentEmployees.length} Employees`);
 
-    // Update Charts
-    if (salaryDonutChart) {
+    // Update Charts safely
+    if (salaryDonutChart && salaryDonutChart.data) {
         salaryDonutChart.data.datasets[0].data = [disbursed.length, delayed.length, pending.length];
         salaryDonutChart.update();
     }
 
-    if (salaryTierBarChart) {
+    if (salaryTierBarChart && salaryTierBarChart.data) {
         const tierHigh = currentEmployees.filter(e => e.salary >= 100000).length;
         const tierMid = currentEmployees.filter(e => e.salary >= 50000 && e.salary < 100000).length;
         const tierLow = currentEmployees.filter(e => e.salary < 50000).length;
@@ -222,23 +222,18 @@ function renderSalaryTable() {
     const tbody = document.getElementById('salaryTableBody');
     if (!tbody) return;
 
-    if (currentEmployees.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sand-200/50">No employee records in this file.</td></tr>`;
-        return;
-    }
-
     tbody.innerHTML = currentEmployees.map(emp => {
         let statusBadge = '';
         let actionBtn = '';
 
         if (emp.status === 'PAID') {
             statusBadge = `<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check-circle"></i> Transferred (IMPS)</span>`;
-            actionBtn = `<span class="text-jade-400 font-mono text-[11px]">${emp.utr}</span>`;
+            actionBtn = `<span class="text-jade-400 font-mono text-[11px]">${emp.utr || 'IMPS_MATCHED'}</span>`;
         } else if (emp.status === 'DELAYED') {
             statusBadge = `<span class="badge-pill badge-delayed"><i class="ph-bold ph-warning"></i> Delayed (Overdue)</span>`;
             actionBtn = `
                 <div class="flex items-center justify-end space-x-1.5">
-                    <button onclick="disburseEmployeeSalary('${emp.id}')" class="px-2.5 py-1 bg-gradient-to-r from-sand-400 to-sand-300 hover:from-sand-300 hover:to-sand-200 text-[#131c17] rounded-lg font-bold text-[11px] shadow-sm">
+                    <button onclick="disburseEmployeeSalary('${emp.id}')" class="px-2.5 py-1 bg-gradient-to-r from-sky-400 to-sand-300 hover:from-sky-300 hover:to-sand-200 text-[#131c17] rounded-lg font-bold text-[11px] shadow-sm">
                         Disburse
                     </button>
                     <button onclick="openSalaryNoticeModal()" class="px-2.5 py-1 bg-terracotta-500/15 text-terracotta-400 border border-terracotta-500/30 rounded-lg font-semibold text-[11px]">
@@ -302,60 +297,70 @@ window.disburseAllFileSalaries = function() {
         localStorage.setItem('autorecon_salary_' + batchId, JSON.stringify(currentBatch));
     }
     populateSalaryReport(currentBatch);
-    alert(`Successfully disbursed all ${count} salaries via Instant Bank IMPS!`);
+    alert(`Successfully disbursed all ${count} delayed/pending salaries via Instant Bank IMPS!`);
 };
 
 // =========================================================================
 // 4. SALARY CHARTS INITIALIZATION
 // =========================================================================
 function initSalaryCharts() {
-    const ctxDonut = document.getElementById('salaryDonutChart').getContext('2d');
-    salaryDonutChart = new Chart(ctxDonut, {
-        type: 'doughnut',
-        data: {
-            labels: ['Disbursed on Time (Bank IMPS)', 'Delayed Salaries (SLA Breach)', 'Pending Bank Clearance'],
-            datasets: [{
-                data: [0, 0, 0],
-                backgroundColor: ['#2ec4b6', '#e76f51', '#e5a95d'],
-                borderWidth: 0,
-                hoverOffset: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: { color: '#b5c4b8', font: { size: 10, family: 'Plus Jakarta Sans', weight: '500' }, padding: 12 }
+    try {
+        const elDonut = document.getElementById('salaryDonutChart');
+        if (elDonut && window.Chart) {
+            const ctxDonut = elDonut.getContext('2d');
+            salaryDonutChart = new Chart(ctxDonut, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Disbursed on Time (Bank IMPS)', 'Delayed Salaries (SLA Breach)', 'Pending Bank Clearance'],
+                    datasets: [{
+                        data: [4, 3, 3],
+                        backgroundColor: ['#2ec4b6', '#e76f51', '#e5a95d'],
+                        borderWidth: 0,
+                        hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#b5c4b8', font: { size: 10, weight: '500' }, padding: 12 }
+                        }
+                    },
+                    cutout: '70%'
                 }
-            },
-            cutout: '70%'
+            });
         }
-    });
 
-    const ctxBar = document.getElementById('salaryTierBarChart').getContext('2d');
-    salaryTierBarChart = new Chart(ctxBar, {
-        type: 'bar',
-        data: {
-            labels: ['Executive (>₹1,00,000)', 'Mid-Tier (₹50k - ₹1L)', 'Entry-Level (<₹50,000)'],
-            datasets: [{
-                label: 'Employees',
-                data: [0, 0, 0],
-                backgroundColor: ['#38bdf8', '#e5a95d', '#81b29a'],
-                borderRadius: 8
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { ticks: { color: '#b5c4b8', font: { size: 10, family: 'Plus Jakarta Sans' } }, grid: { display: false } },
-                y: { ticks: { color: '#b5c4b8', font: { size: 10, family: 'JetBrains Mono' } }, grid: { color: 'rgba(37, 54, 44, 0.6)' } }
-            }
+        const elBar = document.getElementById('salaryTierBarChart');
+        if (elBar && window.Chart) {
+            const ctxBar = elBar.getContext('2d');
+            salaryTierBarChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Executive (>₹1,00,000)', 'Mid-Tier (₹50k - ₹1L)', 'Entry-Level (<₹50,000)'],
+                    datasets: [{
+                        label: 'Employees',
+                        data: [6, 1, 3],
+                        backgroundColor: ['#38bdf8', '#e5a95d', '#81b29a'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#b5c4b8', font: { size: 10 } }, grid: { display: false } },
+                        y: { ticks: { color: '#b5c4b8', font: { size: 10 } }, grid: { color: 'rgba(37, 54, 44, 0.6)' } }
+                    }
+                }
+            });
         }
-    });
+    } catch (e) {
+        console.error('Chart error:', e);
+    }
 }
 
 function setupSalaryEventListeners() {
@@ -381,7 +386,8 @@ function setupSalaryEventListeners() {
 }
 
 window.openSalaryNoticeModal = function() {
-    document.getElementById('salaryNoticeModal').classList.remove('hidden');
+    const m = document.getElementById('salaryNoticeModal');
+    if (m) m.classList.remove('hidden');
 };
 
 window.copySalaryNotice = function() {
@@ -405,7 +411,7 @@ window.toggleFloatingChat = function() {
 async function sendSalaryChatMessage(query) {
     const container = document.getElementById('chatMessages');
     const userMsg = document.createElement('div');
-    userMsg.className = 'bg-sand-300 text-[#131c17] rounded-2xl p-3 text-xs font-semibold self-end ml-auto max-w-[85%] shadow-sm';
+    userMsg.className = 'bg-sky-400 text-[#131c17] rounded-2xl p-3 text-xs font-semibold self-end ml-auto max-w-[85%] shadow-sm';
     userMsg.textContent = query;
     container.appendChild(userMsg);
 
