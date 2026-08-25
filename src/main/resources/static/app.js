@@ -1,36 +1,47 @@
-// AutoRecon AI — Premium Glassmorphism, Live Background & Live Features Controller
+// AutoRecon AI — All-in-One Autonomous Accounting & Financial Operations OS
+// Multi-Tasking Client Controller: Gateway Recon, Payroll & Salary Delays, Vendor AP & MSME 43B(h), Cash Flow & AI Munimji
 
 let reconChart = null;
 let feeChart = null;
 let currentOrders = [];
 let currentDiscrepancies = [];
 let currentFilter = 'ALL';
-let activeDrawerOrder = null;
-let splashTimer = null;
-let liveStreamInterval = null;
 let isLiveStreamActive = true;
+let currentBatchId = null;
 
+// Multi-Tasking Data Stores
+let currentPayroll = [];
+let currentVendors = [];
+let currentCashFlow = null;
+
+// Initialization
 document.addEventListener('DOMContentLoaded', () => {
     initLiveBackground();
-    initSplashScreen();
+    initMinimalSplash();
     initCharts();
+    setupNavigationTabs();
     setupEventListeners();
     initLiveTicker();
+
+    // Fetch all 4 accounting modules
     fetchSummary();
     fetchOrders();
     fetchDiscrepancies();
+    fetchBatchesList();
+    fetchPayroll();
+    fetchVendors();
+    fetchCashFlow();
     fetchAiConfig();
-    fetchBatches();
 });
 
-// =============================================================================
-// 1. LIVE INTERACTIVE CANVAS BACKGROUND (Floating Constellation & Glow Nodes)
-// =============================================================================
+// =========================================================================
+// 1. LIVE BACKGROUND PARTICLES (Physics & Constellations)
+// =========================================================================
 function initLiveBackground() {
     const canvas = document.getElementById('liveBgCanvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    
+
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
 
@@ -40,163 +51,152 @@ function initLiveBackground() {
     });
 
     const particles = [];
-    const particleCount = Math.min(Math.floor(window.innerWidth / 28), 50);
-    const colors = ['rgba(229, 169, 93, 0.45)', 'rgba(46, 196, 182, 0.4)', 'rgba(129, 178, 154, 0.35)', 'rgba(231, 111, 81, 0.3)'];
+    const numParticles = Math.min(Math.floor(window.innerWidth / 25), 45);
 
-    let mouse = { x: null, y: null, radius: 140 };
-
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.x;
-        mouse.y = e.y;
-    });
-
-    window.addEventListener('mouseout', () => {
-        mouse.x = null;
-        mouse.y = null;
-    });
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.size = Math.random() * 2.2 + 1;
-            this.baseX = this.x;
-            this.baseY = this.y;
-            this.density = (Math.random() * 20) + 1;
-            this.vx = (Math.random() - 0.5) * 0.6;
-            this.vy = (Math.random() - 0.5) * 0.6;
-            this.color = colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.fillStyle = this.color;
-            ctx.fill();
-        }
-
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-
-            if (this.x < 0 || this.x > width) this.vx = -this.vx;
-            if (this.y < 0 || this.y > height) this.vy = -this.vy;
-
-            // Mouse repulsion/attraction field
-            if (mouse.x != null && mouse.y != null) {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    const force = (mouse.radius - distance) / mouse.radius;
-                    const directionX = (dx / distance) * force * this.density * 0.4;
-                    const directionY = (dy / distance) * force * this.density * 0.4;
-                    this.x -= directionX;
-                    this.y -= directionY;
-                }
-            }
-        }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
+    for (let i = 0; i < numParticles; i++) {
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 2 + 1,
+            color: (i % 3 === 0) ? '#e5a95d' : (i % 3 === 1 ? '#2ec4b6' : '#81b29a'),
+            vx: (Math.random() - 0.5) * 0.45,
+            vy: (Math.random() - 0.5) * 0.45,
+            alpha: Math.random() * 0.4 + 0.2
+        });
     }
 
     function animateParticles() {
         ctx.clearRect(0, 0, width, height);
 
+        // Draw connecting constellation lines
         for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-
-            // Connect nearby nodes with delicate glowing links
             for (let j = i + 1; j < particles.length; j++) {
-                let dx = particles[i].x - particles[j].x;
-                let dy = particles[i].y - particles[j].y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < 130) {
+                if (dist < 130) {
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(229, 169, 93, ${0.12 * (1 - distance / 130)})`;
-                    ctx.lineWidth = 0.8;
+                    ctx.strokeStyle = `rgba(229, 169, 93, ${0.12 * (1 - dist / 130)})`;
+                    ctx.lineWidth = 0.75;
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
                     ctx.stroke();
-                    ctx.closePath();
                 }
             }
         }
+
+        // Draw and update particles
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = p.alpha;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+
+            p.x += p.vx;
+            p.y += p.vy;
+
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+        });
+
         requestAnimationFrame(animateParticles);
     }
 
     animateParticles();
 }
 
-// =============================================================================
-// 2. MINIMALISTIC OPENING SCREEN (Clean, Sleek & Fast - 2 Seconds)
-// =============================================================================
-function initSplashScreen() {
+// =========================================================================
+// 2. MINIMALISTIC FAST SPLASH SCREEN
+// =========================================================================
+function initMinimalSplash() {
     const splash = document.getElementById('splashScreen');
     const bar = document.getElementById('splashProgressBar');
-    const text = document.getElementById('splashStatusText');
     const pct = document.getElementById('splashPercentText');
+    const txt = document.getElementById('splashStatusText');
 
     if (!splash) return;
 
     let progress = 0;
     const stages = [
-        { at: 20, msg: "Connecting Razorpay Webhooks..." },
-        { at: 55, msg: "Verifying Bank Nodal Credits..." },
-        { at: 85, msg: "Calculating 2% Contractual MDR Rates..." },
-        { at: 100, msg: "AutoRecon AI Online" }
+        { at: 25, text: "Verifying Razorpay Webhook Ingestion..." },
+        { at: 55, text: "Auditing Employee Salary Payouts & SLA..." },
+        { at: 80, text: "Checking MSME Section 43B(h) Vendor Aging..." },
+        { at: 100, text: "Multi-Tasking Financial Workspace Ready!" }
     ];
 
-    splashTimer = setInterval(() => {
-        progress += 3;
+    const timer = setInterval(() => {
+        progress += Math.floor(Math.random() * 18) + 12;
         if (progress > 100) progress = 100;
 
-        if (bar) bar.style.width = `${progress}%`;
-        if (pct) pct.textContent = `${progress}%`;
+        bar.style.width = progress + '%';
+        pct.textContent = progress + '%';
 
-        for (let s of stages) {
-            if (progress >= s.at && text) {
-                text.textContent = s.msg;
-            }
-        }
+        const stage = stages.find(s => progress <= s.at) || stages[stages.length - 1];
+        txt.textContent = stage.text;
 
         if (progress >= 100) {
-            clearInterval(splashTimer);
+            clearInterval(timer);
             setTimeout(() => {
                 splash.classList.add('fade-out');
-                setTimeout(() => splash.remove(), 600);
+                setTimeout(() => splash.remove(), 700);
             }, 300);
         }
-    }, 35); // ~1.8 seconds total
+    }, 120);
 }
 
 window.skipSplashScreen = function() {
-    if (splashTimer) clearInterval(splashTimer);
     const splash = document.getElementById('splashScreen');
     if (splash) {
         splash.classList.add('fade-out');
-        setTimeout(() => splash.remove(), 600);
+        setTimeout(() => splash.remove(), 400);
     }
 };
 
-// =============================================================================
-// 3. LIVE WEBHOOK INGESTION TICKER STREAM
-// =============================================================================
+// =========================================================================
+// 3. TOP IOS SEGMENTED NAVIGATION TAB SWITCHER
+// =========================================================================
+function setupNavigationTabs() {
+    const tabButtons = document.querySelectorAll('.nav-tab-btn');
+    const views = document.querySelectorAll('.module-view');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+
+            tabButtons.forEach(b => {
+                b.classList.remove('active');
+                b.classList.add('text-sand-200/70');
+            });
+            btn.classList.add('active');
+            btn.classList.remove('text-sand-200/70');
+
+            views.forEach(v => {
+                if (v.id === targetId) {
+                    v.classList.remove('hidden');
+                } else {
+                    v.classList.add('hidden');
+                }
+            });
+        });
+    });
+}
+
+// =========================================================================
+// 4. LIVE REAL-TIME STREAM TICKER
+// =========================================================================
 function initLiveTicker() {
     const tickerEl = document.getElementById('liveTickerFeed');
     if (!tickerEl) return;
 
     const liveEvents = [
-        { pay: "pay_RZP_10036", amt: "₹4,500.00", method: "UPI", status: "MDR Verified (2%)", utr: "UTR_HDFC_9000036" },
-        { pay: "pay_RZP_10037", amt: "₹12,800.00", method: "Card", status: "GST Input Logged", utr: "UTR_ICICI_9000037" },
-        { pay: "pay_RZP_10038", amt: "₹2,150.00", method: "UPI", status: "Payout Settled (T+1)", utr: "UTR_SBI_9000038" },
-        { pay: "pay_RZP_10039", amt: "₹8,700.00", method: "Netbanking", status: "3-Way Triangulation OK", utr: "UTR_KOTAK_9000039" },
-        { pay: "pay_RZP_10040", amt: "₹3,400.00", method: "UPI", status: "Nodal Payout Matched", utr: "UTR_AXIS_9000040" }
+        { pay: 'pay_RZP_10036', amt: '₹4,500', method: 'UPI (GPay)', status: 'MDR 2% Matched', utr: 'UTR_HDFC_992101' },
+        { pay: 'SAL_EMP_103', amt: '₹58,700', method: 'NEFT Payout', status: 'Delay Alert Flagged', utr: 'Pending Clearance' },
+        { pay: 'BILL_VEND_504', amt: '₹31,500', method: 'MSME Invoice', status: '2 Days to 43B(h) SLA', utr: 'Zenith Legal' },
+        { pay: 'pay_RZP_10037', amt: '₹12,500', method: 'Credit Card', status: 'Bank Deposited', utr: 'UTR_KOTAK_88192' },
+        { pay: 'GSTR_2B_ITC', amt: '₹34,149', method: 'GST Tax Portal', status: 'ITC Reconciled', utr: 'GSTR-3B Ready' }
     ];
 
     let index = 0;
@@ -206,33 +206,17 @@ function initLiveTicker() {
         index++;
         tickerEl.style.opacity = '0';
         setTimeout(() => {
-            tickerEl.innerHTML = `<span class="text-sand-300 font-bold">${ev.pay}</span> (${ev.amt} via <span class="text-sand-100">${ev.method}</span>) &rarr; <span class="text-jade-400 font-semibold">${ev.status}</span> &rarr; Bank Credit: <span class="text-sand-200">${ev.utr}</span>`;
+            tickerEl.innerHTML = `<span class="text-sand-300 font-bold">${ev.pay}</span> (${ev.amt} via <span class="text-sand-100">${ev.method}</span>) &rarr; <span class="text-jade-400 font-semibold">${ev.status}</span> &rarr; Reference: <span class="text-sand-200 font-mono">${ev.utr}</span>`;
             tickerEl.style.opacity = '1';
         }, 200);
     }, 4500);
-
-    const toggleBtn = document.getElementById('btnToggleLiveFeed');
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            isLiveStreamActive = !isLiveStreamActive;
-            if (isLiveStreamActive) {
-                toggleBtn.innerHTML = `<span class="live-pulse-dot"></span><span class="hidden sm:inline">Live Stream</span>`;
-                toggleBtn.classList.add('text-jade-400');
-                toggleBtn.classList.remove('text-sand-200/50');
-            } else {
-                toggleBtn.innerHTML = `<i class="ph-bold ph-pause"></i><span class="hidden sm:inline">Paused</span>`;
-                toggleBtn.classList.remove('text-jade-400');
-                toggleBtn.classList.add('text-sand-200/50');
-            }
-        });
-    }
 }
 
-
-// Event Listeners
+// =========================================================================
+// 5. EVENT LISTENERS
+// =========================================================================
 function setupEventListeners() {
     document.getElementById('btnLoadDemo').addEventListener('click', loadDemoData);
-    document.getElementById('btnRunRecon').addEventListener('click', runReconciliation);
     document.getElementById('btnOpenDisputeModal').addEventListener('click', openDisputeModal);
     document.getElementById('btnCopyDispute').addEventListener('click', copyDisputeToClipboard);
     document.getElementById('btnOpenSimModal').addEventListener('click', () => {
@@ -241,21 +225,21 @@ function setupEventListeners() {
 
     document.getElementById('simForm').addEventListener('submit', handleSimulateTransaction);
 
-    // Live Search Filter
+    // Live Search Filter for Reconciliation Table
     document.getElementById('tableSearchInput').addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
         renderOrdersTable(query);
     });
 
-    // Filter Buttons
+    // Reconciliation Filter Buttons
     document.querySelectorAll('.table-filter-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             document.querySelectorAll('.table-filter-btn').forEach(b => {
                 b.classList.remove('bg-sand-300', 'text-[#131c17]', 'font-bold', 'shadow-sm');
-                b.classList.add('bg-[#1a2720]', 'text-sand-200', 'border', 'border-[#2b3d32]');
+                b.classList.add('text-sand-200');
             });
-            e.target.classList.remove('bg-[#1a2720]', 'text-sand-200', 'border', 'border-[#2b3d32]');
             e.target.classList.add('bg-sand-300', 'text-[#131c17]', 'font-bold', 'shadow-sm');
+            e.target.classList.remove('text-sand-200');
             currentFilter = e.target.getAttribute('data-filter');
             renderOrdersTable(document.getElementById('tableSearchInput').value.toLowerCase().trim());
         });
@@ -279,14 +263,6 @@ function setupEventListeners() {
             sendChatMessage(query);
         });
     });
-
-    // Floating AI Chat trigger
-    const aiSettingsBtn = document.getElementById('btnOpenAiSettings');
-    if (aiSettingsBtn) {
-        aiSettingsBtn.addEventListener('click', () => {
-            document.getElementById('aiSettingsModal').classList.remove('hidden');
-        });
-    }
 
     // CSV Upload Modal
     const btnUpload = document.getElementById('btnOpenUploadModal');
@@ -326,7 +302,9 @@ window.toggleFloatingChat = function() {
     }
 };
 
-// Chart Initializations with Earth Tone Colors (Zero Blue!)
+// =========================================================================
+// 6. CHART INITIALIZATIONS
+// =========================================================================
 function initCharts() {
     const elRecon = document.getElementById('reconDonutChart');
     if (elRecon) {
@@ -336,7 +314,7 @@ function initCharts() {
             data: {
                 labels: ['Credited in Bank (Safe)', 'MDR Overcharged by Razorpay', 'Delayed Payout (>2 Days)', 'Missing Bank Credit'],
                 datasets: [{
-                    data: [0, 0, 0, 0],
+                    data: [32, 1, 1, 1],
                     backgroundColor: ['#2ec4b6', '#e5a95d', '#e76f51', '#d48b38'],
                     borderWidth: 0,
                     hoverOffset: 6
@@ -365,7 +343,7 @@ function initCharts() {
                 labels: ['Contracted 2% MDR', 'Actual MDR Deducted', 'GST on Fee (18%)', 'Extra Overcharge'],
                 datasets: [{
                     label: 'INR',
-                    data: [0, 0, 0, 0],
+                    data: [3392.00, 3531.50, 635.67, 139.50],
                     backgroundColor: ['#e5a95d', '#d48b38', '#81b29a', '#e76f51'],
                     borderRadius: 8
                 }]
@@ -373,9 +351,7 @@ function initCharts() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
                     x: { ticks: { color: '#b5c4b8', font: { size: 10, family: 'Plus Jakarta Sans' } }, grid: { display: false } },
                     y: { ticks: { color: '#b5c4b8', font: { size: 10, family: 'JetBrains Mono' } }, grid: { color: 'rgba(37, 54, 44, 0.6)' } }
@@ -396,22 +372,22 @@ async function fetchAiConfig() {
     }
 }
 
-// Fetch Summary KPIs
+// =========================================================================
+// 7. MODULE 1: RECONCILIATION API & RENDERING
+// =========================================================================
 async function fetchSummary() {
     try {
         const res = await fetch('/api/recon/summary');
         if (!res.ok) return;
         const data = await res.json();
-        updateDashboard(data);
+        updateReconDashboard(data);
     } catch (err) {
         console.error('Error fetching summary:', err);
     }
 }
 
-// Update Dashboard UI
-function updateDashboard(summary) {
+function updateReconDashboard(summary) {
     if (!summary) return;
-
     const setTxt = (id, val) => {
         const el = document.getElementById(id);
         if (el) el.textContent = val;
@@ -459,8 +435,6 @@ function updateDashboard(summary) {
     }
 }
 
-
-// Fetch Orders
 async function fetchOrders() {
     try {
         const res = await fetch('/api/recon/orders');
@@ -472,7 +446,6 @@ async function fetchOrders() {
     }
 }
 
-// Fetch Discrepancies
 async function fetchDiscrepancies() {
     try {
         const res = await fetch('/api/recon/discrepancies');
@@ -483,9 +456,9 @@ async function fetchDiscrepancies() {
     }
 }
 
-// Render Orders Table
 function renderOrdersTable(searchQuery = '') {
     const tbody = document.getElementById('ordersTableBody');
+    if (!tbody) return;
     let filtered = currentOrders;
 
     if (currentFilter === 'DISCREPANCY') {
@@ -497,64 +470,55 @@ function renderOrdersTable(searchQuery = '') {
     }
 
     if (searchQuery) {
-        filtered = filtered.filter(o =>
+        filtered = filtered.filter(o => 
             (o.orderId && o.orderId.toLowerCase().includes(searchQuery)) ||
-            (o.customerName && o.customerName.toLowerCase().includes(searchQuery)) ||
-            (o.customerEmail && o.customerEmail.toLowerCase().includes(searchQuery)) ||
-            (o.paymentId && o.paymentId.toLowerCase().includes(searchQuery))
+            (o.customerName && o.customerName.toLowerCase().includes(searchQuery))
         );
     }
 
-    if (!filtered || filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-10 text-center text-sand-200/50">No records found matching current query.</td></tr>`;
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sand-200/50">No transaction records found matching filter.</td></tr>`;
         return;
     }
 
     tbody.innerHTML = filtered.map(order => {
-        let badgeClass = 'badge-reconciled';
-        let badgeLabel = 'Deposited in Bank (100%)';
+        let statusBadge = '';
+        let rowClass = 'hover:bg-[#16221b] transition cursor-pointer';
 
-        if (order.reconStatus === 'FEE_MISMATCH') {
-            badgeClass = 'badge-fee-mismatch';
-            badgeLabel = 'MDR Overcharge';
-        } else if (order.reconStatus === 'DELAYED_SETTLEMENT') {
-            badgeClass = 'badge-delayed';
-            badgeLabel = 'Delayed Payout (>2 Days)';
+        if (order.reconStatus === 'RECONCILED') {
+            statusBadge = '<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check"></i> Safe</span>';
+        } else if (order.reconStatus === 'FEE_MISMATCH') {
+            statusBadge = '<span class="badge-pill badge-fee-mismatch"><i class="ph-bold ph-warning"></i> Fee Leak</span>';
+            rowClass += ' bg-sand-300/[0.04]';
+        } else if (order.reconStatus === 'DELAYED_SLA') {
+            statusBadge = '<span class="badge-pill badge-delayed"><i class="ph-bold ph-clock"></i> SLA Breach</span>';
+            rowClass += ' bg-terracotta-500/[0.04]';
         } else if (order.reconStatus === 'MISSING_BANK_CREDIT') {
-            badgeClass = 'badge-delayed';
-            badgeLabel = 'Missing Bank Deposit';
-        } else if (order.reconStatus === 'UNRECONCILED') {
-            badgeClass = 'badge-delayed';
-            badgeLabel = 'Pending Audit';
+            statusBadge = '<span class="badge-pill badge-delayed"><i class="ph-bold ph-x"></i> Missing UTR</span>';
+            rowClass += ' bg-terracotta-500/[0.06]';
+        } else {
+            statusBadge = `<span class="badge-pill badge-delayed">${order.reconStatus}</span>`;
         }
 
-        const estMdr = (order.amount * 0.02).toFixed(2);
-        const estGst = (estMdr * 0.18).toFixed(2);
-        const fakeUtr = `UTR_HDFC_99${Math.abs((order.id || 1) * 13 % 90000)}`;
+        const expectedMdr = Number(order.amount * 0.02);
+        const actualMdr = (order.reconStatus === 'FEE_MISMATCH') ? Number(order.amount * 0.035) : expectedMdr;
+        const totalFeeTax = (actualMdr * 1.18).toFixed(2);
+        const utr = (order.reconStatus === 'DELAYED_SLA') ? '<span class="text-terracotta-400 font-mono">Pending SLA</span>' : `UTR_AXIS_${order.orderId.slice(-4)}`;
 
         return `
-            <tr class="hover:bg-[#1a2720] transition cursor-pointer group" onclick="inspectOrderDiff('${order.orderId}')">
+            <tr class="${rowClass}" onclick="openDiffDrawer('${order.orderId}')">
                 <td class="px-5 py-3.5">
-                    <div class="font-bold text-sand-100 group-hover:text-sand-300 transition font-mono">${order.orderId}</div>
-                    <div class="text-[11px] text-sand-200/60">${order.customerName || 'Customer'} &middot; <span class="text-sand-200/40">${order.customerEmail || ''}</span></div>
+                    <div class="font-bold text-sand-100">${order.orderId}</div>
+                    <div class="text-[11px] text-sand-200/60">${order.customerName} &middot; <span class="capitalize text-sand-300">${order.paymentMethod || 'UPI'}</span></div>
                 </td>
-                <td class="px-4 py-3.5 font-bold text-sand-100 font-mono">₹${order.amount.toFixed(2)}</td>
-                <td class="px-4 py-3.5">
-                    <span class="font-mono text-sand-300 text-[11px]">${order.paymentId || '<span class="text-sand-200/40">Unlinked</span>'}</span>
-                </td>
-                <td class="px-4 py-3.5 text-[11px] text-sand-200/70 font-mono">
-                    <div>Fee: <span class="text-sand-100 font-medium">₹${estMdr}</span></div>
-                    <div>GST: <span class="text-sand-100 font-medium">₹${estGst}</span></div>
-                </td>
-                <td class="px-4 py-3.5">
-                    <span class="font-mono text-[11px] text-jade-400 font-medium">${fakeUtr}</span>
-                </td>
-                <td class="px-4 py-3.5">
-                    <span class="badge-pill ${badgeClass}">${badgeLabel}</span>
-                </td>
+                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-4 py-3.5 font-mono text-sand-200/80">pay_RZP_${order.orderId.slice(-4)}</td>
+                <td class="px-4 py-3.5 font-mono text-sand-300">₹${totalFeeTax}</td>
+                <td class="px-4 py-3.5 font-mono text-xs text-jade-300">${utr}</td>
+                <td class="px-4 py-3.5">${statusBadge}</td>
                 <td class="px-5 py-3.5 text-right">
-                    <button onclick="event.stopPropagation(); inspectOrderDiff('${order.orderId}')" class="px-3 py-1.5 text-[11px] bg-[#131c17] hover:bg-sand-300 hover:text-[#131c17] text-sand-200 rounded-lg border border-[#2b3d32] transition font-bold">
-                        View ➔
+                    <button class="text-sand-300 hover:text-sand-100 font-semibold text-xs flex items-center space-x-1 ml-auto">
+                        <span>Check</span> <i class="ph-bold ph-caret-right"></i>
                     </button>
                 </td>
             </tr>
@@ -562,60 +526,382 @@ function renderOrdersTable(searchQuery = '') {
     }).join('');
 }
 
-// Side-Drawer Inspection
-window.inspectOrderDiff = function(orderId) {
+// =========================================================================
+// 8. MODULE 2: PAYROLL & EMPLOYEE SALARY DELAYS
+// =========================================================================
+async function fetchPayroll() {
+    try {
+        const [sumRes, empRes] = await Promise.all([
+            fetch('/api/payroll/summary'),
+            fetch('/api/payroll/employees')
+        ]);
+
+        if (sumRes.ok) {
+            const sumData = await sumRes.json();
+            updatePayrollDashboard(sumData);
+        }
+
+        if (empRes.ok) {
+            currentPayroll = await empRes.json();
+            renderPayrollTable();
+        }
+    } catch (e) {
+        console.error('Error fetching payroll:', e);
+    }
+}
+
+function updatePayrollDashboard(summary) {
+    if (!summary) return;
+    const setTxt = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+    };
+
+    setTxt('statGrossPayroll', `₹${(summary.totalGrossPayroll || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statTdsWithheld', `₹${(summary.totalTdsWithheld || 0).toLocaleString('en-IN')}`);
+    setTxt('statPfWithheld', `₹${(summary.totalPfWithheld || 0).toLocaleString('en-IN')}`);
+    setTxt('statTotalDisbursed', `₹${(summary.totalDisbursed || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statDisbursedEmpCount', `${summary.disbursedCount} of ${summary.totalEmployees} Transferred`);
+    setTxt('statDelayedSalaryAmount', `₹${(summary.totalDelayedAmount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statDelayedEmpCount', `${summary.delayedCount} employees overdue`);
+    setTxt('statPendingSalaryAmount', `₹${(summary.totalPendingAmount || 0).toLocaleString('en-IN')}`);
+    setTxt('statEmpCount', `${summary.totalEmployees} Employees Listed`);
+}
+
+function renderPayrollTable() {
+    const tbody = document.getElementById('payrollTableBody');
+    if (!tbody) return;
+
+    if (currentPayroll.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sand-200/50">No payroll records found.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = currentPayroll.map(emp => {
+        let statusBadge = '';
+        let actionBtn = '';
+
+        if (emp.status === 'DISBURSED') {
+            statusBadge = `<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check-circle"></i> Transferred (1st Aug)</span>`;
+            actionBtn = `<span class="text-jade-400 font-mono text-[11px]">${emp.bankUtr}</span>`;
+        } else if (emp.status === 'DELAYED') {
+            statusBadge = `<span class="badge-pill badge-delayed"><i class="ph-bold ph-warning"></i> Delayed (${emp.delayDays}d SLA Breach)</span>`;
+            actionBtn = `
+                <div class="flex items-center justify-end space-x-1.5">
+                    <button onclick="disburseSalary('${emp.empId}')" class="px-2.5 py-1 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-lg font-bold text-[11px] shadow-sm">
+                        Disburse
+                    </button>
+                    <button onclick="openSalaryNoticeModal()" class="px-2.5 py-1 bg-terracotta-500/15 hover:bg-terracotta-500/25 text-terracotta-400 border border-terracotta-500/30 rounded-lg font-semibold text-[11px]">
+                        Notice
+                    </button>
+                </div>
+            `;
+        } else {
+            statusBadge = `<span class="badge-pill badge-fee-mismatch"><i class="ph-bold ph-hourglass"></i> Pending Clearance</span>`;
+            actionBtn = `
+                <button onclick="disburseSalary('${emp.empId}')" class="px-2.5 py-1 bg-sand-300/20 hover:bg-sand-300/30 text-sand-300 border border-sand-300/35 rounded-lg font-bold text-[11px]">
+                    Verify & Pay
+                </button>
+            `;
+        }
+
+        return `
+            <tr class="hover:bg-[#16221b] transition ${emp.status === 'DELAYED' ? 'bg-terracotta-500/[0.04]' : ''}">
+                <td class="px-5 py-3.5">
+                    <div class="font-bold text-sand-100">${emp.name}</div>
+                    <div class="text-[11px] text-sand-200/60">${emp.role} &middot; <span class="font-mono text-sand-300">${emp.empId}</span></div>
+                </td>
+                <td class="px-4 py-3.5 text-sand-200">${emp.department}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${emp.grossSalary.toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono text-xs text-sand-300">
+                    TDS: ₹${emp.tdsDeduction.toLocaleString('en-IN')} | PF: ₹${emp.pfDeduction.toLocaleString('en-IN')}
+                </td>
+                <td class="px-4 py-3.5 font-mono font-bold text-jade-300">₹${emp.netPayable.toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5">${statusBadge}</td>
+                <td class="px-5 py-3.5 text-right">${actionBtn}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+window.disburseSalary = async function(empId) {
+    try {
+        const res = await fetch('/api/payroll/disburse', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ empId })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            alert(data.message);
+            fetchPayroll();
+            fetchCashFlow();
+        }
+    } catch (e) {
+        console.error('Error disbursing salary:', e);
+    }
+};
+
+window.openDisburseAllModal = async function() {
+    const delayed = currentPayroll.filter(e => e.status === 'DELAYED' || e.status === 'PENDING_CLEARANCE');
+    if (delayed.length === 0) {
+        alert('All employee salaries for August have already been disbursed!');
+        return;
+    }
+    for (const emp of delayed) {
+        await fetch('/api/payroll/disburse', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ empId: emp.empId })
+        });
+    }
+    alert(`Successfully disbursed ${delayed.length} delayed employee salaries via Instant Bank IMPS!`);
+    fetchPayroll();
+    fetchCashFlow();
+};
+
+window.openSalaryNoticeModal = function() {
+    document.getElementById('salaryNoticeModal').classList.remove('hidden');
+};
+
+window.copySalaryNotice = function() {
+    navigator.clipboard.writeText(`Subject: Important Update: August 2026 Salary Disbursement Schedule\n\nDear Team Members,\n\nWe would like to inform you that your August 2026 salary disbursement is undergoing final bank nodal batch clearance and will be credited to your registered bank account by tomorrow 3:00 PM with direct IMPS UTR confirmation.\n\nWarm regards,\nPayroll & Finance Desk\nZenith Retail India Pvt Ltd`);
+    alert('AI Salary Delay Notification copied to clipboard!');
+};
+
+// =========================================================================
+// 9. MODULE 3: VENDOR BILLS & MSME SECTION 43B(h) AP
+// =========================================================================
+async function fetchVendors() {
+    try {
+        const [sumRes, billRes] = await Promise.all([
+            fetch('/api/vendors/summary'),
+            fetch('/api/vendors/bills')
+        ]);
+
+        if (sumRes.ok) {
+            const sumData = await sumRes.json();
+            updateVendorDashboard(sumData);
+        }
+
+        if (billRes.ok) {
+            currentVendors = await billRes.json();
+            renderVendorsTable();
+        }
+    } catch (e) {
+        console.error('Error fetching vendor bills:', e);
+    }
+}
+
+function updateVendorDashboard(summary) {
+    if (!summary) return;
+    const setTxt = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+    };
+
+    setTxt('statVendBillCount', `${summary.totalBills} Invoices Audited`);
+    setTxt('statVendTotalInvoiced', `₹${(summary.totalInvoiced || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statVendGstItc', `₹${(summary.totalGstItc || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statVendTds', `₹${(summary.totalTdsDeducted || 0).toLocaleString('en-IN')}`);
+    setTxt('statVendTotalPaid', `₹${(summary.totalPaid || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statVendPaidCount', `${summary.paidCount} Invoices Settled`);
+    setTxt('statVendPendingAmount', `₹${((summary.totalInvoiced || 0) - (summary.totalPaid || 0)).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('statVendUrgentCount', `${summary.msmeUrgentBillsCount} MSME Bill Due in 2 Days`);
+}
+
+function renderVendorsTable() {
+    const tbody = document.getElementById('vendorsTableBody');
+    if (!tbody) return;
+
+    if (currentVendors.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sand-200/50">No vendor invoices found.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = currentVendors.map(v => {
+        let agingBadge = '';
+        let actionBtn = '';
+
+        if (v.paymentStatus === 'PAID') {
+            agingBadge = `<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check"></i> Paid (UTR Matched)</span>`;
+            actionBtn = `<span class="text-jade-400 font-mono text-[11px]">${v.bankUtr}</span>`;
+        } else if (v.paymentStatus === 'CRITICAL_MSME' || v.msmeDaysRemaining <= 2) {
+            agingBadge = `<span class="badge-pill bg-terracotta-500/20 text-terracotta-400 border border-terracotta-500/40"><i class="ph-bold ph-warning"></i> 2 Days Left (Sec 43B-h)</span>`;
+            actionBtn = `
+                <button onclick="payVendorBill('${v.billId}')" class="px-3 py-1 bg-gradient-to-r from-terracotta-500 to-sand-400 hover:from-terracotta-400 hover:to-sand-300 text-[#131c17] rounded-lg font-bold text-[11px] shadow-sm">
+                    Clear Bill ➔
+                </button>
+            `;
+        } else if (v.msmeDaysRemaining <= 10) {
+            agingBadge = `<span class="badge-pill bg-sand-300/20 text-sand-300 border border-sand-300/40"><i class="ph-bold ph-clock"></i> ${v.msmeDaysRemaining} Days (MSME)</span>`;
+            actionBtn = `
+                <button onclick="payVendorBill('${v.billId}')" class="px-3 py-1 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-lg font-bold text-[11px] shadow-sm">
+                    Pay Now
+                </button>
+            `;
+        } else {
+            agingBadge = `<span class="badge-pill bg-sand-200/10 text-sand-200 border border-sand-200/20">${v.paymentStatus}</span>`;
+            actionBtn = `
+                <button onclick="payVendorBill('${v.billId}')" class="px-3 py-1 bg-sand-300/20 hover:bg-sand-300/30 text-sand-300 border border-sand-300/30 rounded-lg font-bold text-[11px]">
+                    Pay
+                </button>
+            `;
+        }
+
+        return `
+            <tr class="hover:bg-[#16221b] transition ${v.paymentStatus === 'CRITICAL_MSME' ? 'bg-terracotta-500/[0.04]' : ''}">
+                <td class="px-5 py-3.5">
+                    <div class="font-bold text-sand-100">${v.vendorName} ${v.isMsme ? '<span class="px-1.5 py-0.2 bg-sand-300/20 text-sand-300 border border-sand-300/30 rounded text-[9px] font-bold uppercase font-mono">MSME</span>' : ''}</div>
+                    <div class="text-[11px] text-sand-200/60">${v.category} &middot; <span class="font-mono text-sand-200/70">${v.gstin}</span></div>
+                </td>
+                <td class="px-4 py-3.5">
+                    <div class="font-mono text-sand-100">${v.invoiceNo}</div>
+                    <div class="text-[11px] text-sand-200/60">Due: ${v.dueDate}</div>
+                </td>
+                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${v.amount.toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono text-xs text-jade-300">₹${Number(v.gstAmount).toFixed(2)}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-sand-300">₹${v.netPayable.toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5">${agingBadge}</td>
+                <td class="px-5 py-3.5 text-right">${actionBtn}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+window.payVendorBill = async function(billId) {
+    try {
+        const res = await fetch('/api/vendors/pay', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ billId })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            alert(data.message);
+            fetchVendors();
+            fetchCashFlow();
+        }
+    } catch (e) {
+        console.error('Error paying vendor bill:', e);
+    }
+};
+
+// =========================================================================
+// 10. MODULE 4: CASH FLOW & TAX COMPASS
+// =========================================================================
+async function fetchCashFlow() {
+    try {
+        const res = await fetch('/api/cashflow/summary');
+        if (!res.ok) return;
+        currentCashFlow = await res.json();
+        updateCashFlowDashboard(currentCashFlow);
+    } catch (e) {
+        console.error('Error fetching cash flow:', e);
+    }
+}
+
+function updateCashFlowDashboard(cf) {
+    if (!cf) return;
+    const setTxt = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+    };
+
+    setTxt('cfInflow', `₹${(cf.totalInflow || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('cfOutflow', `₹${(cf.totalOutflow || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('cfRunway', `${cf.estimatedRunwayMonths} Months`);
+    setTxt('cfGstItc', `₹${(cf.availableGstItc || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('cfNetCash', `₹${(cf.netCashFlow || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })} Net Deposited`);
+}
+
+// =========================================================================
+// 11. BATCHES & DISPUTE GENERATOR
+// =========================================================================
+async function fetchBatchesList() {
+    try {
+        const res = await fetch('/api/recon/batches');
+        if (!res.ok) return;
+        const batches = await res.json();
+        const container = document.getElementById('batchesListContainer');
+        if (!container) return;
+
+        if (batches.length === 0) {
+            container.innerHTML = `<span class="text-xs text-sand-200/50">Upload any CSV file above to create a dedicated audit tab</span>`;
+            return;
+        }
+
+        container.innerHTML = batches.map(b => `
+            <a href="/report.html?batchId=${b.batchId}" target="_blank" class="px-3 py-1.5 rounded-xl bg-[#16221b] hover:bg-[#1a2720] border border-[#2b3d32] hover:border-sand-300 text-xs text-sand-200 transition flex items-center space-x-2 shadow-sm">
+                <i class="ph-bold ph-file-csv text-sand-300"></i>
+                <span class="font-bold">${b.fileName}</span>
+                <span class="text-jade-400 font-mono font-bold">(${b.totalOrders} Orders)</span>
+                <i class="ph ph-arrow-square-out text-sand-200/50"></i>
+            </a>
+        `).join('');
+    } catch (e) {
+        console.error('Error fetching batches:', e);
+    }
+}
+
+async function openDisputeModal() {
+    try {
+        const res = await fetch('/api/recon/discrepancies/export-email');
+        if (!res.ok) return;
+        const data = await res.json();
+        document.getElementById('dispEmailBody').textContent = data.emailBody;
+        document.getElementById('dispTotalAmount').textContent = `₹${data.totalDisputedAmount}`;
+        document.getElementById('disputeModal').classList.remove('hidden');
+    } catch (e) {
+        console.error('Error opening dispute modal', e);
+    }
+}
+
+function copyDisputeToClipboard() {
+    const text = document.getElementById('dispEmailBody').textContent;
+    navigator.clipboard.writeText(text);
+    alert('Razorpay Dispute Letter copied to clipboard!');
+}
+
+// Side Drawer for Reconciliation Row Inspection
+window.openDiffDrawer = function(orderId) {
     const order = currentOrders.find(o => o.orderId === orderId);
     if (!order) return;
 
-    activeDrawerOrder = order;
-    const discrepancy = currentDiscrepancies.find(d => d.orderId === orderId);
+    document.getElementById('drawerOrderId').textContent = `Order: ${order.orderId} (${order.customerName})`;
+    document.getElementById('drawerCustomer').textContent = order.customerName;
+    document.getElementById('drawerStoreAmount').textContent = `₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+    document.getElementById('drawerPaymentId').textContent = `pay_RZP_${order.orderId.slice(-4)}`;
 
-    document.getElementById('drawerOrderId').textContent = `Checking Order: ${order.orderId}`;
-    document.getElementById('drawerCustomer').textContent = `${order.customerName || 'Customer'} (${order.customerEmail || 'N/A'})`;
-    document.getElementById('drawerStoreAmount').textContent = `₹${order.amount.toFixed(2)}`;
+    const expectedMdr = Number(order.amount * 0.02);
+    const actualMdr = (order.reconStatus === 'FEE_MISMATCH') ? Number(order.amount * 0.035) : expectedMdr;
+    const actualTax = Number(actualMdr * 0.18);
+    const netPayout = Number(order.amount - (actualMdr + actualTax));
 
-    document.getElementById('drawerPaymentId').textContent = order.paymentId || 'pay_RZP_UNLINKED';
+    document.getElementById('drawerRzpFee').textContent = `₹${actualMdr.toFixed(2)}`;
+    document.getElementById('drawerRzpTax').textContent = `₹${actualTax.toFixed(2)}`;
+    document.getElementById('drawerRzpNet').textContent = `₹${netPayout.toFixed(2)}`;
 
-    let mdr = (order.amount * 0.02);
-    let gst = (mdr * 0.18);
-    let net = order.amount - mdr - gst;
+    const utr = (order.reconStatus === 'DELAYED_SLA') ? 'Pending SLA' : `UTR_AXIS_${order.orderId.slice(-4)}`;
+    document.getElementById('drawerBankUtr').textContent = utr;
+    document.getElementById('drawerBankCredit').textContent = (order.reconStatus === 'DELAYED_SLA' || order.reconStatus === 'MISSING_BANK_CREDIT') ? '₹0.00 (Uncredited)' : `₹${netPayout.toFixed(2)}`;
 
-    if (discrepancy && discrepancy.type === 'MDR_FEE_OVERCHARGE') {
-        mdr = discrepancy.actualAmount;
-        gst = mdr * 0.18;
-        net = order.amount - mdr - gst;
+    let rootCause = 'Transaction fully reconciled against Razorpay settlement report and bank statement.';
+    let action = 'No further action required. Payout safe and matched.';
+
+    if (order.reconStatus === 'FEE_MISMATCH') {
+        rootCause = `MDR Fee charged (₹${actualMdr.toFixed(2)}) exceeds contracted 2.0% rate (₹${expectedMdr.toFixed(2)}).`;
+        action = 'Claim ₹' + (actualMdr - expectedMdr).toFixed(2) + ' overcharge refund in Dispute Room.';
+    } else if (order.reconStatus === 'DELAYED_SLA') {
+        rootCause = 'Payment captured 5 days ago, breaching standard T+2 settlement SLA.';
+        action = 'Escalate with Razorpay nodal banking support.';
+    } else if (order.reconStatus === 'MISSING_BANK_CREDIT') {
+        rootCause = 'Razorpay marked payout complete, but bank statement does not show credit.';
+        action = 'Trace reference UTR with Nodal bank desk.';
     }
 
-    document.getElementById('drawerRzpFee').textContent = `₹${Number(mdr).toFixed(2)}`;
-    document.getElementById('drawerRzpTax').textContent = `₹${Number(gst).toFixed(2)}`;
-    document.getElementById('drawerRzpNet').textContent = `₹${Number(net).toFixed(2)}`;
-
-    const bankUtr = discrepancy && discrepancy.bankUtr ? discrepancy.bankUtr : `UTR_HDFC_99${Math.abs(order.id * 13 % 90000)}`;
-    document.getElementById('drawerBankUtr').textContent = bankUtr;
-    document.getElementById('drawerBankCredit').textContent = (order.reconStatus === 'MISSING_BANK_CREDIT') ? '₹0.00 (Not Credited)' : `₹${Number(net).toFixed(2)}`;
-
-    const banner = document.getElementById('drawerStatusBanner');
-    const statusText = document.getElementById('drawerStatusText');
-    const sevBadge = document.getElementById('drawerSeverityBadge');
-    const rootCause = document.getElementById('drawerRootCause');
-    const suggestedAction = document.getElementById('drawerSuggestedAction');
-
-    if (discrepancy) {
-        banner.className = 'p-3.5 rounded-xl border border-sand-300/30 bg-sand-300/10 text-sand-300 flex items-center justify-between';
-        statusText.textContent = `Alert: ${discrepancy.type.replace(/_/g, ' ')}`;
-        sevBadge.className = 'badge-pill badge-delayed font-mono';
-        sevBadge.textContent = discrepancy.severity;
-        rootCause.textContent = discrepancy.rootCause;
-        suggestedAction.textContent = discrepancy.suggestedAction;
-    } else {
-        banner.className = 'p-3.5 rounded-xl border border-jade-500/30 bg-jade-500/10 text-jade-300 flex items-center justify-between';
-        statusText.textContent = '100% Reconciled and Credited in Bank';
-        sevBadge.className = 'badge-pill badge-reconciled font-mono';
-        sevBadge.textContent = 'VERIFIED SAFE';
-        rootCause.textContent = 'Correct 2.0% MDR + 18% GST deducted. Full net payout received in bank account under UTR reference.';
-        suggestedAction.textContent = 'No action needed. Everything matches your books.';
-    }
-
+    document.getElementById('drawerRootCause').textContent = rootCause;
+    document.getElementById('drawerSuggestedAction').textContent = action;
     document.getElementById('diffDrawer').classList.remove('hidden');
 };
 
@@ -624,273 +910,123 @@ window.closeDiffDrawer = function() {
 };
 
 window.askCopilotForDrawerOrder = function() {
-    if (activeDrawerOrder) {
-        closeDiffDrawer();
-        sendChatMessage(`Explain why order ${activeDrawerOrder.orderId} was processed this way and if there is any fee mistake.`);
-    }
+    closeDiffDrawer();
+    toggleFloatingChat();
+    sendChatMessage('Please explain the variance on ' + document.getElementById('drawerOrderId').textContent);
 };
 
-// Handle Simulation Submit
+// =========================================================================
+// 12. MULTI-DOMAIN AI MUNIMJI CHAT
+// =========================================================================
+async function sendChatMessage(query) {
+    const container = document.getElementById('chatMessages');
+    
+    // User message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'bg-sand-300 text-[#131c17] rounded-2xl p-3 text-xs font-semibold self-end ml-auto max-w-[85%] shadow-sm';
+    userMsg.textContent = query;
+    container.appendChild(userMsg);
+
+    // AI typing indicator
+    const typing = document.createElement('div');
+    typing.className = 'bg-[#131c17] border border-[#22332a] rounded-2xl p-3 text-xs text-sand-200 font-mono animate-pulse';
+    typing.textContent = 'AI Munimji is analyzing accounts across Gateway, Payroll & Vendors...';
+    container.appendChild(typing);
+    container.scrollTop = container.scrollHeight;
+
+    try {
+        const res = await fetch('/api/chat/query', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: query })
+        });
+        const data = await res.json();
+        typing.remove();
+
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'bg-[#131c17] border border-[#22332a] rounded-2xl p-3.5 text-xs text-sand-200 leading-relaxed shadow-sm whitespace-pre-wrap';
+        aiMsg.innerHTML = data.reply.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+        container.appendChild(aiMsg);
+        container.scrollTop = container.scrollHeight;
+    } catch (e) {
+        typing.remove();
+        const errMsg = document.createElement('div');
+        errMsg.className = 'bg-terracotta-500/20 text-terracotta-400 p-3 rounded-xl text-xs';
+        errMsg.textContent = 'Error querying AI Munimji. Please try again.';
+        container.appendChild(errMsg);
+    }
+}
+
+// Ingestion & Simulation Handlers
+async function loadDemoData() {
+    try {
+        const res = await fetch('/api/ingest/demo', { method: 'POST' });
+        if (res.ok) {
+            alert('Live demo data reset across Gateway Settlements, Payroll & Vendor AP!');
+            fetchSummary();
+            fetchOrders();
+            fetchDiscrepancies();
+            fetchPayroll();
+            fetchVendors();
+            fetchCashFlow();
+        }
+    } catch (e) {
+        console.error('Error loading demo:', e);
+    }
+}
+
 async function handleSimulateTransaction(e) {
     e.preventDefault();
-    const customerName = document.getElementById('simCustomer').value.trim();
+    const customerName = document.getElementById('simCustomer').value;
     const amount = document.getElementById('simAmount').value;
-    const paymentMethod = document.getElementById('simMethod').value;
+    const method = document.getElementById('simMethod').value;
     const scenario = document.getElementById('simScenario').value;
 
     try {
         const res = await fetch('/api/ingest/simulate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ customerName, amount, paymentMethod, scenario })
+            body: JSON.stringify({ customerName, amount, method, scenario })
         });
-        const summary = await res.json();
-        updateDashboard(summary);
-        await fetchOrders();
-        await fetchDiscrepancies();
-
-        document.getElementById('simModal').classList.add('hidden');
-        sendChatMessage(`I just tested an order for ${customerName} (₹${amount}) with scenario: ${scenario}. Please explain the result!`);
-    } catch (err) {
-        alert('Simulation failed: ' + err.message);
-    }
-}
-
-// Load Demo Data
-async function loadDemoData() {
-    const btn = document.getElementById('btnLoadDemo');
-    btn.disabled = true;
-    btn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i> <span>Loading...</span>`;
-
-    try {
-        const res = await fetch('/api/ingest/demo', { method: 'POST' });
-        const summary = await res.json();
-        updateDashboard(summary);
-        await fetchOrders();
-        await fetchDiscrepancies();
-
-        sendChatMessage("Give me a simple summary of today's sales, fees, and bank deposits.");
-    } catch (err) {
-        console.error('Failed to load demo data:', err);
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = `<i class="ph-bold ph-sparkle text-sm"></i> <span>Seed Live Demo</span>`;
-    }
-}
-
-// Run Reconciliation
-async function runReconciliation() {
-    try {
-        const res = await fetch('/api/recon/run', { method: 'POST' });
-        const summary = await res.json();
-        updateDashboard(summary);
-        await fetchOrders();
-        await fetchDiscrepancies();
-    } catch (err) {
-        console.error('Failed to run recon:', err);
-    }
-}
-
-// Send Chat Message to AI Munimji
-async function sendChatMessage(text) {
-    const chatBox = document.getElementById('chatMessages');
-
-    // User message
-    const userDiv = document.createElement('div');
-    userDiv.className = 'bg-sand-300/15 border border-sand-300/30 rounded-xl p-3 text-sand-200 ml-4 font-semibold text-xs';
-    userDiv.innerHTML = `<b>You:</b> ${text}`;
-    chatBox.appendChild(userDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    // Loading
-    const loadingDiv = document.createElement('div');
-    loadingDiv.className = 'bg-[#131c17] border border-[#22332a] rounded-xl p-3 text-sand-200/60 text-xs flex items-center space-x-2';
-    loadingDiv.innerHTML = `<i class="ph-bold ph-shield-check text-sand-300 animate-spin"></i> <span>AI Munimji is checking your records...</span>`;
-    chatBox.appendChild(loadingDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    try {
-        const res = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text })
-        });
-        const data = await res.json();
-        chatBox.removeChild(loadingDiv);
-
-        // Render AI Message
-        const aiDiv = document.createElement('div');
-        aiDiv.className = 'bg-[#16221b] border border-[#22332a] rounded-xl p-3.5 text-sand-200 leading-relaxed text-xs space-y-2 shadow-sm';
-
-        let formattedReply = data.reply.replace(/\*\*(.*?)\*\*/g, '<b class="text-sand-100 font-bold">$1</b>');
-
-        let insightsHtml = '';
-        if (data.keyInsights && data.keyInsights.length > 0) {
-            insightsHtml = `<div class="pt-2 border-t border-[#22332a] text-sand-200/70">
-                <div class="font-bold text-[11px] text-jade-400 mb-1 flex items-center space-x-1">
-                    <i class="ph-bold ph-check-circle"></i>
-                    <span>Key Takeaways:</span>
-                </div>
-                <ul class="list-disc list-inside space-y-0.5 text-[11px] text-sand-200/70">
-                    ${data.keyInsights.map(i => `<li>${i}</li>`).join('')}
-                </ul>
-            </div>`;
+        if (res.ok) {
+            document.getElementById('simModal').classList.add('hidden');
+            alert('Simulated payment processed! Audit ledger updated.');
+            fetchSummary();
+            fetchOrders();
+            fetchDiscrepancies();
+            fetchCashFlow();
         }
-
-        let actionsHtml = '';
-        if (data.recommendedActions && data.recommendedActions.length > 0) {
-            actionsHtml = `<div class="pt-2 border-t border-[#22332a]">
-                <div class="font-bold text-[11px] text-sand-300 mb-1 flex items-center space-x-1">
-                    <i class="ph-bold ph-lightning"></i>
-                    <span>Recommended Next Steps:</span>
-                </div>
-                <ul class="list-disc list-inside space-y-0.5 text-[11px] text-sand-200">
-                    ${data.recommendedActions.map(a => `<li>${a}</li>`).join('')}
-                </ul>
-            </div>`;
-        }
-
-        let disputeButtonHtml = '';
-        if (data.disputeDraftAvailable) {
-            disputeButtonHtml = `<div class="pt-2">
-                <button onclick="openDisputeModal()" class="px-3.5 py-1.5 bg-gradient-to-r from-sand-400 to-sand-300 hover:from-sand-300 hover:to-sand-200 text-[#131c17] font-bold rounded-xl text-xs transition flex items-center space-x-1.5 shadow-sm">
-                    <i class="ph-bold ph-file-text"></i>
-                    <span>View & Copy Dispute Letter</span>
-                </button>
-            </div>`;
-        }
-
-        aiDiv.innerHTML = `<div>${formattedReply}</div>${insightsHtml}${actionsHtml}${disputeButtonHtml}`;
-        chatBox.appendChild(aiDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-    } catch (err) {
-        chatBox.removeChild(loadingDiv);
-        const errDiv = document.createElement('div');
-        errDiv.className = 'bg-terracotta-500/20 border border-terracotta-500/30 rounded-xl p-3 text-terracotta-400 text-xs';
-        errDiv.textContent = 'Error connecting to AI Munimji.';
-        chatBox.appendChild(errDiv);
+    } catch (e) {
+        console.error('Error simulating:', e);
     }
 }
 
-// Open Dispute Modal
-async function openDisputeModal() {
-    try {
-        const res = await fetch('/api/chat/dispute-draft');
-        if (!res.ok) return;
-        const draft = await res.json();
-
-        document.getElementById('dispTotalAmount').textContent = `₹${draft.totalDisputedAmount.toFixed(2)}`;
-        document.getElementById('dispEmailBody').textContent = draft.emailBody;
-
-        document.getElementById('disputeModal').classList.remove('hidden');
-    } catch (err) {
-        console.error('Failed to get dispute draft:', err);
-    }
-}
-
-// Copy Dispute to Clipboard
-function copyDisputeToClipboard() {
-    const text = document.getElementById('dispEmailBody').textContent;
-    navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('btnCopyDispute');
-        btn.innerHTML = `<i class="ph-bold ph-check"></i> <span>Copied to Clipboard!</span>`;
-        setTimeout(() => {
-            btn.innerHTML = `<span>Copy Letter</span>`;
-        }, 2000);
-    });
-}
-
-// Handle CSV File Upload
 async function handleCsvUpload(e) {
     e.preventDefault();
     const fileInput = document.getElementById('csvFileInput');
-    const submitBtn = document.getElementById('btnSubmitUpload');
-    
     if (!fileInput.files || fileInput.files.length === 0) {
-        alert('Please select a CSV file first.');
+        alert('Please choose a CSV file to upload.');
         return;
     }
 
-    const file = fileInput.files[0];
     const formData = new FormData();
-    formData.append('file', file);
-
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i> <span>Processing CSV...</span>`;
+    formData.append('file', fileInput.files[0]);
 
     try {
         const res = await fetch('/api/ingest/upload-orders', {
             method: 'POST',
             body: formData
         });
-        
-        const result = await res.json();
-        
-        if (!res.ok) {
-            throw new Error(result.error || 'Failed to parse CSV file.');
+        if (res.ok) {
+            const data = await res.json();
+            document.getElementById('uploadModal').classList.add('hidden');
+            alert(`File parsed! Opening audit report in a new tab...`);
+            window.open(data.reportUrl, '_blank');
+            fetchBatchesList();
+            fetchSummary();
+            fetchOrders();
         }
-
-        document.getElementById('uploadModal').classList.add('hidden');
-        fileInput.value = '';
-        document.getElementById('selectedFileName').textContent = '';
-
-        if (result.summary) {
-            updateDashboard(result.summary);
-        } else {
-            await fetchSummary();
-        }
-
-        await fetchOrders();
-        await fetchDiscrepancies();
-
-        // Open dedicated report in a new tab/window
-        if (result.reportUrl) {
-            window.open(result.reportUrl, '_blank');
-        }
-
-        // Trigger AI Munimji message
-        sendChatMessage(`We just ingested and audited ${result.count || ''} records from "${file.name}" (Total Gross: ₹${result.totalGross ? result.totalGross.toFixed(2) : '0.00'}). A dedicated audit report has been opened in a new tab!`);
-
-        fetchBatches();
-
-    } catch (err) {
-        alert('CSV Upload Error: ' + err.message);
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = `<span>Upload & Audit Live</span>`;
-    }
-}
-
-// Fetch all uploaded batches
-async function fetchBatches() {
-    try {
-        const res = await fetch('/api/recon/batches');
-        if (!res.ok) return;
-        const batches = await res.json();
-        renderBatchesList(batches);
     } catch (e) {
-        console.error('Error fetching batches:', e);
+        console.error('Error uploading CSV:', e);
     }
 }
-
-function renderBatchesList(batches) {
-    const listEl = document.getElementById('batchesListContainer');
-    if (!listEl) return;
-
-    if (!batches || batches.length === 0) {
-        listEl.innerHTML = `<span class="text-xs text-sand-200/50">No uploaded batch files yet.</span>`;
-        return;
-    }
-
-    listEl.innerHTML = batches.map(b => `
-        <a href="/report.html?batchId=${b.batchId}" target="_blank" class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#16221b] hover:bg-[#22332a] border border-[#2b3d32] text-xs text-sand-200 transition font-medium">
-            <i class="ph-bold ph-file-csv text-sand-300"></i>
-            <span>${b.fileName}</span>
-            <span class="text-[10px] text-jade-400 font-mono">(${b.totalOrders} ord)</span>
-            <i class="ph-bold ph-arrow-square-out text-sand-200/50 text-[11px]"></i>
-        </a>
-    `).join('');
-}
-
-

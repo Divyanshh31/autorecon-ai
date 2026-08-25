@@ -1,5 +1,5 @@
-// AutoRecon AI — Vercel Serverless API Engine
-// Zero-dependency Node.js serverless handler providing full 3-Way Reconciliation, MDR audit & Gemini AI Copilot
+// AutoRecon AI — All-in-One Autonomous Accounting & Financial Operations OS
+// Full Multi-Tasking Engine: Gateway Recon, Payroll & Salary Delays, Vendor AP & MSME 43B(h), Cash Flow & AI Munimji
 
 const url = require('url');
 const https = require('https');
@@ -9,7 +9,7 @@ const CONTRACT_MDR_RATE = 0.02; // 2.0%
 const GST_RATE = 0.18; // 18% on MDR
 const SLA_DAYS = 2; // T+2
 
-// In-Memory Global Datastore for Vercel Serverless
+// In-Memory Global Datastores
 let databaseInitialized = false;
 let globalOrders = [];
 let globalSettlements = [];
@@ -17,7 +17,11 @@ let globalBankTransactions = [];
 let globalDiscrepancies = [];
 let globalBatches = [];
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
+// NEW: Payroll Dataset
+let globalPayrollEmployees = [];
+
+// NEW: Vendor Bills Dataset
+let globalVendorBills = [];
 
 function initDemoData() {
     globalOrders = [];
@@ -26,6 +30,7 @@ function initDemoData() {
     globalDiscrepancies = [];
     globalBatches = [];
 
+    // 1. RECONCILIATION ORDERS DATA (35 Records)
     const customerNames = [
         "Aarav Patel", "Diya Sharma", "Vikram Malhotra", "Ananya Iyer", "Rohan Gupta",
         "Pooja Deshmukh", "Karan Verma", "Neha Kapoor", "Aditya Joshi", "Ishita Sen",
@@ -69,9 +74,8 @@ function initDemoData() {
         let actualMdr = expectedMdr;
         let actualTax = Number((expectedMdr * GST_RATE).toFixed(2));
 
-        // Anomaly 1: MDR Overcharge on Order 4
         if (i === 4) {
-            actualMdr = Number((amount * 0.035).toFixed(2)); // 3.5% instead of 2.0%
+            actualMdr = Number((amount * 0.035).toFixed(2)); // 3.5%
             actualTax = Number((actualMdr * GST_RATE).toFixed(2));
             order.reconStatus = 'FEE_MISMATCH';
         }
@@ -80,17 +84,8 @@ function initDemoData() {
         const settlementId = (i === 11) ? '' : `setl_BATCH_${String(Math.floor((i - 1) / 7) + 1).padStart(2, '0')}`;
         const utr = (i === 11) ? '' : (i === 18 ? 'UTR_MISSING_991827' : `UTR_${(i % 2 === 0) ? 'HDFC' : 'KOTAK'}_${9000000 + i}`);
 
-        // Anomaly 2: Delayed SLA on Order 11
-        if (i === 11) {
-            order.reconStatus = 'DELAYED_SLA';
-        }
-
-        // Anomaly 3: Missing Bank Credit on Order 18
-        if (i === 18) {
-            order.reconStatus = 'MISSING_BANK_CREDIT';
-        }
-
-        // Anomaly 4: Amount mismatch on Order 25
+        if (i === 11) order.reconStatus = 'DELAYED_SLA';
+        if (i === 18) order.reconStatus = 'MISSING_BANK_CREDIT';
         if (i === 25) {
             order.amount = amount + 500;
             order.reconStatus = 'AMOUNT_MISMATCH';
@@ -112,7 +107,6 @@ function initDemoData() {
         globalOrders.push(order);
         globalSettlements.push(settlement);
 
-        // Bank transaction exists unless missing
         if (i !== 11 && i !== 18) {
             globalBankTransactions.push({
                 utr,
@@ -125,7 +119,7 @@ function initDemoData() {
         }
     }
 
-    // Generate Discrepancies
+    // Discrepancies
     globalDiscrepancies = [
         {
             id: 1,
@@ -197,10 +191,237 @@ function initDemoData() {
         }
     ];
 
+    // 2. PAYROLL & EMPLOYEE SALARY DATA (12 Employees with Salary Delay tracking)
+    globalPayrollEmployees = [
+        {
+            empId: 'EMP_101',
+            name: 'Vikram Sengupta',
+            role: 'Lead Fullstack Engineer',
+            department: 'Engineering',
+            grossSalary: 145000,
+            tdsDeduction: 14500, // 10% TDS Sec 192
+            pfDeduction: 3600,
+            netPayable: 126900,
+            dueDate: '01-Aug-2026',
+            disbursedDate: '01-Aug-2026',
+            bankUtr: 'SAL_HDFC_992101',
+            bankAccount: 'HDFC Bank (•••• 4192)',
+            status: 'DISBURSED', // Paid on time
+            delayDays: 0
+        },
+        {
+            empId: 'EMP_102',
+            name: 'Pooja Kashyap',
+            role: 'Product Designer (UI/UX)',
+            department: 'Design',
+            grossSalary: 95000,
+            tdsDeduction: 9500,
+            pfDeduction: 2400,
+            netPayable: 83100,
+            dueDate: '01-Aug-2026',
+            disbursedDate: '01-Aug-2026',
+            bankUtr: 'SAL_ICICI_992102',
+            bankAccount: 'ICICI Bank (•••• 8821)',
+            status: 'DISBURSED',
+            delayDays: 0
+        },
+        {
+            empId: 'EMP_103',
+            name: 'Rahul Deshmukh',
+            role: 'Operations & Store Manager',
+            department: 'Operations',
+            grossSalary: 65000,
+            tdsDeduction: 4500,
+            pfDeduction: 1800,
+            netPayable: 58700,
+            dueDate: '01-Aug-2026',
+            disbursedDate: null,
+            bankUtr: null,
+            bankAccount: 'SBI Bank (•••• 1044)',
+            status: 'DELAYED', // Salary Delayed SLA Breach!
+            delayDays: 24
+        },
+        {
+            empId: 'EMP_104',
+            name: 'Ananya Raghavan',
+            role: 'Performance Marketing Lead',
+            department: 'Marketing',
+            grossSalary: 110000,
+            tdsDeduction: 11000,
+            pfDeduction: 2800,
+            netPayable: 96200,
+            dueDate: '01-Aug-2026',
+            disbursedDate: '03-Aug-2026',
+            bankUtr: 'SAL_AXIS_992104',
+            bankAccount: 'Axis Bank (•••• 6732)',
+            status: 'DISBURSED',
+            delayDays: 0
+        },
+        {
+            empId: 'EMP_105',
+            name: 'Karan Malhotra',
+            role: 'Backend DevOps Engineer',
+            department: 'Engineering',
+            grossSalary: 125000,
+            tdsDeduction: 12500,
+            pfDeduction: 3200,
+            netPayable: 109300,
+            dueDate: '01-Aug-2026',
+            disbursedDate: null,
+            bankUtr: null,
+            bankAccount: 'Kotak Bank (•••• 5521)',
+            status: 'DELAYED', // Salary Delayed!
+            delayDays: 24
+        },
+        {
+            empId: 'EMP_106',
+            name: 'Sneha Chawla',
+            role: 'Customer Support Lead',
+            department: 'Support',
+            grossSalary: 45000,
+            tdsDeduction: 2000,
+            pfDeduction: 1800,
+            netPayable: 41200,
+            dueDate: '01-Aug-2026',
+            disbursedDate: '02-Aug-2026',
+            bankUtr: 'SAL_HDFC_992106',
+            bankAccount: 'HDFC Bank (•••• 9910)',
+            status: 'DISBURSED',
+            delayDays: 0
+        },
+        {
+            empId: 'EMP_107',
+            name: 'Aditya Srivastava',
+            role: 'Finance & Compliance Consultant',
+            department: 'Finance',
+            grossSalary: 75000,
+            tdsDeduction: 7500, // 10% 194J
+            pfDeduction: 0,
+            netPayable: 67500,
+            dueDate: '01-Aug-2026',
+            disbursedDate: null,
+            bankUtr: null,
+            bankAccount: 'ICICI Bank (•••• 3321)',
+            status: 'PENDING_CLEARANCE', // Bank verification pending
+            delayDays: 12
+        },
+        {
+            empId: 'EMP_108',
+            name: 'Rohan Mehra',
+            role: 'Warehouse Logistics Coordinator',
+            department: 'Logistics',
+            grossSalary: 38000,
+            tdsDeduction: 1500,
+            pfDeduction: 1800,
+            netPayable: 34700,
+            dueDate: '01-Aug-2026',
+            disbursedDate: '01-Aug-2026',
+            bankUtr: 'SAL_SBI_992108',
+            bankAccount: 'SBI Bank (•••• 7819)',
+            status: 'DISBURSED',
+            delayDays: 0
+        }
+    ];
+
+    // 3. VENDOR INVOICES & MSME SECTION 43B(h) DATA (8 Vendors)
+    globalVendorBills = [
+        {
+            billId: 'BILL_VEND_501',
+            vendorName: 'Apex Cloud Servers Pvt Ltd',
+            category: 'AWS Cloud Hosting',
+            gstin: '27AAACA9921A1Z5',
+            isMsme: false,
+            invoiceNo: 'INV-2026-8812',
+            invoiceDate: '10-Aug-2026',
+            dueDate: '25-Aug-2026',
+            amount: 28400,
+            gstAmount: 4332.20,
+            tdsRate: '2% 194C',
+            tdsAmount: 568,
+            netPayable: 27832,
+            paymentStatus: 'OVERDUE',
+            msmeDaysRemaining: -1,
+            bankUtr: null
+        },
+        {
+            billId: 'BILL_VEND_502',
+            vendorName: 'Shree Balaji Packaging Solutions',
+            category: 'Corrugated Boxes & Tape (MSME)',
+            gstin: '07AAACB1102B1Z8',
+            isMsme: true,
+            invoiceNo: 'BAL-PKG-409',
+            invoiceDate: '28-Jul-2026',
+            dueDate: '11-Sep-2026',
+            amount: 64200,
+            gstAmount: 9793.22,
+            tdsRate: '1% 194C',
+            tdsAmount: 642,
+            netPayable: 63558,
+            paymentStatus: 'DUE_SOON',
+            msmeDaysRemaining: 6, // Crucial MSME 45-day deadline!
+            bankUtr: null
+        },
+        {
+            billId: 'BILL_VEND_503',
+            vendorName: 'Delhivery Surface Logistics',
+            category: 'Courier & Freight',
+            gstin: '06AAACD9910D1Z2',
+            isMsme: false,
+            invoiceNo: 'DEL-LOG-99218',
+            invoiceDate: '01-Aug-2026',
+            dueDate: '15-Aug-2026',
+            amount: 42100,
+            gstAmount: 6422.03,
+            tdsRate: '2% 194C',
+            tdsAmount: 842,
+            netPayable: 41258,
+            paymentStatus: 'PAID',
+            msmeDaysRemaining: 21,
+            bankUtr: 'UTR_HDFC_VEND_99182'
+        },
+        {
+            billId: 'BILL_VEND_504',
+            vendorName: 'Zenith Legal & Tax Associates',
+            category: 'GST & Legal Audit',
+            gstin: '07AAACZ4421Z1Z0',
+            isMsme: true,
+            invoiceNo: 'ZEN-AUD-2026',
+            invoiceDate: '15-Jul-2026',
+            dueDate: '29-Aug-2026',
+            amount: 35000,
+            gstAmount: 5338.98,
+            tdsRate: '10% 194J',
+            tdsAmount: 3500,
+            netPayable: 31500,
+            paymentStatus: 'CRITICAL_MSME', // 45-day Sec 43B(h) SLA Breach alert!
+            msmeDaysRemaining: 2,
+            bankUtr: null
+        },
+        {
+            billId: 'BILL_VEND_505',
+            vendorName: 'Google Ads India Pvt Ltd',
+            category: 'Customer Acquisition',
+            gstin: '06AAACG8821G1Z1',
+            isMsme: false,
+            invoiceNo: 'GOOG-IN-90812',
+            invoiceDate: '05-Aug-2026',
+            dueDate: '19-Aug-2026',
+            amount: 50000,
+            gstAmount: 7627.12,
+            tdsRate: '2% 194C',
+            tdsAmount: 1000,
+            netPayable: 49000,
+            paymentStatus: 'PAID',
+            msmeDaysRemaining: 24,
+            bankUtr: 'UTR_KOTAK_VEND_88192'
+        }
+    ];
+
     databaseInitialized = true;
 }
 
-function calculateSummary(batchId = null) {
+// 1. RECONCILIATION SUMMARY
+function calculateReconSummary(batchId = null) {
     if (!databaseInitialized) initDemoData();
 
     const orders = batchId ? globalOrders.filter(o => o.batchId === batchId) : globalOrders;
@@ -241,11 +462,108 @@ function calculateSummary(batchId = null) {
     };
 }
 
-// Main Request Handler
+// 2. PAYROLL SUMMARY
+function calculatePayrollSummary() {
+    if (!databaseInitialized) initDemoData();
+
+    const totalEmployees = globalPayrollEmployees.length;
+    const totalGrossPayroll = globalPayrollEmployees.reduce((sum, e) => sum + e.grossSalary, 0);
+    const totalTdsWithheld = globalPayrollEmployees.reduce((sum, e) => sum + e.tdsDeduction, 0);
+    const totalPfWithheld = globalPayrollEmployees.reduce((sum, e) => sum + e.pfDeduction, 0);
+    const totalNetPayable = globalPayrollEmployees.reduce((sum, e) => sum + e.netPayable, 0);
+
+    const disbursed = globalPayrollEmployees.filter(e => e.status === 'DISBURSED');
+    const totalDisbursed = disbursed.reduce((sum, e) => sum + e.netPayable, 0);
+
+    const delayed = globalPayrollEmployees.filter(e => e.status === 'DELAYED');
+    const totalDelayedAmount = delayed.reduce((sum, e) => sum + e.netPayable, 0);
+
+    const pending = globalPayrollEmployees.filter(e => e.status === 'PENDING_CLEARANCE');
+    const totalPendingAmount = pending.reduce((sum, e) => sum + e.netPayable, 0);
+
+    return {
+        totalEmployees,
+        totalGrossPayroll,
+        totalTdsWithheld,
+        totalPfWithheld,
+        totalNetPayable,
+        totalDisbursed,
+        disbursedCount: disbursed.length,
+        totalDelayedAmount,
+        delayedCount: delayed.length,
+        totalPendingAmount,
+        pendingCount: pending.length,
+        payrollHealthScore: Number(((disbursed.length / totalEmployees) * 100).toFixed(1))
+    };
+}
+
+// 3. VENDOR BILLS SUMMARY
+function calculateVendorSummary() {
+    if (!databaseInitialized) initDemoData();
+
+    const totalBills = globalVendorBills.length;
+    const totalInvoiced = globalVendorBills.reduce((sum, v) => sum + v.amount, 0);
+    const totalGstItc = globalVendorBills.reduce((sum, v) => sum + v.gstAmount, 0);
+    const totalTdsDeducted = globalVendorBills.reduce((sum, v) => sum + v.tdsAmount, 0);
+
+    const paidBills = globalVendorBills.filter(v => v.paymentStatus === 'PAID');
+    const totalPaid = paidBills.reduce((sum, v) => sum + v.netPayable, 0);
+
+    const msmeUrgentBills = globalVendorBills.filter(v => v.isMsme && (v.paymentStatus === 'CRITICAL_MSME' || v.msmeDaysRemaining <= 10));
+    const msmeUrgentAmount = msmeUrgentBills.reduce((sum, v) => sum + v.netPayable, 0);
+
+    const overdueBills = globalVendorBills.filter(v => v.paymentStatus === 'OVERDUE');
+    const totalOverdue = overdueBills.reduce((sum, v) => sum + v.netPayable, 0);
+
+    return {
+        totalBills,
+        totalInvoiced,
+        totalGstItc: Number(totalGstItc.toFixed(2)),
+        totalTdsDeducted,
+        totalPaid,
+        paidCount: paidBills.length,
+        msmeUrgentBillsCount: msmeUrgentBills.length,
+        msmeUrgentAmount,
+        overdueBillsCount: overdueBills.length,
+        totalOverdue
+    };
+}
+
+// 4. CASH FLOW & P&L COMPASS SUMMARY
+function calculateCashFlowSummary() {
+    const recon = calculateReconSummary();
+    const payroll = calculatePayrollSummary();
+    const vendor = calculateVendorSummary();
+
+    const totalInflow = recon.totalSettledToBank;
+    const totalOutflow = payroll.totalDisbursed + vendor.totalPaid + recon.totalActualMdrFee + recon.totalGstTax;
+    const netCashFlow = totalInflow - totalOutflow;
+
+    // GST Input Tax Credit (ITC) Balance (Razorpay GST + Vendor Bill GST)
+    const availableGstItc = recon.totalGstTax + vendor.totalGstItc;
+
+    // Estimated monthly operating burn
+    const monthlyBurn = payroll.totalGrossPayroll + vendor.totalInvoiced;
+    const estimatedRunwayMonths = monthlyBurn > 0 ? Number(((totalInflow + 450000) / monthlyBurn).toFixed(1)) : 12.0;
+
+    return {
+        totalInflow: Number(totalInflow.toFixed(2)),
+        totalOutflow: Number(totalOutflow.toFixed(2)),
+        netCashFlow: Number(netCashFlow.toFixed(2)),
+        availableGstItc: Number(availableGstItc.toFixed(2)),
+        estimatedRunwayMonths,
+        grossSales: recon.totalGrossVolume,
+        pendingSalaries: payroll.totalDelayedAmount + payroll.totalPendingAmount,
+        pendingVendorBills: vendor.totalInvoiced - vendor.totalPaid,
+        netOperatingMargin: Number((((totalInflow - totalOutflow) / (totalInflow || 1)) * 100).toFixed(1))
+    };
+}
+
+// MAIN REQUEST HANDLER
 module.exports = async (req, res) => {
-    // CORS headers
+    // CORS Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') {
@@ -254,21 +572,17 @@ module.exports = async (req, res) => {
         return;
     }
 
-    if (!databaseInitialized) {
-        initDemoData();
-    }
+    if (!databaseInitialized) initDemoData();
 
     const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname;
     const query = parsedUrl.query;
 
-    // Helper: JSON Response
     const json = (data, statusCode = 200) => {
         res.writeHead(statusCode, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(data));
     };
 
-    // Helper: Read Body
     const readBody = () => new Promise((resolve, reject) => {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -283,121 +597,65 @@ module.exports = async (req, res) => {
     });
 
     try {
-        // Route 1: Summary
-        if (pathname === '/api/recon/summary') {
-            const batchId = query.batchId || null;
-            return json(calculateSummary(batchId));
-        }
-
-        // Route 2: Orders
+        // MODULE 1: RECONCILIATION ENDPOINTS
+        if (pathname === '/api/recon/summary') return json(calculateReconSummary(query.batchId || null));
         if (pathname === '/api/recon/orders') {
             const batchId = query.batchId || null;
-            const orders = batchId ? globalOrders.filter(o => o.batchId === batchId) : globalOrders;
-            return json(orders);
+            return json(batchId ? globalOrders.filter(o => o.batchId === batchId) : globalOrders);
         }
-
-        // Route 3: Discrepancies
         if (pathname === '/api/recon/discrepancies') {
             const batchId = query.batchId || null;
-            const discrepancies = batchId ? globalDiscrepancies.filter(d => d.batchId === batchId) : globalDiscrepancies;
-            return json(discrepancies);
+            return json(batchId ? globalDiscrepancies.filter(d => d.batchId === batchId) : globalDiscrepancies);
         }
+        if (pathname === '/api/recon/batches') return json(globalBatches);
 
-        // Route 4: Batches
-        if (pathname === '/api/recon/batches') {
-            return json(globalBatches);
-        }
-
-        // Route 5: Batch Details
-        if (pathname.startsWith('/api/recon/batches/')) {
-            const parts = pathname.split('/');
-            const bId = parts[4];
-            const sub = parts[5];
-
-            const batch = globalBatches.find(b => b.batchId === bId);
-            if (sub === 'summary') {
-                return json(calculateSummary(bId));
-            } else if (sub === 'orders') {
-                return json(globalOrders.filter(o => o.batchId === bId));
-            } else {
-                return json(batch || { batchId: bId, fileName: 'Uploaded File', totalOrders: 0 });
-            }
-        }
-
-        // Route 6: Export Dispute Email
         if (pathname === '/api/recon/discrepancies/export-email') {
-            const summary = calculateSummary();
-            const emailBody = `To: settlements@razorpay.com\nSubject: Formal Dispute: MDR Fee Variance & SLA Breaches (MID: RZP_ENT_8892)\n\nDear Razorpay Settlement & Compliance Team,\n\nWe are writing to formally lodge a reconciliation dispute regarding our merchant account (MID: RZP_ENT_8892).\nOur automated audit detected variances totaling INR ${summary.totalDiscrepancyAmount}.\n\nAudit Summary:\n1. Total Gross Volume Audited: INR ${summary.totalGrossVolume}\n2. Contracted MDR Rate: 2.00% + 18% GST\n3. Overcharged MDR Fees: INR ${summary.totalActualMdrFee - summary.totalExpectedMdrFee > 0 ? (summary.totalActualMdrFee - summary.totalExpectedMdrFee).toFixed(2) : '0.00'}\n4. Delayed Settlement SLA Breaches: ${summary.delayedSettlements} instances\n\nPlease credit the overcharged fee variance to our nodal bank account within 3 business days.\n\nSincerely,\nFinance & Reconciliation Desk\nZenith Retail India Pvt Ltd`;
+            const summary = calculateReconSummary();
+            const emailBody = `To: settlements@razorpay.com\nSubject: Formal Dispute: MDR Fee Variance & SLA Breaches (MID: RZP_ENT_8892)\n\nDear Razorpay Settlement & Compliance Team,\n\nWe are writing to formally lodge a reconciliation dispute regarding our merchant account (MID: RZP_ENT_8892).\nOur automated audit detected variances totaling INR ${summary.totalDiscrepancyAmount}.\n\nAudit Summary:\n1. Total Gross Volume Audited: INR ${summary.totalGrossVolume}\n2. Contracted MDR Rate: 2.00% + 18% GST\n3. Overcharged MDR Fees: INR ${(summary.totalActualMdrFee - summary.totalExpectedMdrFee > 0 ? summary.totalActualMdrFee - summary.totalExpectedMdrFee : 0).toFixed(2)}\n4. Delayed Settlement SLA Breaches: ${summary.delayedSettlements} instances\n\nPlease credit the overcharged fee variance to our nodal bank account within 3 business days.\n\nSincerely,\nFinance & Reconciliation Desk\nZenith Retail India Pvt Ltd`;
             return json({ emailBody, totalDisputedAmount: summary.totalDiscrepancyAmount });
         }
 
-        // Route 7: Ingest Demo
+        // MODULE 2: PAYROLL & SALARY ENDPOINTS
+        if (pathname === '/api/payroll/summary') return json(calculatePayrollSummary());
+        if (pathname === '/api/payroll/employees') return json(globalPayrollEmployees);
+        if (pathname === '/api/payroll/disburse' && req.method === 'POST') {
+            const body = await readBody();
+            const empId = body.empId;
+            const emp = globalPayrollEmployees.find(e => e.empId === empId);
+            if (emp) {
+                emp.status = 'DISBURSED';
+                emp.disbursedDate = new Date().toISOString().slice(0, 10);
+                emp.bankUtr = `SAL_MANUAL_${Date.now().toString().slice(-6)}`;
+                emp.delayDays = 0;
+            }
+            return json({ message: `Salary of ₹${emp ? emp.netPayable : 0} disbursed successfully!`, employee: emp });
+        }
+
+        // MODULE 3: VENDOR BILLS & MSME ENDPOINTS
+        if (pathname === '/api/vendors/summary') return json(calculateVendorSummary());
+        if (pathname === '/api/vendors/bills') return json(globalVendorBills);
+        if (pathname === '/api/vendors/pay' && req.method === 'POST') {
+            const body = await readBody();
+            const billId = body.billId;
+            const bill = globalVendorBills.find(b => b.billId === billId);
+            if (bill) {
+                bill.paymentStatus = 'PAID';
+                bill.bankUtr = `VEND_UTR_${Date.now().toString().slice(-6)}`;
+            }
+            return json({ message: `Vendor invoice #${billId} cleared successfully!`, bill });
+        }
+
+        // MODULE 4: CASH FLOW & TAX COMPASS ENDPOINTS
+        if (pathname === '/api/cashflow/summary') return json(calculateCashFlowSummary());
+
+        // MODULE 5: INGESTION & DEMO SEED
         if (pathname === '/api/ingest/demo') {
             initDemoData();
-            return json(calculateSummary());
+            return json(calculateReconSummary());
         }
 
-        // Route 8: Simulate Transaction
-        if (pathname === '/api/ingest/simulate' && req.method === 'POST') {
-            const body = await readBody();
-            const orderId = `order_SIM_${Date.now().toString().slice(-4)}`;
-            const paymentId = `pay_RZP_SIM_${Date.now().toString().slice(-4)}`;
-            const amount = Number(body.amount || 5000);
-            const customer = body.customerName || 'Simulated Customer';
-            const method = body.method || 'upi';
-            const scenario = body.scenario || 'NORMAL';
-
-            let reconStatus = 'RECONCILED';
-            let actualMdr = Number((amount * 0.02).toFixed(2));
-            let actualTax = Number((actualMdr * 0.18).toFixed(2));
-
-            if (scenario === 'MDR_OVERCHARGE') {
-                actualMdr = Number((amount * 0.035).toFixed(2));
-                actualTax = Number((actualMdr * 0.18).toFixed(2));
-                reconStatus = 'FEE_MISMATCH';
-                globalDiscrepancies.unshift({
-                    id: globalDiscrepancies.length + 1,
-                    orderId,
-                    batchId: 'batch_demo',
-                    paymentId,
-                    settlementId: 'setl_SIM',
-                    bankUtr: 'UTR_SIM_OVER',
-                    type: 'MDR_FEE_OVERCHARGE',
-                    severity: 'MEDIUM',
-                    expectedAmount: Number((amount * 0.02).toFixed(2)),
-                    actualAmount: actualMdr,
-                    varianceAmount: Number((actualMdr - (amount * 0.02)).toFixed(2)),
-                    rootCause: `MDR Fee charged (${actualMdr} INR) exceeds contracted 2.0% SLA.`,
-                    suggestedAction: 'Raise automated fee dispute ticket with Razorpay.',
-                    detectedAt: new Date().toISOString(),
-                    resolved: false
-                });
-            }
-
-            const newOrder = {
-                orderId,
-                customerName: customer,
-                amount,
-                currency: 'INR',
-                orderDate: new Date().toISOString().slice(0, 19),
-                status: 'COMPLETED',
-                paymentMethod: method,
-                batchId: 'batch_demo',
-                reconStatus
-            };
-
-            globalOrders.unshift(newOrder);
-            return json(newOrder);
-        }
-
-        // Route 9: Sample CSV
         if (pathname === '/api/ingest/sample-csv') {
-            const sampleCsv = `order_id,customer_name,amount,currency,order_date,payment_method,status
-ORD_CSV_101,Rohan Verma,4500.00,INR,2026-08-24 10:30:00,upi,COMPLETED
-ORD_CSV_102,Priya Sharma,12500.00,INR,2026-08-24 11:15:00,card,COMPLETED
-ORD_CSV_103,Amitabh Sen,2800.00,INR,2026-08-24 12:45:00,netbanking,COMPLETED
-ORD_CSV_104,Kavita Nair,12500.00,INR,2026-08-24 14:20:00,upi,COMPLETED
-ORD_CSV_105,Deepak Joshi,2700.00,INR,2026-08-24 16:10:00,card,COMPLETED`;
+            const sampleCsv = `order_id,customer_name,amount,currency,order_date,payment_method,status\nORD_CSV_101,Rohan Verma,4500.00,INR,2026-08-24 10:30:00,upi,COMPLETED\nORD_CSV_102,Priya Sharma,12500.00,INR,2026-08-24 11:15:00,card,COMPLETED\nORD_CSV_103,Amitabh Sen,2800.00,INR,2026-08-24 12:45:00,netbanking,COMPLETED\nORD_CSV_104,Kavita Nair,12500.00,INR,2026-08-24 14:20:00,upi,COMPLETED\nORD_CSV_105,Deepak Joshi,2700.00,INR,2026-08-24 16:10:00,card,COMPLETED`;
             res.writeHead(200, {
                 'Content-Type': 'text/csv',
                 'Content-Disposition': 'attachment; filename="autorecon_sample_orders.csv"'
@@ -405,12 +663,10 @@ ORD_CSV_105,Deepak Joshi,2700.00,INR,2026-08-24 16:10:00,card,COMPLETED`;
             return res.end(sampleCsv);
         }
 
-        // Route 10: Upload Orders CSV
         if (pathname === '/api/ingest/upload-orders' && req.method === 'POST') {
             const batchId = `batch_${Date.now()}`;
             const fileName = 'uploaded_orders.csv';
 
-            // Sample batch orders created from upload
             const sampleItems = [
                 { id: '101', name: 'Rohan Verma', amt: 4500, m: 'upi', s: 'RECONCILED' },
                 { id: '102', name: 'Priya Sharma', amt: 12500, m: 'card', s: 'RECONCILED' },
@@ -444,7 +700,7 @@ ORD_CSV_105,Deepak Joshi,2700.00,INR,2026-08-24 16:10:00,card,COMPLETED`;
                         expectedAmount: expectedMdr,
                         actualAmount: actualMdr,
                         varianceAmount: Number((actualMdr - expectedMdr).toFixed(2)),
-                        rootCause: `MDR Fee charged (${actualMdr} INR) exceeds contracted 2.0% SLA (expected: ${expectedMdr} INR).`,
+                        rootCause: `MDR Fee charged (${actualMdr} INR) exceeds contracted 2.0% SLA.`,
                         suggestedAction: 'Raise automated fee dispute ticket with Razorpay Merchant Account Manager.',
                         detectedAt: new Date().toISOString(),
                         resolved: false
@@ -486,15 +742,14 @@ ORD_CSV_105,Deepak Joshi,2700.00,INR,2026-08-24 16:10:00,card,COMPLETED`;
                 });
             });
 
-            const batchRecord = {
+            globalBatches.unshift({
                 batchId,
                 fileName,
                 totalOrders: sampleItems.length,
                 totalGross: batchGross,
                 uploadedAt: new Date().toISOString(),
                 status: 'RECONCILED'
-            };
-            globalBatches.unshift(batchRecord);
+            });
 
             return json({
                 message: `Successfully parsed and reconciled ${sampleItems.length} orders from ${fileName}`,
@@ -503,45 +758,50 @@ ORD_CSV_105,Deepak Joshi,2700.00,INR,2026-08-24 16:10:00,card,COMPLETED`;
                 count: sampleItems.length,
                 totalGross: batchGross,
                 reportUrl: `/report.html?batchId=${batchId}`,
-                summary: calculateSummary(batchId)
+                summary: calculateReconSummary(batchId)
             });
         }
 
-        // Route 11: AI Chat Config
+        // MODULE 6: MULTI-DOMAIN AI CHAT COPILOT
         if (pathname === '/api/chat/config') {
-            return json({
-                configured: true,
-                model: 'gemini-2.5-flash',
-                promptTemplate: 'AI Munimji Razorpay Controller'
-            });
+            return json({ configured: true, model: 'gemini-2.5-flash', capabilities: ['Gateway Recon', 'Salary Delays & Payroll', 'Vendor AP & MSME 43B(h)', 'Cash Flow P&L'] });
         }
 
-        // Route 12: AI Chat Query
         if (pathname === '/api/chat/query' && req.method === 'POST') {
             const body = await readBody();
             const message = (body.message || '').toLowerCase();
-            const summary = calculateSummary(body.batchId || null);
+            const recon = calculateReconSummary();
+            const payroll = calculatePayrollSummary();
+            const vendor = calculateVendorSummary();
+            const cashflow = calculateCashFlowSummary();
 
             let aiReply = '';
-            if (message.includes('overcharge') || message.includes('fee') || message.includes('mdr')) {
-                const diff = (summary.totalActualMdrFee - summary.totalExpectedMdrFee).toFixed(2);
-                aiReply = `Namaste! 🙏 According to your Razorpay contracted rate of **2.0% MDR + 18% GST**, Razorpay should have charged **₹${summary.totalExpectedMdrFee.toLocaleString('en-IN')}**. However, they deducted **₹${summary.totalActualMdrFee.toLocaleString('en-IN')}**, resulting in a fee leakage of **₹${diff}** (e.g. Order #order_DEMO_0004 charged at 3.5%). You can claim this refund right away in Dispute Room!`;
-            } else if (message.includes('gst') || message.includes('tax') || message.includes('input credit')) {
-                aiReply = `For this billing cycle, Razorpay deducted **₹${summary.totalGstTax.toLocaleString('en-IN')}** as 18% GST on processing fees. You can claim the full **₹${summary.totalGstTax.toLocaleString('en-IN')}** as Input Tax Credit (ITC) under GSTR-3B using Razorpay's monthly tax invoice.`;
-            } else if (message.includes('dispute') || message.includes('email') || message.includes('letter')) {
-                aiReply = `I have drafted a formal Razorpay dispute letter citing your MID (RZP_ENT_8892) and listing all **${summary.discrepancyCount} variances** (totaling ₹${summary.totalDiscrepancyAmount.toLocaleString('en-IN')}). Click the **Dispute Room** button in the header or ask me to export the letter!`;
-            } else {
-                aiReply = `Namaste! 🙏 I am your **AI Munimji**. I have audited **${summary.totalOrders} transactions** against Razorpay payout reports and bank credits. Current reconciliation health is **${summary.healthScorePercentage}%** with **${summary.discrepancyCount} items flagged** for review totaling **₹${summary.totalDiscrepancyAmount.toLocaleString('en-IN')}**. How can I help you today?`;
+
+            // 1. Payroll / Salary Delay Query
+            if (message.includes('salary') || message.includes('payroll') || message.includes('employee') || message.includes('delay')) {
+                aiReply = `Namaste! 🙏 In your **August 2026 Payroll Run**:\n\n• **Total Payroll**: ₹${payroll.totalGrossPayroll.toLocaleString('en-IN')}\n• **Salaries Disbursed On-Time**: ${payroll.disbursedCount} of ${payroll.totalEmployees} employees (₹${payroll.totalDisbursed.toLocaleString('en-IN')})\n• ⚠️ **Delayed Salary Payouts**: **2 employees** (Rahul Deshmukh - ₹58,700 and Karan Malhotra - ₹1,09,300) are currently **${globalPayrollEmployees[2].delayDays} days overdue** beyond standard 1st-of-the-month SLA.\n• **TDS Withheld (Sec 192)**: ₹${payroll.totalTdsWithheld.toLocaleString('en-IN')} (to be deposited by 7th Sept).\n\nWould you like me to draft a salary delay notification email for the employees?`;
+            }
+            // 2. MSME / Vendor Invoices Query
+            else if (message.includes('vendor') || message.includes('msme') || message.includes('43b') || message.includes('bill')) {
+                aiReply = `Namaste! 🙏 Here is your **Accounts Payable & MSME Section 43B(h) Audit**:\n\n• **Total Outstanding Payables**: ₹${(vendor.totalInvoiced - vendor.totalPaid).toLocaleString('en-IN')}\n• 🚨 **Critical MSME Alert**: **Zenith Legal Associates** (Invoice ZEN-AUD-2026 for ₹31,500) has only **2 days remaining** on the mandatory 45-day MSME deadline! If unpaid within 45 days, this expense will be disallowed under Income Tax Section 43B(h).\n• **Shree Balaji Packaging**: ₹63,558 due in 6 days.\n• **Total GST Input Tax Credit (ITC)** claimable from vendor bills: **₹${vendor.totalGstItc.toLocaleString('en-IN')}**.`;
+            }
+            // 3. Cash Flow / P&L / Runway Query
+            else if (message.includes('cash') || message.includes('runway') || message.includes('profit') || message.includes('balance') || message.includes('p&l')) {
+                aiReply = `Namaste! 🙏 Here is your **Live Cash Flow & Financial Health Compass**:\n\n• **Total Bank Inflows**: ₹${cashflow.totalInflow.toLocaleString('en-IN')}\n• **Total Outflows** (Salaries + Vendors + Gateway Fees): ₹${cashflow.totalOutflow.toLocaleString('en-IN')}\n• **Net Operating Cash Flow**: **₹${cashflow.netCashFlow.toLocaleString('en-IN')}**\n• **Estimated Cash Runway**: **${cashflow.estimatedRunwayMonths} Months**\n• **Total GST ITC Available (GSTR-2B)**: **₹${cashflow.availableGstItc.toLocaleString('en-IN')}** (Razorpay GST + Vendor Invoices).`;
+            }
+            // 4. Gateway Recon / Fee Query
+            else if (message.includes('overcharge') || message.includes('fee') || message.includes('mdr') || message.includes('razorpay')) {
+                const diff = (recon.totalActualMdrFee - recon.totalExpectedMdrFee).toFixed(2);
+                aiReply = `Namaste! 🙏 According to your Razorpay contracted rate of **2.0% MDR + 18% GST**, Razorpay should have charged **₹${recon.totalExpectedMdrFee.toLocaleString('en-IN')}**. However, they deducted **₹${recon.totalActualMdrFee.toLocaleString('en-IN')}**, resulting in a fee leakage of **₹${diff}** (e.g. Order #order_DEMO_0004 charged at 3.5%). You can claim this refund right away in Dispute Room!`;
+            }
+            // General Fallback
+            else {
+                aiReply = `Namaste! 🙏 I am your **AI Munimji** — your Autonomous Financial Controller. I am actively monitoring:\n\n1. 💳 **Razorpay Gateway Settlements** (35 orders audited, ₹${recon.totalDiscrepancyAmount} flagged)\n2. 👥 **Payroll & Salary Delays** (2 delayed salaries totaling ₹${payroll.totalDelayedAmount.toLocaleString('en-IN')})\n3. 🧾 **Vendor Bills & MSME 43B(h)** (1 urgent MSME bill near 45-day deadline)\n4. 📊 **Cash Flow & GST ITC** (₹${cashflow.availableGstItc.toLocaleString('en-IN')} ITC claimable)\n\nAsk me any question about salaries, vendor bills, tax deadlines, or gateway fees!`;
             }
 
-            return json({
-                reply: aiReply,
-                model: 'gemini-2.5-flash',
-                timestamp: new Date().toISOString()
-            });
+            return json({ reply: aiReply, model: 'gemini-2.5-flash', timestamp: new Date().toISOString() });
         }
 
-        // Fallback 404
         return json({ error: 'Endpoint not found', path: pathname }, 404);
 
     } catch (err) {
