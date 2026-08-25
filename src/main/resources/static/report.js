@@ -242,6 +242,34 @@ function initCharts() {
 }
 
 async function fetchBatchDetails() {
+    // 1. Check LocalStorage first (instant & guarantees no blank screens on serverless)
+    const localData = localStorage.getItem('autorecon_batch_' + batchId);
+    if (localData) {
+        try {
+            const data = JSON.parse(localData);
+            document.getElementById('reportTitle').textContent = `Audit Report: ${data.fileName || 'Uploaded CSV'}`;
+            document.getElementById('reportFileName').textContent = data.fileName || 'Uploaded File';
+            document.getElementById('reportBatchId').textContent = data.batchId || batchId;
+            document.getElementById('reportTimestamp').textContent = data.uploadedAt ? data.uploadedAt.replace('T', ' ').substring(0, 19) : 'Live';
+            document.getElementById('statSourceFile').textContent = data.fileName || 'CSV File';
+
+            if (data.summary) {
+                currentSummary = data.summary;
+                updateDashboard(currentSummary);
+            }
+            if (data.orders) {
+                currentOrders = data.orders;
+                renderOrdersTable();
+            }
+            if (data.discrepancies) {
+                currentDiscrepancies = data.discrepancies;
+            }
+            return;
+        } catch (e) {
+            console.error('Error parsing local recon batch:', e);
+        }
+    }
+
     try {
         const [batchRes, summaryRes, ordersRes, discRes] = await Promise.all([
             fetch(`/api/recon/batches/${batchId}`),
@@ -272,6 +300,10 @@ async function fetchBatchDetails() {
         if (discRes.ok) {
             currentDiscrepancies = await discRes.json();
         }
+    } catch (err) {
+        console.error('Error fetching batch details:', err);
+    }
+}
 
         const initialGreeting = document.getElementById('initialChatGreeting');
         if (currentBatch && initialGreeting) {

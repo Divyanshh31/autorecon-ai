@@ -635,6 +635,25 @@ module.exports = async (req, res) => {
         // MODULE 2: PAYROLL & SALARY ENDPOINTS
         if (pathname === '/api/payroll/summary') return json(calculatePayrollSummary());
         if (pathname === '/api/payroll/employees') return json(globalPayrollEmployees);
+        if (pathname === '/api/ingest/upload-salary' && req.method === 'POST') {
+            const body = await readBody();
+            if (body && body.batchId) {
+                globalBatches.unshift({
+                    batchId: body.batchId,
+                    fileName: body.fileName || 'Salary CSV',
+                    uploadedAt: body.uploadedAt || new Date().toISOString(),
+                    totalOrders: (body.employees || []).length,
+                    type: 'SALARY'
+                });
+            }
+            return json({ success: true, message: 'Salary CSV ingested successfully' });
+        }
+        if (pathname.startsWith('/api/payroll/batches/')) {
+            const parts = pathname.split('/');
+            const bId = parts[4];
+            const batch = globalBatches.find(b => b.batchId === bId);
+            return json(batch || { batchId: bId, fileName: 'Salary CSV', employees: [] });
+        }
         if (pathname === '/api/payroll/disburse' && req.method === 'POST') {
             const body = await readBody();
             const empId = body.empId;

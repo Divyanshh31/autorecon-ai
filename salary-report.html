@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoRecon AI — Employee Salary & Payroll Audit Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pine: {
+                            800: '#1e2d25',
+                            900: '#131c17',
+                            950: '#0a110d'
+                        },
+                        sand: {
+                            100: '#f5eedc',
+                            200: '#ebd9b8',
+                            300: '#e5a95d',
+                            400: '#d48b38'
+                        },
+                        jade: {
+                            400: '#48e5c2',
+                            500: '#2ec4b6',
+                            600: '#269b90'
+                        },
+                        terracotta: {
+                            400: '#f28482',
+                            500: '#e76f51',
+                            600: '#d15335'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Distinctive Sapphire & Golden Cosmic Glow for Salary Hub */
+        .salary-orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(56, 189, 248, 0) 70%);
+            top: -100px;
+            right: 10%;
+            animation: orbFloat 22s infinite alternate ease-in-out;
+        }
+        .salary-orb-2 {
+            width: 650px;
+            height: 650px;
+            background: radial-gradient(circle, rgba(229, 169, 93, 0.3) 0%, rgba(229, 169, 93, 0) 70%);
+            bottom: -120px;
+            left: -80px;
+            animation: orbFloat 26s infinite alternate ease-in-out;
+        }
+        .salary-orb-3 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(168, 85, 247, 0) 70%);
+            top: 40%;
+            left: 30%;
+            animation: orbFloat 20s infinite alternate ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-amber-600 selection:text-stone-950 pb-20">
+
+    <!-- LIVE DISTINCTIVE SALARY BACKGROUND -->
+    <canvas id="liveSalaryCanvas"></canvas>
+    <div class="ambient-glow-orbs">
+        <div class="orb salary-orb-1"></div>
+        <div class="orb salary-orb-2"></div>
+        <div class="orb salary-orb-3"></div>
+    </div>
+
+    <!-- Top Navigation Glass Header -->
+    <header class="glass-header sticky top-0 z-40">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <div class="flex items-center space-x-4">
+                <div class="h-11 w-11 rounded-2xl bg-gradient-to-tr from-sky-400 to-sand-400 p-[1px] shadow-lg flex-shrink-0">
+                    <div class="w-full h-full bg-[#131c17]/90 rounded-[15px] flex items-center justify-center backdrop-blur-md">
+                        <i class="ph-fill ph-users-three text-sand-300 text-2xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2.5">
+                        <span class="font-extrabold text-xl text-sand-100 tracking-tight" id="reportTitle">
+                            Salary & Payroll Audit Report
+                        </span>
+                        <span class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-sky-500/15 text-sky-400 border border-sky-500/30 font-mono">
+                            Employee Salary Session
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-xs text-sand-200/60 mt-0.5">
+                        <span id="reportFileName" class="text-sand-200 font-bold">Uploaded Salary CSV</span>
+                        <span>&middot;</span>
+                        <span id="reportBatchId" class="font-mono text-sand-200/70">Batch ID</span>
+                        <span>&middot;</span>
+                        <span id="reportTimestamp" class="text-sand-200/60">Live</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header Actions -->
+            <div class="flex items-center space-x-3">
+                <a href="/" class="glass-btn px-3.5 py-2 text-xs font-semibold rounded-xl transition flex items-center space-x-1.5 shadow-sm">
+                    <i class="ph-bold ph-arrow-left"></i>
+                    <span>Main Dashboard</span>
+                </a>
+                <button onclick="window.print()" class="glass-btn px-3.5 py-2 text-xs font-semibold rounded-xl transition flex items-center space-x-1.5 shadow-sm">
+                    <i class="ph-bold ph-printer"></i>
+                    <span>Print / PDF</span>
+                </button>
+                <button onclick="openSalaryNoticeModal()" class="px-4 py-2 text-xs font-bold rounded-xl bg-terracotta-500/20 hover:bg-terracotta-500/30 text-terracotta-400 border border-terracotta-500/40 transition flex items-center space-x-1.5 shadow-sm">
+                    <i class="ph-bold ph-envelope-open"></i>
+                    <span>AI Delay Notice</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Viewport -->
+    <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- 3 Big Golden Numbers for This Uploaded Salary File -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            
+            <!-- 1. Total Ingested Payroll CTC -->
+            <div class="pine-card p-6 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="p-2.5 rounded-xl bg-sand-300/15 text-sand-300 border border-sand-300/25">
+                            <i class="ph-bold ph-money text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-sand-200/70">Total Payroll CTC Ingested</span>
+                            <p class="text-xs text-sand-100 font-medium" id="statEmpCount">0 Employees</p>
+                        </div>
+                    </div>
+                    <span class="badge-pill bg-sand-300/10 text-sand-300 border border-sand-300/30 text-[11px]">100% Ingested</span>
+                </div>
+                <div class="my-4">
+                    <div class="text-3xl font-black text-sand-100 font-mono" id="statGrossSalary">₹0.00</div>
+                </div>
+                <div class="pt-3 border-t border-[#25362c] text-xs text-sand-200/70 flex justify-between">
+                    <span>Source: <b class="text-sand-200" id="statSourceFile">File</b></span>
+                    <span>TDS (Sec 192): <b class="text-sand-300 font-mono" id="statTdsWithheld">₹0.00</b></span>
+                </div>
+            </div>
+
+            <!-- 2. Net Bank Salary Disbursed -->
+            <div class="pine-card p-6 flex flex-col justify-between border-jade-500/30 bg-jade-500/[0.04]">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="p-2.5 rounded-xl bg-jade-500/15 text-jade-400 border border-jade-500/25">
+                            <i class="ph-bold ph-check-circle text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-jade-300">Net Salaries Paid (Bank IMPS)</span>
+                            <p class="text-xs text-sand-100 font-medium" id="statDisbursedEmpCount">0 Transferred</p>
+                        </div>
+                    </div>
+                    <span class="badge-pill badge-reconciled text-[11px]">Transferred</span>
+                </div>
+                <div class="my-4">
+                    <div class="text-3xl font-black text-jade-400 font-mono" id="statTotalDisbursed">₹0.00</div>
+                </div>
+                <div class="pt-3 border-t border-[#25362c] text-xs text-sand-200/70 flex justify-between">
+                    <span>NEFT / IMPS Slips: <b class="text-jade-300 font-semibold">Verified UTRs</b></span>
+                    <span>SLA: <b class="text-sand-200 font-medium">1st of Month</b></span>
+                </div>
+            </div>
+
+            <!-- 3. Delayed / Pending Salaries -->
+            <div class="pine-card p-6 flex flex-col justify-between border-terracotta-500/40 bg-terracotta-500/[0.06]">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="p-2.5 rounded-xl bg-terracotta-500/15 text-terracotta-400 border border-terracotta-500/30">
+                            <i class="ph-bold ph-clock-countdown text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-terracotta-400">Delayed Salaries (SLA Breach)</span>
+                            <p class="text-xs text-sand-100 font-medium" id="statDelayedEmpCount">0 Overdue</p>
+                        </div>
+                    </div>
+                    <button onclick="openSalaryNoticeModal()" class="text-xs font-bold text-terracotta-400 bg-terracotta-500/15 hover:bg-terracotta-500/25 px-3 py-1 rounded-full border border-terracotta-500/40 transition">
+                        AI Notice ➔
+                    </button>
+                </div>
+                <div class="my-4">
+                    <div class="text-3xl font-black text-terracotta-400 font-mono" id="statDelayedAmount">₹0.00</div>
+                </div>
+                <div class="pt-3 border-t border-[#25362c] text-xs text-sand-200/70 flex justify-between">
+                    <span>Pending Clearance: <b class="text-sand-300 font-mono" id="statPendingAmount">₹0.00</b></span>
+                    <span>Status: <b class="text-terracotta-400 font-bold">Action Required</b></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3-Step Clear Salary Settlement Trail -->
+        <div class="pine-card p-6">
+            <div class="flex items-center justify-between mb-5">
+                <div>
+                    <h2 class="text-base font-bold text-sand-100">Salary Breakdown & Deductions Trail</h2>
+                    <p class="text-xs text-sand-200/60 mt-0.5">Tracking Gross CTC ➔ Statutory TDS/PF Deductions ➔ Net Bank Disbursal</p>
+                </div>
+                <span class="badge-pill bg-sky-500/15 text-sky-300 border border-sky-500/30 text-xs">
+                    Standard TDS: <b>10% Sec 192 + PF 12%</b>
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-xl border border-[#25362c] bg-[#16221b]/80 backdrop-blur-md">
+                    <div class="flex items-center space-x-2 text-xs font-bold text-sand-200 mb-2">
+                        <span class="w-5 h-5 rounded-full bg-sand-400 text-[#131c17] flex items-center justify-center text-[10px] font-bold">1</span>
+                        <span>Total Ingested Gross CTC</span>
+                    </div>
+                    <div class="text-xl font-black text-sand-100 font-mono" id="trailGrossSalary">₹0.00</div>
+                    <p class="text-xs text-sand-200/60 mt-1.5">Sum of all salaries from this uploaded file.</p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-[#25362c] bg-[#16221b]/80 backdrop-blur-md">
+                    <div class="flex items-center space-x-2 text-xs font-bold text-sand-200 mb-2">
+                        <span class="w-5 h-5 rounded-full bg-sand-300 text-[#131c17] flex items-center justify-center text-[10px] font-bold">2</span>
+                        <span>Statutory TDS & PF Withheld</span>
+                    </div>
+                    <div class="text-xl font-black text-sand-300 font-mono" id="trailDeductions">₹0.00</div>
+                    <p class="text-xs text-sand-200/60 mt-1.5">
+                        TDS (Sec 192): <b class="text-sand-200 font-mono" id="trailTds">₹0.00</b> | 
+                        PF: <b class="text-sand-200 font-mono" id="trailPf">₹0.00</b>
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-jade-500/30 bg-jade-500/[0.04] backdrop-blur-md">
+                    <div class="flex items-center space-x-2 text-xs font-bold text-jade-300 mb-2">
+                        <span class="w-5 h-5 rounded-full bg-jade-400 text-[#131c17] flex items-center justify-center text-[10px] font-bold">3</span>
+                        <span>Net Bank Payouts</span>
+                    </div>
+                    <div class="text-xl font-black text-jade-400 font-mono" id="trailNetPayable">₹0.00</div>
+                    <p class="text-xs text-sand-200/70 mt-1.5">Net amount payable to employees' bank accounts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spacious 50/50 Visual Salary Graphs -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="pine-card p-6 flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-sand-200">Salary Disbursal Status</h3>
+                        <p class="text-[11px] text-sand-200/60 mt-0.5">Disbursed on-time vs Delayed SLA breach</p>
+                    </div>
+                    <span class="badge-pill bg-sand-300/10 text-sand-300 font-mono text-xs" id="chartEmpCount">0 Employees</span>
+                </div>
+                <div class="relative flex-1 flex items-center justify-center min-h-[260px]">
+                    <canvas id="salaryDonutChart"></canvas>
+                </div>
+            </div>
+
+            <div class="pine-card p-6 flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-sand-200">Salary Tier Distribution</h3>
+                        <p class="text-[11px] text-sand-200/60 mt-0.5">Gross CTC brackets of employees in this file</p>
+                    </div>
+                    <span class="text-xs text-sand-200/60 font-mono">INR</span>
+                </div>
+                <div class="relative flex-1 flex items-center justify-center min-h-[260px]">
+                    <canvas id="salaryTierBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employee Salary Register Table for This Uploaded File -->
+        <div class="pine-card overflow-hidden">
+            <div class="p-5 border-b border-[#22332a] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-sm font-bold text-sand-100 flex items-center space-x-2">
+                        <i class="ph-bold ph-identification-card text-sand-300"></i>
+                        <span>Employee Salary Register (From This CSV)</span>
+                    </h3>
+                    <p class="text-xs text-sand-200/60 mt-0.5">Parsed from uploaded file with automated TDS, PF and delay tracking</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="disburseAllFileSalaries()" class="px-4 py-2 bg-gradient-to-r from-sand-400 to-jade-400 text-[#131c17] rounded-xl font-bold text-xs shadow-md transition active:scale-95">
+                        ⚡ 1-Click Disburse All Salaries
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-[#131c17]/80 text-sand-200/70 uppercase font-bold text-[11px] border-b border-[#22332a]">
+                        <tr>
+                            <th class="px-5 py-3.5">Employee Name</th>
+                            <th class="px-4 py-3.5">City & Email</th>
+                            <th class="px-4 py-3.5">Gross Salary (CTC)</th>
+                            <th class="px-4 py-3.5">TDS & PF Deduction</th>
+                            <th class="px-4 py-3.5">Net Payable</th>
+                            <th class="px-4 py-3.5">Payout Status</th>
+                            <th class="px-5 py-3.5 text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salaryTableBody" class="divide-y divide-[#22332a] text-sand-200">
+                        <tr>
+                            <td colspan="7" class="px-5 py-10 text-center text-sand-200/50">
+                                Loading salary records from this batch...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Salary Delay Notice -->
+    <div id="salaryNoticeModal" class="hidden fixed inset-0 z-50 bg-[#0a110d]/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-[#16221b]/95 backdrop-blur-2xl border border-[#2b3d32] rounded-2xl max-w-xl w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-[#22332a]">
+                <h3 class="text-sm font-bold text-sand-100 flex items-center space-x-2">
+                    <i class="ph-bold ph-envelope-open text-terracotta-400"></i>
+                    <span>AI Salary Delay Notification</span>
+                </h3>
+                <button onclick="document.getElementById('salaryNoticeModal').classList.add('hidden')" class="text-sand-200/60 hover:text-sand-100">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            <div class="py-4 space-y-3 text-xs">
+                <p class="text-sand-200/80">AI Munimji has prepared a formal communication for employees in this file with delayed payouts:</p>
+                <div class="bg-[#131c17] p-4 rounded-xl border border-[#22332a] font-mono text-sand-200 leading-relaxed max-h-60 overflow-y-auto" id="salaryNoticeContent">
+Subject: Important Update: Salary Disbursement Schedule
+
+Dear Team Members,
+
+We would like to inform you that your monthly salary payout is undergoing final bank nodal batch clearance and will be credited to your registered bank accounts by tomorrow 3:00 PM with direct IMPS UTR confirmation.
+
+We deeply value your dedication and apologize for the short delay.
+
+Warm regards,
+Payroll & Finance Desk
+                </div>
+            </div>
+            <div class="pt-3 flex justify-end space-x-2">
+                <button type="button" onclick="document.getElementById('salaryNoticeModal').classList.add('hidden')" class="glass-btn px-4 py-2 rounded-xl">Close</button>
+                <button onclick="copySalaryNotice()" class="px-4 py-2 bg-sand-300 text-[#131c17] font-bold rounded-xl shadow-md">Copy Notification</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating AI Chatbot Button (Rufus style) -->
+    <div id="aiChatWidgetWrapper" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div id="floatingChatWindow" class="hidden mb-4 w-[420px] max-w-[94vw] h-[550px] bg-[#16221b]/95 backdrop-blur-2xl border border-sand-300/35 rounded-3xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300">
+            <div class="p-4 bg-[#131c17]/90 border-b border-[#22332a] flex items-center justify-between">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-400 to-sand-400 p-[1px] shadow-sm flex-shrink-0">
+                        <div class="w-full h-full bg-[#131c17] rounded-[11px] flex items-center justify-center">
+                            <i class="ph-fill ph-robot text-sand-300 text-lg"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold text-sand-100 flex items-center space-x-1.5">
+                            <span>AI Munimji (Salary Copilot)</span>
+                            <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                        </h3>
+                        <p class="text-[10px] text-sand-200/60 font-mono">Salary Roster Context Active</p>
+                    </div>
+                </div>
+                <button onclick="toggleFloatingChat()" class="p-1.5 text-sand-200/60 hover:text-sand-100 rounded-lg hover:bg-[#1a2720]">
+                    <i class="ph-bold ph-x text-sm"></i>
+                </button>
+            </div>
+
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 text-xs">
+                <div class="bg-[#131c17] border border-[#22332a] rounded-2xl p-3.5 text-sand-200 leading-relaxed shadow-sm">
+                    Namaste! 🙏 I am analyzing the **Employee Salary CSV** you uploaded. Ask me about total CTC, TDS withholdings, delayed payouts, or 1-click disbursal!
+                </div>
+            </div>
+
+            <div class="px-3 py-2 flex flex-wrap gap-1.5 border-t border-[#22332a] bg-[#131c17]/60">
+                <button class="quick-chip px-2.5 py-1 bg-[#1a2720] hover:bg-[#22332a] text-sand-200 rounded-lg text-[11px] font-semibold transition border border-[#2b3d32]" data-query="How much total TDS needs to be deposited for this salary roster?">
+                    🧾 Total TDS to Deposit?
+                </button>
+                <button class="quick-chip px-2.5 py-1 bg-[#1a2720] hover:bg-[#22332a] text-sand-200 rounded-lg text-[11px] font-semibold transition border border-[#2b3d32]" data-query="Who are the highest paid employees in this file?">
+                    👥 Top Earners
+                </button>
+                <button class="quick-chip px-2.5 py-1 bg-sand-300/15 hover:bg-sand-300/25 text-sand-300 rounded-lg text-[11px] font-bold border border-sand-300/30 transition" data-query="Draft salary delay explanation email for employees">
+                    📝 Write Delay Notice
+                </button>
+            </div>
+
+            <form id="chatForm" class="p-3 bg-[#131c17]/90 border-t border-[#22332a] flex items-center space-x-2">
+                <input type="text" id="chatInput" placeholder="Ask about salaries, TDS, or payouts..." class="glass-input flex-1 rounded-xl px-3.5 py-2 text-xs focus:outline-none transition">
+                <button type="submit" class="p-2.5 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-xl transition shadow-sm flex items-center justify-center font-bold">
+                    <i class="ph-bold ph-paper-plane-right text-xs"></i>
+                </button>
+            </form>
+        </div>
+
+        <button id="btnToggleFloatingChat" onclick="toggleFloatingChat()" class="group px-4 py-3 bg-gradient-to-r from-sky-400 via-sand-300 to-jade-400 text-[#131c17] rounded-full shadow-2xl hover:shadow-sky-400/30 flex items-center space-x-2.5 font-extrabold text-xs transition-all active:scale-95 border border-sand-200/40">
+            <div class="w-6 h-6 rounded-full bg-[#131c17] flex items-center justify-center text-sand-300 shadow-inner">
+                <i class="ph-fill ph-sparkle text-xs"></i>
+            </div>
+            <span class="tracking-wide font-bold">Ask AI Munimji</span>
+            <span class="px-1.5 py-0.5 bg-[#131c17]/20 text-[#131c17] rounded-md text-[10px] font-mono font-bold">Salary AI</span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="salary-report.js"></script>
+</body>
+</html>
