@@ -1004,9 +1004,17 @@ async function handleSimulateTransaction(e) {
 async function handleCsvUpload(e) {
     e.preventDefault();
     const fileInput = document.getElementById('csvFileInput');
+    const submitBtn = document.getElementById('btnSubmitUpload');
+
     if (!fileInput.files || fileInput.files.length === 0) {
-        alert('Please choose a CSV file to upload.');
+        showToast('Please select a CSV file first.');
         return;
+    }
+
+    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : 'Upload';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i> Auditing Batch...`;
     }
 
     const formData = new FormData();
@@ -1019,14 +1027,70 @@ async function handleCsvUpload(e) {
         });
         if (res.ok) {
             const data = await res.json();
+            
+            // 1. Instantly hide modal
             document.getElementById('uploadModal').classList.add('hidden');
-            alert(`File parsed! Opening audit report in a new tab...`);
-            window.open(data.reportUrl, '_blank');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+            }
+            fileInput.value = '';
+            document.getElementById('selectedFileName').textContent = '';
+
+            // 2. Open new tab directly
+            const reportWindow = window.open(data.reportUrl, '_blank');
+
+            // 3. Show sleek non-blocking notification banner
+            showToast(`✅ Successfully parsed & reconciled ${data.count} orders from ${data.fileName}!`, data.reportUrl, 'Open Report ➔');
+
+            // 4. Refresh live lists
             fetchBatchesList();
             fetchSummary();
             fetchOrders();
+            fetchCashFlow();
+        } else {
+            showToast('Error uploading file. Please try again.');
         }
     } catch (e) {
         console.error('Error uploading CSV:', e);
+        showToast('Upload error. Please check file format.');
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnHtml;
+        }
     }
 }
+
+// Non-blocking iOS Glass Toast Notification
+function showToast(message, actionUrl = null, actionLabel = null) {
+    let toast = document.getElementById('liveAppToast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'liveAppToast';
+        toast.className = 'fixed top-24 left-1/2 -translate-x-1/2 z-50 px-5 py-3.5 rounded-2xl bg-[#16221b]/95 backdrop-blur-2xl border border-sand-300/40 text-sand-100 shadow-2xl flex items-center space-x-3 text-xs transition-all duration-300 transform scale-95 opacity-0';
+        document.body.appendChild(toast);
+    }
+
+    let actionBtnHtml = '';
+    if (actionUrl && actionLabel) {
+        actionBtnHtml = `<a href="${actionUrl}" target="_blank" class="px-3 py-1.5 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-xl font-bold transition shadow-sm ml-2">${actionLabel}</a>`;
+    }
+
+    toast.innerHTML = `
+        <div class="flex items-center space-x-2">
+            <span class="live-pulse-dot"></span>
+            <span class="font-medium">${message}</span>
+        </div>
+        ${actionBtnHtml}
+    `;
+
+    toast.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+    toast.classList.add('opacity-100', 'scale-100');
+
+    setTimeout(() => {
+        toast.classList.remove('opacity-100', 'scale-100');
+        toast.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+    }, 6000);
+}
+

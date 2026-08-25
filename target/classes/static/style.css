@@ -1,6 +1,6 @@
 /* ==========================================================================
    AutoRecon AI — Authentic iPhone / iOS Glassmorphism & Vibrant Liquid Materials
-   Palette: Botanical Deep Pine (#131c17), Warm Sandstone (#e5a95d), Forest Jade (#2ec4b6)
+   Multi-Tasking Accounting OS: Gateway Recon, Payroll & Delays, Vendor MSME, Cash Flow
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -120,7 +120,7 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   MINIMALISTIC OPENING SCREEN (Clean Apple/iOS Style)
+   MINIMALISTIC OPENING SCREEN
    ========================================================================== */
 #splashScreen {
     position: fixed;
@@ -262,6 +262,34 @@ pre, code, .font-mono {
     background: rgba(10, 16, 13, 0.85);
     border-color: var(--brand-gold);
     box-shadow: 0 0 18px rgba(229, 169, 93, 0.25), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   IOS SEGMENTED MODULE SWITCHER PILLS
+   ========================================================================== */
+.nav-tab-btn {
+    color: #b5c4b8;
+    background: transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-tab-btn.active {
+    background: linear-gradient(135deg, rgba(229, 169, 93, 0.95) 0%, rgba(212, 139, 56, 0.95) 100%);
+    color: #131c17;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    font-weight: 800;
+}
+
+/* Module View Transitions */
+.module-view {
+    animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInSlide {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================================

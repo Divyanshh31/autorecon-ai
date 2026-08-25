@@ -609,6 +609,23 @@ module.exports = async (req, res) => {
         }
         if (pathname === '/api/recon/batches') return json(globalBatches);
 
+        if (pathname.startsWith('/api/recon/batches/')) {
+            const parts = pathname.split('/');
+            const bId = parts[4];
+            const sub = parts[5];
+
+            const batch = globalBatches.find(b => b.batchId === bId);
+            if (sub === 'summary') {
+                return json(calculateReconSummary(bId));
+            } else if (sub === 'orders') {
+                return json(globalOrders.filter(o => o.batchId === bId));
+            } else if (sub === 'discrepancies') {
+                return json(globalDiscrepancies.filter(d => d.batchId === bId));
+            } else {
+                return json(batch || { batchId: bId, fileName: 'Uploaded File', totalOrders: 0 });
+            }
+        }
+
         if (pathname === '/api/recon/discrepancies/export-email') {
             const summary = calculateReconSummary();
             const emailBody = `To: settlements@razorpay.com\nSubject: Formal Dispute: MDR Fee Variance & SLA Breaches (MID: RZP_ENT_8892)\n\nDear Razorpay Settlement & Compliance Team,\n\nWe are writing to formally lodge a reconciliation dispute regarding our merchant account (MID: RZP_ENT_8892).\nOur automated audit detected variances totaling INR ${summary.totalDiscrepancyAmount}.\n\nAudit Summary:\n1. Total Gross Volume Audited: INR ${summary.totalGrossVolume}\n2. Contracted MDR Rate: 2.00% + 18% GST\n3. Overcharged MDR Fees: INR ${(summary.totalActualMdrFee - summary.totalExpectedMdrFee > 0 ? summary.totalActualMdrFee - summary.totalExpectedMdrFee : 0).toFixed(2)}\n4. Delayed Settlement SLA Breaches: ${summary.delayedSettlements} instances\n\nPlease credit the overcharged fee variance to our nodal bank account within 3 business days.\n\nSincerely,\nFinance & Reconciliation Desk\nZenith Retail India Pvt Ltd`;
