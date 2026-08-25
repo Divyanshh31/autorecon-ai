@@ -48,7 +48,7 @@ pre, code, .font-mono {
 /* ==========================================================================
    LIVE INTERACTIVE BACKGROUND CANVAS & ETHEREAL ORBS
    ========================================================================== */
-#liveBgCanvas {
+#liveBgCanvas, #liveSalaryCanvas {
     position: fixed;
     top: 0;
     left: 0;
