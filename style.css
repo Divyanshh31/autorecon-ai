@@ -1,0 +1,382 @@
+/* ==========================================================================
+   AutoRecon AI — Authentic iPhone / iOS Glassmorphism & Vibrant Liquid Materials
+   Palette: Botanical Deep Pine (#131c17), Warm Sandstone (#e5a95d), Forest Jade (#2ec4b6)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --bg-main: #0a110d;
+    --bg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 32, 25, 0.52) 40%, rgba(14, 22, 18, 0.68) 100%);
+    --bg-glass-card-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(26, 42, 33, 0.65) 40%, rgba(18, 29, 23, 0.78) 100%);
+    --bg-glass-header: rgba(12, 19, 15, 0.68);
+    --bg-glass-drawer: rgba(16, 26, 20, 0.88);
+    
+    --border-glass: rgba(255, 255, 255, 0.14);
+    --border-glass-hover: rgba(229, 169, 93, 0.45);
+    --border-glass-glow: rgba(46, 196, 182, 0.45);
+    
+    --text-primary: #f5eedc;
+    --text-secondary: #b5c4b8;
+    --text-muted: #7e9182;
+    
+    --brand-gold: #e5a95d;
+    --brand-ochre: #d48b38;
+    --brand-jade: #2ec4b6;
+    --brand-sage: #81b29a;
+    --brand-terracotta: #e76f51;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+pre, code, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* ==========================================================================
+   LIVE INTERACTIVE BACKGROUND CANVAS & ETHEREAL ORBS
+   ========================================================================== */
+#liveBgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.ambient-glow-orbs {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.42;
+    animation: orbFloat 24s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+    width: 580px;
+    height: 580px;
+    background: radial-gradient(circle, #e5a95d 0%, rgba(229, 169, 93, 0) 70%);
+    top: -120px;
+    right: 5%;
+    animation-duration: 24s;
+}
+
+.orb-2 {
+    width: 680px;
+    height: 680px;
+    background: radial-gradient(circle, #2ec4b6 0%, rgba(46, 196, 182, 0) 70%);
+    bottom: -150px;
+    left: -100px;
+    animation-duration: 28s;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, #e76f51 0%, rgba(231, 111, 81, 0) 70%);
+    top: 38%;
+    right: -100px;
+    animation-duration: 22s;
+    animation-delay: -10s;
+}
+
+.orb-4 {
+    width: 440px;
+    height: 440px;
+    background: radial-gradient(circle, #81b29a 0%, rgba(129, 178, 154, 0) 70%);
+    top: 15%;
+    left: 18%;
+    animation-duration: 26s;
+    animation-delay: -14s;
+}
+
+@keyframes orbFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(45px, 65px) scale(1.12); }
+    100% { transform: translate(-35px, -45px) scale(0.94); }
+}
+
+/* ==========================================================================
+   MINIMALISTIC OPENING SCREEN (Clean Apple/iOS Style)
+   ========================================================================== */
+#splashScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: radial-gradient(circle at 50% 50%, #15241d 0%, #080e0a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+}
+
+#splashScreen.fade-out {
+    opacity: 0;
+    transform: scale(1.05);
+    filter: blur(12px);
+    pointer-events: none;
+}
+
+.minimal-glass-emblem {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 50px rgba(229, 169, 93, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    animation: gentlePulse 3s infinite ease-in-out;
+}
+
+@keyframes gentlePulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(229, 169, 93, 0.18); }
+    50% { transform: scale(1.03); box-shadow: 0 0 65px rgba(229, 169, 93, 0.38); }
+}
+
+.hairline-loader {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.hairline-loader-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #e5a95d, #2ec4b6, #e5a95d);
+    background-size: 200% 100%;
+    animation: loaderShimmer 2s infinite linear;
+    transition: width 0.25s ease-out;
+}
+
+@keyframes loaderShimmer {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+/* ==========================================================================
+   AUTHENTIC IPHONE / IOS GLASSMORPHISM CORE MATERIALS
+   ========================================================================== */
+
+/* iPhone Frosted Glass Cards (Squircle 26px, Specular Rim Shine, Vibrancy) */
+.pine-card, .glass-card {
+    background: var(--bg-glass-card);
+    backdrop-filter: blur(36px) saturate(210%) contrast(105%);
+    -webkit-backdrop-filter: blur(36px) saturate(210%) contrast(105%);
+    border: 1px solid var(--border-glass);
+    border-radius: 26px;
+    box-shadow: 
+        0 20px 45px -10px rgba(0, 0, 0, 0.55),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.28),
+        inset 0 0 0 0.5px rgba(255, 255, 255, 0.08),
+        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.pine-card:hover, .glass-card:hover {
+    background: var(--bg-glass-card-hover);
+    border-color: rgba(229, 169, 93, 0.38);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 28px 55px -10px rgba(0, 0, 0, 0.65),
+        0 0 30px rgba(229, 169, 93, 0.12),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.38),
+        inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
+}
+
+/* iPhone Glass Header Bar */
+.glass-header {
+    background: var(--bg-glass-header);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* iPhone Glass Buttons (Tactile Squircle with Specular Top Highlight) */
+.glass-btn {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    color: var(--text-primary);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-btn:hover {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.07) 100%);
+    border-color: rgba(229, 169, 93, 0.45);
+    transform: translateY(-1px);
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.35),
+        0 0 15px rgba(229, 169, 93, 0.15),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.glass-btn:active {
+    transform: scale(0.97);
+}
+
+/* iPhone Glass Input (Deep Translucent Well) */
+.glass-input {
+    background: rgba(10, 16, 13, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: var(--text-primary);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+    background: rgba(10, 16, 13, 0.85);
+    border-color: var(--brand-gold);
+    box-shadow: 0 0 18px rgba(229, 169, 93, 0.25), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   IPHONE DYNAMIC ISLAND LIVE WEBHOOK STREAM CAPSULE
+   ========================================================================== */
+.live-stream-ticker {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(12, 19, 15, 0.85) 50%, rgba(8, 14, 11, 0.9) 100%);
+    backdrop-filter: blur(32px) saturate(220%);
+    -webkit-backdrop-filter: blur(32px) saturate(220%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 9999px;
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.live-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #2ec4b6;
+    box-shadow: 0 0 12px #2ec4b6, 0 0 4px #2ec4b6;
+    animation: livePulse 1.5s infinite ease-in-out;
+}
+
+@keyframes livePulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.35); opacity: 0.55; }
+}
+
+/* ==========================================================================
+   IOS CONTROL CENTER BADGES & PILLS
+   ========================================================================== */
+.badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.28rem 0.75rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    border-radius: 9999px;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.badge-reconciled {
+    background: rgba(46, 196, 182, 0.18);
+    color: #48e5c2;
+    border: 1px solid rgba(46, 196, 182, 0.45);
+    box-shadow: 0 0 15px rgba(46, 196, 182, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.badge-fee-mismatch {
+    background: rgba(229, 169, 93, 0.18);
+    color: #f7be78;
+    border: 1px solid rgba(229, 169, 93, 0.45);
+    box-shadow: 0 0 15px rgba(229, 169, 93, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.badge-delayed {
+    background: rgba(231, 111, 81, 0.18);
+    color: #f89d89;
+    border: 1px solid rgba(231, 111, 81, 0.45);
+    box-shadow: 0 0 15px rgba(231, 111, 81, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+/* ==========================================================================
+   AMAZON RUFUS / SIRI FLOATING GLASS WIDGET
+   ========================================================================== */
+#floatingChatWindow {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(20, 32, 25, 0.88) 35%, rgba(12, 19, 15, 0.96) 100%);
+    backdrop-filter: blur(48px) saturate(230%);
+    -webkit-backdrop-filter: blur(48px) saturate(230%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 30px 70px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(229, 169, 93, 0.15),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
+}
+
+#btnToggleFloatingChat {
+    background: linear-gradient(135deg, #e5a95d 0%, #d48b38 50%, #2ec4b6 100%);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.5),
+        0 0 25px rgba(229, 169, 93, 0.35),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+#btnToggleFloatingChat:hover {
+    box-shadow: 
+        0 20px 45px rgba(0, 0, 0, 0.6),
+        0 0 35px rgba(229, 169, 93, 0.5),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(10, 16, 13, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(229, 169, 93, 0.5);
+}

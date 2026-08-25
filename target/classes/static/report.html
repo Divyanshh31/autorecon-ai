@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoRecon AI — Batch Audit Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pine: {
+                            800: '#1e2d25',
+                            900: '#131c17',
+                            950: '#0a110d'
+                        },
+                        sand: {
+                            100: '#f5eedc',
+                            200: '#ebd9b8',
+                            300: '#e5a95d',
+                            400: '#d48b38'
+                        },
+                        jade: {
+                            400: '#48e5c2',
+                            500: '#2ec4b6',
+                            600: '#269b90'
+                        },
+                        terracotta: {
+                            400: '#f28482',
+                            500: '#e76f51',
+                            600: '#d15335'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-amber-600 selection:text-stone-950 pb-20">
+
+    <!-- LIVE BACKGROUND -->
+    <canvas id="liveBgCanvas"></canvas>
+    <div class="ambient-glow-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+
+    <!-- Top Navigation Glass Header -->
+    <header class="glass-header sticky top-0 z-40">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- File Info & Brand -->
+            <div class="flex items-center space-x-4">
+                <div class="h-11 w-11 rounded-2xl bg-gradient-to-tr from-sand-400 to-jade-500 p-[1px] shadow-lg flex-shrink-0">
+                    <div class="w-full h-full bg-[#131c17]/90 rounded-[15px] flex items-center justify-center backdrop-blur-md">
+                        <i class="ph-fill ph-file-text text-sand-300 text-2xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2.5">
+                        <span class="font-extrabold text-xl text-sand-100 tracking-tight" id="reportTitle">
+                            Batch Audit Report
+                        </span>
+                        <span class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-jade-500/15 text-jade-400 border border-jade-500/30 font-mono">
+                            CSV Audit Session
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-xs text-sand-200/60 mt-0.5">
+                        <span id="reportFileName" class="text-sand-200 font-bold">Uploaded File</span>
+                        <span>&middot;</span>
+                        <span id="reportBatchId" class="font-mono text-sand-200/70">Batch ID</span>
+                        <span>&middot;</span>
+                        <span id="reportTimestamp" class="text-sand-200/60">Live</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header Actions -->
+            <div class="flex items-center space-x-3">
+                <a href="/" class="glass-btn px-3.5 py-2 text-xs font-semibold rounded-xl transition flex items-center space-x-1.5 shadow-sm">
+                    <i class="ph-bold ph-arrow-left"></i>
+                    <span>Main Dashboard</span>
+                </a>
+                <button onclick="window.print()" class="glass-btn px-3.5 py-2 text-xs font-semibold rounded-xl transition flex items-center space-x-1.5 shadow-sm">
+                    <i class="ph-bold ph-printer"></i>
+                    <span>Print / PDF</span>
+                </button>
+                <button id="btnOpenDisputeModal" class="px-4 py-2 text-xs font-bold rounded-xl bg-sand-300/15 hover:bg-sand-300/25 text-sand-300 border border-sand-300/40 transition flex items-center space-x-1.5 shadow-sm">
+                    <i class="ph-bold ph-scales"></i>
+                    <span>Dispute Room</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Viewport -->
+    <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- 3 Big Golden Numbers for This Uploaded CSV File -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            
+            <!-- 1. Total Store Sales -->
+            <div class="pine-card p-6 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="p-2.5 rounded-xl bg-sand-300/15 text-sand-300 border border-sand-300/25">
+                            <i class="ph-bold ph-shopping-bag text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-sand-200/70">CSV Ingested Sales</span>
+                            <p class="text-xs text-sand-100 font-medium" id="statOrderCount">0 Orders Processed</p>
+                        </div>
+                    </div>
+                    <span class="badge-pill bg-sand-300/10 text-sand-300 border border-sand-300/30 text-[11px]">100% Ingested</span>
+                </div>
+                <div class="my-4">
+                    <div class="text-3xl font-black text-sand-100 font-mono" id="statGrossVolume">₹0.00</div>
+                </div>
+                <div class="pt-3 border-t border-[#25362c] text-xs text-sand-200/70 flex justify-between">
+                    <span>Source: <b class="text-sand-200" id="statSourceFile">File</b></span>
+                    <span>Reconciliation: <b class="text-jade-400 font-semibold" id="statHealthPct">100%</b></span>
+                </div>
+            </div>
+
+            <!-- 2. Credited in Bank (Safe) -->
+            <div class="pine-card p-6 flex flex-col justify-between border-jade-500/30 bg-jade-500/[0.04]">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="p-2.5 rounded-xl bg-jade-500/15 text-jade-400 border border-jade-500/25">
+                            <i class="ph-bold ph-bank text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-jade-300">Money in Bank (Safe)</span>
+                            <p class="text-xs text-sand-100 font-medium">Net Payouts Verified</p>
+                        </div>
+                    </div>
+                    <span class="badge-pill badge-reconciled text-[11px]">Verified Safe</span>
+                </div>
+                <div class="my-4">
+                    <div class="text-3xl font-black text-jade-400 font-mono" id="statSettledBank">₹0.00</div>
+                </div>
+                <div class="pt-3 border-t border-[#25362c] text-xs text-sand-200/70 flex justify-between">
+                    <span>Matched Payouts: <b class="text-jade-300 font-mono font-bold" id="statReconciledCount">0 Orders</b></span>
+                    <span>Settlement SLA: <b class="text-sand-200 font-medium">T+2 Days</b></span>
+                </div>
+            </div>
+
+            <!-- 3. Money to Recover / Check -->
+            <div class="pine-card p-6 flex flex-col justify-between border-sand-300/30 bg-sand-300/[0.04]">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="p-2.5 rounded-xl bg-sand-300/15 text-sand-300 border border-sand-300/25">
+                            <i class="ph-bold ph-warning-circle text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-sand-300">Variances to Check</span>
+                            <p class="text-xs text-sand-100 font-medium" id="statAnomalyCount">0 items flagged</p>
+                        </div>
+                    </div>
+                    <button onclick="document.getElementById('btnOpenDisputeModal').click()" class="text-xs font-bold text-sand-300 bg-sand-300/15 hover:bg-sand-300/25 px-3 py-1 rounded-full border border-sand-300/40 transition">
+                        Claim ➔
+                    </button>
+                </div>
+                <div class="my-4">
+                    <div class="text-3xl font-black text-sand-300 font-mono" id="statDiscrepancyAmount">₹0.00</div>
+                </div>
+                <div class="pt-3 border-t border-[#25362c] text-xs text-sand-200/70 flex justify-between">
+                    <span>Fee Overcharge: <b class="text-sand-300 font-mono" id="statFeeLeakVal">₹0.00</b></span>
+                    <span>Delayed / Missing: <b class="text-terracotta-400 font-mono" id="statDelayedVal">₹0.00</b></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3-Step Clear Settlement Trail for this File -->
+        <div class="pine-card p-6">
+            <div class="flex items-center justify-between mb-5">
+                <div>
+                    <h2 class="text-base font-bold text-sand-100">Settlement Trail for this File</h2>
+                    <p class="text-xs text-sand-200/60 mt-0.5">Tracking every rupee across Store, Razorpay, and Bank for this batch</p>
+                </div>
+                <span class="badge-pill bg-sand-300/10 text-sand-300 border border-sand-300/25 text-xs">
+                    Contracted Rate: <b>2.0% MDR + 18% GST</b>
+                </span>
+            </div>
+
+            <!-- 3 Columns Flow -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                <!-- Column 1 -->
+                <div class="p-4 rounded-xl border border-[#25362c] bg-[#16221b]/80 backdrop-blur-md">
+                    <div class="flex items-center space-x-2 text-xs font-bold text-sand-200 mb-2">
+                        <span class="w-5 h-5 rounded-full bg-sand-400 text-[#131c17] flex items-center justify-center text-[10px] font-bold">1</span>
+                        <span>Customer Sales (Store)</span>
+                    </div>
+                    <div class="text-xl font-black text-sand-100 font-mono" id="trailGross">₹0.00</div>
+                    <p class="text-xs text-sand-200/60 mt-1.5">Total money in this uploaded CSV batch.</p>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="p-4 rounded-xl border border-[#25362c] bg-[#16221b]/80 backdrop-blur-md">
+                    <div class="flex items-center space-x-2 text-xs font-bold text-sand-200 mb-2">
+                        <span class="w-5 h-5 rounded-full bg-sand-300 text-[#131c17] flex items-center justify-center text-[10px] font-bold">2</span>
+                        <span>Razorpay Fee & GST Cut</span>
+                    </div>
+                    <div class="text-xl font-black text-sand-300 font-mono" id="trailFeesTax">₹0.00</div>
+                    <p class="text-xs text-sand-200/60 mt-1.5">
+                        MDR Fee: <b class="text-sand-200 font-mono" id="trailMdr">₹0.00</b> | 
+                        GST: <b class="text-sand-200 font-mono" id="trailGst">₹0.00</b>
+                    </p>
+                </div>
+
+                <!-- Column 3 -->
+                <div class="p-4 rounded-xl border border-jade-500/30 bg-jade-500/[0.04] backdrop-blur-md">
+                    <div class="flex items-center space-x-2 text-xs font-bold text-jade-300 mb-2">
+                        <span class="w-5 h-5 rounded-full bg-jade-400 text-[#131c17] flex items-center justify-center text-[10px] font-bold">3</span>
+                        <span>Deposited in Bank</span>
+                    </div>
+                    <div class="text-xl font-black text-jade-400 font-mono" id="trailBank">₹0.00</div>
+                    <p class="text-xs text-sand-200/70 mt-1.5">Net amount credited to your bank account with UTR.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Section: Spacious 50/50 Visual Graphs -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Chart 1: Visual Pie Breakdown -->
+            <div class="pine-card p-6 flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-sand-200">Reconciliation Breakdown</h3>
+                        <p class="text-[11px] text-sand-200/60 mt-0.5">Distribution of verified payouts vs discrepancies</p>
+                    </div>
+                    <span class="badge-pill bg-sand-300/10 text-sand-300 font-mono text-xs" id="chartOrderCount">0 Orders</span>
+                </div>
+                <div class="relative flex-1 flex items-center justify-center min-h-[260px]">
+                    <canvas id="reconDonutChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: Contractual Fee Audit -->
+            <div class="pine-card p-6 flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-sand-200">Gateway Fee Deductions</h3>
+                        <p class="text-[11px] text-sand-200/60 mt-0.5">Contracted 2.0% SLA vs actual deducted fees</p>
+                    </div>
+                    <span class="text-xs text-sand-200/60 font-mono">INR</span>
+                </div>
+                <div class="relative flex-1 flex items-center justify-center min-h-[260px]">
+                    <canvas id="feeBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3-Way Transaction Ledger for this file -->
+        <div class="pine-card overflow-hidden">
+            <div class="p-5 border-b border-[#22332a] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-sm font-bold text-sand-100 flex items-center space-x-2">
+                        <i class="ph-bold ph-table text-sand-300"></i>
+                        <span>Transaction Ledger for This Uploaded File</span>
+                    </h3>
+                    <p class="text-xs text-sand-200/60 mt-0.5">Click any row to inspect the side-by-side 3-way data diff</p>
+                </div>
+
+                <!-- Search & Filters -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="relative">
+                        <i class="ph ph-magnifying-glass absolute left-3 top-2.5 text-sand-200/50 text-xs"></i>
+                        <input type="text" id="tableSearchInput" placeholder="Search Order ID, Customer, UTR..." class="glass-input rounded-xl pl-8 pr-3 py-1.5 text-xs focus:outline-none transition w-48 sm:w-64">
+                    </div>
+                    <button class="table-filter-btn px-3 py-1.5 text-xs rounded-xl bg-sand-300 text-[#131c17] font-bold transition shadow-sm" data-filter="ALL">All Records</button>
+                    <button class="table-filter-btn glass-btn px-3 py-1.5 text-xs rounded-xl font-semibold transition" data-filter="DISCREPANCY">Anomalies Only</button>
+                    <button class="table-filter-btn glass-btn px-3 py-1.5 text-xs rounded-xl font-semibold transition" data-filter="FEE_MISMATCH">Fee Overcharges</button>
+                    <button class="table-filter-btn glass-btn px-3 py-1.5 text-xs rounded-xl font-semibold transition" data-filter="RECONCILED">Reconciled</button>
+                </div>
+            </div>
+
+            <!-- Table Container -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-[#131c17]/80 text-sand-200/70 uppercase font-bold text-[11px] border-b border-[#22332a]">
+                        <tr>
+                            <th class="px-5 py-3.5">Order / Customer</th>
+                            <th class="px-4 py-3.5">Order Value</th>
+                            <th class="px-4 py-3.5">Razorpay Payment ID</th>
+                            <th class="px-4 py-3.5">Gateway Fee (MDR + GST)</th>
+                            <th class="px-4 py-3.5">Bank Credit UTR</th>
+                            <th class="px-4 py-3.5">Audit Status</th>
+                            <th class="px-5 py-3.5 text-right">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody" class="divide-y divide-[#22332a] text-sand-200">
+                        <tr>
+                            <td colspan="7" class="px-5 py-10 text-center text-sand-200/50">
+                                Loading transaction records for this batch...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- =========================================================================
+         AMAZON-STYLE FLOATING AI MUNIMJI COPILOT WIDGET (Rufus Style)
+         ========================================================================= -->
+    <div id="aiChatWidgetWrapper" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        
+        <!-- Flyout Glass Chat Window -->
+        <div id="floatingChatWindow" class="hidden mb-4 w-[420px] max-w-[94vw] h-[550px] bg-[#16221b]/95 backdrop-blur-2xl border border-sand-300/35 rounded-3xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300">
+            
+            <!-- Header -->
+            <div class="p-4 bg-[#131c17]/90 border-b border-[#22332a] flex items-center justify-between">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sand-400 to-jade-400 p-[1px] shadow-sm flex-shrink-0">
+                        <div class="w-full h-full bg-[#131c17] rounded-[11px] flex items-center justify-center">
+                            <i class="ph-fill ph-robot text-sand-300 text-lg"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold text-sand-100 flex items-center space-x-1.5">
+                            <span>AI Munimji Copilot</span>
+                            <span class="w-2 h-2 rounded-full bg-jade-400 animate-pulse"></span>
+                        </h3>
+                        <p class="text-[10px] text-sand-200/60 font-mono">Batch Context Active · Merchant Assistant</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-1.5">
+                    <button onclick="toggleFloatingChat()" class="p-1.5 text-sand-200/60 hover:text-sand-100 rounded-lg hover:bg-[#1a2720]">
+                        <i class="ph-bold ph-x text-sm"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages Stream -->
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 text-xs">
+                <div class="bg-[#131c17] border border-[#22332a] rounded-2xl p-3.5 text-sand-200 leading-relaxed shadow-sm" id="initialChatGreeting">
+                    Namaste! 🙏 I am analyzing the transactions from your uploaded CSV file. Ask me any question below!
+                </div>
+            </div>
+
+            <!-- Quick Query Pills -->
+            <div class="px-3 py-2 flex flex-wrap gap-1.5 border-t border-[#22332a] bg-[#131c17]/60">
+                <button class="quick-chip px-2.5 py-1 bg-[#1a2720] hover:bg-[#22332a] text-sand-200 rounded-lg text-[11px] font-semibold transition border border-[#2b3d32]" data-query="Did Razorpay overcharge any gateway fees in this batch?">
+                    🔍 Fee Overcharges?
+                </button>
+                <button class="quick-chip px-2.5 py-1 bg-[#1a2720] hover:bg-[#22332a] text-sand-200 rounded-lg text-[11px] font-semibold transition border border-[#2b3d32]" data-query="How much GST input credit can I claim for this uploaded batch?">
+                    🧾 GST Summary
+                </button>
+                <button class="quick-chip px-2.5 py-1 bg-sand-300/15 hover:bg-sand-300/25 text-sand-300 rounded-lg text-[11px] font-bold border border-sand-300/30 transition" data-query="Draft a dispute email to Razorpay Support for this batch">
+                    📝 Write Dispute Email
+                </button>
+            </div>
+
+            <!-- Chat Input Form -->
+            <form id="chatForm" class="p-3 bg-[#131c17]/90 border-t border-[#22332a] flex items-center space-x-2">
+                <input type="text" id="chatInput" placeholder="Ask about this file (e.g. Did Razorpay overcharge?)..." class="glass-input flex-1 rounded-xl px-3.5 py-2 text-xs focus:outline-none transition">
+                <button type="submit" class="p-2.5 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-xl transition shadow-sm flex items-center justify-center font-bold">
+                    <i class="ph-bold ph-paper-plane-right text-xs"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Floating Trigger Button (Amazon Rufus Style) -->
+        <button id="btnToggleFloatingChat" onclick="toggleFloatingChat()" class="group px-4 py-3 bg-gradient-to-r from-sand-400 via-sand-300 to-jade-400 text-[#131c17] rounded-full shadow-2xl hover:shadow-sand-300/30 flex items-center space-x-2.5 font-extrabold text-xs transition-all active:scale-95 border border-sand-200/40">
+            <div class="w-6 h-6 rounded-full bg-[#131c17] flex items-center justify-center text-sand-300 shadow-inner">
+                <i class="ph-fill ph-sparkle text-xs"></i>
+            </div>
+            <span class="tracking-wide font-bold">Ask AI Munimji</span>
+            <span class="px-1.5 py-0.5 bg-[#131c17]/20 text-[#131c17] rounded-md text-[10px] font-mono font-bold">Rufus AI</span>
+        </button>
+    </div>
+
+    <!-- Side-Drawer: Simple 3-Way Data Comparison -->
+    <div id="diffDrawer" class="hidden fixed inset-0 z-50 overflow-hidden">
+        <div class="absolute inset-0 bg-[#0a110d]/80 backdrop-blur-sm" onclick="closeDiffDrawer()"></div>
+        <div class="fixed inset-y-0 right-0 max-w-lg w-full bg-[#16221b]/95 backdrop-blur-2xl border-l border-[#2b3d32] shadow-2xl p-6 flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b border-[#22332a]">
+                <div>
+                    <h3 class="text-sm font-bold text-sand-100">3-Way Transaction Check</h3>
+                    <p class="text-xs text-sand-200/60" id="drawerOrderId">Checking Order: ...</p>
+                </div>
+                <button onclick="closeDiffDrawer()" class="text-sand-200/60 hover:text-sand-100 p-2">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Drawer Content Body -->
+            <div class="flex-1 overflow-y-auto py-4 space-y-4 text-xs">
+                
+                <!-- Status Banner -->
+                <div id="drawerStatusBanner" class="p-3.5 rounded-xl border flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i id="drawerStatusIcon" class="ph-fill ph-check-circle text-lg"></i>
+                        <span id="drawerStatusText" class="font-bold">Status</span>
+                    </div>
+                    <span id="drawerSeverityBadge" class="badge-pill">Severity</span>
+                </div>
+
+                <!-- 3 Layers -->
+                <div class="space-y-3">
+                    <!-- Layer 1 -->
+                    <div class="bg-[#131c17]/80 border border-[#22332a] rounded-xl p-3.5 space-y-1.5">
+                        <div class="font-bold text-sand-100 flex items-center space-x-1.5">
+                            <i class="ph-bold ph-storefront text-sand-300"></i>
+                            <span>1. Store Sales Record</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-sand-200 pt-1">
+                            <div>Customer: <b id="drawerCustomer" class="text-sand-100">--</b></div>
+                            <div>Amount: <b id="drawerStoreAmount" class="text-sand-100 font-mono">₹0.00</b></div>
+                        </div>
+                    </div>
+
+                    <!-- Layer 2 -->
+                    <div class="bg-[#131c17]/80 border border-[#22332a] rounded-xl p-3.5 space-y-1.5">
+                        <div class="font-bold text-sand-100 flex items-center space-x-1.5">
+                            <i class="ph-bold ph-shield-check text-sand-300"></i>
+                            <span>2. Razorpay Settlement Record</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-sand-200 pt-1">
+                            <div>Payment ID: <b id="drawerPaymentId" class="text-sand-100 font-mono">--</b></div>
+                            <div>Fee (MDR): <b id="drawerRzpFee" class="text-sand-300 font-mono">₹0.00</b></div>
+                            <div>GST: <b id="drawerRzpTax" class="text-sand-100 font-mono">₹0.00</b></div>
+                            <div>Net Payable: <b id="drawerRzpNet" class="text-jade-400 font-mono">₹0.00</b></div>
+                        </div>
+                    </div>
+
+                    <!-- Layer 3 -->
+                    <div class="bg-[#131c17]/80 border border-[#22332a] rounded-xl p-3.5 space-y-1.5">
+                        <div class="font-bold text-sand-100 flex items-center space-x-1.5">
+                            <i class="ph-bold ph-bank text-jade-400"></i>
+                            <span>3. Bank Statement Deposit</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-sand-200 pt-1">
+                            <div>Bank UTR: <b id="drawerBankUtr" class="text-jade-300 font-mono">--</b></div>
+                            <div>Deposited: <b id="drawerBankCredit" class="text-sand-100 font-mono">₹0.00</b></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation -->
+                <div class="bg-sand-300/10 border border-sand-300/25 rounded-xl p-3.5 space-y-1.5">
+                    <span class="font-bold text-sand-300">What happened here:</span>
+                    <p id="drawerRootCause" class="text-sand-200 leading-relaxed text-xs"></p>
+                    <div class="pt-2 border-t border-sand-300/20 mt-2">
+                        <span class="font-bold text-sand-300">Suggested Action:</span>
+                        <p id="drawerSuggestedAction" class="text-sand-200 text-xs mt-0.5"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drawer Footer -->
+            <div class="pt-4 border-t border-[#22332a] flex items-center justify-between">
+                <button onclick="askCopilotForDrawerOrder()" class="px-4 py-2 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-xl font-bold text-xs shadow-sm">
+                    Ask AI Munimji
+                </button>
+                <button onclick="closeDiffDrawer()" class="glass-btn px-4 py-2 rounded-xl font-semibold text-xs">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Dispute Letter Generator -->
+    <div id="disputeModal" class="hidden fixed inset-0 z-50 bg-[#0a110d]/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-[#16221b]/95 backdrop-blur-2xl border border-[#2b3d32] rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-[#22332a] flex items-center justify-between bg-[#131c17]/90">
+                <div>
+                    <h3 class="text-sm font-bold text-sand-100">Razorpay Fee & Settlement Dispute Letter</h3>
+                    <p class="text-xs text-sand-200/60">Ready to send directly to Razorpay Merchant Support</p>
+                </div>
+                <button onclick="document.getElementById('disputeModal').classList.add('hidden')" class="text-sand-200/60 hover:text-sand-100">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="p-5 flex-1 overflow-y-auto text-xs">
+                <div class="bg-[#131c17] p-4 rounded-xl border border-[#22332a] font-mono text-sand-200">
+                    <div class="grid grid-cols-2 gap-2 mb-3 pb-3 border-b border-[#22332a] text-xs">
+                        <div>To: <b class="text-sand-300">settlements@razorpay.com</b></div>
+                        <div>Total Disputed: <b class="text-sand-300" id="dispTotalAmount">₹0.00</b></div>
+                    </div>
+                    <pre id="dispEmailBody" class="font-mono text-sand-200 whitespace-pre-wrap leading-relaxed text-xs max-h-72 overflow-y-auto"></pre>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-[#22332a] bg-[#131c17]/90 flex items-center justify-between">
+                <span class="text-xs text-sand-200/60">Auto-drafted with contractual 2.0% MDR calculations</span>
+                <div class="flex items-center space-x-2">
+                    <button id="btnCopyDispute" class="px-4 py-2 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-xl text-xs font-bold shadow-sm transition">
+                        Copy Letter
+                    </button>
+                    <button onclick="window.print()" class="glass-btn px-4 py-2 rounded-xl text-xs font-semibold">
+                        Print / PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="report.js"></script>
+</body>
+</html>

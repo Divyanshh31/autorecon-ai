@@ -1,0 +1,14 @@
+{
+  "name": "autorecon-ai",
+  "version": "1.0.0",
+  "description": "AutoRecon AI — Autonomous Settlement Controller for Razorpay with iPhone iOS Glassmorphism",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "vercel-build": "echo 'Vercel build complete'"
+  },
+  "dependencies": {},
+  "keywords": ["fintech", "reconciliation", "razorpay", "gemini-ai", "glassmorphism"],
+  "author": "Zenith Retail / AutoRecon AI",
+  "license": "MIT"
+}
