@@ -176,6 +176,9 @@ function initLiveBackground() {
 // =========================================================================
 // 2. MINIMALISTIC FAST SPLASH SCREEN
 // =========================================================================
+// =========================================================================
+// 2. MINIMALISTIC FAST SPLASH SCREEN
+// =========================================================================
 function initMinimalSplash() {
     const splash = document.getElementById('splashScreen');
     const bar = document.getElementById('splashProgressBar');
@@ -183,6 +186,11 @@ function initMinimalSplash() {
     const txt = document.getElementById('splashStatusText');
 
     if (!splash) return;
+
+    // Failsafe: automatically remove splash screen after max 1.5 seconds under all conditions
+    setTimeout(() => {
+        skipSplashScreen();
+    }, 1200);
 
     let progress = 0;
     const stages = [
@@ -193,30 +201,31 @@ function initMinimalSplash() {
     ];
 
     const timer = setInterval(() => {
-        progress += Math.floor(Math.random() * 18) + 12;
+        progress += Math.floor(Math.random() * 25) + 20;
         if (progress > 100) progress = 100;
 
-        bar.style.width = progress + '%';
-        pct.textContent = progress + '%';
+        if (bar) bar.style.width = progress + '%';
+        if (pct) pct.textContent = progress + '%';
 
         const stage = stages.find(s => progress <= s.at) || stages[stages.length - 1];
-        txt.textContent = stage.text;
+        if (txt) txt.textContent = stage.text;
 
         if (progress >= 100) {
             clearInterval(timer);
             setTimeout(() => {
-                splash.classList.add('fade-out');
-                setTimeout(() => splash.remove(), 700);
-            }, 300);
+                skipSplashScreen();
+            }, 200);
         }
-    }, 120);
+    }, 100);
 }
 
 window.skipSplashScreen = function() {
     const splash = document.getElementById('splashScreen');
     if (splash) {
         splash.classList.add('fade-out');
-        setTimeout(() => splash.remove(), 400);
+        setTimeout(() => {
+            if (splash.parentNode) splash.parentNode.removeChild(splash);
+        }, 500);
     }
 };
 
@@ -281,20 +290,32 @@ function initLiveTicker() {
 // 5. EVENT LISTENERS
 // =========================================================================
 function setupEventListeners() {
-    document.getElementById('btnLoadDemo').addEventListener('click', loadDemoData);
-    document.getElementById('btnOpenDisputeModal').addEventListener('click', openDisputeModal);
-    document.getElementById('btnCopyDispute').addEventListener('click', copyDisputeToClipboard);
-    document.getElementById('btnOpenSimModal').addEventListener('click', () => {
-        document.getElementById('simModal').classList.remove('hidden');
+    const btnDemo = document.getElementById('btnLoadDemo');
+    if (btnDemo) btnDemo.addEventListener('click', loadDemoData);
+
+    const btnDispute = document.getElementById('btnOpenDisputeModal');
+    if (btnDispute) btnDispute.addEventListener('click', openDisputeModal);
+
+    const btnCopyDisp = document.getElementById('btnCopyDispute');
+    if (btnCopyDisp) btnCopyDisp.addEventListener('click', copyDisputeToClipboard);
+
+    const btnSim = document.getElementById('btnOpenSimModal');
+    if (btnSim) btnSim.addEventListener('click', () => {
+        const sm = document.getElementById('simModal');
+        if (sm) sm.classList.remove('hidden');
     });
 
-    document.getElementById('simForm').addEventListener('submit', handleSimulateTransaction);
+    const simForm = document.getElementById('simForm');
+    if (simForm) simForm.addEventListener('submit', handleSimulateTransaction);
 
     // Live Search Filter for Reconciliation Table
-    document.getElementById('tableSearchInput').addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        renderOrdersTable(query);
-    });
+    const searchInput = document.getElementById('tableSearchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            renderOrdersTable(query);
+        });
+    }
 
     // Reconciliation Filter Buttons
     document.querySelectorAll('.table-filter-btn').forEach(btn => {
@@ -306,26 +327,30 @@ function setupEventListeners() {
             e.target.classList.add('bg-sand-300', 'text-[#131c17]', 'font-bold', 'shadow-sm');
             e.target.classList.remove('text-sand-200');
             currentFilter = e.target.getAttribute('data-filter');
-            renderOrdersTable(document.getElementById('tableSearchInput').value.toLowerCase().trim());
+            const sq = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            renderOrdersTable(sq);
         });
     });
 
     // Chat form
-    document.getElementById('chatForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const input = document.getElementById('chatInput');
-        const query = input.value.trim();
-        if (query) {
-            sendChatMessage(query);
-            input.value = '';
-        }
-    });
+    const chatForm = document.getElementById('chatForm');
+    if (chatForm) {
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('chatInput');
+            const query = input ? input.value.trim() : '';
+            if (query) {
+                sendChatMessage(query);
+                if (input) input.value = '';
+            }
+        });
+    }
 
     // Quick query pills
     document.querySelectorAll('.quick-chip').forEach(chip => {
         chip.addEventListener('click', () => {
             const query = chip.getAttribute('data-query');
-            sendChatMessage(query);
+            if (query) sendChatMessage(query);
         });
     });
 
@@ -333,7 +358,8 @@ function setupEventListeners() {
     const btnUpload = document.getElementById('btnOpenUploadModal');
     if (btnUpload) {
         btnUpload.addEventListener('click', () => {
-            document.getElementById('uploadModal').classList.remove('hidden');
+            const um = document.getElementById('uploadModal');
+            if (um) um.classList.remove('hidden');
         });
     }
 
@@ -343,7 +369,8 @@ function setupEventListeners() {
         dropZone.addEventListener('click', () => fileInput.click());
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
-                document.getElementById('selectedFileName').textContent = 'Selected: ' + e.target.files[0].name;
+                const sfn = document.getElementById('selectedFileName');
+                if (sfn) sfn.textContent = 'Selected: ' + e.target.files[0].name;
             }
         });
     }
