@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoRecon AI — Sign In / Create Account</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pine: { 800: '#1e2d25', 900: '#131c17', 950: '#0a110d' },
+                        sand: { 100: '#f5eedc', 200: '#ebd9b8', 300: '#e5a95d', 400: '#d48b38' },
+                        jade: { 400: '#48e5c2', 500: '#2ec4b6', 600: '#269b90' },
+                        terracotta: { 400: '#f28482', 500: '#e76f51', 600: '#d15335' }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #liveBgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .auth-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 32, 25, 0.65) 45%, rgba(12, 19, 15, 0.85) 100%);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 28px;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .glass-input {
+            background: rgba(10, 16, 13, 0.65);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 14px;
+            color: #f5eedc;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.06);
+            transition: all 0.2s ease;
+        }
+
+        .glass-input:focus {
+            background: rgba(10, 16, 13, 0.85);
+            border-color: #e5a95d;
+            box-shadow: 0 0 18px rgba(229, 169, 93, 0.25), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 bg-[#0a110d] text-[#f5eedc] selection:bg-amber-600 selection:text-stone-950">
+
+    <!-- LIVE BACKGROUND -->
+    <canvas id="liveBgCanvas"></canvas>
+    <div class="ambient-glow-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- MAIN AUTH CONTAINER -->
+    <div class="w-full max-w-md auth-card p-8 sm:p-10 relative z-10 my-8">
+        
+        <!-- Logo & Title -->
+        <div class="text-center mb-8">
+            <a href="/" class="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-tr from-sand-400 to-jade-500 p-[1px] shadow-xl mb-4 hover:scale-105 transition active:scale-95">
+                <div class="w-full h-full bg-[#131c17]/95 rounded-[15px] flex items-center justify-center backdrop-blur-md">
+                    <i class="ph-fill ph-buildings text-sand-300 text-3xl"></i>
+                </div>
+            </a>
+            <h1 class="text-2xl font-black text-sand-100 tracking-tight">
+                AutoRecon<span class="text-sand-300">.AI</span>
+            </h1>
+            <p class="text-xs text-sand-200/70 mt-1" id="authSubtitle">
+                Multi-Tasking Accounting & Autonomous Financial Controller
+            </p>
+        </div>
+
+        <!-- Segmented Tab Switcher: Sign In vs Sign Up -->
+        <div class="bg-[#101914] p-1.5 rounded-2xl border border-white/10 flex items-center mb-6 shadow-inner">
+            <button id="tabBtnSignIn" onclick="switchAuthTab('signin')" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-sand-300 text-[#131c17] shadow-md">
+                Sign In
+            </button>
+            <button id="tabBtnSignUp" onclick="switchAuthTab('signup')" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all text-sand-200/70 hover:text-sand-100">
+                Create Account
+            </button>
+        </div>
+
+        <!-- Alert Notification Box -->
+        <div id="authAlert" class="hidden mb-5 p-3.5 rounded-xl text-xs flex items-center space-x-2.5">
+            <i id="authAlertIcon" class="ph-bold ph-warning text-base flex-shrink-0"></i>
+            <span id="authAlertText" class="font-medium leading-relaxed"></span>
+        </div>
+
+        <!-- SIGN IN FORM -->
+        <form id="signInForm" onsubmit="handleSignIn(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-sand-200 mb-1.5">Business Email</label>
+                <div class="relative">
+                    <input type="email" id="signInEmail" required placeholder="founder@company.com" class="glass-input w-full px-4 py-3 text-xs pl-10">
+                    <i class="ph-bold ph-envelope-simple absolute left-3.5 top-3.5 text-sand-200/50 text-sm"></i>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <label class="block text-xs font-bold text-sand-200">Password</label>
+                    <a href="javascript:void(0)" onclick="alert('For demo accounts, you can sign in directly or register a new free account!')" class="text-[11px] text-sand-300 hover:underline">Forgot password?</a>
+                </div>
+                <div class="relative">
+                    <input type="password" id="signInPassword" required placeholder="••••••••••••" class="glass-input w-full px-4 py-3 text-xs pl-10">
+                    <i class="ph-bold ph-lock-key absolute left-3.5 top-3.5 text-sand-200/50 text-sm"></i>
+                </div>
+            </div>
+
+            <button type="submit" id="btnSignInSubmit" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-sand-400 via-sand-300 to-jade-400 hover:from-sand-300 hover:to-jade-300 text-[#131c17] font-black text-xs shadow-lg shadow-sand-400/20 active:scale-95 transition flex items-center justify-center space-x-2 mt-2">
+                <span>Sign In to Financial Workspace</span>
+                <i class="ph-bold ph-arrow-right"></i>
+            </button>
+        </form>
+
+        <!-- SIGN UP FORM (Hidden by default) -->
+        <form id="signUpForm" onsubmit="handleSignUp(event)" class="hidden space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-sand-200 mb-1.5">Your Full Name</label>
+                <div class="relative">
+                    <input type="text" id="signUpName" required placeholder="Divyansh Sharma" class="glass-input w-full px-4 py-3 text-xs pl-10">
+                    <i class="ph-bold ph-user absolute left-3.5 top-3.5 text-sand-200/50 text-sm"></i>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-sand-200 mb-1.5">Company / Business Name</label>
+                <div class="relative">
+                    <input type="text" id="signUpCompany" required placeholder="Zenith Retail India Pvt Ltd" class="glass-input w-full px-4 py-3 text-xs pl-10">
+                    <i class="ph-bold ph-buildings absolute left-3.5 top-3.5 text-sand-200/50 text-sm"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-sand-200 mb-1.5">Work Email</label>
+                    <div class="relative">
+                        <input type="email" id="signUpEmail" required placeholder="divyansh@zenith.in" class="glass-input w-full px-4 py-3 text-xs pl-10">
+                        <i class="ph-bold ph-envelope-simple absolute left-3.5 top-3.5 text-sand-200/50 text-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-sand-200 mb-1.5">GSTIN (Optional)</label>
+                    <div class="relative">
+                        <input type="text" id="signUpGstin" placeholder="27AAACZ8892Z1Z4" class="glass-input w-full px-4 py-3 text-xs pl-10 uppercase font-mono">
+                        <i class="ph-bold ph-receipt absolute left-3.5 top-3.5 text-sand-200/50 text-sm"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-sand-200 mb-1.5">Create Secure Password</label>
+                <div class="relative">
+                    <input type="password" id="signUpPassword" required minlength="6" placeholder="At least 6 characters" class="glass-input w-full px-4 py-3 text-xs pl-10">
+                    <i class="ph-bold ph-lock-key absolute left-3.5 top-3.5 text-sand-200/50 text-sm"></i>
+                </div>
+            </div>
+
+            <button type="submit" id="btnSignUpSubmit" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-jade-400 via-sand-300 to-sand-400 hover:from-jade-300 hover:to-sand-300 text-[#131c17] font-black text-xs shadow-lg shadow-jade-400/20 active:scale-95 transition flex items-center justify-center space-x-2 mt-2">
+                <span>Create Free Workspace & Private Storage</span>
+                <i class="ph-bold ph-sparkle"></i>
+            </button>
+        </form>
+
+        <!-- Quick Guest Demo Entry -->
+        <div class="mt-6 pt-5 border-t border-white/10 text-center">
+            <button onclick="handleQuickDemoLogin()" class="text-xs text-sand-300 hover:text-sand-100 font-semibold flex items-center justify-center space-x-1.5 mx-auto transition">
+                <i class="ph-bold ph-lightning text-sm"></i>
+                <span>Continue as Guest Demo Merchant ➔</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Background Particle Script -->
+    <script>
+        function initLiveBackground() {
+            const canvas = document.getElementById('liveBgCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const particles = [];
+            const numParticles = Math.min(Math.floor(window.innerWidth / 25), 40);
+
+            for (let i = 0; i < numParticles; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 2 + 1,
+                    color: (i % 3 === 0) ? '#e5a95d' : (i % 3 === 1 ? '#2ec4b6' : '#81b29a'),
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    alpha: Math.random() * 0.4 + 0.2
+                });
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, width, height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 130) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(229, 169, 93, ${0.12 * (1 - dist / 130)})`;
+                            ctx.lineWidth = 0.75;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+                });
+
+                requestAnimationFrame(animateParticles);
+            }
+
+            animateParticles();
+        }
+
+        document.addEventListener('DOMContentLoaded', initLiveBackground);
+
+        // Tab Switcher
+        function switchAuthTab(mode) {
+            const btnIn = document.getElementById('tabBtnSignIn');
+            const btnUp = document.getElementById('tabBtnSignUp');
+            const formIn = document.getElementById('signInForm');
+            const formUp = document.getElementById('signUpForm');
+            const alertBox = document.getElementById('authAlert');
+            if (alertBox) alertBox.classList.add('hidden');
+
+            if (mode === 'signup') {
+                btnUp.className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-sand-300 text-[#131c17] shadow-md';
+                btnIn.className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition-all text-sand-200/70 hover:text-sand-100';
+                formIn.classList.add('hidden');
+                formUp.classList.remove('hidden');
+                document.getElementById('authSubtitle').textContent = 'Create your private isolated accounting workspace';
+            } else {
+                btnIn.className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-sand-300 text-[#131c17] shadow-md';
+                btnUp.className = 'flex-1 py-2.5 rounded-xl text-xs font-bold transition-all text-sand-200/70 hover:text-sand-100';
+                formUp.classList.add('hidden');
+                formIn.classList.remove('hidden');
+                document.getElementById('authSubtitle').textContent = 'Multi-Tasking Accounting & Autonomous Financial Controller';
+            }
+        }
+
+        function showAlert(msg, isSuccess = false) {
+            const box = document.getElementById('authAlert');
+            const icon = document.getElementById('authAlertIcon');
+            const txt = document.getElementById('authAlertText');
+
+            box.className = `mb-5 p-3.5 rounded-xl text-xs flex items-center space-x-2.5 border ${
+                isSuccess 
+                ? 'bg-jade-500/15 border-jade-500/40 text-jade-300' 
+                : 'bg-terracotta-500/15 border-terracotta-500/40 text-terracotta-400'
+            }`;
+            icon.className = isSuccess ? 'ph-bold ph-check-circle text-base' : 'ph-bold ph-warning text-base';
+            txt.textContent = msg;
+            box.classList.remove('hidden');
+        }
+
+        // SIGN IN
+        async function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value.trim();
+            const password = document.getElementById('signInPassword').value;
+            const btn = document.getElementById('btnSignInSubmit');
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i> Authenticating...`;
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.token) {
+                    localStorage.setItem('autorecon_auth_token', data.token);
+                    localStorage.setItem('autorecon_current_user', JSON.stringify(data.user));
+                    showAlert('Welcome back, ' + data.user.name + '! Redirecting to workspace...', true);
+                    setTimeout(() => window.location.href = '/', 900);
+                } else {
+                    showAlert(data.message || 'Invalid email or password.');
+                }
+            } catch (err) {
+                showAlert('Connection error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>Sign In to Financial Workspace</span> <i class="ph-bold ph-arrow-right"></i>`;
+            }
+        }
+
+        // SIGN UP
+        async function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signUpName').value.trim();
+            const companyName = document.getElementById('signUpCompany').value.trim();
+            const email = document.getElementById('signUpEmail').value.trim();
+            const gstin = document.getElementById('signUpGstin').value.trim();
+            const password = document.getElementById('signUpPassword').value;
+            const btn = document.getElementById('btnSignUpSubmit');
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i> Creating Workspace...`;
+
+            try {
+                const res = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, companyName, email, gstin, password })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.token) {
+                    localStorage.setItem('autorecon_auth_token', data.token);
+                    localStorage.setItem('autorecon_current_user', JSON.stringify(data.user));
+                    showAlert('Workspace created successfully! Initializing dashboard...', true);
+                    setTimeout(() => window.location.href = '/', 900);
+                } else {
+                    showAlert(data.message || 'Sign up error. Please try again.');
+                }
+            } catch (err) {
+                showAlert('Connection error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>Create Free Workspace & Private Storage</span> <i class="ph-bold ph-sparkle"></i>`;
+            }
+        }
+
+        // GUEST DEMO LOGIN
+        function handleQuickDemoLogin() {
+            localStorage.removeItem('autorecon_auth_token');
+            localStorage.setItem('autorecon_current_user', JSON.stringify({
+                id: 'demo_user',
+                name: 'Zenith Retail Demo',
+                companyName: 'Zenith Retail India Pvt Ltd',
+                email: 'demo@zenith.in',
+                gstin: '27AAACZ8892Z1Z4'
+            }));
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

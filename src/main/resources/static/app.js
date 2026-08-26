@@ -14,8 +14,73 @@ let currentPayroll = [];
 let currentVendors = [];
 let currentCashFlow = null;
 
+// Auth Helper
+function getAuthHeaders(customHeaders = {}) {
+    const headers = { ...customHeaders };
+    const token = localStorage.getItem('autorecon_auth_token');
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
+}
+
+// User Profile Initializer
+function initAuth() {
+    const token = localStorage.getItem('autorecon_auth_token');
+    const userJson = localStorage.getItem('autorecon_current_user');
+    const authLoginBtn = document.getElementById('btnHeaderAuthLogin');
+    const userProfileDiv = document.getElementById('headerUserProfile');
+    const nameEl = document.getElementById('headerUserName');
+    const roleEl = document.getElementById('headerUserRole');
+    const avatarEl = document.getElementById('headerUserAvatar');
+    const compEl = document.getElementById('headerCompanyName');
+    const gstinEl = document.getElementById('headerGstin');
+
+    if (token && userJson) {
+        try {
+            const user = JSON.parse(userJson);
+            if (authLoginBtn) authLoginBtn.classList.add('hidden');
+            if (userProfileDiv) userProfileDiv.classList.remove('hidden');
+            if (nameEl) nameEl.textContent = user.name || 'User';
+            if (roleEl) roleEl.textContent = user.companyName || 'Business';
+            if (avatarEl) avatarEl.textContent = (user.name || 'U').charAt(0).toUpperCase();
+            if (compEl) compEl.textContent = user.companyName || 'My Business';
+            if (gstinEl) gstinEl.textContent = user.gstin ? `GSTIN: ${user.gstin}` : 'Private Workspace';
+        } catch(e) {}
+    } else {
+        if (authLoginBtn) authLoginBtn.classList.remove('hidden');
+        if (userProfileDiv) userProfileDiv.classList.add('hidden');
+        if (compEl) compEl.textContent = 'Zenith Retail India Pvt Ltd';
+        if (gstinEl) gstinEl.textContent = 'GSTIN: 27AAACZ8892Z1Z4';
+    }
+}
+
+window.handleLogout = async function() {
+    const token = localStorage.getItem('autorecon_auth_token');
+    if (token) {
+        try {
+            await fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: getAuthHeaders()
+            });
+        } catch(e){}
+    }
+    localStorage.removeItem('autorecon_auth_token');
+    localStorage.removeItem('autorecon_current_user');
+    showToast('Logged out. Switched to Guest Demo Workspace.');
+    initAuth();
+    fetchSummary();
+    fetchOrders();
+    fetchDiscrepancies();
+    fetchBatchesList();
+    fetchPayroll();
+    fetchVendors();
+    fetchCashFlow();
+};
+
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
+    initAuth();
     initLiveBackground();
     initMinimalSplash();
     initCharts();
@@ -377,7 +442,7 @@ async function fetchAiConfig() {
 // =========================================================================
 async function fetchSummary() {
     try {
-        const res = await fetch('/api/recon/summary');
+        const res = await fetch('/api/recon/summary', { headers: getAuthHeaders() });
         if (!res.ok) return;
         const data = await res.json();
         updateReconDashboard(data);
@@ -437,7 +502,7 @@ function updateReconDashboard(summary) {
 
 async function fetchOrders() {
     try {
-        const res = await fetch('/api/recon/orders');
+        const res = await fetch('/api/recon/orders', { headers: getAuthHeaders() });
         if (!res.ok) return;
         currentOrders = await res.json();
         renderOrdersTable();
@@ -448,7 +513,7 @@ async function fetchOrders() {
 
 async function fetchDiscrepancies() {
     try {
-        const res = await fetch('/api/recon/discrepancies');
+        const res = await fetch('/api/recon/discrepancies', { headers: getAuthHeaders() });
         if (!res.ok) return;
         currentDiscrepancies = await res.json();
     } catch (err) {
@@ -532,9 +597,23 @@ function renderOrdersTable(searchQuery = '') {
 async function fetchPayroll() {
     try {
         const [sumRes, empRes] = await Promise.all([
-            fetch('/api/payroll/summary'),
-            fetch('/api/payroll/employees')
+            fetch('/api/payroll/summary', { headers: getAuthHeaders() }),
+            fetch('/api/payroll/employees', { headers: getAuthHeaders() })
         ]);
+
+        if (sumRes.ok) {
+            const sumData = await sumRes.json();
+            updatePayrollDashboard(sumData);
+        }
+
+        if (empRes.ok) {
+            currentPayroll = await empRes.json();
+            renderPayrollTable();
+        }
+    } catch (e) {
+        console.error('Error fetching payroll:', e);
+    }
+}
 
         if (sumRes.ok) {
             const sumData = await sumRes.json();
@@ -675,8 +754,8 @@ window.copySalaryNotice = function() {
 async function fetchVendors() {
     try {
         const [sumRes, billRes] = await Promise.all([
-            fetch('/api/vendors/summary'),
-            fetch('/api/vendors/bills')
+            fetch('/api/vendors/summary', { headers: getAuthHeaders() }),
+            fetch('/api/vendors/bills', { headers: getAuthHeaders() })
         ]);
 
         if (sumRes.ok) {
@@ -773,7 +852,7 @@ window.payVendorBill = async function(billId) {
     try {
         const res = await fetch('/api/vendors/pay', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({ billId })
         });
         if (res.ok) {
@@ -792,7 +871,7 @@ window.payVendorBill = async function(billId) {
 // =========================================================================
 async function fetchCashFlow() {
     try {
-        const res = await fetch('/api/cashflow/summary');
+        const res = await fetch('/api/cashflow/summary', { headers: getAuthHeaders() });
         if (!res.ok) return;
         currentCashFlow = await res.json();
         updateCashFlowDashboard(currentCashFlow);
@@ -823,13 +902,16 @@ async function fetchBatchesList() {
     if (!container) return;
 
     let batches = [];
+    const token = localStorage.getItem('autorecon_auth_token');
+    const userScopeKey = token ? `autorecon_saved_batches_${token.slice(0, 10)}` : 'autorecon_saved_batches';
+
     try {
-        const saved = localStorage.getItem('autorecon_saved_batches');
+        const saved = localStorage.getItem(userScopeKey);
         if (saved) batches = JSON.parse(saved);
     } catch(e){}
 
     try {
-        const res = await fetch('/api/recon/batches');
+        const res = await fetch('/api/recon/batches', { headers: getAuthHeaders() });
         if (res.ok) {
             const apiBatches = await res.json();
             apiBatches.forEach(ab => {
@@ -865,18 +947,21 @@ async function fetchBatchesList() {
 
 function addBatchToLibrary(batch) {
     let savedBatches = [];
+    const token = localStorage.getItem('autorecon_auth_token');
+    const userScopeKey = token ? `autorecon_saved_batches_${token.slice(0, 10)}` : 'autorecon_saved_batches';
+
     try {
-        savedBatches = JSON.parse(localStorage.getItem('autorecon_saved_batches') || '[]');
+        savedBatches = JSON.parse(localStorage.getItem(userScopeKey) || '[]');
     } catch(e){}
     savedBatches = savedBatches.filter(b => b.batchId !== batch.batchId);
     savedBatches.unshift(batch);
-    localStorage.setItem('autorecon_saved_batches', JSON.stringify(savedBatches));
+    localStorage.setItem(userScopeKey, JSON.stringify(savedBatches));
     fetchBatchesList();
 }
 
 async function openDisputeModal() {
     try {
-        const res = await fetch('/api/recon/discrepancies/export-email');
+        const res = await fetch('/api/recon/discrepancies/export-email', { headers: getAuthHeaders() });
         if (!res.ok) return;
         const data = await res.json();
         document.getElementById('dispEmailBody').textContent = data.emailBody;
@@ -967,7 +1052,7 @@ async function sendChatMessage(query) {
     try {
         const res = await fetch('/api/chat/query', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({ message: query })
         });
         const data = await res.json();
@@ -990,7 +1075,7 @@ async function sendChatMessage(query) {
 // Ingestion & Simulation Handlers
 async function loadDemoData() {
     try {
-        const res = await fetch('/api/ingest/demo', { method: 'POST' });
+        const res = await fetch('/api/ingest/demo', { method: 'POST', headers: getAuthHeaders() });
         if (res.ok) {
             alert('Live demo data reset across Gateway Settlements, Payroll & Vendor AP!');
             fetchSummary();
@@ -1015,7 +1100,7 @@ async function handleSimulateTransaction(e) {
     try {
         const res = await fetch('/api/ingest/simulate', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({ customerName, amount, method, scenario })
         });
         if (res.ok) {
@@ -1142,7 +1227,7 @@ async function handleCsvUpload(e) {
             // Background server sync
             fetch('/api/ingest/upload-salary', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
                 body: JSON.stringify(salaryBatch)
             }).catch(err => console.log('API sync:', err));
 
@@ -1256,12 +1341,44 @@ async function handleCsvUpload(e) {
 
         fetch('/api/ingest/upload-orders', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
             body: JSON.stringify(reconBatch)
         }).catch(err => console.log('API sync:', err));
     };
 
     reader.readAsText(file);
+}
+
+// Non-blocking iOS Glass Toast Notification
+function showToast(message, actionUrl = null, actionLabel = null) {
+    let toast = document.getElementById('liveAppToast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'liveAppToast';
+        toast.className = 'fixed top-24 left-1/2 -translate-x-1/2 z-50 px-5 py-3.5 rounded-2xl bg-[#16221b]/95 backdrop-blur-2xl border border-sand-300/40 text-sand-100 shadow-2xl flex items-center space-x-3 text-xs transition-all duration-300 transform scale-95 opacity-0';
+        document.body.appendChild(toast);
+    }
+
+    let actionBtnHtml = '';
+    if (actionUrl && actionLabel) {
+        actionBtnHtml = `<a href="${actionUrl}" target="_blank" class="px-3 py-1.5 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-xl font-bold transition shadow-sm ml-2">${actionLabel}</a>`;
+    }
+
+    toast.innerHTML = `
+        <div class="flex items-center space-x-2">
+            <span class="live-pulse-dot"></span>
+            <span class="font-medium">${message}</span>
+        </div>
+        ${actionBtnHtml}
+    `;
+
+    toast.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+    toast.classList.add('opacity-100', 'scale-100');
+
+    setTimeout(() => {
+        toast.classList.remove('opacity-100', 'scale-100');
+        toast.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+    }, 6000);
 }
 
 // Non-blocking iOS Glass Toast Notification
