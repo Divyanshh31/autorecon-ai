@@ -642,20 +642,6 @@ async function fetchPayroll() {
     }
 }
 
-        if (sumRes.ok) {
-            const sumData = await sumRes.json();
-            updatePayrollDashboard(sumData);
-        }
-
-        if (empRes.ok) {
-            currentPayroll = await empRes.json();
-            renderPayrollTable();
-        }
-    } catch (e) {
-        console.error('Error fetching payroll:', e);
-    }
-}
-
 function updatePayrollDashboard(summary) {
     if (!summary) return;
     const setTxt = (id, val) => {
