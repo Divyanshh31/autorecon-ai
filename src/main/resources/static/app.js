@@ -24,7 +24,7 @@ function getAuthHeaders(customHeaders = {}) {
     return headers;
 }
 
-// User Profile Initializer
+// User Profile Initializer & Auth Gate
 function initAuth() {
     const token = localStorage.getItem('autorecon_auth_token');
     const userJson = localStorage.getItem('autorecon_current_user');
@@ -35,10 +35,12 @@ function initAuth() {
     const avatarEl = document.getElementById('headerUserAvatar');
     const compEl = document.getElementById('headerCompanyName');
     const gstinEl = document.getElementById('headerGstin');
+    const welcomeName = document.getElementById('welcomeUserName');
+    const welcomeGstin = document.getElementById('welcomeGstinPill');
 
-    if (token && userJson) {
+    if (token || userJson) {
         try {
-            const user = JSON.parse(userJson);
+            const user = userJson ? JSON.parse(userJson) : { name: 'User', companyName: 'My Business' };
             if (authLoginBtn) authLoginBtn.classList.add('hidden');
             if (userProfileDiv) userProfileDiv.classList.remove('hidden');
             if (nameEl) nameEl.textContent = user.name || 'User';
@@ -46,12 +48,11 @@ function initAuth() {
             if (avatarEl) avatarEl.textContent = (user.name || 'U').charAt(0).toUpperCase();
             if (compEl) compEl.textContent = user.companyName || 'My Business';
             if (gstinEl) gstinEl.textContent = user.gstin ? `GSTIN: ${user.gstin}` : 'Private Workspace';
+            if (welcomeName) welcomeName.textContent = user.name || 'Merchant';
+            if (welcomeGstin) welcomeGstin.textContent = user.companyName ? `${user.companyName} · Private Store` : 'Private Financial Workspace';
         } catch(e) {}
     } else {
-        if (authLoginBtn) authLoginBtn.classList.remove('hidden');
-        if (userProfileDiv) userProfileDiv.classList.add('hidden');
-        if (compEl) compEl.textContent = 'Zenith Retail India Pvt Ltd';
-        if (gstinEl) gstinEl.textContent = 'GSTIN: 27AAACZ8892Z1Z4';
+        window.location.replace('/auth.html');
     }
 }
 
@@ -67,15 +68,7 @@ window.handleLogout = async function() {
     }
     localStorage.removeItem('autorecon_auth_token');
     localStorage.removeItem('autorecon_current_user');
-    showToast('Logged out. Switched to Guest Demo Workspace.');
-    initAuth();
-    fetchSummary();
-    fetchOrders();
-    fetchDiscrepancies();
-    fetchBatchesList();
-    fetchPayroll();
-    fetchVendors();
-    fetchCashFlow();
+    window.location.href = '/auth.html';
 };
 
 // Initialization
@@ -484,6 +477,15 @@ function updateReconDashboard(summary) {
         const el = document.getElementById(id);
         if (el) el.textContent = val;
     };
+
+    const emptyBanner = document.getElementById('emptyWorkspaceBanner');
+    if (emptyBanner) {
+        if (!summary || summary.totalOrders === 0) {
+            emptyBanner.classList.remove('hidden');
+        } else {
+            emptyBanner.classList.add('hidden');
+        }
+    }
 
     setTxt('statGrossVolume', `₹${(summary.totalGrossVolume || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
     setTxt('statSettledBank', `₹${(summary.totalSettledToBank || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);

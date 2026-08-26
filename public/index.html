@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoRecon AI — All-in-One Autonomous Accounting & Financial Controller</title>
+    <!-- Auth Gate: Force Sign-In / Sign-Up first before accessing dashboard -->
+    <script>
+        (function() {
+            const token = localStorage.getItem('autorecon_auth_token');
+            const user = localStorage.getItem('autorecon_current_user');
+            if (!token && !user) {
+                window.location.replace('/auth.html');
+            }
+        })();
+    </script>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -214,6 +224,36 @@
             </div>
             <div class="flex items-center space-x-2 flex-shrink-0 text-[11px] text-sand-200/60 font-mono">
                 <span class="text-jade-400">● 100% In Sync</span>
+            </div>
+        </div>
+    <!-- EMPTY WORKSPACE WELCOME HERO (Active when user has not yet uploaded files) -->
+    <div id="emptyWorkspaceBanner" class="hidden max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div class="pine-card p-6 sm:p-8 rounded-3xl border border-sand-300/30 bg-gradient-to-r from-[#17251d]/95 to-[#101b15]/95 text-center relative overflow-hidden shadow-2xl">
+            <div class="max-w-2xl mx-auto space-y-3.5">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 bg-sand-300/15 border border-sand-300/30 rounded-full text-sand-300 text-xs font-bold font-mono">
+                    <i class="ph-bold ph-shield-check"></i>
+                    <span id="welcomeGstinPill">Private Financial Workspace</span>
+                </div>
+                <h2 class="text-xl sm:text-2xl font-black text-sand-100 tracking-tight">
+                    Welcome, <span id="welcomeUserName" class="text-sand-300">Merchant</span>!
+                </h2>
+                <p class="text-xs sm:text-sm text-sand-200/70 leading-relaxed">
+                    Upload your business CSV files to begin automated reconciliation, payroll delay tracking, and MSME tax compliance.
+                </p>
+                <div class="pt-3 flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="document.getElementById('uploadModal').classList.remove('hidden')" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-sand-400 to-sand-300 hover:from-sand-300 hover:to-sand-200 text-[#131c17] font-bold text-xs shadow-xl flex items-center space-x-2 active:scale-95 transition">
+                        <i class="ph-bold ph-upload-simple text-base"></i>
+                        <span>Upload Business CSV</span>
+                    </button>
+                    <a href="/salary-report.html" class="px-4 py-2.5 rounded-2xl bg-[#1b2b22] hover:bg-[#23382c] border border-white/15 text-sand-100 font-semibold text-xs flex items-center space-x-2 transition">
+                        <i class="ph-bold ph-users-three text-jade-300 text-base"></i>
+                        <span>Salary Audit Desk ➔</span>
+                    </a>
+                    <button onclick="loadDemoData()" class="px-3.5 py-2.5 rounded-2xl bg-sand-300/10 hover:bg-sand-300/20 border border-sand-300/30 text-sand-300 font-medium text-xs flex items-center space-x-1.5 transition">
+                        <i class="ph-bold ph-sparkle text-sm"></i>
+                        <span>Load Sample Dataset</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

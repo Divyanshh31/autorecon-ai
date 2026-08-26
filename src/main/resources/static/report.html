@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoRecon AI — Batch Audit Report</title>
+    <!-- Auth Gate -->
+    <script>
+        (function() {
+            const token = localStorage.getItem('autorecon_auth_token');
+            const user = localStorage.getItem('autorecon_current_user');
+            if (!token && !user) {
+                window.location.replace('/auth.html');
+            }
+        })();
+    </script>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
