@@ -81,7 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     initLiveTicker();
 
-    // Fetch all 4 accounting modules
+    // Fetch all 4 accounting modules & database health
+    fetchDbStatus();
     fetchSummary();
     fetchOrders();
     fetchDiscrepancies();
@@ -443,6 +444,22 @@ function initCharts() {
                 }
             }
         });
+    }
+}
+
+// Database Health Check
+async function fetchDbStatus() {
+    try {
+        const res = await fetch('/api/db/status');
+        if (!res.ok) return;
+        const dbInfo = await res.json();
+        const el = document.getElementById('headerDbStatus');
+        if (el && dbInfo.status === 'CONNECTED') {
+            el.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-jade-400 animate-pulse"></span><span>DB: Connected</span>`;
+            el.title = `Engine: ${dbInfo.provider} | Total Records: ${(dbInfo.metrics.totalSalesOrders + dbInfo.metrics.totalPayrollRecords + dbInfo.metrics.totalFilesAndBatches)}`;
+        }
+    } catch (e) {
+        console.error('Error checking DB status:', e);
     }
 }
 
