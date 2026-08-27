@@ -1,4 +1,4 @@
-# 🛡️ AutoRecon AI — Autonomous Multi-Tasking Accounting & Financial Operations OS
+# AutoRecon AI — Autonomous Multi-Tasking Accounting & Financial Operations OS
 
 > **Live Deployment:** [https://razorpay-autorecon.vercel.app](https://razorpay-autorecon.vercel.app)  
 > **GitHub Repository:** [https://github.com/Divyanshh31/autorecon-ai](https://github.com/Divyanshh31/autorecon-ai)  
@@ -6,7 +6,7 @@
 
 ---
 
-## 📌 Executive Summary
+## Executive Summary
 
 Every modern merchant and growing enterprise in India faces massive operational bottlenecks in financial back-office operations:
 1. **Gateway Fee Leakage**: Hidden MDR variations, 18% GST calculation errors, delayed settlements past SLA (T+2), and uncredited bank UTRs.
@@ -18,7 +18,7 @@ Every modern merchant and growing enterprise in India faces massive operational 
 
 ---
 
-## 🌟 Key Features & Multi-Tasking Hub
+## Key Features & Multi-Tasking Hub
 
 ```
  ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -53,39 +53,39 @@ Every modern merchant and growing enterprise in India faces massive operational 
 
 ---
 
-### 1. 💳 Payment Gateway 3-Way Reconciliation
-- **Automated 3-Way Matching**: Audits Store Orders ⟷ Razorpay Settlements ⟷ Bank Statement Credits.
+### 1. Payment Gateway 3-Way Reconciliation
+- **Automated 3-Way Matching**: Audits Store Orders <-> Razorpay Settlements <-> Bank Statement Credits.
 - **Contractual MDR Audit**: Enforces contracted 2.00% MDR rate + 18% GST, instantly flagging fee overcharges (e.g. 3.5% fee leaks).
 - **Settlement SLA Monitor**: Detects captured payments held beyond standard T+2 settlement turnaround.
 - **1-Click Dispute Room**: Generates formal, audit-ready Razorpay dispute notices with pre-filled UTR numbers and variance calculations.
 
-### 2. 👥 Employee Payroll & Salary Delay Audit Desk (`/salary-report.html`)
+### 2. Employee Payroll & Salary Delay Audit Desk (`/salary-report.html`)
 - **Universal Salary CSV Detector**: Detects employee rosters with columns (`salary`, `first_name`, `last_name`, `email`, `city`, `joined`).
 - **Statutory Computation**: Automatically calculates Gross CTC, Section 192 TDS (10%), EPF deductions, and Net Bank Pay.
 - **SLA Delay Tracking**: Identifies overdue payouts with SLA breach timers.
 - **Dedicated Cosmic Sapphire Live Desk**: Interactive visual dashboard with **Disburse via Instant IMPS** and **AI Salary Delay Notice Generator**.
 
-### 3. 🧾 Vendor Accounts Payable & MSME Section 43B(h) Engine
+### 3. Vendor Accounts Payable & MSME Section 43B(h) Engine
 - **45-Day MSME Payment Countdown**: Categorizes vendor bills and warns against Section 43B(h) non-compliance (2-day urgent alerts).
 - **TDS & GST ITC Matching**: Computes TDS (Sec 194C/194J) and claimable GSTR-2B Input Tax Credit.
 - **1-Click Settlement**: Simulates direct vendor clearing with generated bank UTRs.
 
-### 4. 📊 Cash Flow & Tax Compass
+### 4. Cash Flow & Tax Compass
 - **Real-Time Net Liquidity**: Real-time balance between gateway collections, payroll disbursements, and vendor payments.
 - **Runway & Burn Estimator**: Calculates operational burn rate and remaining cash runway in months.
 - **GST ITC Pool**: Aggregates claimable Input Tax Credit across gateway processing fees and vendor invoices.
 
-### 5. 🔐 Multi-Tenant User Authentication & Isolated Storage
+### 5. Multi-Tenant User Authentication & Isolated Storage
 - **Apple iOS Glassmorphism Auth Portal (`/auth.html`)**: Register with Name, Business Name, Work Email, GSTIN, and Password.
 - **Private Data Partitioning**: Every user has an isolated workspace. Newly registered users see clean dashboards ready for their own uploaded files.
 - **Universal Multi-Tab File Library**: Upload custom CSVs and open dedicated audit tabs per file.
 
-### 6. 🧠 AI Munimji Financial Copilot (Powered by Gemini 2.5)
+### 6. AI Munimji Financial Copilot (Powered by Gemini 2.5)
 - Context-aware financial AI assistant that understands Gateway variances, pending salaries, MSME tax alarms, and cash runway.
 
 ---
 
-## 🔑 Quick Demo Credentials
+## Quick Demo Credentials
 
 You can test the platform instantly:
 
@@ -99,7 +99,7 @@ You can test the platform instantly:
 
 ---
 
-## 🚀 Local Installation & Running Guide
+## Local Installation & Running Guide
 
 ### Option 1: Java 21 & Spring Boot 3.3 (IntelliJ IDEA / CLI)
 
@@ -132,9 +132,9 @@ Open **`http://localhost:3000`** in your browser.
 
 ---
 
-## 📡 REST API Reference
+## REST API Reference
 
-### 🔐 Authentication (`/api/auth/*`)
+### Authentication (`/api/auth/*`)
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
 | `/api/auth/signup` | `POST` | Register new user & initialize private workspace |
@@ -142,7 +142,7 @@ Open **`http://localhost:3000`** in your browser.
 | `/api/auth/me` | `GET` | Retrieve profile of authenticated user |
 | `/api/auth/logout` | `POST` | Invalidate active user session |
 
-### 💳 Gateway Reconciliation (`/api/recon/*`)
+### Gateway Reconciliation (`/api/recon/*`)
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
 | `/api/recon/summary` | `GET` | Retrieve KPI metrics, health score & volume totals |
@@ -151,21 +151,21 @@ Open **`http://localhost:3000`** in your browser.
 | `/api/recon/discrepancies/export-email` | `GET` | Generate pre-filled Razorpay Dispute Letter |
 | `/api/recon/batches` | `GET` | List all uploaded CSV batch sessions |
 
-### 👥 Payroll & Salaries (`/api/payroll/*`)
+### Payroll & Salaries (`/api/payroll/*`)
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
 | `/api/payroll/summary` | `GET` | Gross payroll, TDS, PF, and delayed salary totals |
 | `/api/payroll/employees` | `GET` | Employee register with SLA delay calculations |
 | `/api/payroll/disburse` | `POST` | 1-click IMPS salary payout simulation |
 
-### 🧾 Vendor AP & MSME (`/api/vendors/*`)
+### Vendor AP & MSME (`/api/vendors/*`)
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
 | `/api/vendors/summary` | `GET` | Invoiced total, GST ITC, and MSME 45-day critical alarms |
 | `/api/vendors/bills` | `GET` | Vendor invoice register with Section 43B(h) countdown |
 | `/api/vendors/pay` | `POST` | Clear vendor invoice with bank UTR match |
 
-### 📊 Cash Flow & AI Chat (`/api/cashflow/*` & `/api/chat/*`)
+### Cash Flow & AI Chat (`/api/cashflow/*` & `/api/chat/*`)
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
 | `/api/cashflow/summary` | `GET` | Net operating cash flow, burn rate & runway months |
@@ -175,7 +175,7 @@ Open **`http://localhost:3000`** in your browser.
 
 ---
 
-## 🏆 Submission Differentiators
+## Submission Differentiators
 
 1. **True Multi-Tasking Operations**: Extends beyond single-purpose gateway reconciliation to handle **Payroll Delays, MSME Section 43B(h) AP, and Cash Flow Compass**.
 2. **Multi-Tenant User Isolation**: Real user sign-up with SHA-256 security and isolated private data stores per business.
@@ -185,5 +185,5 @@ Open **`http://localhost:3000`** in your browser.
 
 ---
 
-## 📄 License
+## License
 Distributed under the **MIT License**. Created for **Razorpay Buildathon 2026**.
