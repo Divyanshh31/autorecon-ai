@@ -1,118 +1,189 @@
-# 🛡️ AutoRecon AI — AI Financial Controller & 3-Way Settlement Copilot for Razorpay
+# 🛡️ AutoRecon AI — Autonomous Multi-Tasking Accounting & Financial Operations OS
 
-> **Razorpay Buildathon — Track 04: AI Finance Controller**  
-> *Built with Java 21, Spring Boot 3.3, Spring AI / LLM Reasoning, H2 In-Memory DB, and Tailwind/Chart.js Dashboard.*
+> **Live Deployment:** [https://razorpay-autorecon.vercel.app](https://razorpay-autorecon.vercel.app)  
+> **GitHub Repository:** [https://github.com/Divyanshh31/autorecon-ai](https://github.com/Divyanshh31/autorecon-ai)  
+> **Tech Stack:** Java 21 LTS, Spring Boot 3.3, Node.js Serverless, Spring AI / Gemini 2.5, H2 In-Memory DB, Tailwind CSS, Chart.js, Glassmorphic iOS 18 Design.
 
 ---
 
 ## 📌 Executive Summary
 
-Every merchant processing payments via Razorpay faces a critical operational bottleneck: **Financial Settlement Reconciliation**.
+Every modern merchant and growing enterprise in India faces massive operational bottlenecks in financial back-office operations:
+1. **Gateway Fee Leakage**: Hidden MDR variations, 18% GST calculation errors, delayed settlements past SLA (T+2), and uncredited bank UTRs.
+2. **Employee Salary Delay & Compliance**: Complex TDS (Sec 192) and EPF withholdings, disbursement delays, and lack of automated employee delay communication.
+3. **MSME Section 43B(h) Penalties**: Strict statutory 45-day payment deadlines for MSME vendor invoices, risking loss of tax deductions.
+4. **Scattered Cash Visibility**: Disconnected gateway inflows, payroll burns, and claimable GST Input Tax Credit (ITC).
 
-Matching internal ERP/Store sales orders against Razorpay batch settlement payouts and incoming bank statement credits is traditionally done through error-prone manual Excel spreadsheets. Hidden fees, unexpected MDR deviations, GST rounding errors, delayed payouts past SLA (T+2), and un-reconciled refunds drain cash flow and waste accounting hours.
-
-**AutoRecon AI** is an autonomous financial controller and settlement copilot that:
-1. **Automates 3-Way Reconciliation**: Matches Store Orders ⟷ Razorpay Settlements ⟷ Bank Statement Credits in real time.
-2. **Audits Contractual MDR Fees & Taxes**: Enforces contracted MDR rate (e.g. 2.00% + 18% GST) and detects overcharges.
-3. **Flags Settlement SLA Delays**: Monitors payout latency and alerts when settlements exceed T+2 banking turnaround.
-4. **Conversational AI CFO Copilot**: Empowers finance teams to query balances, explain variances, and analyze gateway expenses using natural language.
-5. **1-Click Dispute & Audit Resolution**: Generates formal, audit-ready dispute letters directly addressed to Razorpay Merchant Support.
+**AutoRecon AI** is an all-in-one, multi-tasking autonomous accounting and financial operations operating system. It unifies gateway reconciliation, payroll delay audits, vendor MSME compliance, and cash flow intelligence under a single **AI Munimji Copilot** with **multi-tenant user authentication and private file storage**.
 
 ---
 
-## 🏗️ Architecture & 3-Way Matching Flow
+## 🌟 Key Features & Multi-Tasking Hub
 
 ```
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                         AutoRecon AI Architecture                           │
- └─────────────────────────────────────────────────────────────────────────────┘
-                                        │
-      ┌─────────────────────────────────┼─────────────────────────────────┐
-      ▼                                 ▼                                 ▼
-┌──────────────┐               ┌──────────────────┐              ┌─────────────────┐
-│ Store Orders │               │ Razorpay Gateway │              │ Bank Statements │
-│ (ERP / Sales)│               │  (Settlements)   │              │   (UTR Ledger)  │
-└──────┬───────┘               └────────┬─────────┘              └────────┬────────┘
-       │                                │                                 │
-       └───────────────────────┬────────┴─────────────────────────────────┘
-                               ▼
-            ┌─────────────────────────────────────────┐
-            │   3-Way Reconciliation & Audit Engine   │
-            │  • Order ID & Gross Amount Match        │
-            │  • MDR Fee Verification (2% + 18% GST)  │
-            │  • Bank UTR Credit Confirmation         │
-            │  • T+2 Settlement SLA Timeline Check    │
-            └────────────────────┬────────────────────┘
-                                 │
-         ┌───────────────────────┴───────────────────────┐
-         ▼                                               ▼
-┌─────────────────────────────────┐             ┌─────────────────────────────────┐
-│   Interactive Controller UI     │             │       AI CFO Copilot Agent      │
-│  • Health Score KPI Cards       │             │  • Natural Language Q&A         │
-│  • Visual Charts (Donut/Bar)    │ <=========> │  • Root-Cause Financial Insight │
-│  • Anomaly Ledger with Filters  │             │  • 1-Click Dispute Generator    │
-└─────────────────────────────────┘             └─────────────────────────────────┘
+ ┌────────────────────────────────────────────────────────────────────────────────────────┐
+ │                      AutoRecon AI — Multi-Tasking Architecture                         │
+ └────────────────────────────────────────────────────────────────────────────────────────┘
+                                             │
+      ┌───────────────────────┬──────────────┴──────────────┬───────────────────────┐
+      ▼                       ▼                             ▼                       ▼
+┌──────────────────┐ ┌──────────────────┐       ┌──────────────────┐ ┌──────────────────┐
+│ 1. Gateway Recon │ │ 2. Salary Desk   │       │ 3. Vendor MSME   │ │ 4. Cash Flow &   │
+│  (Razorpay 3-Way)│ │  (Payroll & SLA) │       │  (Sec 43B-h AP)  │ │   Tax Compass    │
+└─────────┬────────┘ └────────┬─────────┘       └────────┬─────────┘ └────────┬─────────┘
+          │                   │                          │                    │
+          └───────────────────┼──────────────────────────┴────────────────────┘
+                              ▼
+           ┌─────────────────────────────────────┐
+           │   Multi-Tenant User Storage Engine  │
+           │  • Sign-Up & Auth Portal (/auth.html│
+           │  • Private Workspaces per User ID   │
+           │  • Universal Smart CSV File Parser  │
+           └──────────────────┬──────────────────┘
+                              │
+          ┌───────────────────┴───────────────────┐
+          ▼                                       ▼
+┌─────────────────────────────────┐     ┌─────────────────────────────────┐
+│     Multi-Tab Audit Desks       │     │    AI Munimji Copilot Agent     │
+│  • Gateway Recon & Dispute Room │ <==>│  • Gemini 2.5 Multi-Domain Chat │
+│  • Sapphire Salary Audit Desk   │     │  • 1-Click Razorpay Dispute Doc │
+│  • Vendor MSME 45-Day Aging     │     │  • Automated Delay Notice Copy  │
+└─────────────────────────────────┘     └─────────────────────────────────┘
 ```
 
 ---
 
-## ⚡ Quick Start & Running in JetBrains IntelliJ IDEA
+### 1. 💳 Payment Gateway 3-Way Reconciliation
+- **Automated 3-Way Matching**: Audits Store Orders ⟷ Razorpay Settlements ⟷ Bank Statement Credits.
+- **Contractual MDR Audit**: Enforces contracted 2.00% MDR rate + 18% GST, instantly flagging fee overcharges (e.g. 3.5% fee leaks).
+- **Settlement SLA Monitor**: Detects captured payments held beyond standard T+2 settlement turnaround.
+- **1-Click Dispute Room**: Generates formal, audit-ready Razorpay dispute notices with pre-filled UTR numbers and variance calculations.
 
-### Prerequisites
+### 2. 👥 Employee Payroll & Salary Delay Audit Desk (`/salary-report.html`)
+- **Universal Salary CSV Detector**: Detects employee rosters with columns (`salary`, `first_name`, `last_name`, `email`, `city`, `joined`).
+- **Statutory Computation**: Automatically calculates Gross CTC, Section 192 TDS (10%), EPF deductions, and Net Bank Pay.
+- **SLA Delay Tracking**: Identifies overdue payouts with SLA breach timers.
+- **Dedicated Cosmic Sapphire Live Desk**: Interactive visual dashboard with **Disburse via Instant IMPS** and **AI Salary Delay Notice Generator**.
+
+### 3. 🧾 Vendor Accounts Payable & MSME Section 43B(h) Engine
+- **45-Day MSME Payment Countdown**: Categorizes vendor bills and warns against Section 43B(h) non-compliance (2-day urgent alerts).
+- **TDS & GST ITC Matching**: Computes TDS (Sec 194C/194J) and claimable GSTR-2B Input Tax Credit.
+- **1-Click Settlement**: Simulates direct vendor clearing with generated bank UTRs.
+
+### 4. 📊 Cash Flow & Tax Compass
+- **Real-Time Net Liquidity**: Real-time balance between gateway collections, payroll disbursements, and vendor payments.
+- **Runway & Burn Estimator**: Calculates operational burn rate and remaining cash runway in months.
+- **GST ITC Pool**: Aggregates claimable Input Tax Credit across gateway processing fees and vendor invoices.
+
+### 5. 🔐 Multi-Tenant User Authentication & Isolated Storage
+- **Apple iOS Glassmorphism Auth Portal (`/auth.html`)**: Register with Name, Business Name, Work Email, GSTIN, and Password.
+- **Private Data Partitioning**: Every user has an isolated workspace. Newly registered users see clean dashboards ready for their own uploaded files.
+- **Universal Multi-Tab File Library**: Upload custom CSVs and open dedicated audit tabs per file.
+
+### 6. 🧠 AI Munimji Financial Copilot (Powered by Gemini 2.5)
+- Context-aware financial AI assistant that understands Gateway variances, pending salaries, MSME tax alarms, and cash runway.
+
+---
+
+## 🔑 Quick Demo Credentials
+
+You can test the platform instantly:
+
+| Property | Value |
+| :--- | :--- |
+| **Live App URL** | [https://razorpay-autorecon.vercel.app](https://razorpay-autorecon.vercel.app) |
+| **Auth Portal** | [https://razorpay-autorecon.vercel.app/auth.html](https://razorpay-autorecon.vercel.app/auth.html) |
+| **Demo Email** | `demo@zenith.in` |
+| **Demo Password** | `zenith123` |
+| **Or Choose** | Click **"Create Account"** for your own private workspace or **"Continue as Guest"** |
+
+---
+
+## 🚀 Local Installation & Running Guide
+
+### Option 1: Java 21 & Spring Boot 3.3 (IntelliJ IDEA / CLI)
+
+#### Prerequisites:
 - **Java 21 LTS**
-- **Maven 3.9+** (or use Maven within IntelliJ)
-- **JetBrains IntelliJ IDEA** (Community or Ultimate)
+- **Maven 3.9+**
 
-### 1. Open in IntelliJ IDEA
-1. Launch **IntelliJ IDEA**.
-2. Click **Open** (or `File -> Open`).
-3. Select the folder: `C:\Users\divya\.gemini\antigravity\scratch\autorecon-ai`.
-4. IntelliJ will automatically detect Maven and index all dependencies.
+```bash
+# Clone the repository
+git clone https://github.com/Divyanshh31/autorecon-ai.git
+cd autorecon-ai
 
-### 2. Run the Application
-- Open `src/main/java/com/razorpay/autorecon/AutoReconApplication.java`.
-- Click the green **Run ▶** button next to `main()`.
-- *Or run in terminal:*
-  ```bash
-  mvn spring-boot:run
-  ```
-
-### 3. Open the Live Dashboard
-Navigate in your browser to:
-👉 **`http://localhost:8080`**
+# Build and run with Maven
+mvn spring-boot:run
+```
+Open **`http://localhost:8080`** in your browser.
 
 ---
 
-## 🎬 3-Minute Demo Video Walkthrough Script (For Submission)
+### Option 2: Node.js / Vercel Serverless
 
-| Time | Action on Screen | Voiceover / Pitch |
-| :--- | :--- | :--- |
-| **0:00 - 0:30** | Open Dashboard at `http://localhost:8080`. | *"Hi judges! Today we present AutoRecon AI for Track 04: AI Finance Controller. Every Razorpay merchant struggles with 3-way reconciliation between their sales catalog, Razorpay settlement batches, and bank credit statements."* |
-| **0:30 - 1:00** | Click **"Load Demo Dataset"**. Watch KPI cards, donut chart, and ledger populate. | *"With 1 click, our 3-way reconciliation engine matches store orders with Razorpay payments and bank UTRs. We instantly see our 91.4% Recon Health Score, ₹82,400 in processed volume, and ₹2,140 in flagged anomalies."* |
-| **1:00 - 1:45** | Filter ledger by **"MDR Overcharge"** and click **"Audit AI"**. | *"Notice order DEMO_0004: Razorpay charged a 3.5% fee instead of our contracted 2.0% MDR SLA. AutoRecon AI automatically caught this variance and calculated the exact excess deduction."* |
-| **1:45 - 2:30** | Interact with **AI CFO Copilot** drawer (Click *'Health Score'*, *'Fee Audit'*, *'Draft Dispute'*). | *"Our AI CFO Copilot provides instant financial reasoning. We can ask natural language questions about fees, tax deductions, or delayed bank credits."* |
-| **2:30 - 3:00** | Click **"View & Export Dispute Draft"** modal and show formal email to Razorpay Support. | *"With one click, AutoRecon AI generates a formal audit dispute notice with attached UTRs and order IDs ready to send to Razorpay Merchant Support. Thank you!"* |
+```bash
+# Install dependencies
+npm install
+
+# Run locally with Vercel CLI
+npx vercel dev
+```
+Open **`http://localhost:3000`** in your browser.
 
 ---
 
 ## 📡 REST API Reference
 
+### 🔐 Authentication (`/api/auth/*`)
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
-| `/api/recon/summary` | `GET` | Retrieve dashboard KPI metrics, health score, and totals |
-| `/api/recon/run` | `POST` | Trigger fresh 3-way reconciliation run |
-| `/api/recon/orders` | `GET` | List orders with optional `status` query filter |
+| `/api/auth/signup` | `POST` | Register new user & initialize private workspace |
+| `/api/auth/login` | `POST` | Authenticate credentials & return session token |
+| `/api/auth/me` | `GET` | Retrieve profile of authenticated user |
+| `/api/auth/logout` | `POST` | Invalidate active user session |
+
+### 💳 Gateway Reconciliation (`/api/recon/*`)
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/recon/summary` | `GET` | Retrieve KPI metrics, health score & volume totals |
+| `/api/recon/orders` | `GET` | List orders with optional batch filter |
 | `/api/recon/discrepancies` | `GET` | List all unresolved financial anomalies |
-| `/api/chat` | `POST` | Chat with AI CFO Copilot (`{"message": "..."}`) |
-| `/api/chat/dispute-draft` | `GET` | Fetch generated formal Razorpay Merchant Dispute Letter |
-| `/api/ingest/demo` | `POST` | Seed 35 realistic merchant orders with edge cases |
-| `/api/ingest/upload-orders`| `POST` | Upload custom CSV of store sales orders |
+| `/api/recon/discrepancies/export-email` | `GET` | Generate pre-filled Razorpay Dispute Letter |
+| `/api/recon/batches` | `GET` | List all uploaded CSV batch sessions |
+
+### 👥 Payroll & Salaries (`/api/payroll/*`)
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/payroll/summary` | `GET` | Gross payroll, TDS, PF, and delayed salary totals |
+| `/api/payroll/employees` | `GET` | Employee register with SLA delay calculations |
+| `/api/payroll/disburse` | `POST` | 1-click IMPS salary payout simulation |
+
+### 🧾 Vendor AP & MSME (`/api/vendors/*`)
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/vendors/summary` | `GET` | Invoiced total, GST ITC, and MSME 45-day critical alarms |
+| `/api/vendors/bills` | `GET` | Vendor invoice register with Section 43B(h) countdown |
+| `/api/vendors/pay` | `POST` | Clear vendor invoice with bank UTR match |
+
+### 📊 Cash Flow & AI Chat (`/api/cashflow/*` & `/api/chat/*`)
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/cashflow/summary` | `GET` | Net operating cash flow, burn rate & runway months |
+| `/api/chat/query` | `POST` | Query AI Munimji across all accounting modules |
+| `/api/ingest/upload-orders` | `POST` | Upload and reconcile sales orders CSV |
+| `/api/ingest/upload-salary` | `POST` | Ingest and audit employee payroll CSV |
 
 ---
 
-## 🏆 Key Submission Differentiators
+## 🏆 Submission Differentiators
 
-1. **Zero-Config Resilience**: Works 100% out of the box with embedded H2 database and dual AI mode (local financial reasoning engine + Gemini Cloud LLM).
-2. **True 3-Way Matching**: Audits the entire lifecycle: Store Order ⟷ Razorpay Settlement ⟷ Bank UTR Credit.
-3. **Actionable Financial Output**: Does not stop at reporting anomalies; generates copy-ready formal dispute notices with exact calculations.
-4. **Enterprise-Grade Java Architecture**: Clean layered Spring Boot architecture (Model-Repository-Service-Controller).
+1. **True Multi-Tasking Operations**: Extends beyond single-purpose gateway reconciliation to handle **Payroll Delays, MSME Section 43B(h) AP, and Cash Flow Compass**.
+2. **Multi-Tenant User Isolation**: Real user sign-up with SHA-256 security and isolated private data stores per business.
+3. **Smart Auto-Detecting CSV Engine**: Automatically routes uploaded files to either the **Payment Recon Engine** or the **Cosmic Salary Audit Desk**.
+4. **Action-Oriented AI**: Generates copy-ready Razorpay dispute letters and employee delay notices with exact calculations.
+5. **Modern iOS 18 Glassmorphism**: Interactive particle canvases, responsive charts, and non-blocking toast notifications.
+
+---
+
+## 📄 License
+Distributed under the **MIT License**. Created for **Razorpay Buildathon 2026**.
