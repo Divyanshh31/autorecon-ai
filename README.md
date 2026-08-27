@@ -2,7 +2,7 @@
 
 > **Live Deployment:** [https://razorpay-autorecon.vercel.app](https://razorpay-autorecon.vercel.app)  
 > **GitHub Repository:** [https://github.com/Divyanshh31/autorecon-ai](https://github.com/Divyanshh31/autorecon-ai)  
-> **Tech Stack:** Java 21 LTS, Spring Boot 3.3, Node.js Serverless, Spring AI / Gemini 2.5, H2 In-Memory DB, Tailwind CSS, Chart.js, Glassmorphic iOS 18 Design.
+> **Tech Stack:** Java 21 LTS, Spring Boot 3.3, Node.js Serverless, Spring AI / Gemini 2.5, Cloud Database Engine (PostgreSQL / Supabase / MongoDB Adapter), H2 DB, Tailwind CSS, Chart.js, Glassmorphic iOS 18 Design.
 
 ---
 
@@ -14,7 +14,7 @@ Every modern merchant and growing enterprise in India faces massive operational 
 3. **MSME Section 43B(h) Penalties**: Strict statutory 45-day payment deadlines for MSME vendor invoices, risking loss of tax deductions.
 4. **Scattered Cash Visibility**: Disconnected gateway inflows, payroll burns, and claimable GST Input Tax Credit (ITC).
 
-**AutoRecon AI** is an all-in-one, multi-tasking autonomous accounting and financial operations operating system. It unifies gateway reconciliation, payroll delay audits, vendor MSME compliance, and cash flow intelligence under a single **AI Munimji Copilot** with **multi-tenant user authentication and private file storage**.
+**AutoRecon AI** is an all-in-one, multi-tasking autonomous accounting and financial operations operating system. It unifies gateway reconciliation, payroll delay audits, vendor MSME compliance, and cash flow intelligence under a single **AI Munimji Copilot** with **multi-tenant cloud database storage and private file isolation**.
 
 ---
 
@@ -35,10 +35,11 @@ Every modern merchant and growing enterprise in India faces massive operational 
           └───────────────────┼──────────────────────────┴────────────────────┘
                               ▼
            ┌─────────────────────────────────────┐
-           │   Multi-Tenant User Storage Engine  │
+           │   Multi-Tenant Cloud Database Engine│
            │  • Sign-Up & Auth Portal (/auth.html│
            │  • Private Workspaces per User ID   │
            │  • Universal Smart CSV File Parser  │
+           │  • Live Health Monitor (/api/db/...)│
            └──────────────────┬──────────────────┘
                               │
           ┌───────────────────┴───────────────────┐
@@ -75,13 +76,38 @@ Every modern merchant and growing enterprise in India faces massive operational 
 - **Runway & Burn Estimator**: Calculates operational burn rate and remaining cash runway in months.
 - **GST ITC Pool**: Aggregates claimable Input Tax Credit across gateway processing fees and vendor invoices.
 
-### 5. Multi-Tenant User Authentication & Isolated Storage
+### 5. Multi-Tenant Cloud Database Engine & Private Workspaces
 - **Apple iOS Glassmorphism Auth Portal (`/auth.html`)**: Register with Name, Business Name, Work Email, GSTIN, and Password.
-- **Private Data Partitioning**: Every user has an isolated workspace. Newly registered users see clean dashboards ready for their own uploaded files.
-- **Universal Multi-Tab File Library**: Upload custom CSVs and open dedicated audit tabs per file.
+- **Private Data Partitioning**: Every user has an isolated database store. Newly registered users see clean dashboards ready for their own uploaded files.
+- **Multi-Tenant Collections**: Dedicated partitions for `users`, `files`, `payroll`, `orders`, `discrepancies`, and `vendorBills`.
 
 ### 6. AI Munimji Financial Copilot (Powered by Gemini 2.5)
 - Context-aware financial AI assistant that understands Gateway variances, pending salaries, MSME tax alarms, and cash runway.
+
+---
+
+## Database Architecture & Storage Engine
+
+AutoRecon AI features a dual-environment database architecture designed for cloud scalability and zero-latency execution:
+
+### 1. Cloud Database Engine (`api/db.js`)
+* **Model:** Relational & Document Data Store.
+* **Collections & Tables:**
+  * `users`: User profiles with SHA-256 password hashing, business details, and GSTIN.
+  * `files`: Uploaded CSV files, raw content, file types (`SALARY`, `RECON`, `VENDOR`), and batch IDs.
+  * `payroll`: Employee payroll registers, TDS (Sec 192), EPF withholdings, SLA delay timers, and IMPS UTR payout ledgers.
+  * `orders`: Store sales transactions, payment modes, and 3-way gateway match states.
+  * `discrepancies`: Gateway MDR fee overcharges, T+2 settlement delays, and missing bank credits.
+  * `vendorBills`: Vendor invoices, TDS (194C/194J), and MSME Section 43B(h) 45-day aging ledgers.
+* **Cloud Database Compatibility:**
+  * **PostgreSQL / Supabase**: Supply `SUPABASE_URL` and `SUPABASE_ANON_KEY` in environment variables for instant cloud PostgreSQL synchronization.
+  * **MongoDB Atlas**: Compatible with document stores via MongoDB connection URI.
+  * **Serverless High-Performance Engine**: Runs out of the box with sub-10ms response times.
+* **Live Health Check Endpoint:** [`/api/db/status`](https://razorpay-autorecon.vercel.app/api/db/status) provides live metrics, record counts, and database connection state.
+
+### 2. Spring Boot Local Database
+* **Engine:** Embedded H2 Relational Database (`jdbc:h2:mem:autorecondb`) with Spring Data JPA & Hibernate.
+* **Web Console:** Accessible at `http://localhost:8080/h2-console`.
 
 ---
 
@@ -134,6 +160,11 @@ Open **`http://localhost:3000`** in your browser.
 
 ## REST API Reference
 
+### Database & System Health (`/api/db/*`)
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/db/status` | `GET` | Live database provider, connection health, and collection record counts |
+
 ### Authentication (`/api/auth/*`)
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
@@ -178,7 +209,7 @@ Open **`http://localhost:3000`** in your browser.
 ## Submission Differentiators
 
 1. **True Multi-Tasking Operations**: Extends beyond single-purpose gateway reconciliation to handle **Payroll Delays, MSME Section 43B(h) AP, and Cash Flow Compass**.
-2. **Multi-Tenant User Isolation**: Real user sign-up with SHA-256 security and isolated private data stores per business.
+2. **Cloud Database Engine**: Built-in multi-tenant database adapter supporting PostgreSQL/Supabase, with live health monitoring and collection indexing.
 3. **Smart Auto-Detecting CSV Engine**: Automatically routes uploaded files to either the **Payment Recon Engine** or the **Cosmic Salary Audit Desk**.
 4. **Action-Oriented AI**: Generates copy-ready Razorpay dispute letters and employee delay notices with exact calculations.
 5. **Modern iOS 18 Glassmorphism**: Interactive particle canvases, responsive charts, and non-blocking toast notifications.
