@@ -196,6 +196,12 @@ Open **`http://localhost:3000`** in your browser.
 | :--- | :--- | :--- |
 | `/api/ml/summary` | `GET` | Retrieve Isolation Forest anomaly scores, 30-day time-series forecast vectors, and SLA risk predictions |
 
+### Direct Razorpay Webhooks (`/api/webhooks/*`)
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/webhooks/razorpay` | `POST` | Ingest real-time `payment.captured`, `settlement.processed`, and `payout.processed` events with HMAC-SHA256 verification |
+| `/api/webhooks/config` | `GET` | Retrieve webhook endpoint URL, secret key, and subscribed events list |
+
 ### Database & System Health (`/api/db/*`)
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |

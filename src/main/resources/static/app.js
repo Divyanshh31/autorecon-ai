@@ -1630,4 +1630,127 @@ function renderMlAnomalyTable(scoredOrders) {
     }).join('');
 }
 
+// =========================================================================
+// 13. DIRECT RAZORPAY WEBHOOK MODAL & SIMULATOR
+// =========================================================================
+window.openWebhookModal = function() {
+    const m = document.getElementById('webhookModal');
+    if (m) m.classList.remove('hidden');
+};
+
+window.copyWebhookUrl = function() {
+    const el = document.getElementById('webhookUrlDisplay');
+    if (el) {
+        navigator.clipboard.writeText(el.value);
+        showToast('✅ Webhook URL copied! Enter this in Razorpay Dashboard.');
+    }
+};
+
+window.copyWebhookSecret = function() {
+    const el = document.getElementById('webhookSecretDisplay');
+    if (el) {
+        navigator.clipboard.writeText(el.value);
+        showToast('✅ Webhook Secret copied to clipboard!');
+    }
+};
+
+window.dispatchLiveWebhookTest = async function() {
+    const scenario = document.getElementById('webhookScenario').value;
+    const customer = document.getElementById('webhookCustomer').value.trim() || 'Aarav Sharma';
+    const amountVal = parseFloat(document.getElementById('webhookAmount').value) || 7500;
+    const btn = document.getElementById('btnDispatchWebhook');
+
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="animate-spin mr-1">⚙️</span> Dispatching...`;
+    }
+
+    let payload = {};
+    const amountInPaise = amountVal * 100;
+
+    if (scenario === 'CLEAN') {
+        payload = {
+            event: 'payment.captured',
+            payload: {
+                payment: {
+                    entity: {
+                        id: `pay_RZP_${Date.now().toString().slice(-6)}`,
+                        amount: amountInPaise,
+                        fee: amountInPaise * 0.02, // 2.0%
+                        tax: (amountInPaise * 0.02) * 0.18,
+                        method: 'upi',
+                        notes: { customer_name: customer }
+                    }
+                }
+            }
+        };
+    } else if (scenario === 'OVERCHARGE') {
+        payload = {
+            event: 'payment.captured',
+            payload: {
+                payment: {
+                    entity: {
+                        id: `pay_RZP_LEAK_${Date.now().toString().slice(-6)}`,
+                        amount: amountInPaise,
+                        fee: amountInPaise * 0.035, // 3.5% MDR Overcharge
+                        tax: (amountInPaise * 0.035) * 0.18,
+                        method: 'card',
+                        notes: { customer_name: customer }
+                    }
+                }
+            }
+        };
+    } else if (scenario === 'SETTLEMENT') {
+        payload = {
+            event: 'settlement.processed',
+            payload: {
+                settlement: {
+                    entity: {
+                        id: `set_LIVE_${Date.now().toString().slice(-6)}`,
+                        amount: amountInPaise * 15,
+                        utr: `UTR_RZP_HDFC_${Date.now().toString().slice(-6)}`
+                    }
+                }
+            }
+        };
+    } else if (scenario === 'PAYOUT') {
+        payload = {
+            event: 'payout.processed',
+            payload: {
+                id: `pout_${Date.now().toString().slice(-6)}`,
+                amount: amountInPaise,
+                utr: `SAL_IMPS_${Date.now().toString().slice(-6)}`
+            }
+        };
+    }
+
+    try {
+        const res = await fetch('/api/webhooks/razorpay', {
+            method: 'POST',
+            headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+            body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        
+        // Refresh all accounting & ML modules
+        fetchSummary();
+        fetchOrders();
+        fetchDiscrepancies();
+        fetchCashFlow();
+        fetchMlIntelligence();
+
+        document.getElementById('webhookModal').classList.add('hidden');
+        showToast(`⚡ Razorpay Webhook [${payload.event}] received and audited in real-time!`);
+    } catch (err) {
+        console.error('Webhook error:', err);
+        alert('Failed to dispatch webhook event: ' + err.message);
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="ph-bold ph-paper-plane-tilt"></i><span>Dispatch Live Webhook Event</span>`;
+        }
+    }
+};
+
 
