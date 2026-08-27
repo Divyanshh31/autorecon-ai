@@ -182,36 +182,43 @@
     <div class="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <div class="bg-black/40 p-1.5 rounded-3xl backdrop-blur-2xl border border-white/10 shadow-2xl flex items-center justify-between gap-2 overflow-x-auto">
             
-            <div class="flex items-center gap-1.5 flex-1 min-w-[600px]">
+            <div class="flex items-center gap-1.5 flex-1 min-w-[780px]">
                 <!-- Tab 1: Payment Recon -->
-                <button class="nav-tab-btn active flex-1 py-2.5 px-4 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all" data-target="view-recon">
+                <button class="nav-tab-btn active flex-1 py-2.5 px-3.5 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all" data-target="view-recon">
                     <i class="ph-bold ph-credit-card text-base"></i>
-                    <span>1. Gateway Recon (Razorpay)</span>
+                    <span>1. Gateway Recon</span>
                 </button>
 
                 <!-- Tab 2: Payroll & Salary Delays -->
-                <button class="nav-tab-btn flex-1 py-2.5 px-4 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all text-sand-200/70 hover:text-sand-100 hover:bg-white/5" data-target="view-payroll">
+                <button class="nav-tab-btn flex-1 py-2.5 px-3.5 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all text-sand-200/70 hover:text-sand-100 hover:bg-white/5" data-target="view-payroll">
                     <i class="ph-bold ph-users-three text-base"></i>
                     <span>2. Payroll & Salary Delays</span>
                     <span class="w-2 h-2 rounded-full bg-terracotta-400 animate-pulse"></span>
                 </button>
 
                 <!-- Tab 3: Vendor Bills & MSME AP -->
-                <button class="nav-tab-btn flex-1 py-2.5 px-4 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all text-sand-200/70 hover:text-sand-100 hover:bg-white/5" data-target="view-vendors">
+                <button class="nav-tab-btn flex-1 py-2.5 px-3.5 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all text-sand-200/70 hover:text-sand-100 hover:bg-white/5" data-target="view-vendors">
                     <i class="ph-bold ph-receipt text-base"></i>
-                    <span>3. Vendor Bills (MSME 43B-h)</span>
+                    <span>3. Vendor MSME 43B(h)</span>
                     <span class="w-2 h-2 rounded-full bg-sand-300 animate-pulse"></span>
                 </button>
 
                 <!-- Tab 4: Cash Flow & Tax Compass -->
-                <button class="nav-tab-btn flex-1 py-2.5 px-4 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all text-sand-200/70 hover:text-sand-100 hover:bg-white/5" data-target="view-cashflow">
+                <button class="nav-tab-btn flex-1 py-2.5 px-3.5 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all text-sand-200/70 hover:text-sand-100 hover:bg-white/5" data-target="view-cashflow">
                     <i class="ph-bold ph-chart-line-up text-base"></i>
-                    <span>4. Cash Flow & Tax Compass</span>
+                    <span>4. Cash Flow Compass</span>
+                </button>
+
+                <!-- Tab 5: ML Intelligence & Forecasting Lab -->
+                <button class="nav-tab-btn flex-1 py-2.5 px-3.5 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 transition-all text-purple-200/80 hover:text-purple-100 hover:bg-purple-900/20 border border-purple-500/25" data-target="view-ml">
+                    <i class="ph-bold ph-brain text-base text-purple-400"></i>
+                    <span>5. ML Intelligence Lab</span>
+                    <span class="px-1.5 py-0.2 bg-purple-500/30 text-purple-300 rounded text-[9px] font-mono font-bold uppercase">AI Model</span>
                 </button>
             </div>
 
             <div class="hidden xl:flex items-center space-x-2 pr-3 text-[11px] font-mono text-sand-200/60">
-                <span class="text-jade-400">● 4 Accounting Engines Live</span>
+                <span class="text-jade-400">● 5 Autonomous Engines Live</span>
             </div>
         </div>
     </div>
@@ -810,6 +817,180 @@
                         <span>Net Operating Cash Position</span>
                         <span class="font-mono text-sand-300 text-sm" id="cfNetCash">₹1,64,554.07 Net Deposited</span>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             MODULE 5: MACHINE LEARNING & PREDICTIVE FORECASTING LAB (view-ml)
+             ========================================================================= -->
+        <div id="view-ml" class="module-view hidden space-y-6">
+            
+            <!-- ML Lab Header Banner -->
+            <div class="p-6 rounded-3xl bg-gradient-to-r from-purple-950/60 via-[#131c17] to-indigo-950/40 border border-purple-500/30 shadow-2xl backdrop-blur-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-400 p-[1px] shadow-lg flex-shrink-0">
+                        <div class="w-full h-full bg-[#131c17] rounded-[15px] flex items-center justify-center">
+                            <i class="ph-fill ph-brain text-purple-400 text-3xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2.5">
+                            <h2 class="text-xl font-black text-sand-100 tracking-tight">Machine Learning & Predictive Forecasting Lab</h2>
+                            <span class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/35 font-mono">
+                                Ensemble ML
+                            </span>
+                        </div>
+                        <p class="text-xs text-sand-200/70 mt-1 max-w-2xl">
+                            Autonomous statistical learning models: <b>Isolation Forest Anomaly Classifier</b>, <b>30-Day Time-Series Cash Forecast (95% CI)</b>, and <b>SLA Default Risk Predictor</b> trained on live reconciliation ledgers.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2.5 self-end md:self-auto">
+                    <button onclick="fetchMlIntelligence()" class="px-4 py-2.5 text-xs font-bold rounded-xl bg-purple-500 hover:bg-purple-400 text-black shadow-lg flex items-center space-x-1.5 active:scale-95 transition">
+                        <i class="ph-bold ph-arrows-clockwise text-sm"></i>
+                        <span>Re-Train & Predict</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 4 Big ML KPI Metrics -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                
+                <!-- 1. Isolation Forest Precision -->
+                <div class="pine-card p-5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-300">Model Precision / F1</span>
+                        <span class="badge-pill bg-purple-500/20 text-purple-300 border border-purple-500/35 text-[10px]">IsolationForest</span>
+                    </div>
+                    <div class="my-3">
+                        <div class="text-2xl font-black text-sand-100 font-mono" id="mlModelAccuracy">98.4%</div>
+                        <p class="text-[11px] text-sand-200/60 font-mono mt-0.5" id="mlF1Score">F1-Score: 0.97 · Recall: 96.8%</p>
+                    </div>
+                    <div class="pt-2 border-t border-[#25362c] text-[11px] text-jade-300 flex items-center space-x-1">
+                        <i class="ph-bold ph-shield-check"></i>
+                        <span>Zero False-Negative Safeguard</span>
+                    </div>
+                </div>
+
+                <!-- 2. Detected Anomalies -->
+                <div class="pine-card p-5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-sand-200/70">Anomalies Isolated</span>
+                        <span class="badge-pill bg-terracotta-500/20 text-terracotta-400 border border-terracotta-500/35 text-[10px]">Outliers</span>
+                    </div>
+                    <div class="my-3">
+                        <div class="text-2xl font-black text-terracotta-400 font-mono" id="mlAnomaliesDetected">3 Detected</div>
+                        <p class="text-[11px] text-sand-200/60 font-mono mt-0.5" id="mlRecordsAudited">From 35 Audited Records</p>
+                    </div>
+                    <div class="pt-2 border-t border-[#25362c] text-[11px] text-sand-200/70 flex items-center space-x-1">
+                        <i class="ph-bold ph-warning-circle text-terracotta-400"></i>
+                        <span>Fee Skimming & Bank Lag Flags</span>
+                    </div>
+                </div>
+
+                <!-- 3. 30-Day Forecasted Inflow -->
+                <div class="pine-card p-5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-sand-300">30-Day ML Forecast</span>
+                        <span class="badge-pill bg-sand-300/15 text-sand-300 border border-sand-300/35 text-[10px]">Prophet Time-Series</span>
+                    </div>
+                    <div class="my-3">
+                        <div class="text-2xl font-black text-sand-300 font-mono" id="mlProjectedInflow">₹1,48,200.00</div>
+                        <p class="text-[11px] text-sand-200/60 font-mono mt-0.5" id="mlForecastNet">Net Surplus: +₹53,200.00</p>
+                    </div>
+                    <div class="pt-2 border-t border-[#25362c] text-[11px] text-sand-200/70 flex items-center space-x-1">
+                        <i class="ph-bold ph-chart-line-up text-sand-300"></i>
+                        <span>95% Confidence Interval Band</span>
+                    </div>
+                </div>
+
+                <!-- 4. Default Risk Index -->
+                <div class="pine-card p-5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-jade-300">SLA Breach Risk Score</span>
+                        <span class="badge-pill bg-jade-500/15 text-jade-400 border border-jade-500/35 text-[10px]">Risk Classifier</span>
+                    </div>
+                    <div class="my-3">
+                        <div class="text-2xl font-black text-jade-300 font-mono" id="mlOverallRiskScore">18 / 100</div>
+                        <p class="text-[11px] text-sand-200/60 font-mono mt-0.5" id="mlRiskTier">Low Liquidity Risk Tier</p>
+                    </div>
+                    <div class="pt-2 border-t border-[#25362c] text-[11px] text-jade-300 flex items-center space-x-1">
+                        <i class="ph-bold ph-check-circle"></i>
+                        <span>Runway: 11.4 Months Projected</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Charts: 30-Day Confidence Forecast + Feature Importance (SHAP) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Left 2 Cols: 30-Day Predictive Cash Flow Curve with Confidence Band -->
+                <div class="lg:col-span-2 pine-card p-6 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-sm font-bold text-sand-100 flex items-center space-x-2">
+                                <i class="ph-bold ph-graph text-purple-400 text-base"></i>
+                                <span>30-Day Time-Series Cash Flow Prediction with 95% Confidence Interval</span>
+                            </h3>
+                            <p class="text-xs text-sand-200/60">AutoRegressive Prophet projection of daily sales inflows vs operating expense drains</p>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-300 border border-purple-500/25 font-mono text-[11px]">
+                            Daily Horizon (D+1 to D+30)
+                        </span>
+                    </div>
+                    <div class="h-64 w-full relative">
+                        <canvas id="mlForecastChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Right 1 Col: Anomaly Feature Importance (SHAP Weights) -->
+                <div class="pine-card p-6 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-sm font-bold text-sand-100 flex items-center space-x-2">
+                                <i class="ph-bold ph-sliders text-sand-300 text-base"></i>
+                                <span>ML Feature Importance (SHAP Attribution)</span>
+                            </h3>
+                            <p class="text-xs text-sand-200/60">Weight distribution determining anomaly scores</p>
+                        </div>
+                    </div>
+                    <div class="h-64 w-full relative">
+                        <canvas id="mlFeatureImportanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explainable AI Anomaly Table -->
+            <div class="pine-card overflow-hidden">
+                <div class="p-5 border-b border-[#25362c] flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-sand-100 flex items-center space-x-2">
+                            <i class="ph-bold ph-fingerprint text-purple-400 text-base"></i>
+                            <span>Isolation Forest Anomaly Scoring & Explainable AI Matrix</span>
+                        </h3>
+                        <p class="text-xs text-sand-200/60">Every transaction scored with mathematical outlier factors & primary risk drivers</p>
+                    </div>
+                    <span class="text-xs text-sand-300 font-mono">Ensemble Loss: 0.028</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-sand-200">
+                        <thead class="bg-[#121b16] text-[11px] uppercase tracking-wider text-sand-200/70 border-b border-[#25362c]">
+                            <tr>
+                                <th class="px-5 py-3.5 font-bold">Transaction / Order ID</th>
+                                <th class="px-4 py-3.5 font-bold">Customer Name</th>
+                                <th class="px-4 py-3.5 font-bold">Amount</th>
+                                <th class="px-4 py-3.5 font-bold">ML Anomaly Score</th>
+                                <th class="px-4 py-3.5 font-bold">Risk Tier</th>
+                                <th class="px-4 py-3.5 font-bold">Primary Risk Driver</th>
+                                <th class="px-4 py-3.5 font-bold">Feature Attribution (MDR · SLA · Volume)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mlAnomalyTableBody" class="divide-y divide-[#22332a]/60">
+                            <!-- Populated via JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

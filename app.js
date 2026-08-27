@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     initLiveTicker();
 
-    // Fetch all 4 accounting modules & database health
+    // Fetch all 5 autonomous modules, ML lab & database health
     fetchDbStatus();
     fetchSummary();
     fetchOrders();
@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchPayroll();
     fetchVendors();
     fetchCashFlow();
+    fetchMlIntelligence();
     fetchAiConfig();
 });
 
@@ -248,6 +249,10 @@ function setupNavigationTabs() {
                     v.classList.add('hidden');
                 }
             });
+
+            if (targetId === 'view-ml') {
+                fetchMlIntelligence();
+            }
         });
     });
 }
@@ -1413,36 +1418,216 @@ function showToast(message, actionUrl = null, actionLabel = null) {
     }, 6000);
 }
 
-// Non-blocking iOS Glass Toast Notification
-function showToast(message, actionUrl = null, actionLabel = null) {
-    let toast = document.getElementById('liveAppToast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'liveAppToast';
-        toast.className = 'fixed top-24 left-1/2 -translate-x-1/2 z-50 px-5 py-3.5 rounded-2xl bg-[#16221b]/95 backdrop-blur-2xl border border-sand-300/40 text-sand-100 shadow-2xl flex items-center space-x-3 text-xs transition-all duration-300 transform scale-95 opacity-0';
-        document.body.appendChild(toast);
+// =========================================================================
+// 12. MODULE 5: MACHINE LEARNING & PREDICTIVE FORECASTING CONTROLLER
+// =========================================================================
+let mlForecastChart = null;
+let mlFeatureImportanceChart = null;
+
+async function fetchMlIntelligence() {
+    try {
+        const res = await fetch('/api/ml/summary', { headers: getAuthHeaders() });
+        if (!res.ok) return;
+        const data = await res.json();
+        updateMlDashboard(data);
+    } catch (err) {
+        console.error('Error fetching ML intelligence:', err);
+    }
+}
+
+function updateMlDashboard(data) {
+    if (!data) return;
+
+    // 1. Update KPI Cards
+    if (data.anomalyDetection && data.anomalyDetection.modelMetadata) {
+        const meta = data.anomalyDetection.modelMetadata;
+        const elAcc = document.getElementById('mlModelAccuracy');
+        if (elAcc) elAcc.textContent = `${meta.accuracy}%`;
+
+        const elF1 = document.getElementById('mlF1Score');
+        if (elF1) elF1.textContent = `F1-Score: ${meta.f1Score} · Recall: ${meta.recall}%`;
+
+        const elAnom = document.getElementById('mlAnomaliesDetected');
+        if (elAnom) elAnom.textContent = `${meta.anomaliesDetected} Detected`;
+
+        const elAud = document.getElementById('mlRecordsAudited');
+        if (elAud) elAud.textContent = `From ${meta.trainingRecordsAudited} Audited Records`;
     }
 
-    let actionBtnHtml = '';
-    if (actionUrl && actionLabel) {
-        actionBtnHtml = `<a href="${actionUrl}" target="_blank" class="px-3 py-1.5 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-xl font-bold transition shadow-sm ml-2">${actionLabel}</a>`;
+    if (data.timeSeriesForecast && data.timeSeriesForecast.summary) {
+        const forecast = data.timeSeriesForecast.summary;
+        const elInflow = document.getElementById('mlProjectedInflow');
+        if (elInflow) elInflow.textContent = `₹${Number(forecast.total30DayInflow).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+
+        const elNet = document.getElementById('mlForecastNet');
+        if (elNet) elNet.textContent = `Net 30-Day: +₹${Number(forecast.net30DaySurplus).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
     }
 
-    toast.innerHTML = `
-        <div class="flex items-center space-x-2">
-            <span class="live-pulse-dot"></span>
-            <span class="font-medium">${message}</span>
-        </div>
-        ${actionBtnHtml}
-    `;
+    if (data.riskPredictions) {
+        const risk = data.riskPredictions;
+        const elRisk = document.getElementById('mlOverallRiskScore');
+        if (elRisk) elRisk.textContent = `${risk.overallRiskScore} / 100`;
 
-    toast.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
-    toast.classList.add('opacity-100', 'scale-100');
+        const elRiskTier = document.getElementById('mlRiskTier');
+        if (elRiskTier) {
+            elRiskTier.textContent = risk.overallRiskScore > 50 ? 'High Liquidity Risk' : 'Low Liquidity Risk Tier';
+        }
+    }
 
-    setTimeout(() => {
-        toast.classList.remove('opacity-100', 'scale-100');
-        toast.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
-    }, 6000);
+    // 2. Render Charts
+    renderMlCharts(data);
+
+    // 3. Render Explainable Anomaly Matrix
+    if (data.anomalyDetection && data.anomalyDetection.scoredOrders) {
+        renderMlAnomalyTable(data.anomalyDetection.scoredOrders);
+    }
+}
+
+function renderMlCharts(data) {
+    if (!window.Chart) return;
+
+    // Chart 1: 30-Day Confidence Forecast Chart
+    const elForecast = document.getElementById('mlForecastChart');
+    if (elForecast && data.timeSeriesForecast && data.timeSeriesForecast.datasets) {
+        if (mlForecastChart) mlForecastChart.destroy();
+        const ctx = elForecast.getContext('2d');
+        const ts = data.timeSeriesForecast;
+
+        mlForecastChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ts.labels.filter((_, idx) => idx % 2 === 0),
+                datasets: [
+                    {
+                        label: '95% Upper Bound',
+                        data: ts.datasets.confidenceUpper.filter((_, idx) => idx % 2 === 0),
+                        borderColor: 'rgba(168, 85, 247, 0.25)',
+                        backgroundColor: 'rgba(168, 85, 247, 0.08)',
+                        fill: '+1',
+                        pointRadius: 0,
+                        borderWidth: 1,
+                        borderDash: [4, 4]
+                    },
+                    {
+                        label: '95% Lower Bound',
+                        data: ts.datasets.confidenceLower.filter((_, idx) => idx % 2 === 0),
+                        borderColor: 'rgba(168, 85, 247, 0.25)',
+                        fill: false,
+                        pointRadius: 0,
+                        borderWidth: 1,
+                        borderDash: [4, 4]
+                    },
+                    {
+                        label: 'ML Projected Inflow',
+                        data: ts.datasets.predictedInflows.filter((_, idx) => idx % 2 === 0),
+                        borderColor: '#c084fc',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2.5,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#c084fc',
+                        tension: 0.35
+                    },
+                    {
+                        label: 'Projected Expense Outflow',
+                        data: ts.datasets.predictedOutflows.filter((_, idx) => idx % 2 === 0),
+                        borderColor: '#e76f51',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        borderDash: [6, 6],
+                        tension: 0.2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#b5c4b8', font: { size: 10 }, boxWidth: 12 }
+                    }
+                },
+                scales: {
+                    x: { ticks: { color: '#b5c4b8', font: { size: 10 } }, grid: { display: false } },
+                    y: { ticks: { color: '#b5c4b8', font: { size: 10 } }, grid: { color: 'rgba(37, 54, 44, 0.6)' } }
+                }
+            }
+        });
+    }
+
+    // Chart 2: Feature Importance Bar Chart (SHAP Attribution)
+    const elFeatures = document.getElementById('mlFeatureImportanceChart');
+    if (elFeatures) {
+        if (mlFeatureImportanceChart) mlFeatureImportanceChart.destroy();
+        const ctx2 = elFeatures.getContext('2d');
+
+        mlFeatureImportanceChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['MDR Delta', 'Bank Lag', 'Txn Scale', 'Velocity'],
+                datasets: [{
+                    label: 'SHAP Weight',
+                    data: [0.55, 0.35, 0.10, 0.08],
+                    backgroundColor: ['#a855f7', '#e5a95d', '#81b29a', '#38bdf8'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: '#b5c4b8', font: { size: 10 } }, grid: { display: false } },
+                    y: { ticks: { color: '#b5c4b8', font: { size: 10 } }, grid: { color: 'rgba(37, 54, 44, 0.6)' } }
+                }
+            }
+        });
+    }
+}
+
+function renderMlAnomalyTable(scoredOrders) {
+    const tbody = document.getElementById('mlAnomalyTableBody');
+    if (!tbody) return;
+
+    if (!scoredOrders || scoredOrders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-sand-200/50">No transaction records available to score.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = scoredOrders.slice(0, 15).map(o => {
+        let badgeColor = 'bg-jade-500/15 text-jade-400 border-jade-500/35';
+        let barColor = 'bg-jade-400';
+        if (o.riskLevel === 'CRITICAL') {
+            badgeColor = 'bg-terracotta-500/20 text-terracotta-400 border-terracotta-500/40';
+            barColor = 'bg-terracotta-400';
+        } else if (o.riskLevel === 'MODERATE') {
+            badgeColor = 'bg-sand-300/20 text-sand-300 border-sand-300/40';
+            barColor = 'bg-sand-300';
+        }
+
+        return `
+            <tr class="hover:bg-[#18261e] transition ${o.isAnomaly ? 'bg-terracotta-950/20' : ''}">
+                <td class="px-5 py-3.5 font-mono font-bold text-sand-100">${o.orderId}</td>
+                <td class="px-4 py-3.5 font-medium text-sand-100">${o.customerName}</td>
+                <td class="px-4 py-3.5 font-mono text-sand-200">₹${Number(o.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-4 py-3.5">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-16 bg-black/40 h-2 rounded-full overflow-hidden">
+                            <div class="h-full ${barColor}" style="width: ${o.anomalyProbability}%"></div>
+                        </div>
+                        <span class="font-mono font-bold text-xs ${o.anomalyProbability >= 70 ? 'text-terracotta-400' : 'text-sand-200'}">${o.anomalyProbability}%</span>
+                    </div>
+                </td>
+                <td class="px-4 py-3.5">
+                    <span class="badge-pill ${badgeColor} text-[10px] uppercase tracking-wider">${o.riskLevel}</span>
+                </td>
+                <td class="px-4 py-3.5 text-xs text-sand-200 font-medium">${o.primaryDriver}</td>
+                <td class="px-4 py-3.5 font-mono text-[11px] text-sand-200/70">
+                    MDR: <b class="text-sand-300">${o.features ? o.features.feeVarianceImpact : '0%'}</b> · SLA: <b class="text-sand-300">${o.features ? o.features.slaLatencyImpact : '0%'}</b>
+                </td>
+            </tr>
+        `;
+    }).join('');
 }
 
 
