@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoRecon AI — Power Your Finance, Automate Every Rupee</title>
-    <!-- Auth Gate -->
+    <!-- Auth Gate & Instant Theme Initializer (Prevents FOUC) -->
     <script>
         (function() {
             const token = localStorage.getItem('autorecon_auth_token');
@@ -12,12 +12,19 @@
             if (!token && !user) {
                 window.location.replace('/auth.html');
             }
+            const savedTheme = localStorage.getItem('autorecon_theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
         })();
     </script>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN with class-based Dark Mode -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -41,9 +48,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260828_3.1">
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white bg-[#F8FAFC] text-slate-900">
+<body class="min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
 
     <!-- =========================================================================
          PEARL WHITE LIVE INTERACTIVE BACKGROUND (Canvas Waves + Pastel Mesh Orbs)
@@ -136,6 +143,11 @@
                 <button id="btnOpenDisputeModal" class="hidden sm:flex px-2.5 py-1.5 text-xs font-bold whitespace-nowrap rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition-all items-center space-x-1 active:scale-95">
                     <i class="ph-bold ph-scales text-sm text-amber-600"></i>
                     <span>Disputes</span>
+                </button>
+
+                <!-- Light / Dark Mode Toggle Button -->
+                <button id="btnThemeToggle" onclick="toggleTheme()" title="Switch Light/Dark Mode" class="theme-toggle-btn active:scale-95 shadow-xs" aria-label="Toggle Light / Dark Mode">
+                    <i class="ph-bold ph-moon-stars text-base" id="themeToggleIcon"></i>
                 </button>
 
                 <!-- Profile Pill -->
@@ -1494,6 +1506,6 @@ Zenith Retail India Pvt Ltd
             if (btn) btn.click();
         }
     </script>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260828_3.1"></script>
 </body>
 </html>

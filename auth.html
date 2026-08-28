@@ -4,10 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoRecon AI — Sign In / Create Account</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Theme Initializer (Prevents FOUC) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('autorecon_theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+    <!-- Tailwind CSS CDN with class-based Dark Mode -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -26,7 +38,7 @@
     </script>
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260828_3.1">
     <style>
         #liveBgCanvas {
             position: fixed;
@@ -39,40 +51,47 @@
         }
 
         .auth-card {
-            background: #FFFFFF;
-            border: 1px solid #CBD5E1;
+            background: var(--rzp-surface-card);
+            border: 1px solid var(--rzp-border);
             border-radius: 28px;
-            box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(15, 23, 42, 0.04);
+            box-shadow: var(--rzp-shadow-card);
+            transition: all 0.3s ease;
         }
 
         .glass-input {
-            background: #FFFFFF;
-            border: 1.5px solid #CBD5E1;
+            background: var(--rzp-surface);
+            border: 1.5px solid var(--rzp-border);
             border-radius: 14px;
-            color: #0F172A;
+            color: var(--rzp-text-main);
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
             box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
             transition: all 0.2s ease;
         }
 
         .glass-input:focus {
-            background: #FFFFFF;
-            border-color: #0066FF;
+            background: var(--rzp-surface);
+            border-color: var(--rzp-blue);
             box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.18);
             outline: none;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 bg-[#F8FAFC] text-slate-900 selection:bg-blue-600 selection:text-white">
+<body class="min-h-screen flex flex-col items-center justify-center p-4 selection:bg-blue-600 selection:text-white">
 
-    <!-- LIVE BACKGROUND -->
+    <!-- Top Right Theme Switcher -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="btnThemeToggle" onclick="toggleTheme()" title="Switch Light/Dark Mode" class="theme-toggle-btn active:scale-95 shadow-md">
+            <i class="ph-bold ph-moon-stars text-base" id="themeToggleIcon"></i>
+        </button>
+    </div>
+
+    <!-- LIVE CLEAN BACKGROUND -->
     <canvas id="liveBgCanvas"></canvas>
     <div class="ambient-glow-orbs">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
     </div>
 
     <!-- MAIN AUTH CONTAINER -->
@@ -81,205 +100,179 @@
         <!-- Logo & Title -->
         <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-tr from-blue-600 via-sky-500 to-emerald-400 p-[1.5px] shadow-xl shadow-blue-500/20 mb-4 hover:scale-105 transition active:scale-95">
-                <div class="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
+                <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[14px] flex items-center justify-center">
                     <i class="ph-fill ph-credit-card text-blue-600 text-3xl"></i>
                 </div>
             </a>
-            <h1 class="text-3xl font-black text-slate-900 tracking-tight">
+            <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
                 AutoRecon<span class="text-blue-600">.AI</span>
             </h1>
-            <p class="text-sm text-slate-600 font-semibold mt-1.5" id="authSubtitle">
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold mt-1.5" id="authSubtitle">
                 Razorpay Multi-Tasking Accounting & Autonomous Financial Controller
             </p>
         </div>
 
-        <!-- Segmented Tab Switcher: Sign In vs Sign Up -->
-        <div class="bg-slate-100 p-1.5 rounded-2xl border border-slate-300 flex items-center mb-6 shadow-inner">
+        <!-- Mode Tabs -->
+        <div class="flex p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl mb-6 border border-slate-200 dark:border-slate-700">
             <button id="tabBtnSignIn" onclick="switchAuthTab('signin')" class="flex-1 py-3 rounded-xl text-sm font-extrabold transition-all bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-md">
                 Sign In
             </button>
-            <button id="tabBtnSignUp" onclick="switchAuthTab('signup')" class="flex-1 py-3 rounded-xl text-sm font-extrabold transition-all text-slate-700 hover:text-slate-900">
-                Create Account
+            <button id="tabBtnSignUp" onclick="switchAuthTab('signup')" class="flex-1 py-3 rounded-xl text-sm font-extrabold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+                Create Workspace
             </button>
         </div>
 
         <!-- Alert Notification Box -->
-        <div id="authAlert" class="hidden mb-5 p-4 rounded-xl text-sm flex items-center space-x-3">
-            <i id="authAlertIcon" class="ph-bold ph-warning text-lg flex-shrink-0"></i>
-            <span id="authAlertText" class="font-bold leading-relaxed"></span>
+        <div id="authAlert" class="hidden mb-5 p-4 rounded-xl text-sm flex items-center space-x-3 transition font-medium">
+            <i id="authAlertIcon" class="ph-bold text-xl flex-shrink-0"></i>
+            <span id="authAlertText"></span>
         </div>
 
         <!-- SIGN IN FORM -->
-        <form id="signInForm" onsubmit="handleSignIn(event)" class="space-y-4.5">
+        <form id="signInForm" onsubmit="handleSignIn(event)" class="space-y-4">
             <div>
-                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 mb-1.5">Business Email Address</label>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Business Email</label>
                 <div class="relative">
-                    <input type="email" id="signInEmail" required placeholder="founder@company.com" class="glass-input w-full px-4 py-3.5 pl-11">
-                    <i class="ph-bold ph-envelope-simple absolute left-4 top-4 text-slate-500 text-base"></i>
+                    <i class="ph-bold ph-envelope-simple absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="email" id="signInEmail" required placeholder="founder@merchant.com" class="w-full px-4 py-3.5 pl-11 glass-input">
                 </div>
             </div>
 
             <div>
                 <div class="flex items-center justify-between mb-1.5">
-                    <label class="block text-xs sm:text-sm font-extrabold text-slate-800">Password</label>
-                    <a href="javascript:void(0)" onclick="alert('For demo accounts, you can sign in directly or register a new free account!')" class="text-xs font-bold text-blue-600 hover:underline">Forgot password?</a>
+                    <label class="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200">Password</label>
+                    <a href="javascript:void(0)" onclick="handleQuickDemoLogin()" class="text-xs font-black text-blue-600 hover:underline">
+                        Fill Demo Credentials
+                    </a>
                 </div>
                 <div class="relative">
-                    <input type="password" id="signInPassword" required placeholder="••••••••••••" class="glass-input w-full px-4 py-3.5 pl-11">
-                    <i class="ph-bold ph-lock-key absolute left-4 top-4 text-slate-500 text-base"></i>
+                    <i class="ph-bold ph-lock-key absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="password" id="signInPassword" required placeholder="••••••••" class="w-full px-4 py-3.5 pl-11 glass-input">
                 </div>
             </div>
 
-            <button type="submit" id="btnSignInSubmit" class="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white font-black text-sm sm:text-base shadow-lg shadow-blue-600/25 active:scale-95 transition flex items-center justify-center space-x-2 mt-3">
-                <span>Sign In to Financial Workspace</span>
+            <button type="submit" id="btnSignInSubmit" class="w-full py-3.5 rounded-xl rzp-btn-primary font-black text-sm sm:text-base flex items-center justify-center space-x-2 shadow-lg shadow-blue-500/25 active:scale-[0.99] transition mt-2">
+                <span>Sign In to Financial OS</span>
                 <i class="ph-bold ph-arrow-right text-lg"></i>
             </button>
         </form>
 
         <!-- SIGN UP FORM -->
-        <form id="signUpForm" onsubmit="handleSignUp(event)" class="hidden space-y-4">
+        <form id="signUpForm" onsubmit="handleSignUp(event)" class="space-y-4 hidden">
             <div>
-                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 mb-1.5">Your Full Name</label>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Your Full Name</label>
                 <div class="relative">
-                    <input type="text" id="signUpName" required placeholder="Divyansh Thakur" class="glass-input w-full px-4 py-3 pl-11">
-                    <i class="ph-bold ph-user absolute left-4 top-3.5 text-slate-500 text-base"></i>
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 mb-1.5">Company / Business Name</label>
-                <div class="relative">
-                    <input type="text" id="signUpCompany" required placeholder="Zenith Retail India Pvt Ltd" class="glass-input w-full px-4 py-3 pl-11">
-                    <i class="ph-bold ph-buildings absolute left-4 top-3.5 text-slate-500 text-base"></i>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div>
-                    <label class="block text-xs sm:text-sm font-extrabold text-slate-800 mb-1.5">Work Email</label>
-                    <div class="relative">
-                        <input type="email" id="signUpEmail" required placeholder="divyansh@zenith.in" class="glass-input w-full px-4 py-3 pl-11">
-                        <i class="ph-bold ph-envelope-simple absolute left-4 top-3.5 text-slate-500 text-base"></i>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs sm:text-sm font-extrabold text-slate-800 mb-1.5">GSTIN (Optional)</label>
-                    <div class="relative">
-                        <input type="text" id="signUpGstin" placeholder="27AAACZ8892Z1Z4" class="glass-input w-full px-4 py-3 pl-11 uppercase font-mono font-bold">
-                        <i class="ph-bold ph-receipt absolute left-4 top-3.5 text-slate-500 text-base"></i>
-                    </div>
+                    <i class="ph-bold ph-user absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="text" id="signUpName" required placeholder="Divyansh Thakur" class="w-full px-4 py-3.5 pl-11 glass-input">
                 </div>
             </div>
 
             <div>
-                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 mb-1.5">Create Secure Password</label>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Company / Store Name</label>
                 <div class="relative">
-                    <input type="password" id="signUpPassword" required minlength="6" placeholder="At least 6 characters" class="glass-input w-full px-4 py-3 pl-11">
-                    <i class="ph-bold ph-lock-key absolute left-4 top-3.5 text-slate-500 text-base"></i>
+                    <i class="ph-bold ph-buildings absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="text" id="signUpCompany" required placeholder="Zenith Retail India Pvt Ltd" class="w-full px-4 py-3.5 pl-11 glass-input">
                 </div>
             </div>
 
-            <button type="submit" id="btnSignUpSubmit" class="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-emerald-500 via-sky-500 to-blue-600 hover:from-emerald-600 hover:to-blue-700 text-white font-black text-sm sm:text-base shadow-lg shadow-blue-600/25 active:scale-95 transition flex items-center justify-center space-x-2 mt-3">
+            <div>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Business Email</label>
+                <div class="relative">
+                    <i class="ph-bold ph-envelope-simple absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="email" id="signUpEmail" required placeholder="divyansh@zenithretail.in" class="w-full px-4 py-3.5 pl-11 glass-input">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Merchant GSTIN (Optional)</label>
+                <div class="relative">
+                    <i class="ph-bold ph-receipt absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="text" id="signUpGstin" placeholder="27AAACZ1234F1Z5" class="w-full px-4 py-3.5 pl-11 glass-input font-mono">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Create Secure Password</label>
+                <div class="relative">
+                    <i class="ph-bold ph-lock-key absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="password" id="signUpPassword" required minlength="6" placeholder="At least 6 characters" class="w-full px-4 py-3.5 pl-11 glass-input">
+                </div>
+            </div>
+
+            <button type="submit" id="btnSignUpSubmit" class="w-full py-3.5 rounded-xl rzp-btn-primary font-black text-sm sm:text-base flex items-center justify-center space-x-2 shadow-lg shadow-blue-500/25 active:scale-[0.99] transition mt-2">
                 <span>Create Free Workspace & Private Storage</span>
                 <i class="ph-bold ph-sparkle text-lg"></i>
             </button>
         </form>
 
-        <!-- Quick Guest Demo Entry -->
-        <div class="mt-7 pt-6 border-t border-slate-200 text-center">
-            <button onclick="handleQuickDemoLogin()" class="text-sm text-blue-700 hover:text-blue-900 font-extrabold flex items-center justify-center space-x-2 mx-auto transition">
-                <i class="ph-bold ph-lightning text-base"></i>
-                <span>Continue as Guest Demo Merchant ➔</span>
+        <!-- Quick Demo Switcher -->
+        <div class="mt-7 pt-6 border-t border-slate-200 dark:border-slate-800 text-center">
+            <p class="text-xs text-slate-600 dark:text-slate-400 font-semibold mb-2">Want instant one-click test access?</p>
+            <button onclick="handleQuickDemoLogin()" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center justify-center space-x-2 mx-auto">
+                <i class="ph-bold ph-lightning text-blue-600 text-sm"></i>
+                <span>One-Click Instant Demo Login</span>
             </button>
         </div>
+
     </div>
 
-    <!-- Background Wave Script -->
+    <!-- SCRIPTS -->
     <script>
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('autorecon_theme', isDark ? 'dark' : 'light');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const icon = document.getElementById('themeToggleIcon');
+            if (!icon) return;
+            const isDark = document.documentElement.classList.contains('dark');
+            icon.className = isDark ? 'ph-bold ph-sun text-amber-400 text-base' : 'ph-bold ph-moon-stars text-base';
+        }
+
         function initLiveBackground() {
             const canvas = document.getElementById('liveBgCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
+
             let width = canvas.width = window.innerWidth;
             let height = canvas.height = window.innerHeight;
 
+            let targetMouse = { x: width / 2, y: height / 2, active: false };
+            let currentMouse = { x: width / 2, y: height / 2 };
+
+            window.addEventListener('mousemove', (e) => {
+                targetMouse.x = e.clientX;
+                targetMouse.y = e.clientY;
+                targetMouse.active = true;
+            });
+
+            window.addEventListener('mouseleave', () => { targetMouse.active = false; });
             window.addEventListener('resize', () => {
                 width = canvas.width = window.innerWidth;
                 height = canvas.height = window.innerHeight;
             });
 
-            const nodes = [];
-            const numNodes = 30;
-
-            for (let i = 0; i < numNodes; i++) {
-                nodes.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    radius: Math.random() * 2.5 + 1.5,
-                    color: (i % 3 === 0) ? '#0066FF' : (i % 3 === 1 ? '#0284C7' : '#047857'),
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4
-                });
-            }
-
-            let waveStep = 0;
-
-            function renderFintechCanvas() {
+            function render() {
                 ctx.clearRect(0, 0, width, height);
+                currentMouse.x += (targetMouse.x - currentMouse.x) * 0.05;
+                currentMouse.y += (targetMouse.y - currentMouse.y) * 0.05;
 
-                waveStep += 0.015;
-                const waves = [
-                    { y: height * 0.75, amp: 40, freq: 0.002, speed: 1.0, color: 'rgba(0, 102, 255, 0.22)', lineWidth: 2.2 },
-                    { y: height * 0.82, amp: 30, freq: 0.0025, speed: -0.8, color: 'rgba(2, 132, 199, 0.18)', lineWidth: 1.8 }
-                ];
-
-                waves.forEach(w => {
-                    ctx.beginPath();
-                    ctx.strokeStyle = w.color;
-                    ctx.lineWidth = w.lineWidth;
-                    for (let x = 0; x <= width; x += 10) {
-                        const y = w.y + Math.sin(x * w.freq + waveStep * w.speed) * w.amp;
-                        if (x === 0) ctx.moveTo(x, y);
-                        else ctx.lineTo(x, y);
-                    }
-                    ctx.stroke();
-                });
-
-                for (let i = 0; i < nodes.length; i++) {
-                    for (let j = i + 1; j < nodes.length; j++) {
-                        const dx = nodes[i].x - nodes[j].x;
-                        const dy = nodes[i].y - nodes[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < 140) {
-                            ctx.beginPath();
-                            const alpha = (1 - dist / 140) * 0.3;
-                            ctx.strokeStyle = `rgba(0, 102, 255, ${alpha})`;
-                            ctx.lineWidth = 1;
-                            ctx.moveTo(nodes[i].x, nodes[i].y);
-                            ctx.lineTo(nodes[j].x, nodes[j].y);
-                            ctx.stroke();
-                        }
-                    }
+                if (targetMouse.active) {
+                    const gradient = ctx.createRadialGradient(
+                        currentMouse.x, currentMouse.y, 10,
+                        currentMouse.x, currentMouse.y, 280
+                    );
+                    gradient.addColorStop(0, 'rgba(0, 102, 255, 0.04)');
+                    gradient.addColorStop(0.5, 'rgba(2, 132, 199, 0.02)');
+                    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, width, height);
                 }
-
-                nodes.forEach(n => {
-                    ctx.beginPath();
-                    ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = n.color;
-                    ctx.fill();
-
-                    n.x += n.vx;
-                    n.y += n.vy;
-
-                    if (n.x < 0 || n.x > width) n.vx *= -1;
-                    if (n.y < 0 || n.y > height) n.vy *= -1;
-                });
-
-                requestAnimationFrame(renderFintechCanvas);
+                requestAnimationFrame(render);
             }
-
-            renderFintechCanvas();
+            render();
         }
 
         function showAlert(msg, isSuccess = false) {
@@ -291,11 +284,11 @@
             alertText.textContent = msg;
 
             if (isSuccess) {
-                alertBox.className = 'mb-5 p-4 rounded-xl text-sm flex items-center space-x-3 bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold';
-                alertIcon.className = 'ph-bold ph-check-circle text-xl flex-shrink-0 text-emerald-700';
+                alertBox.className = 'mb-5 p-4 rounded-xl text-sm flex items-center space-x-3 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 font-bold';
+                alertIcon.className = 'ph-bold ph-check-circle text-xl flex-shrink-0 text-emerald-700 dark:text-emerald-400';
             } else {
-                alertBox.className = 'mb-5 p-4 rounded-xl text-sm flex items-center space-x-3 bg-red-50 text-red-900 border border-red-300 font-bold';
-                alertIcon.className = 'ph-bold ph-warning text-xl flex-shrink-0 text-red-700';
+                alertBox.className = 'mb-5 p-4 rounded-xl text-sm flex items-center space-x-3 bg-red-50 dark:bg-red-950/60 text-red-900 dark:text-red-300 border border-red-300 dark:border-red-700 font-bold';
+                alertIcon.className = 'ph-bold ph-warning text-xl flex-shrink-0 text-red-700 dark:text-red-400';
             }
         }
 
@@ -310,13 +303,13 @@
 
             if (mode === 'signin') {
                 btnSignIn.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-md';
-                btnSignUp.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all text-slate-700 hover:text-slate-900';
+                btnSignUp.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
                 formSignIn.classList.remove('hidden');
                 formSignUp.classList.add('hidden');
                 subtitle.textContent = 'Razorpay Multi-Tasking Accounting & Autonomous Financial Controller';
             } else {
                 btnSignUp.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-md';
-                btnSignIn.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all text-slate-700 hover:text-slate-900';
+                btnSignIn.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
                 formSignIn.classList.add('hidden');
                 formSignUp.classList.remove('hidden');
                 subtitle.textContent = 'Create a secure workspace with dedicated partitioned database storage';
@@ -349,7 +342,7 @@
             } catch (err) {
                 showAlert(err.message, false);
                 btn.disabled = false;
-                btn.innerHTML = `<span>Sign In to Financial Workspace</span><i class="ph-bold ph-arrow-right text-lg"></i>`;
+                btn.innerHTML = `<span>Sign In to Financial OS</span><i class="ph-bold ph-arrow-right text-lg"></i>`;
             }
         }
 
@@ -393,6 +386,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            updateThemeIcon();
             initLiveBackground();
         });
     </script>

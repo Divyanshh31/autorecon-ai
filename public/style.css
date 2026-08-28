@@ -1,19 +1,19 @@
 /* ==========================================================================
-   AutoRecon AI — High-Clarity Luxury Pearl White Fintech Design System
-   Google Font 'Outfit', Razor-Sharp Contrast, Defined Glass Cards & Precision Motion
+   AutoRecon AI — Complete Dual-Theme Fintech Design System
+   Light Mode (Luxury Pearl White) & Dark Mode (Obsidian Cyber Fintech)
+   Google Font 'Outfit' + JetBrains Mono · High-Definition Contrast
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
-    /* Base Pearl White Palette */
+    /* ---------------- LIGHT MODE TOKENS (Default) ---------------- */
     --rzp-bg: #F8FAFC;
     --rzp-bg-secondary: #F1F5F9;
     --rzp-surface: #FFFFFF;
     --rzp-surface-card: #FFFFFF;
     --rzp-surface-card-hover: #FFFFFF;
     
-    /* Vibrant High-Clarity Fintech Accents */
     --rzp-blue: #0066FF;
     --rzp-blue-hover: #0052CC;
     --rzp-azure: #0284C7;
@@ -29,18 +29,60 @@
     --rzp-red: #B91C1C;
     --rzp-red-soft: rgba(185, 28, 28, 0.1);
     
-    /* Sharp High-Definition Borders & Deep Jet Text */
     --rzp-border: #CBD5E1;
     --rzp-border-hover: #0066FF;
     --rzp-border-glow: rgba(0, 102, 255, 0.3);
     
-    --rzp-text-main: #0F172A;       /* Deep Jet Slate (100% Contrast) */
-    --rzp-text-body: #1E293B;       /* Crisp Charcoal Slate */
-    --rzp-text-muted: #475569;      /* Dark Slate for High Legibility */
+    --rzp-text-main: #0F172A;
+    --rzp-text-body: #1E293B;
+    --rzp-text-muted: #475569;
     --rzp-text-light: #64748B;
+    
+    --rzp-grid-color: rgba(15, 23, 42, 0.025);
+    --rzp-header-bg: rgba(255, 255, 255, 0.96);
+    --rzp-row-hover: #F1F5F9;
+    --rzp-shadow-card: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
     
     --rzp-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     --rzp-ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---------------- DARK MODE TOKENS (Obsidian Cyber Fintech) ---------------- */
+html.dark {
+    --rzp-bg: #0A0E17;
+    --rzp-bg-secondary: #0F172A;
+    --rzp-surface: #111827;
+    --rzp-surface-card: #111827;
+    --rzp-surface-card-hover: #162036;
+    
+    --rzp-blue: #38BDF8;
+    --rzp-blue-hover: #0284C7;
+    --rzp-azure: #38BDF8;
+    --rzp-cyan: #22D3EE;
+    --rzp-indigo: #818CF8;
+    
+    --rzp-emerald: #10B981;
+    --rzp-emerald-soft: rgba(16, 185, 129, 0.15);
+    
+    --rzp-amber: #F59E0B;
+    --rzp-amber-soft: rgba(245, 158, 11, 0.15);
+    
+    --rzp-red: #EF4444;
+    --rzp-red-soft: rgba(239, 68, 68, 0.15);
+    
+    --rzp-border: #1E293B;
+    --rzp-border-hover: #38BDF8;
+    --rzp-border-glow: rgba(56, 189, 248, 0.25);
+    
+    --rzp-text-main: #F8FAFC;
+    --rzp-text-body: #E2E8F0;
+    --rzp-text-muted: #94A3B8;
+    --rzp-text-light: #64748B;
+    
+    --rzp-grid-color: rgba(255, 255, 255, 0.025);
+    --rzp-header-bg: rgba(10, 14, 23, 0.94);
+    --rzp-row-hover: #1E293B;
+    --rzp-shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 * {
@@ -58,17 +100,23 @@ body {
     font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--rzp-bg);
     background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.035) 0%, transparent 60%),
-        linear-gradient(to right, rgba(15, 23, 42, 0.025) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(15, 23, 42, 0.025) 1px, transparent 1px);
+        radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.04) 0%, transparent 60%),
+        linear-gradient(to right, var(--rzp-grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--rzp-grid-color) 1px, transparent 1px);
     background-size: 100% 100%, 48px 48px, 48px 48px;
     color: var(--rzp-text-main);
     font-size: 14px;
     line-height: 1.55;
     min-height: 100vh;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+html.dark body {
+    background-color: var(--rzp-bg);
+    color: var(--rzp-text-main);
 }
 
 pre, code, .font-mono {
@@ -86,6 +134,13 @@ pre, code, .font-mono {
     animation: lightGradientFlow 7s infinite alternate ease-in-out;
 }
 
+html.dark .rzp-gradient-text {
+    background: linear-gradient(135deg, #38BDF8 0%, #60A5FA 30%, #34D399 65%, #A78BFA 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 @keyframes lightGradientFlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -93,7 +148,7 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   2. MINIMALISTIC PEARL WHITE AMBIENT BACKGROUND & ORBS
+   2. AMBIENT BACKGROUND CANVAS & ORBS
    ========================================================================== */
 #liveBgCanvas {
     position: fixed;
@@ -122,6 +177,10 @@ pre, code, .font-mono {
     will-change: transform;
 }
 
+html.dark .orb {
+    opacity: 0.12;
+}
+
 .orb-1 {
     width: 600px;
     height: 600px;
@@ -147,10 +206,6 @@ pre, code, .font-mono {
     right: -100px;
     animation-delay: -14s;
 }
-    top: 35%;
-    right: -80px;
-    animation-delay: -10s;
-}
 
 @keyframes lightOrbMotion {
     0% { transform: translate3d(0, 0, 0) scale(1); }
@@ -159,16 +214,14 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   3. HIGH-DEFINITION GLASS CARDS & 3D HOVER EFFECTS
+   3. HIGH-DEFINITION GLASS CARDS & HOVER EFFECTS
    ========================================================================== */
 .rzp-card, .pine-card, .glass-card {
-    background: #FFFFFF;
+    background: var(--rzp-surface-card);
     border: 1px solid var(--rzp-border);
     border-radius: 18px;
-    box-shadow: 
-        0 4px 16px -2px rgba(15, 23, 42, 0.06),
-        0 1px 3px 0 rgba(15, 23, 42, 0.04);
-    transition: transform 0.28s var(--rzp-ease-spring), border-color 0.28s var(--rzp-ease-spring), box-shadow 0.28s var(--rzp-ease-spring);
+    box-shadow: var(--rzp-shadow-card);
+    transition: transform 0.28s var(--rzp-ease-spring), border-color 0.28s var(--rzp-ease-spring), box-shadow 0.28s var(--rzp-ease-spring), background-color 0.3s ease;
     position: relative;
     overflow: hidden;
     perspective: 1000px;
@@ -182,11 +235,15 @@ pre, code, .font-mono {
     left: -100%;
     width: 50%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), rgba(0, 102, 255, 0.12), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), rgba(0, 102, 255, 0.12), transparent);
     transform: skewX(-20deg);
     transition: left 0.75s var(--rzp-ease-smooth);
     pointer-events: none;
     z-index: 1;
+}
+
+html.dark .rzp-card::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), rgba(56, 189, 248, 0.15), transparent);
 }
 
 .rzp-card:hover::before, .pine-card:hover::before, .glass-card:hover::before {
@@ -197,51 +254,43 @@ pre, code, .font-mono {
     border-color: var(--rzp-blue);
     box-shadow: 
         0 18px 36px -8px rgba(0, 102, 255, 0.16),
-        0 0 0 1px rgba(0, 102, 255, 0.35);
+        0 0 0 1px var(--rzp-border-glow);
     transform: translateY(-4px);
 }
 
 /* Glass Header */
 .glass-header {
-    background: rgba(255, 255, 255, 0.96);
+    background: var(--rzp-header-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--rzp-border);
     box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid var(--rzp-border);
+    background: var(--rzp-surface);
+    color: var(--rzp-text-muted);
+    transition: all 0.2s var(--rzp-ease-spring);
+    cursor: pointer;
+}
+
+.theme-toggle-btn:hover {
+    color: var(--rzp-text-main);
+    border-color: var(--rzp-blue);
+    transform: scale(1.05);
 }
 
 /* ==========================================================================
-   4. FLOATING MICRO-WIDGETS & BADGES
-   ========================================================================== */
-.floating-pill {
-    background: #FFFFFF;
-    border: 1px solid rgba(0, 102, 255, 0.35);
-    border-radius: 9999px;
-    box-shadow: 0 8px 20px -4px rgba(0, 102, 255, 0.14), 0 2px 6px rgba(15, 23, 42, 0.05);
-    font-size: 0.75rem;
-    font-weight: 700;
-    animation: lightFloat 5s ease-in-out infinite alternate;
-    transition: all 0.25s ease;
-}
-
-.floating-pill:hover {
-    transform: translateY(-3px) scale(1.03);
-    border-color: #0066FF;
-    box-shadow: 0 12px 24px -4px rgba(0, 102, 255, 0.25);
-}
-
-.floating-pill-alt {
-    animation-duration: 6s;
-    animation-delay: -2.5s;
-}
-
-@keyframes lightFloat {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-6px); }
-}
-
-/* ==========================================================================
-   5. BESPOKE BUTTONS & HOVER GLINT
+   4. BESPOKE BUTTONS & HOVER GLINT
    ========================================================================== */
 .rzp-btn-primary {
     display: inline-flex;
@@ -261,43 +310,23 @@ pre, code, .font-mono {
     transition: transform 0.2s var(--rzp-ease-spring), box-shadow 0.2s var(--rzp-ease-spring), background-position 0.35s ease;
 }
 
-/* Light Beam Glint Traversing across the Button */
-.rzp-btn-primary::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -75%;
-    width: 250%;
-    height: 200%;
-    background: linear-gradient(60deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
-    transform: rotate(25deg);
-    transition: left 0.75s var(--rzp-ease-smooth);
-    opacity: 0;
-    pointer-events: none;
-}
-
 .rzp-btn-primary:hover {
     background-position: 100% 0;
     box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5);
     transform: translateY(-1.5px);
 }
 
-.rzp-btn-primary:hover::after {
-    left: 100%;
-    opacity: 1;
-}
-
 .rzp-btn-primary:active {
     transform: scale(0.97);
 }
 
-/* Secondary White Glass Buttons */
+/* Secondary White/Dark Glass Buttons */
 .glass-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    background: #FFFFFF;
+    background: var(--rzp-surface);
     border: 1px solid var(--rzp-border);
     border-radius: 10px;
     color: var(--rzp-text-main) !important;
@@ -308,20 +337,16 @@ pre, code, .font-mono {
 }
 
 .glass-btn:hover {
-    background: #F8FAFC;
-    border-color: #94A3B8;
+    background: var(--rzp-bg-secondary);
+    border-color: var(--rzp-text-muted);
     color: var(--rzp-text-main) !important;
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
     transform: translateY(-1.5px);
 }
 
-.glass-btn:active {
-    transform: scale(0.97);
-}
-
 /* Glass Inputs */
 .glass-input {
-    background: #FFFFFF;
+    background: var(--rzp-surface);
     border: 1.5px solid var(--rzp-border);
     border-radius: 10px;
     color: var(--rzp-text-main);
@@ -331,14 +356,14 @@ pre, code, .font-mono {
 }
 
 .glass-input:focus {
-    background: #FFFFFF;
+    background: var(--rzp-surface);
     border-color: var(--rzp-blue);
     box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.16);
     outline: none;
 }
 
 /* ==========================================================================
-   6. TAB SWITCHER (Compact High-Contrast Capsule)
+   5. TAB SWITCHER (Compact Capsule)
    ========================================================================== */
 .nav-tab-btn {
     display: inline-flex;
@@ -356,6 +381,10 @@ pre, code, .font-mono {
 .nav-tab-btn:hover {
     color: var(--rzp-text-main);
     background: rgba(15, 23, 42, 0.06);
+}
+
+html.dark .nav-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .nav-tab-btn.active {
@@ -376,7 +405,7 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   7. INTERACTIVE TABLE ROW HOVER & PRECISION STYLING
+   6. INTERACTIVE TABLE ROW HOVER & PRECISION STYLING
    ========================================================================== */
 table {
     border-collapse: separate;
@@ -386,16 +415,16 @@ table {
 tbody tr {
     transition: all 0.18s var(--rzp-ease-spring);
     position: relative;
-    border-bottom: 1px solid #E2E8F0;
+    border-bottom: 1px solid var(--rzp-border);
 }
 
 tbody tr:hover {
-    background: #F1F5F9 !important;
-    box-shadow: inset 3.5px 0 0 0 #0066FF;
+    background: var(--rzp-row-hover) !important;
+    box-shadow: inset 3.5px 0 0 0 var(--rzp-blue);
 }
 
 /* ==========================================================================
-   8. STATUS BADGES WITH VIVID READABLE PILLS
+   7. STATUS BADGES WITH VIVID READABLE PILLS
    ========================================================================== */
 .badge-pill {
     display: inline-flex;
@@ -414,10 +443,22 @@ tbody tr:hover {
     border: 1.5px solid #6EE7B7;
 }
 
+html.dark .badge-reconciled {
+    background: rgba(6, 78, 59, 0.6);
+    color: #34D399;
+    border: 1.5px solid #059669;
+}
+
 .badge-fee-mismatch {
     background: #FFFBEB;
     color: #92400E;
     border: 1.5px solid #FCD34D;
+}
+
+html.dark .badge-fee-mismatch {
+    background: rgba(120, 53, 15, 0.6);
+    color: #FBBF24;
+    border: 1.5px solid #D97706;
 }
 
 .badge-delayed {
@@ -426,11 +467,17 @@ tbody tr:hover {
     border: 1.5px solid #FCA5A5;
 }
 
+html.dark .badge-delayed {
+    background: rgba(127, 29, 29, 0.6);
+    color: #F87171;
+    border: 1.5px solid #DC2626;
+}
+
 /* ==========================================================================
-   9. DYNAMIC ISLAND LIVE STREAM CAPSULE & PULSE DOT
+   8. DYNAMIC ISLAND LIVE STREAM CAPSULE & PULSE DOT
    ========================================================================== */
 .live-stream-ticker {
-    background: #FFFFFF;
+    background: var(--rzp-surface);
     border: 1px solid var(--rzp-border);
     border-radius: 9999px;
     box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
@@ -452,28 +499,22 @@ tbody tr:hover {
 }
 
 /* ==========================================================================
-   9B. INTERACTIVE FINTECH OPERATING TERMINAL (Juspay / Stripe Style)
+   9. INTERACTIVE FINTECH OPERATING TERMINAL (Juspay / Stripe Style)
    ========================================================================== */
 .hero-simulator-terminal {
-    background: #FFFFFF;
-    border: 1.5px solid #CBD5E1;
+    background: var(--rzp-surface);
+    border: 1.5px solid var(--rzp-border);
     border-radius: 24px;
-    box-shadow: 
-        0 25px 60px -12px rgba(0, 102, 255, 0.14),
-        0 8px 24px -4px rgba(15, 23, 42, 0.06);
+    box-shadow: var(--rzp-shadow-card);
     overflow: hidden;
     position: relative;
     transition: all 0.3s var(--rzp-ease-spring);
 }
 
 .hero-simulator-terminal:hover {
-    border-color: #0066FF;
-    box-shadow: 
-        0 30px 70px -10px rgba(0, 102, 255, 0.20),
-        0 10px 28px -4px rgba(15, 23, 42, 0.08);
+    border-color: var(--rzp-blue);
 }
 
-/* Terminal Tab Pills */
 .sim-tab-btn {
     padding: 6px 12px;
     font-size: 0.75rem;
@@ -487,7 +528,7 @@ tbody tr:hover {
 
 .sim-tab-btn:hover {
     color: var(--rzp-text-main);
-    background: rgba(15, 23, 42, 0.05);
+    background: var(--rzp-bg-secondary);
 }
 
 .sim-tab-btn.active {
@@ -497,10 +538,9 @@ tbody tr:hover {
     box-shadow: 0 2px 8px rgba(0, 102, 255, 0.35);
 }
 
-/* Live Flow Stages */
 .sim-flow-node {
-    background: #FFFFFF;
-    border: 1px solid #CBD5E1;
+    background: var(--rzp-surface);
+    border: 1px solid var(--rzp-border);
     border-radius: 14px;
     padding: 10px 12px;
     transition: all 0.25s ease;
@@ -508,23 +548,22 @@ tbody tr:hover {
 
 .sim-flow-node.highlighted {
     border-color: #0066FF;
-    background: #F8FAFC;
+    background: var(--rzp-bg-secondary);
     box-shadow: 0 4px 14px rgba(0, 102, 255, 0.15);
 }
 
 .sim-flow-node.overcharge {
     border-color: #D97706;
-    background: #FFFBEB;
+    background: var(--rzp-amber-soft);
     box-shadow: 0 4px 14px rgba(217, 119, 6, 0.15);
 }
 
 .sim-flow-node.cleared {
     border-color: #059669;
-    background: #ECFDF5;
+    background: var(--rzp-emerald-soft);
     box-shadow: 0 4px 14px rgba(5, 150, 105, 0.15);
 }
 
-/* Animated Flow Connector Line */
 .sim-connector-line {
     height: 2px;
     background: linear-gradient(90deg, #0066FF, #0284C7, #059669);
@@ -544,7 +583,7 @@ tbody tr:hover {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #F8FAFC;
+    background: var(--rzp-bg);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -559,7 +598,7 @@ tbody tr:hover {
 }
 
 .minimal-glass-emblem {
-    background: #FFFFFF;
+    background: var(--rzp-surface);
     border: 1px solid var(--rzp-border);
     box-shadow: 0 10px 25px rgba(0, 102, 255, 0.12);
     animation: emblemFloat 3s infinite alternate ease-in-out;
@@ -575,6 +614,10 @@ tbody tr:hover {
     background: rgba(15, 23, 42, 0.08);
     border-radius: 9999px;
     overflow: hidden;
+}
+
+html.dark .hairline-loader {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .hairline-loader-bar {
@@ -606,9 +649,9 @@ tbody tr:hover {
 }
 
 #floatingChatWindow {
-    background: #FFFFFF;
+    background: var(--rzp-surface);
     border: 1px solid var(--rzp-border);
-    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
     animation: windowPopup 0.25s var(--rzp-ease-spring);
 }
 
@@ -626,12 +669,16 @@ tbody tr:hover {
 }
 
 ::-webkit-scrollbar-track {
-    background: #F8FAFC;
+    background: var(--rzp-bg);
 }
 
 ::-webkit-scrollbar-thumb {
     background: rgba(15, 23, 42, 0.2);
     border-radius: 4px;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {

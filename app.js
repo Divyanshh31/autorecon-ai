@@ -1,11 +1,83 @@
 // AutoRecon AI — All-in-One Autonomous Accounting & Financial Operations OS
 // Multi-Tasking Client Controller: Gateway Recon, Payroll & Salary Delays, Vendor AP & MSME 43B(h), Cash Flow & AI Munimji
 
+// Automatic Cache Purging for Stale Mobile/Desktop Browsers
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+        for (let registration of registrations) {
+            registration.unregister();
+        }
+    });
+}
+if ('caches' in window) {
+    caches.keys().then(names => {
+        for (let name of names) caches.delete(name);
+    });
+}
+
 let reconChart = null;
 let feeChart = null;
+let cashFlowChartInstance = null;
 let currentFilter = 'ALL';
 let isLiveStreamActive = true;
 let currentBatchId = null;
+
+// =========================================================================
+// THEME SWITCHER (LIGHT & DARK MODE)
+// =========================================================================
+window.toggleTheme = function() {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('autorecon_theme', isDark ? 'dark' : 'light');
+    updateThemeIcon();
+    updateChartsTheme();
+    showToast(isDark ? '🌙 Switched to Dark Obsidian Mode' : '☀️ Switched to Light Pearl Mode');
+};
+
+function updateThemeIcon() {
+    const icon = document.getElementById('themeToggleIcon');
+    if (!icon) return;
+    const isDark = document.documentElement.classList.contains('dark');
+    icon.className = isDark ? 'ph-bold ph-sun text-amber-400 text-base' : 'ph-bold ph-moon-stars text-base';
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('autorecon_theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+    updateThemeIcon();
+}
+
+function updateChartsTheme() {
+    const isDark = document.documentElement.classList.contains('dark');
+    const labelColor = isDark ? '#E2E8F0' : '#334155';
+    const tickColor = isDark ? '#94A3B8' : '#475569';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(226, 232, 240, 0.8)';
+
+    if (reconChart) {
+        if (reconChart.options.plugins?.legend?.labels) {
+            reconChart.options.plugins.legend.labels.color = labelColor;
+        }
+        reconChart.update();
+    }
+
+    if (feeChart) {
+        if (feeChart.options.scales?.x?.ticks) feeChart.options.scales.x.ticks.color = tickColor;
+        if (feeChart.options.scales?.y?.ticks) feeChart.options.scales.y.ticks.color = tickColor;
+        if (feeChart.options.scales?.y?.grid) feeChart.options.scales.y.grid.color = gridColor;
+        feeChart.update();
+    }
+
+    const cfEl = document.getElementById('cashFlowChart');
+    if (cfEl && window.cashFlowChartInstance) {
+        if (window.cashFlowChartInstance.options.scales?.x?.ticks) window.cashFlowChartInstance.options.scales.x.ticks.color = tickColor;
+        if (window.cashFlowChartInstance.options.scales?.y?.ticks) window.cashFlowChartInstance.options.scales.y.ticks.color = tickColor;
+        if (window.cashFlowChartInstance.options.scales?.y?.grid) window.cashFlowChartInstance.options.scales.y.grid.color = gridColor;
+        window.cashFlowChartInstance.update();
+    }
+}
 
 const defaultCustomerNames = [
     "Aarav Patel", "Diya Sharma", "Vikram Malhotra", "Ananya Iyer", "Rohan Gupta",
@@ -125,6 +197,7 @@ window.handleLogout = async function() {
 
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     initAuth();
     initLiveBackground();
     initMinimalSplash();
