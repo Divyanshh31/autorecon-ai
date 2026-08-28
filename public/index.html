@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoRecon AI — Power Your Finance, Automate Every Rupee</title>
-    <!-- Auth Gate: Force Sign-In / Sign-Up first before accessing dashboard -->
+    <!-- Auth Gate -->
     <script>
         (function() {
             const token = localStorage.getItem('autorecon_auth_token');
@@ -22,15 +22,15 @@
                 extend: {
                     colors: {
                         rzp: {
-                            navy: '#02042B',
-                            dark: '#0B132B',
-                            card: '#0E1A38',
+                            light: '#F8FAFC',
+                            subtle: '#F1F5F9',
+                            card: '#FFFFFF',
                             blue: '#0066FF',
-                            azure: '#3395FF',
-                            cyan: '#00C2FF',
-                            emerald: '#00D09C',
-                            amber: '#FF9900',
-                            red: '#FF4D4D'
+                            azure: '#0284C7',
+                            cyan: '#06B6D4',
+                            emerald: '#059669',
+                            amber: '#D97706',
+                            red: '#DC2626'
                         }
                     }
                 }
@@ -43,10 +43,10 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white bg-[#02042B]">
+<body class="min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white bg-[#F8FAFC] text-slate-900">
 
     <!-- =========================================================================
-         LIVE INTERACTIVE BACKGROUND (Canvas Particles + Ambient Orbs)
+         PEARL WHITE LIVE INTERACTIVE BACKGROUND (Canvas Waves + Pastel Mesh Orbs)
          ========================================================================= -->
     <canvas id="liveBgCanvas"></canvas>
     <div class="ambient-glow-orbs">
@@ -57,18 +57,18 @@
     </div>
 
     <!-- =========================================================================
-         MINIMALISTIC OPENING SPLASH
+         MINIMALISTIC FAST OPENING SPLASH
          ========================================================================= -->
     <div id="splashScreen">
         <div class="max-w-sm w-full px-6 flex flex-col items-center text-center space-y-6">
-            <div class="h-16 w-16 rounded-2xl minimal-glass-emblem flex items-center justify-center shadow-lg shadow-blue-500/25">
-                <i class="ph-fill ph-credit-card text-sky-400 text-3xl"></i>
+            <div class="h-16 w-16 rounded-2xl minimal-glass-emblem flex items-center justify-center shadow-lg shadow-blue-500/20 bg-white">
+                <i class="ph-fill ph-credit-card text-blue-600 text-3xl"></i>
             </div>
             <div class="space-y-1">
-                <h1 class="text-xl font-bold tracking-[0.2em] text-white uppercase">
-                    AutoRecon<span class="text-sky-400">.AI</span>
+                <h1 class="text-xl font-black tracking-[0.2em] text-slate-900 uppercase">
+                    AutoRecon<span class="text-blue-600">.AI</span>
                 </h1>
-                <p class="text-xs text-slate-300 font-medium">
+                <p class="text-xs text-slate-600 font-medium">
                     Razorpay Autonomous Financial Operations & Reconciliation OS
                 </p>
             </div>
@@ -76,19 +76,19 @@
                 <div class="hairline-loader">
                     <div id="splashProgressBar" class="hairline-loader-bar" style="width: 0%"></div>
                 </div>
-                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                <div class="flex items-center justify-between text-[11px] font-mono text-slate-500">
                     <span id="splashStatusText" class="truncate pr-2">Syncing Settlements, Payroll & MSME Invoices...</span>
-                    <span id="splashPercentText" class="text-sky-400 font-bold">0%</span>
+                    <span id="splashPercentText" class="text-blue-600 font-bold">0%</span>
                 </div>
             </div>
-            <button onclick="skipSplashScreen()" class="text-[11px] text-slate-400 hover:text-white transition font-mono tracking-wider pt-2">
+            <button onclick="skipSplashScreen()" class="text-[11px] text-slate-400 hover:text-slate-700 transition font-mono tracking-wider pt-2">
                 [ Click to Skip ]
             </button>
         </div>
     </div>
 
     <!-- =========================================================================
-         TOP RAZORPAY.COM STYLE NAVIGATION BAR
+         TOP LUXURY PEARL WHITE NAVIGATION BAR
          ========================================================================= -->
     <header class="glass-header sticky top-0 z-40">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3 flex items-center justify-between gap-4">
@@ -96,16 +96,16 @@
             <!-- Brand Identity (Clean Single-Line) -->
             <div class="flex items-center space-x-3 flex-shrink-0">
                 <a href="/" class="flex items-center space-x-2.5 whitespace-nowrap">
-                    <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-tr from-blue-600 via-sky-500 to-emerald-400 p-[1px] shadow-lg shadow-blue-500/25 flex-shrink-0">
-                        <div class="w-full h-full bg-[#0E1A38] rounded-[11px] flex items-center justify-center">
-                            <i class="ph-fill ph-lightning text-sky-400 text-lg sm:text-xl"></i>
+                    <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-tr from-blue-600 via-sky-500 to-emerald-400 p-[1px] shadow-md shadow-blue-500/20 flex-shrink-0">
+                        <div class="w-full h-full bg-white rounded-[11px] flex items-center justify-center">
+                            <i class="ph-fill ph-lightning text-blue-600 text-lg sm:text-xl"></i>
                         </div>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <span class="font-extrabold text-lg sm:text-xl text-white tracking-tight">
-                            AutoRecon<span class="text-sky-400">.AI</span>
+                        <span class="font-black text-lg sm:text-xl text-slate-900 tracking-tight">
+                            AutoRecon<span class="text-blue-600">.AI</span>
                         </span>
-                        <span class="hidden xl:inline-flex px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-blue-500/15 text-sky-300 border border-blue-500/30 font-mono">
+                        <span class="hidden xl:inline-flex px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-blue-50 text-blue-700 border border-blue-200 font-mono">
                             Razorpay OS
                         </span>
                     </div>
@@ -113,41 +113,41 @@
             </div>
 
             <!-- Center Navigation Links (Clean Single-Line) -->
-            <nav class="hidden md:flex items-center space-x-4 lg:space-x-6 text-xs lg:text-sm font-semibold text-slate-300 whitespace-nowrap flex-shrink-0">
-                <a href="#operatingConsole" onclick="switchToTab('view-recon')" class="hover:text-sky-400 transition">Gateway Recon</a>
-                <a href="#operatingConsole" onclick="switchToTab('view-payroll')" class="hover:text-sky-400 transition">Payroll Desk</a>
-                <a href="#operatingConsole" onclick="switchToTab('view-vendors')" class="hover:text-sky-400 transition">MSME 43B(h)</a>
-                <a href="#operatingConsole" onclick="switchToTab('view-cashflow')" class="hover:text-sky-400 transition">Cash Compass</a>
-                <a href="#operatingConsole" onclick="switchToTab('view-ml')" class="hover:text-sky-400 transition">ML Lab</a>
+            <nav class="hidden md:flex items-center space-x-4 lg:space-x-6 text-xs lg:text-sm font-semibold text-slate-600 whitespace-nowrap flex-shrink-0">
+                <a href="#operatingConsole" onclick="switchToTab('view-recon')" class="hover:text-blue-600 transition">Gateway Recon</a>
+                <a href="#operatingConsole" onclick="switchToTab('view-payroll')" class="hover:text-blue-600 transition">Payroll Desk</a>
+                <a href="#operatingConsole" onclick="switchToTab('view-vendors')" class="hover:text-blue-600 transition">MSME 43B(h)</a>
+                <a href="#operatingConsole" onclick="switchToTab('view-cashflow')" class="hover:text-blue-600 transition">Cash Compass</a>
+                <a href="#operatingConsole" onclick="switchToTab('view-ml')" class="hover:text-blue-600 transition">ML Lab</a>
             </nav>
 
-            <!-- Action Toolbar & Profile (Clean Single-Line) -->
+            <!-- Action Toolbar & Profile -->
             <div class="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
-                <button id="btnOpenWebhookModal" onclick="openWebhookModal()" class="rzp-btn-primary px-3.5 py-2 text-xs font-bold whitespace-nowrap flex items-center space-x-1.5 active:scale-95 shadow-md shadow-blue-500/25">
+                <button id="btnOpenWebhookModal" onclick="openWebhookModal()" class="rzp-btn-primary px-3.5 py-2 text-xs font-bold whitespace-nowrap flex items-center space-x-1.5 active:scale-95 shadow-md shadow-blue-500/20">
                     <i class="ph-bold ph-plugs-connected text-sm"></i>
                     <span>Razorpay Webhook</span>
                 </button>
-                <button id="btnOpenUploadModal" class="glass-btn px-3 py-2 text-xs font-semibold whitespace-nowrap flex items-center space-x-1.5 active:scale-95 text-slate-200 hover:text-white">
-                    <i class="ph-bold ph-upload-simple text-sm text-sky-400"></i>
+                <button id="btnOpenUploadModal" class="glass-btn px-3 py-2 text-xs font-semibold whitespace-nowrap flex items-center space-x-1.5 active:scale-95 text-slate-700 hover:text-slate-900">
+                    <i class="ph-bold ph-upload-simple text-sm text-blue-600"></i>
                     <span class="hidden sm:inline">Upload CSV</span>
                 </button>
-                <button id="btnOpenDisputeModal" class="hidden lg:flex px-3 py-2 text-xs font-bold whitespace-nowrap rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/35 transition-all items-center space-x-1.5 active:scale-95">
-                    <i class="ph-bold ph-scales text-sm"></i>
+                <button id="btnOpenDisputeModal" class="hidden lg:flex px-3 py-2 text-xs font-bold whitespace-nowrap rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition-all items-center space-x-1.5 active:scale-95">
+                    <i class="ph-bold ph-scales text-sm text-amber-600"></i>
                     <span>Dispute Room</span>
                 </button>
 
                 <!-- Profile Pill -->
-                <div id="headerUserProfile" class="flex items-center space-x-2 pl-2 border-l border-white/10 flex-shrink-0">
-                    <div class="flex items-center space-x-2 bg-[#0E1A38] border border-blue-500/30 py-1 px-2.5 rounded-xl text-xs shadow-sm">
+                <div id="headerUserProfile" class="flex items-center space-x-2 pl-2 border-l border-slate-200 flex-shrink-0">
+                    <div class="flex items-center space-x-2 bg-slate-100 border border-slate-200 py-1 px-2.5 rounded-xl text-xs shadow-sm">
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-tr from-blue-600 to-sky-400 flex items-center justify-center text-white font-bold text-[10px]" id="headerUserAvatar">
                             Z
                         </div>
                         <div class="text-left hidden xl:block whitespace-nowrap">
-                            <div class="font-bold text-white text-[11px] leading-tight" id="headerUserName">Zenith Retail Demo</div>
-                            <div class="text-[9px] text-slate-400 leading-tight truncate max-w-[90px]" id="headerUserRole">Merchant Admin</div>
+                            <div class="font-bold text-slate-900 text-[11px] leading-tight" id="headerUserName">Zenith Retail Demo</div>
+                            <div class="text-[9px] text-slate-500 leading-tight truncate max-w-[90px]" id="headerUserRole">Merchant Admin</div>
                         </div>
                     </div>
-                    <button onclick="handleLogout()" title="Log Out" class="p-2 glass-btn rounded-xl text-slate-400 hover:text-red-400 hover:border-red-500/40 transition text-xs flex items-center justify-center flex-shrink-0">
+                    <button onclick="handleLogout()" title="Log Out" class="p-2 glass-btn rounded-xl text-slate-500 hover:text-red-600 hover:border-red-200 transition text-xs flex items-center justify-center flex-shrink-0">
                         <i class="ph-bold ph-sign-out text-sm"></i>
                     </button>
                 </div>
@@ -156,61 +156,61 @@
     </header>
 
     <!-- =========================================================================
-         HERO SECTION (Razorpay.com Flagship Signature Layout)
+         HERO SECTION (Luxury Pearl White Signature Layout)
          ========================================================================= -->
     <section class="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-12">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             <!-- Left Hero Content -->
             <div class="lg:col-span-7 space-y-6">
-                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-sky-300 text-xs font-bold">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                     <span>Razorpay Autonomous Accounting Suite 2026</span>
                 </div>
 
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight">
                     Power your finance, <br>
                     <span class="rzp-gradient-text">
                         automate every rupee.
                     </span>
                 </h1>
 
-                <p class="text-sm sm:text-base text-slate-300 max-w-xl leading-relaxed">
+                <p class="text-sm sm:text-base text-slate-600 max-w-xl leading-relaxed">
                     Audit Razorpay gateway settlement credits, catch hidden MDR fee leaks, disburse employee salaries on time with instant IMPS, and eliminate MSME 45-day Section 43B(h) tax penalties — powered by autonomous AI.
                 </p>
 
                 <!-- Hero Action CTAs -->
                 <div class="flex items-center gap-3 flex-wrap pt-2">
-                    <a href="#operatingConsole" class="rzp-btn-primary px-6 py-3.5 text-sm font-bold flex items-center space-x-2 shadow-xl shadow-blue-600/30 active:scale-95 transition">
+                    <a href="#operatingConsole" class="rzp-btn-primary px-6 py-3.5 text-sm font-bold flex items-center space-x-2 shadow-lg shadow-blue-600/25 active:scale-95 transition">
                         <i class="ph-bold ph-lightning text-base"></i>
                         <span>Explore Live Console ➔</span>
                     </a>
-                    <button onclick="openWebhookModal()" class="glass-btn px-5 py-3.5 text-sm font-bold flex items-center space-x-2 border-blue-500/40 hover:border-blue-500/60 active:scale-95 transition">
-                        <i class="ph-bold ph-plugs-connected text-base text-sky-400"></i>
+                    <button onclick="openWebhookModal()" class="glass-btn px-5 py-3.5 text-sm font-bold flex items-center space-x-2 border-slate-200 hover:border-blue-300 active:scale-95 transition text-slate-800">
+                        <i class="ph-bold ph-plugs-connected text-base text-blue-600"></i>
                         <span>Connect Webhook</span>
                     </button>
-                    <button onclick="document.getElementById('simModal').classList.remove('hidden')" class="glass-btn px-4 py-3.5 text-sm font-bold text-purple-300 border-purple-500/30 hover:border-purple-500/50">
-                        <i class="ph-bold ph-flask text-base text-purple-400"></i>
+                    <button onclick="document.getElementById('simModal').classList.remove('hidden')" class="glass-btn px-4 py-3.5 text-sm font-bold text-purple-700 border-purple-200 hover:border-purple-300">
+                        <i class="ph-bold ph-flask text-base text-purple-600"></i>
                     </button>
                 </div>
 
                 <!-- Trust / Proof Signals -->
-                <div class="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 border-t border-white/10 text-xs">
+                <div class="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 border-t border-slate-200 text-xs">
                     <div>
-                        <div class="text-[10px] text-slate-400 uppercase font-bold">Gross Audited</div>
-                        <div class="text-lg font-extrabold text-white font-mono mt-0.5">₹1,69,600.00</div>
+                        <div class="text-[10px] text-slate-500 uppercase font-bold">Gross Audited</div>
+                        <div class="text-lg font-extrabold text-slate-900 font-mono mt-0.5">₹1,69,600.00</div>
                     </div>
                     <div>
-                        <div class="text-[10px] text-slate-400 uppercase font-bold">ML Precision</div>
-                        <div class="text-lg font-extrabold text-emerald-400 font-mono mt-0.5">98.4%</div>
+                        <div class="text-[10px] text-slate-500 uppercase font-bold">ML Precision</div>
+                        <div class="text-lg font-extrabold text-emerald-600 font-mono mt-0.5">98.4%</div>
                     </div>
                     <div>
-                        <div class="text-[10px] text-slate-400 uppercase font-bold">Settlement SLA</div>
-                        <div class="text-lg font-extrabold text-sky-400 font-mono mt-0.5">T+2 Days</div>
+                        <div class="text-[10px] text-slate-500 uppercase font-bold">Settlement SLA</div>
+                        <div class="text-lg font-extrabold text-blue-600 font-mono mt-0.5">T+2 Days</div>
                     </div>
                     <div>
-                        <div class="text-[10px] text-slate-400 uppercase font-bold">Fee Leakage</div>
-                        <div class="text-lg font-extrabold text-emerald-400 font-mono mt-0.5">0% Unresolved</div>
+                        <div class="text-[10px] text-slate-500 uppercase font-bold">Fee Leakage</div>
+                        <div class="text-lg font-extrabold text-emerald-600 font-mono mt-0.5">0% Unresolved</div>
                     </div>
                 </div>
             </div>
@@ -218,18 +218,16 @@
             <!-- Right Hero Interactive 3-Way Flow Simulator Widget -->
             <div class="lg:col-span-5 relative">
                 <!-- Floating Micro-Pill (Top) -->
-                <div class="floating-pill px-3.5 py-1.5 inline-flex items-center space-x-2 text-[11px] font-bold text-sky-300 mb-3 ml-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span>⚡ Live Ingestion: <b class="text-white">payment.captured (₹4,500)</b></span>
+                <div class="floating-pill px-3.5 py-1.5 inline-flex items-center space-x-2 text-[11px] font-bold text-blue-700 mb-3 ml-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span>⚡ Live Ingestion: <b class="text-slate-900">payment.captured (₹4,500)</b></span>
                 </div>
 
-                <div class="rzp-card p-6 border-blue-500/30 shadow-2xl relative overflow-hidden">
-                    <div class="absolute -top-12 -right-12 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
-                    
-                    <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+                <div class="rzp-card p-6 border-slate-200 shadow-xl relative overflow-hidden bg-white/95">
+                    <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
                         <div class="flex items-center space-x-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                            <span class="text-xs font-bold uppercase tracking-wider text-white">Live 3-Way Recon Engine</span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-900">Live 3-Way Recon Engine</span>
                         </div>
                         <span class="badge-pill badge-reconciled font-mono text-[10px]">Active Node</span>
                     </div>
@@ -237,52 +235,52 @@
                     <!-- 3-Way Step Breakdown -->
                     <div class="space-y-3 text-xs">
                         <!-- Step 1 -->
-                        <div class="p-3.5 rounded-2xl bg-[#081028] border border-white/10 flex items-center justify-between transition hover:border-blue-500/40">
+                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between transition hover:border-blue-300">
                             <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-sky-400 flex items-center justify-center font-bold">
+                                <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
                                     1
                                 </div>
                                 <div>
-                                    <div class="font-bold text-white">Customer Order Captured</div>
-                                    <div class="text-[11px] text-slate-400">Order ID: #ORD_88192 via UPI</div>
+                                    <div class="font-bold text-slate-900">Customer Order Captured</div>
+                                    <div class="text-[11px] text-slate-500">Order ID: #ORD_88192 via UPI</div>
                                 </div>
                             </div>
-                            <div class="text-right font-mono font-bold text-white">₹4,500.00</div>
+                            <div class="text-right font-mono font-bold text-slate-900">₹4,500.00</div>
                         </div>
 
                         <!-- Step 2 -->
-                        <div class="p-3.5 rounded-2xl bg-[#081028] border border-white/10 flex items-center justify-between transition hover:border-sky-500/40">
+                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between transition hover:border-sky-300">
                             <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-300 flex items-center justify-center font-bold">
+                                <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold">
                                     2
                                 </div>
                                 <div>
-                                    <div class="font-bold text-white">Razorpay Fee & GST Audited</div>
-                                    <div class="text-[11px] text-slate-400">Contracted 2.0% MDR + 18% GST</div>
+                                    <div class="font-bold text-slate-900">Razorpay Fee & GST Audited</div>
+                                    <div class="text-[11px] text-slate-500">Contracted 2.0% MDR + 18% GST</div>
                                 </div>
                             </div>
-                            <div class="text-right font-mono font-bold text-sky-400">- ₹106.20</div>
+                            <div class="text-right font-mono font-bold text-sky-700">- ₹106.20</div>
                         </div>
 
                         <!-- Step 3 -->
-                        <div class="p-3.5 rounded-2xl bg-[#081028] border border-emerald-500/30 flex items-center justify-between transition hover:border-emerald-500/60">
+                        <div class="p-3.5 rounded-2xl bg-emerald-50/60 border border-emerald-200 flex items-center justify-between transition hover:border-emerald-300">
                             <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
                                     3
                                 </div>
                                 <div>
-                                    <div class="font-bold text-emerald-400">Bank Deposited (Axis Bank)</div>
-                                    <div class="text-[11px] text-slate-400">UTR: <span class="font-mono text-emerald-300">UTR_AXIS_992101</span></div>
+                                    <div class="font-bold text-emerald-800">Bank Deposited (Axis Bank)</div>
+                                    <div class="text-[11px] text-emerald-600">UTR: <span class="font-mono text-emerald-700 font-bold">UTR_AXIS_992101</span></div>
                                 </div>
                             </div>
-                            <div class="text-right font-mono font-extrabold text-emerald-400">₹4,393.80</div>
+                            <div class="text-right font-mono font-extrabold text-emerald-700">₹4,393.80</div>
                         </div>
                     </div>
 
                     <!-- Interactive Quick Action Trigger in Widget -->
-                    <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
-                        <span class="text-slate-400 text-[11px]">Audit Latency: <b class="text-white">180ms</b></span>
-                        <button onclick="dispatchLiveWebhookTest()" class="text-sky-400 hover:text-white font-bold text-[11px] flex items-center space-x-1">
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-slate-500 text-[11px]">Audit Latency: <b class="text-slate-900">180ms</b></span>
+                        <button onclick="dispatchLiveWebhookTest()" class="text-blue-600 hover:text-blue-800 font-bold text-[11px] flex items-center space-x-1">
                             <span>Simulate New Event</span> <i class="ph-bold ph-arrow-right"></i>
                         </button>
                     </div>
@@ -290,12 +288,12 @@
 
                 <!-- Floating Micro-Pills (Bottom Row) -->
                 <div class="flex items-center justify-between mt-3 px-1">
-                    <div class="floating-pill floating-pill-alt px-3 py-1.5 text-[11px] font-bold text-emerald-300 flex items-center space-x-1.5">
-                        <i class="ph-bold ph-shield-check text-emerald-400 text-sm"></i>
+                    <div class="floating-pill floating-pill-alt px-3 py-1.5 text-[11px] font-bold text-emerald-700 flex items-center space-x-1.5 bg-white">
+                        <i class="ph-bold ph-shield-check text-emerald-600 text-sm"></i>
                         <span>MSME 43B(h): 100% In Sync</span>
                     </div>
-                    <div class="floating-pill px-3 py-1.5 text-[11px] font-bold text-sky-300 flex items-center space-x-1.5">
-                        <i class="ph-bold ph-bank text-sky-400 text-sm"></i>
+                    <div class="floating-pill px-3 py-1.5 text-[11px] font-bold text-blue-700 flex items-center space-x-1.5 bg-white">
+                        <i class="ph-bold ph-bank text-blue-600 text-sm"></i>
                         <span>Axis Bank UTR Verified</span>
                     </div>
                 </div>
@@ -312,20 +310,20 @@
         <!-- Section Title & Dynamic Module Switcher -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h2 class="text-2xl font-black text-white tracking-tight flex items-center space-x-2">
+                <h2 class="text-2xl font-black text-slate-900 tracking-tight flex items-center space-x-2">
                     <span>Autonomous Financial Operating Console</span>
                 </h2>
-                <p class="text-xs text-slate-400 mt-0.5">
+                <p class="text-xs text-slate-500 mt-0.5">
                     Live 3-way reconciliation, salary delay prevention, MSME Section 43B(h) compliance, and ML forecasting.
                 </p>
             </div>
-            <div class="flex items-center space-x-2 text-xs font-mono text-slate-400">
-                <span class="text-emerald-400">● 5 Engines Synchronized</span>
+            <div class="flex items-center space-x-2 text-xs font-mono text-slate-500">
+                <span class="text-emerald-600 font-bold">● 5 Engines Synchronized</span>
             </div>
         </div>
 
         <!-- Segmented Tab Switcher Bar -->
-        <div class="bg-[#0B132B] p-1.5 rounded-2xl border border-white/10 shadow-2xl flex items-center justify-between gap-2 overflow-x-auto">
+        <div class="bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between gap-2 overflow-x-auto">
             <div class="flex items-center gap-1.5 flex-1 min-w-[780px]">
                 <!-- Tab 1: Payment Recon -->
                 <button class="nav-tab-btn active flex-1 py-3 px-4 text-xs font-extrabold flex items-center justify-center space-x-2 transition-all" data-target="view-recon">
@@ -337,14 +335,14 @@
                 <button class="nav-tab-btn flex-1 py-3 px-4 text-xs font-extrabold flex items-center justify-center space-x-2 transition-all" data-target="view-payroll">
                     <i class="ph-bold ph-users-three text-base"></i>
                     <span>2. Payroll & Salary Desk</span>
-                    <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+                    <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
                 </button>
 
                 <!-- Tab 3: Vendor Bills & MSME AP -->
                 <button class="nav-tab-btn flex-1 py-3 px-4 text-xs font-extrabold flex items-center justify-center space-x-2 transition-all" data-target="view-vendors">
                     <i class="ph-bold ph-receipt text-base"></i>
                     <span>3. Vendor MSME 43B(h)</span>
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
                 </button>
 
                 <!-- Tab 4: Cash Flow & Tax Compass -->
@@ -354,10 +352,10 @@
                 </button>
 
                 <!-- Tab 5: ML Intelligence & Forecasting Lab -->
-                <button class="nav-tab-btn flex-1 py-3 px-4 text-xs font-extrabold flex items-center justify-center space-x-2 transition-all border border-purple-500/30 text-purple-300 hover:bg-purple-900/20" data-target="view-ml">
-                    <i class="ph-bold ph-brain text-base text-purple-400"></i>
+                <button class="nav-tab-btn flex-1 py-3 px-4 text-xs font-extrabold flex items-center justify-center space-x-2 transition-all border border-purple-200 text-purple-700 hover:bg-purple-50" data-target="view-ml">
+                    <i class="ph-bold ph-brain text-base text-purple-600"></i>
                     <span>5. ML Intelligence Lab</span>
-                    <span class="px-1.5 py-0.2 bg-purple-500/30 text-purple-300 rounded text-[9px] font-mono font-bold uppercase">AI Model</span>
+                    <span class="px-1.5 py-0.2 bg-purple-100 text-purple-700 rounded text-[9px] font-mono font-bold uppercase">AI Model</span>
                 </button>
             </div>
         </div>
@@ -366,13 +364,13 @@
         <div class="live-stream-ticker px-4 py-2.5 rounded-full flex items-center justify-between text-xs gap-3">
             <div class="flex items-center space-x-2 flex-shrink-0">
                 <span class="live-pulse-dot"></span>
-                <span class="font-bold text-white uppercase tracking-wider text-[11px]">Financial Operations Stream:</span>
+                <span class="font-bold text-slate-900 uppercase tracking-wider text-[11px]">Financial Operations Stream:</span>
             </div>
-            <div id="liveTickerFeed" class="truncate text-slate-300 font-mono text-[11px] flex-1 text-center">
+            <div id="liveTickerFeed" class="truncate text-slate-600 font-mono text-[11px] flex-1 text-center">
                 Monitoring Razorpay settlement credits, salary disbursement cycles, and MSME 45-day invoice aging...
             </div>
-            <div class="flex items-center space-x-2 flex-shrink-0 text-[11px] text-slate-400 font-mono">
-                <span id="tickerSyncBadge" class="text-emerald-400">● 100% In Sync</span>
+            <div class="flex items-center space-x-2 flex-shrink-0 text-[11px] text-slate-500 font-mono">
+                <span id="tickerSyncBadge" class="text-emerald-600 font-bold">● 100% In Sync</span>
             </div>
         </div>
 
@@ -383,67 +381,67 @@
             
             <!-- 4 Top KPI Metric Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="rzp-card p-5 flex flex-col justify-between">
+                <div class="rzp-card p-5 flex flex-col justify-between bg-white">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Gross Sales Volume</span>
-                        <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-sky-400">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Gross Sales Volume</span>
+                        <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
                             <i class="ph-bold ph-currency-inr text-lg"></i>
                         </div>
                     </div>
                     <div class="my-3">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight" id="statGrossVolume">₹1,69,600.00</div>
+                        <div class="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight" id="statGrossVolume">₹1,69,600.00</div>
                     </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
+                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
                         <span>Total Orders:</span>
-                        <span class="font-bold text-white font-mono" id="chartOrderCount">35 Orders</span>
+                        <span class="font-bold text-slate-900 font-mono" id="chartOrderCount">35 Orders</span>
                     </div>
                 </div>
 
-                <div class="rzp-card p-5 flex flex-col justify-between">
+                <div class="rzp-card p-5 flex flex-col justify-between bg-white">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Net Settled to Bank</span>
-                        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Net Settled to Bank</span>
+                        <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
                             <i class="ph-bold ph-bank text-lg"></i>
                         </div>
                     </div>
                     <div class="my-3">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono tracking-tight" id="statSettledBank">₹1,64,554.07</div>
+                        <div class="text-2xl sm:text-3xl font-black text-emerald-600 font-mono tracking-tight" id="statSettledBank">₹1,64,554.07</div>
                     </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
+                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
                         <span>Reconciled Orders:</span>
-                        <span class="font-bold text-emerald-400 font-mono" id="statReconciledCount">32 Orders</span>
+                        <span class="font-bold text-emerald-600 font-mono" id="statReconciledCount">32 Orders</span>
                     </div>
                 </div>
 
-                <div class="rzp-card p-5 flex flex-col justify-between">
+                <div class="rzp-card p-5 flex flex-col justify-between bg-white">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Fee Leak & Overcharge</span>
-                        <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Fee Leak & Overcharge</span>
+                        <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600">
                             <i class="ph-bold ph-warning-diamond text-lg"></i>
                         </div>
                     </div>
                     <div class="my-3">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-amber-400 font-mono tracking-tight" id="statFeeLeakVal">₹139.50</div>
+                        <div class="text-2xl sm:text-3xl font-black text-amber-600 font-mono tracking-tight" id="statFeeLeakVal">₹139.50</div>
                     </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
+                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
                         <span>Contracted Rate:</span>
-                        <span class="font-bold text-white font-mono">2.0% MDR + GST</span>
+                        <span class="font-bold text-slate-900 font-mono">2.0% MDR + GST</span>
                     </div>
                 </div>
 
-                <div class="rzp-card p-5 flex flex-col justify-between">
+                <div class="rzp-card p-5 flex flex-col justify-between bg-white">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Discrepancies</span>
-                        <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-400">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Discrepancies</span>
+                        <div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center text-red-600">
                             <i class="ph-bold ph-scales text-lg"></i>
                         </div>
                     </div>
                     <div class="my-3">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-red-400 font-mono tracking-tight" id="statDiscrepancyAmount">₹7,489.50</div>
+                        <div class="text-2xl sm:text-3xl font-black text-red-600 font-mono tracking-tight" id="statDiscrepancyAmount">₹7,489.50</div>
                     </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
+                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
                         <span>Action Required:</span>
-                        <span class="font-bold text-red-400 font-mono" id="statAnomalyCount">3 items to inspect</span>
+                        <span class="font-bold text-red-600 font-mono" id="statAnomalyCount">3 items to inspect</span>
                     </div>
                 </div>
             </div>
@@ -451,14 +449,14 @@
             <!-- Charts Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Donut Chart: Settlement Health -->
-                <div class="rzp-card p-6 flex flex-col justify-between">
+                <div class="rzp-card p-6 flex flex-col justify-between bg-white">
                     <div class="flex items-center justify-between mb-4">
                         <div>
-                            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                                <i class="ph-bold ph-chart-donut text-sky-400"></i>
+                            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                                <i class="ph-bold ph-chart-donut text-blue-600"></i>
                                 <span>3-Way Settlement Breakdown</span>
                             </h3>
-                            <p class="text-xs text-slate-400 mt-0.5">Distribution across Reconciled, Fee Leaks & SLA Delays</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Distribution across Reconciled, Fee Leaks & SLA Delays</p>
                         </div>
                         <span class="badge-pill badge-reconciled font-mono">Real-Time Audit</span>
                     </div>
@@ -468,16 +466,16 @@
                 </div>
 
                 <!-- Bar Chart: MDR Fee Variance -->
-                <div class="rzp-card p-6 flex flex-col justify-between">
+                <div class="rzp-card p-6 flex flex-col justify-between bg-white">
                     <div class="flex items-center justify-between mb-4">
                         <div>
-                            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                                <i class="ph-bold ph-chart-bar text-sky-400"></i>
+                            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                                <i class="ph-bold ph-chart-bar text-blue-600"></i>
                                 <span>MDR Fee & Tax Variance Analysis</span>
                             </h3>
-                            <p class="text-xs text-slate-400 mt-0.5">Contracted 2% MDR vs Actual Gateway Fee Deductions</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Contracted 2% MDR vs Actual Gateway Fee Deductions</p>
                         </div>
-                        <button onclick="openDisputeModal()" class="px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-lg text-xs font-bold transition">
+                        <button onclick="openDisputeModal()" class="px-3 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-lg text-xs font-bold transition">
                             Generate Dispute Letter
                         </button>
                     </div>
@@ -488,58 +486,58 @@
             </div>
 
             <!-- Settlement Trail Flow -->
-            <div class="rzp-card p-6">
-                <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+            <div class="rzp-card p-6 bg-white">
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
                     <div>
-                        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                            <i class="ph-bold ph-arrows-merge text-sky-400"></i>
+                        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                            <i class="ph-bold ph-arrows-merge text-blue-600"></i>
                             <span>End-to-End Settlement Trail (Store &rarr; Gateway &rarr; Bank)</span>
                         </h3>
-                        <p class="text-xs text-slate-400 mt-0.5">Auditing money movement through Indian banking clearing nodes</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Auditing money movement through Indian banking clearing nodes</p>
                     </div>
-                    <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-bold">
+                    <span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-mono font-bold">
                         100% Tax Compliant
                     </span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 text-center">
-                    <div class="p-3.5 rounded-xl bg-[#0B132B] border border-white/10">
-                        <div class="text-[10px] text-slate-400 uppercase font-bold">1. Gross Orders</div>
-                        <div class="text-base font-bold text-white font-mono mt-1" id="trailGross">₹1,69,600.00</div>
-                        <div class="text-[10px] text-slate-500 mt-0.5">Captured via Razorpay</div>
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="text-[10px] text-slate-500 uppercase font-bold">1. Gross Orders</div>
+                        <div class="text-base font-bold text-slate-900 font-mono mt-1" id="trailGross">₹1,69,600.00</div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">Captured via Razorpay</div>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-[#0B132B] border border-white/10">
-                        <div class="text-[10px] text-slate-400 uppercase font-bold">2. Contracted MDR (2%)</div>
-                        <div class="text-base font-bold text-sky-400 font-mono mt-1" id="trailMdr">₹3,392.00</div>
-                        <div class="text-[10px] text-slate-500 mt-0.5">Contract SLA rate</div>
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="text-[10px] text-slate-500 uppercase font-bold">2. Contracted MDR (2%)</div>
+                        <div class="text-base font-bold text-blue-600 font-mono mt-1" id="trailMdr">₹3,392.00</div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">Contract SLA rate</div>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-[#0B132B] border border-white/10">
-                        <div class="text-[10px] text-slate-400 uppercase font-bold">3. GST on Fee (18%)</div>
-                        <div class="text-base font-bold text-sky-300 font-mono mt-1" id="trailGst">₹635.67</div>
-                        <div class="text-[10px] text-slate-500 mt-0.5">Eligible for GSTR-2B ITC</div>
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="text-[10px] text-slate-500 uppercase font-bold">3. GST on Fee (18%)</div>
+                        <div class="text-base font-bold text-sky-600 font-mono mt-1" id="trailGst">₹635.67</div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">Eligible for GSTR-2B ITC</div>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-[#0B132B] border border-white/10">
-                        <div class="text-[10px] text-slate-400 uppercase font-bold">4. Total Deductions</div>
-                        <div class="text-base font-bold text-amber-400 font-mono mt-1" id="trailFeesTax">₹4,167.17</div>
-                        <div class="text-[10px] text-slate-500 mt-0.5">MDR + GST + Overcharge</div>
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="text-[10px] text-slate-500 uppercase font-bold">4. Total Deductions</div>
+                        <div class="text-base font-bold text-amber-600 font-mono mt-1" id="trailFeesTax">₹4,167.17</div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">MDR + GST + Overcharge</div>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-[#0B132B] border border-emerald-500/30">
-                        <div class="text-[10px] text-emerald-400 uppercase font-bold">5. Bank Deposited</div>
-                        <div class="text-base font-bold text-emerald-400 font-mono mt-1" id="trailBank">₹1,64,554.07</div>
-                        <div class="text-[10px] text-emerald-500 mt-0.5">Verified Bank UTRs</div>
+                    <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                        <div class="text-[10px] text-emerald-700 uppercase font-bold">5. Bank Deposited</div>
+                        <div class="text-base font-bold text-emerald-700 font-mono mt-1" id="trailBank">₹1,64,554.07</div>
+                        <div class="text-[10px] text-emerald-600 mt-0.5">Verified Bank UTRs</div>
                     </div>
                 </div>
             </div>
 
             <!-- Transaction Ledger (3-Way Check) Table -->
-            <div class="rzp-card overflow-hidden">
-                <div class="p-5 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="rzp-card overflow-hidden bg-white">
+                <div class="p-5 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                            <i class="ph-bold ph-table text-sky-400"></i>
+                        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                            <i class="ph-bold ph-table text-blue-600"></i>
                             <span>Transaction Ledger (3-Way Check)</span>
                         </h3>
-                        <p class="text-xs text-slate-400 mt-0.5">Click any transaction to inspect side-by-side: Store &rarr; Razorpay &rarr; Bank</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Click any transaction to inspect side-by-side: Store &rarr; Razorpay &rarr; Bank</p>
                     </div>
 
                     <!-- Search & Filter Controls -->
@@ -548,18 +546,18 @@
                             <input type="text" id="ledgerSearchInput" oninput="renderOrdersTable(this.value.toLowerCase())" placeholder="Search Order ID, Customer..." class="glass-input px-3 py-1.5 text-xs pl-8 w-48 sm:w-60">
                             <i class="ph-bold ph-magnifying-glass absolute left-2.5 top-2 text-slate-400 text-xs"></i>
                         </div>
-                        <div class="bg-[#0B132B] p-1 rounded-xl border border-white/10 flex items-center text-xs">
+                        <div class="bg-slate-100 p-1 rounded-xl border border-slate-200 flex items-center text-xs">
                             <button onclick="setLedgerFilter('ALL')" id="filterBtnAll" class="px-2.5 py-1 rounded-lg font-semibold text-white bg-blue-600">All</button>
-                            <button onclick="setLedgerFilter('DISCREPANCY')" id="filterBtnDisc" class="px-2.5 py-1 rounded-lg font-semibold text-slate-400 hover:text-white">Discrepancies</button>
-                            <button onclick="setLedgerFilter('FEE_MISMATCH')" id="filterBtnFee" class="px-2.5 py-1 rounded-lg font-semibold text-slate-400 hover:text-white">Fee Leak</button>
-                            <button onclick="setLedgerFilter('RECONCILED')" id="filterBtnRec" class="px-2.5 py-1 rounded-lg font-semibold text-slate-400 hover:text-white">Reconciled</button>
+                            <button onclick="setLedgerFilter('DISCREPANCY')" id="filterBtnDisc" class="px-2.5 py-1 rounded-lg font-semibold text-slate-600 hover:text-slate-900">Discrepancies</button>
+                            <button onclick="setLedgerFilter('FEE_MISMATCH')" id="filterBtnFee" class="px-2.5 py-1 rounded-lg font-semibold text-slate-600 hover:text-slate-900">Fee Leak</button>
+                            <button onclick="setLedgerFilter('RECONCILED')" id="filterBtnRec" class="px-2.5 py-1 rounded-lg font-semibold text-slate-600 hover:text-slate-900">Reconciled</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
-                        <thead class="bg-[#0B132B]/80 text-slate-400 uppercase font-bold text-[11px] border-b border-white/10">
+                        <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[11px] border-b border-slate-200">
                             <tr>
                                 <th class="px-5 py-3.5">Order / Customer</th>
                                 <th class="px-4 py-3.5">Order Value</th>
@@ -570,7 +568,7 @@
                                 <th class="px-5 py-3.5 text-right">Details</th>
                             </tr>
                         </thead>
-                        <tbody id="ordersTableBody" class="divide-y divide-white/5 text-slate-200">
+                        <tbody id="ordersTableBody" class="divide-y divide-slate-100 text-slate-800">
                             <!-- Populated dynamically via app.js -->
                         </tbody>
                     </table>
@@ -585,92 +583,95 @@
             
             <!-- 3 Big Payroll Numbers -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="rzp-card p-6 flex flex-col justify-between">
+                <div class="rzp-card p-6 flex flex-col justify-between bg-white">
                     <div class="flex items-center justify-between">
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">August Payroll Run</span>
-                            <p class="text-xs text-white font-medium mt-0.5" id="statEmpCount">8 Employees Listed</p>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">August Payroll Run</span>
+                            <p class="text-xs text-slate-900 font-medium mt-0.5" id="statEmpCount">8 Employees Listed</p>
                         </div>
-                        <span class="badge-pill bg-blue-500/10 text-sky-400 border border-blue-500/20 text-[11px]">Monthly Cycle</span>
+                        <span class="badge-pill bg-blue-50 text-blue-700 border border-blue-200 text-[11px]">Monthly Cycle</span>
                     </div>
                     <div class="my-4">
-                        <div class="text-3xl font-extrabold text-white font-mono tracking-tight" id="statGrossPayroll">₹6,98,000.00</div>
+                        <div class="text-3xl font-black text-slate-900 font-mono tracking-tight" id="statGrossPayroll">₹6,98,000.00</div>
                     </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
-                        <span>TDS Sec 192: <b class="text-sky-400 font-mono" id="statTdsWithheld">₹63,000</b></span>
-                        <span>PF Withheld: <b class="text-white font-mono" id="statPfWithheld">₹17,400</b></span>
+                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+                        <span>TDS Sec 192: <b class="text-blue-600 font-mono" id="statTdsWithheld">₹63,000</b></span>
+                        <span>EPF (12%): <b class="text-slate-900 font-mono" id="statEpfDeducted">₹34,800</b></span>
                     </div>
                 </div>
 
-                <div class="rzp-card p-6 flex flex-col justify-between border-emerald-500/30">
+                <div class="rzp-card p-6 flex flex-col justify-between bg-white">
                     <div class="flex items-center justify-between">
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Salaries Disbursed (On-Time)</span>
-                            <p class="text-xs text-white font-medium mt-0.5" id="statDisbursedEmpCount">5 of 8 Transferred</p>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Disbursed (IMPS Cleared)</span>
+                            <p class="text-xs text-emerald-600 font-medium mt-0.5">Direct UTR Matched</p>
                         </div>
-                        <span class="badge-pill badge-reconciled text-[11px]">Credited</span>
+                        <span class="badge-pill badge-reconciled text-[11px]">Cleared</span>
                     </div>
                     <div class="my-4">
-                        <div class="text-3xl font-extrabold text-emerald-400 font-mono tracking-tight" id="statTotalDisbursed">₹3,81,000.00</div>
+                        <div class="text-3xl font-black text-emerald-600 font-mono tracking-tight" id="statDisbursedPayroll">₹5,30,000.00</div>
                     </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
-                        <span>NEFT Bank Slips: <b class="text-emerald-400 font-semibold">Verified UTRs</b></span>
-                        <span>SLA: <b class="text-white font-medium">1st of Month</b></span>
+                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+                        <span>Cleared Employees:</span>
+                        <span class="font-bold text-emerald-600 font-mono" id="statClearedCount">6 / 8 Members</span>
                     </div>
                 </div>
 
-                <div class="rzp-card p-6 flex flex-col justify-between border-red-500/40">
+                <div class="rzp-card p-6 flex flex-col justify-between bg-white border-red-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-red-400">Delayed Salaries (SLA Breach)</span>
-                            <p class="text-xs text-white font-medium mt-0.5" id="statDelayedEmpCount">2 employees overdue</p>
+                            <span class="text-xs font-bold uppercase tracking-wider text-red-600">Pending & Delayed Salaries</span>
+                            <p class="text-xs text-red-600 font-medium mt-0.5">Exceeded T+1 Disbursal SLA</p>
                         </div>
-                        <button onclick="openSalaryNoticeModal()" class="text-xs font-bold text-red-400 bg-red-500/15 hover:bg-red-500/25 px-3 py-1 rounded-full border border-red-500/40 transition">
-                            AI Notice ➔
-                        </button>
+                        <span class="badge-pill badge-delayed text-[11px]">Action Required</span>
                     </div>
                     <div class="my-4">
-                        <div class="text-3xl font-extrabold text-red-400 font-mono tracking-tight" id="statDelayedSalaryAmount">₹1,54,800.00</div>
+                        <div class="text-3xl font-black text-red-600 font-mono tracking-tight" id="statPendingPayroll">₹1,68,000.00</div>
                     </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
-                        <span>Pending Clearance: <b class="text-amber-400 font-mono" id="statPendingSalaryAmount">₹66,600</b></span>
-                        <span>Status: <b class="text-red-400 font-bold">Action Required</b></span>
+                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 flex justify-between">
+                        <span>Delayed Accounts:</span>
+                        <span class="font-bold text-red-600 font-mono" id="statDelayedEmpCount">2 Employees</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Employee Salary Ledger -->
-            <div class="rzp-card overflow-hidden">
-                <div class="p-5 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <!-- Employee Payroll Roster Table -->
+            <div class="rzp-card overflow-hidden bg-white">
+                <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                            <i class="ph-bold ph-identification-card text-sky-400"></i>
-                            <span>Employee Salary Register & Delay Tracker</span>
+                        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                            <i class="ph-bold ph-users text-blue-600"></i>
+                            <span>Employee Salary Register & Real-Time Payout Disbursal SLA</span>
                         </h3>
-                        <p class="text-xs text-slate-400 mt-0.5">Track gross pay, statutory TDS/PF deductions, payout UTRs & SLA delays</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Auditing salary payments, bank IMPS UTRs, and employee TDS Section 192 compliance</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="openDisburseAllModal()" class="rzp-btn-primary px-4 py-2 text-xs flex items-center space-x-1.5 shadow-md">
-                            <i class="ph-bold ph-lightning"></i>
-                            <span>1-Click Disburse Delayed Salaries</span>
+
+                    <div class="flex items-center space-x-2">
+                        <button onclick="openSalaryNoticeModal()" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
+                            <i class="ph-bold ph-paper-plane-tilt"></i>
+                            <span>Send Delay Notice</span>
                         </button>
+                        <a href="/salary-report.html" target="_blank" class="px-3 py-1.5 glass-btn text-xs font-bold flex items-center space-x-1.5">
+                            <i class="ph-bold ph-file-pdf text-red-500"></i>
+                            <span>Download Slip PDF</span>
+                        </a>
                     </div>
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
-                        <thead class="bg-[#0B132B]/80 text-slate-400 uppercase font-bold text-[11px] border-b border-white/10">
+                        <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[11px] border-b border-slate-200">
                             <tr>
                                 <th class="px-5 py-3.5">Employee / Role</th>
-                                <th class="px-4 py-3.5">Department</th>
-                                <th class="px-4 py-3.5">Gross CTC</th>
-                                <th class="px-4 py-3.5">TDS & PF Withheld</th>
+                                <th class="px-4 py-3.5">Monthly CTC</th>
+                                <th class="px-4 py-3.5">TDS (Sec 192)</th>
                                 <th class="px-4 py-3.5">Net Payable</th>
-                                <th class="px-4 py-3.5">Bank Payout Status</th>
-                                <th class="px-5 py-3.5 text-right">Action</th>
+                                <th class="px-4 py-3.5">Bank UTR</th>
+                                <th class="px-4 py-3.5">SLA / Status</th>
+                                <th class="px-5 py-3.5 text-right">Payout Action</th>
                             </tr>
                         </thead>
-                        <tbody id="payrollTableBody" class="divide-y divide-white/5 text-slate-200">
+                        <tbody id="payrollTableBody" class="divide-y divide-slate-100 text-slate-800">
                             <!-- Populated dynamically via app.js -->
                         </tbody>
                     </table>
@@ -679,106 +680,58 @@
         </div>
 
         <!-- =========================================================================
-             MODULE 3: VENDOR BILLS & MSME 45-DAY SECTION 43B(h) VIEW
+             MODULE 3: VENDOR INVOICES & MSME SECTION 43B(h) VIEW
              ========================================================================= -->
         <div id="view-vendors" class="module-view hidden space-y-6">
             
-            <!-- MSME 43B(h) Critical Alert Banner -->
-            <div class="p-4 rounded-2xl bg-gradient-to-r from-blue-950/60 via-red-950/40 to-blue-950/60 border border-blue-500/30 flex items-center justify-between gap-4">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2.5 rounded-xl bg-blue-500/20 text-sky-400 flex-shrink-0">
-                        <i class="ph-bold ph-shield-warning text-2xl"></i>
+            <!-- MSME 43B(h) Compliance Banner -->
+            <div class="rzp-card p-6 bg-amber-50/70 border-amber-200 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="ph-fill ph-shield-warning"></i>
                     </div>
                     <div>
-                        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Indian Income Tax Section 43B(h) — MSME 45-Day Payment Rule</h3>
-                        <p class="text-xs text-slate-300 mt-0.5">MSME vendor invoices must be cleared within 45 days to claim tax deductions in FY 2026-27.</p>
-                    </div>
-                </div>
-                <span class="badge-pill bg-red-500/20 text-red-400 border border-red-500/40 text-xs flex-shrink-0 font-mono">
-                    1 Invoice in Critical Window
-                </span>
-            </div>
-
-            <!-- 3 Big Vendor Numbers -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="rzp-card p-6 flex flex-col justify-between">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Vendor Bills</span>
-                            <p class="text-xs text-white font-medium mt-0.5" id="statVendBillCount">5 Invoices Audited</p>
-                        </div>
-                        <span class="badge-pill bg-blue-500/10 text-sky-400 border border-blue-500/20 text-[11px]">Accounts Payable</span>
-                    </div>
-                    <div class="my-4">
-                        <div class="text-3xl font-extrabold text-white font-mono tracking-tight" id="statVendTotalInvoiced">₹2,19,700.00</div>
-                    </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
-                        <span>GST ITC Claimable: <b class="text-emerald-400 font-mono" id="statVendGstItc">₹33,513.55</b></span>
-                        <span>TDS 194C/J: <b class="text-sky-400 font-mono" id="statVendTds">₹6,552</b></span>
-                    </div>
-                </div>
-
-                <div class="rzp-card p-6 flex flex-col justify-between border-emerald-500/30">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Invoices Cleared (Paid)</span>
-                            <p class="text-xs text-white font-medium mt-0.5" id="statVendPaidCount">2 Invoices Settled</p>
-                        </div>
-                        <span class="badge-pill badge-reconciled text-[11px]">Paid</span>
-                    </div>
-                    <div class="my-4">
-                        <div class="text-3xl font-extrabold text-emerald-400 font-mono tracking-tight" id="statVendTotalPaid">₹90,258.00</div>
-                    </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
-                        <span>Bank Settlements: <b class="text-emerald-400 font-semibold">2 UTRs Matched</b></span>
-                        <span>GST Input: <b class="text-white font-medium">GSTR-2B Verified</b></span>
-                    </div>
-                </div>
-
-                <div class="rzp-card p-6 flex flex-col justify-between border-amber-500/30">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">MSME Urgent & Overdue</span>
-                            <p class="text-xs text-white font-medium mt-0.5" id="statVendUrgentCount">1 MSME Bill Due in 2 Days</p>
-                        </div>
-                        <span class="badge-pill bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px]">Sec 43B(h)</span>
-                    </div>
-                    <div class="my-4">
-                        <div class="text-3xl font-extrabold text-amber-400 font-mono tracking-tight" id="statVendPendingAmount">₹1,22,890.00</div>
-                    </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
-                        <span>Zenith Legal (MSME): <b class="text-red-400 font-mono">₹31,500 (2d left)</b></span>
-                        <span>Balaji Packaging: <b class="text-amber-400 font-mono">₹24,500</b></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Vendor Payables Ledger -->
-            <div class="rzp-card overflow-hidden">
-                <div class="p-5 border-b border-white/10 flex items-center justify-between">
-                    <div>
-                        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                            <i class="ph-bold ph-receipt text-sky-400"></i>
-                            <span>Accounts Payable & MSME Section 43B(h) Ledger</span>
+                        <h3 class="text-sm font-bold text-amber-900 flex items-center space-x-2">
+                            <span>Income Tax Section 43B(h) Active Shield</span>
+                            <span class="px-2 py-0.5 text-[9px] font-bold uppercase rounded bg-amber-200 text-amber-900 font-mono">Mandatory Compliance</span>
                         </h3>
-                        <p class="text-xs text-slate-400 mt-0.5">Track vendor GSTIN, invoice dates, TDS deductions and 45-day MSME aging countdown</p>
+                        <p class="text-xs text-amber-800 mt-1 max-w-2xl leading-relaxed">
+                            Payments to registered Micro & Small Enterprises (MSMEs) must be cleared within <b>45 days</b> (or 15 days without agreement). Overdue invoices are disallowed as business expense deductions and taxed at 30% + penalty interest.
+                        </p>
+                    </div>
+                </div>
+                <div class="text-right flex-shrink-0 font-mono">
+                    <div class="text-xs text-amber-700 font-bold uppercase">At-Risk Disallowance</div>
+                    <div class="text-2xl font-black text-amber-900 mt-0.5" id="statMsmeAtRisk">₹1,45,000.00</div>
+                </div>
+            </div>
+
+            <!-- Vendor Aging Table -->
+            <div class="rzp-card overflow-hidden bg-white">
+                <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                            <i class="ph-bold ph-receipt text-blue-600"></i>
+                            <span>Vendor Accounts Payable & MSME 45-Day Aging Registry</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Tracking vendor payment terms, MSME Udyam classification, and TDS Sec 194C/194J</p>
                     </div>
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
-                        <thead class="bg-[#0B132B]/80 text-slate-400 uppercase font-bold text-[11px] border-b border-white/10">
+                        <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[11px] border-b border-slate-200">
                             <tr>
-                                <th class="px-5 py-3.5">Vendor / Service</th>
-                                <th class="px-4 py-3.5">Invoice No & Date</th>
-                                <th class="px-4 py-3.5">Bill Amount</th>
-                                <th class="px-4 py-3.5">GST Input (ITC)</th>
-                                <th class="px-4 py-3.5">Net Payable</th>
-                                <th class="px-4 py-3.5">MSME 45-Day Aging</th>
+                                <th class="px-5 py-3.5">Vendor Name / Category</th>
+                                <th class="px-4 py-3.5">Invoice #</th>
+                                <th class="px-4 py-3.5">Invoice Amount</th>
+                                <th class="px-4 py-3.5">TDS Deducted</th>
+                                <th class="px-4 py-3.5">MSME Classification</th>
+                                <th class="px-4 py-3.5">45-Day Countdown</th>
                                 <th class="px-5 py-3.5 text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="vendorsTableBody" class="divide-y divide-white/5 text-slate-200">
+                        <tbody id="vendorsTableBody" class="divide-y divide-slate-100 text-slate-800">
                             <!-- Populated dynamically via app.js -->
                         </tbody>
                     </table>
@@ -787,118 +740,68 @@
         </div>
 
         <!-- =========================================================================
-             MODULE 4: CASH FLOW & TAX COMPASS VIEW
+             MODULE 4: CASH FLOW COMPASS VIEW
              ========================================================================= -->
         <div id="view-cashflow" class="module-view hidden space-y-6">
             
-            <!-- 3 Big Financial Health Numbers -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="rzp-card p-6 flex flex-col justify-between border-emerald-500/30">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Net Operating Inflow</span>
-                            <p class="text-xs text-white font-medium mt-0.5">Customer Sales Deposited</p>
-                        </div>
-                        <span class="badge-pill badge-reconciled text-[11px]">Healthy</span>
-                    </div>
-                    <div class="my-4">
-                        <div class="text-3xl font-extrabold text-emerald-400 font-mono tracking-tight" id="cfInflow">₹1,64,554.07</div>
-                    </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
-                        <span>Total Outflow (Salaries + Bills): <b class="text-sky-400 font-mono" id="cfOutflow">₹5,43,925.17</b></span>
-                    </div>
+            <!-- Cash Flow Numbers -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="rzp-card p-5 bg-white">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Gross Gateway Inflows</span>
+                    <div class="text-2xl font-black text-slate-900 font-mono mt-2" id="cfInflowVal">₹1,64,554.07</div>
+                    <div class="text-[11px] text-emerald-600 font-medium mt-1">Settled to Current Account</div>
                 </div>
-
-                <div class="rzp-card p-6 flex flex-col justify-between">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Estimated Runway</span>
-                            <p class="text-xs text-white font-medium mt-0.5">Cash Reserve Duration</p>
-                        </div>
-                        <span class="badge-pill bg-blue-500/10 text-sky-400 border border-blue-500/20 text-[11px]">Sustainability</span>
-                    </div>
-                    <div class="my-4">
-                        <div class="text-3xl font-extrabold text-white font-mono tracking-tight" id="cfRunway">6.8 Months</div>
-                    </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
-                        <span>Monthly Operating Burn: <b class="text-slate-200 font-mono">₹9,17,700</b></span>
-                    </div>
+                <div class="rzp-card p-5 bg-white">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Payroll Outflows</span>
+                    <div class="text-2xl font-black text-red-600 font-mono mt-2" id="cfPayrollVal">₹5,30,000.00</div>
+                    <div class="text-[11px] text-slate-500 mt-1">August Salary Run</div>
                 </div>
-
-                <div class="rzp-card p-6 flex flex-col justify-between border-blue-500/30">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-sky-400">GST Input Tax Credit (ITC)</span>
-                            <p class="text-xs text-white font-medium mt-0.5">GSTR-2B Claim Balance</p>
-                        </div>
-                        <span class="badge-pill bg-blue-500/20 text-sky-300 border border-blue-500/35 text-[11px]">Save on GST</span>
-                    </div>
-                    <div class="my-4">
-                        <div class="text-3xl font-extrabold text-sky-300 font-mono tracking-tight" id="cfGstItc">₹34,149.22</div>
-                    </div>
-                    <div class="pt-3 border-t border-white/10 text-xs text-slate-400 flex justify-between">
-                        <span>Razorpay GST: <b class="text-white font-mono">₹635.67</b></span>
-                        <span>Vendor GST: <b class="text-white font-mono">₹33,513.55</b></span>
-                    </div>
+                <div class="rzp-card p-5 bg-white">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Vendor Outflows</span>
+                    <div class="text-2xl font-black text-amber-600 font-mono mt-2" id="cfVendorVal">₹3,45,000.00</div>
+                    <div class="text-[11px] text-slate-500 mt-1">Cleared Invoices</div>
+                </div>
+                <div class="rzp-card p-5 bg-white">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Net Operational Runway</span>
+                    <div class="text-2xl font-black text-blue-600 font-mono mt-2" id="cfRunwayVal">8.4 Months</div>
+                    <div class="text-[11px] text-emerald-600 font-medium mt-1">Healthy Treasury Reserve</div>
                 </div>
             </div>
 
-            <!-- Complete P&L Waterfall Card -->
-            <div class="rzp-card p-6">
-                <h3 class="text-sm font-bold text-white mb-4">August 2026 Profit & Cash Compass Summary</h3>
-                <div class="space-y-3 text-xs">
-                    <div class="flex items-center justify-between p-3 rounded-xl bg-[#0B132B] border border-white/10">
-                        <span class="text-slate-300">Total Gross Store Orders (Gross Revenue)</span>
-                        <span class="text-white font-mono font-bold">₹1,69,600.00</span>
-                    </div>
-                    <div class="flex items-center justify-between p-3 rounded-xl bg-[#0B132B] border border-white/10">
-                        <span class="text-slate-300">Less: Razorpay MDR Fees (2.0%) & GST Deductions</span>
-                        <span class="text-sky-400 font-mono font-bold">- ₹4,167.17</span>
-                    </div>
-                    <div class="flex items-center justify-between p-3 rounded-xl bg-[#0B132B] border border-white/10">
-                        <span class="text-slate-300">Less: Employee Payroll Salaries (August)</span>
-                        <span class="text-sky-400 font-mono font-bold">- ₹6,98,000.00</span>
-                    </div>
-                    <div class="flex items-center justify-between p-3 rounded-xl bg-[#0B132B] border border-white/10">
-                        <span class="text-slate-300">Less: Vendor Services (Cloud, Packaging, Logistics, Ads)</span>
-                        <span class="text-sky-400 font-mono font-bold">- ₹2,19,700.00</span>
-                    </div>
-                    <div class="flex items-center justify-between p-3.5 rounded-xl bg-blue-600/15 border border-blue-500/30 text-white font-bold">
-                        <span>Net Operating Cash Position</span>
-                        <span class="font-mono text-sky-400 text-sm" id="cfNetCash">₹1,64,554.07 Net Deposited</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Master Cash Inflow & Outflow Treasury Ledger -->
-            <div class="rzp-card overflow-hidden">
-                <div class="p-5 border-b border-white/10 flex items-center justify-between">
+            <!-- Cash Flow Curve & Ledger -->
+            <div class="rzp-card p-6 bg-white">
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
                     <div>
-                        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                            <i class="ph-bold ph-wallet text-emerald-400"></i>
-                            <span>Master Cash Treasury & Expense Ledger</span>
+                        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                            <i class="ph-bold ph-chart-line-up text-blue-600"></i>
+                            <span>30-Day Predictive Cash Flow & Runway Forecast</span>
                         </h3>
-                        <p class="text-xs text-slate-400 mt-0.5">Real-time audited journal of customer gateway credits, payroll disbursements, and vendor payments</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Machine Learning projection of bank balances, recurring payroll liabilities, and MSME invoices</p>
                     </div>
-                    <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 font-mono text-[11px]">
-                        FY 2026-27 Treasury
-                    </span>
                 </div>
+                <div class="h-64 relative flex items-center justify-center">
+                    <canvas id="cashFlowChart"></canvas>
+                </div>
+            </div>
 
+            <!-- Treasury Ledger -->
+            <div class="rzp-card overflow-hidden bg-white">
+                <div class="p-5 border-b border-slate-100">
+                    <h3 class="text-sm font-bold text-slate-900">Unified Corporate Treasury Ledger</h3>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
-                        <thead class="bg-[#0B132B]/80 text-slate-400 uppercase font-bold text-[11px] border-b border-white/10">
+                        <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[11px] border-b border-slate-200">
                             <tr>
-                                <th class="px-5 py-3.5">Date / Time</th>
-                                <th class="px-4 py-3.5">Category & Entity</th>
-                                <th class="px-4 py-3.5">Flow Type</th>
-                                <th class="px-4 py-3.5">Gross Amount</th>
-                                <th class="px-4 py-3.5">Tax (GST / TDS)</th>
-                                <th class="px-4 py-3.5">Net Impact</th>
-                                <th class="px-5 py-3.5 text-right">Banking Reference (UTR)</th>
+                                <th class="px-5 py-3.5">Date</th>
+                                <th class="px-4 py-3.5">Entity / Description</th>
+                                <th class="px-4 py-3.5">Category</th>
+                                <th class="px-4 py-3.5">Inflow / Outflow</th>
+                                <th class="px-4 py-3.5">Balance After Txn</th>
+                                <th class="px-5 py-3.5 text-right">Status</th>
                             </tr>
                         </thead>
-                        <tbody id="cashflowTableBody" class="divide-y divide-white/5 text-slate-200">
+                        <tbody id="cashFlowTableBody" class="divide-y divide-slate-100 text-slate-800">
                             <!-- Populated dynamically via app.js -->
                         </tbody>
                     </table>
@@ -907,114 +810,50 @@
         </div>
 
         <!-- =========================================================================
-             MODULE 5: MACHINE LEARNING & PREDICTIVE FORECASTING LAB (view-ml)
+             MODULE 5: ML INTELLIGENCE & FORECASTING LAB
              ========================================================================= -->
         <div id="view-ml" class="module-view hidden space-y-6">
             
-            <!-- ML Lab Header Banner -->
-            <div class="p-6 rounded-2xl bg-gradient-to-r from-purple-950/60 via-[#0B132B] to-indigo-950/50 border border-purple-500/30 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="rzp-card p-6 bg-purple-50/70 border-purple-200 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 border border-purple-500/35 flex items-center justify-center text-purple-400">
-                        <i class="ph-bold ph-brain text-2xl"></i>
+                    <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="ph-fill ph-brain"></i>
                     </div>
                     <div>
-                        <div class="flex items-center space-x-2">
-                            <h2 class="text-base font-bold text-white">Machine Learning Anomaly Detection & Forecasting Lab</h2>
-                            <span class="px-2 py-0.5 text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 rounded border border-purple-500/40">ISOLATION FOREST V2.4</span>
-                        </div>
-                        <p class="text-xs text-slate-300 mt-1">Multi-dimensional anomaly scoring, 30-day Prophet cash projections, and SLA breach risk classifier</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-3 text-xs font-mono">
-                    <div class="px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-slate-300">
-                        Accuracy: <b class="text-emerald-400">98.4%</b>
-                    </div>
-                    <div class="px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-slate-300">
-                        F1 Score: <b class="text-sky-400">0.972</b>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ML 4 KPI Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="rzp-card p-5 border-purple-500/30">
-                    <span class="text-xs text-slate-400 uppercase font-bold">ML Outlier Score</span>
-                    <div class="text-2xl font-extrabold text-purple-300 font-mono my-2" id="mlAnomalyCount">3 Anomalies</div>
-                    <p class="text-[11px] text-slate-400">35 orders analyzed via Isolation Forest</p>
-                </div>
-                <div class="rzp-card p-5 border-blue-500/30">
-                    <span class="text-xs text-slate-400 uppercase font-bold">30-Day Inflow Forecast</span>
-                    <div class="text-2xl font-extrabold text-sky-400 font-mono my-2" id="mlForecastInflow">₹4,25,000</div>
-                    <p class="text-[11px] text-slate-400">95% Confidence Interval</p>
-                </div>
-                <div class="rzp-card p-5 border-amber-500/30">
-                    <span class="text-xs text-slate-400 uppercase font-bold">Projected Net Burn</span>
-                    <div class="text-2xl font-extrabold text-amber-400 font-mono my-2" id="mlForecastBurn">₹3,40,000</div>
-                    <p class="text-[11px] text-slate-400">Payroll + MSME vendor schedule</p>
-                </div>
-                <div class="rzp-card p-5 border-red-500/30">
-                    <span class="text-xs text-slate-400 uppercase font-bold">SLA Breach Risk</span>
-                    <div class="text-2xl font-extrabold text-red-400 font-mono my-2" id="mlSlaRiskLevel">ELEVATED</div>
-                    <p class="text-[11px] text-slate-400">2 salary delays & 1 MSME due</p>
-                </div>
-            </div>
-
-            <!-- ML Charts Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- 30-Day Prophet Forecast Chart -->
-                <div class="rzp-card p-6">
-                    <h3 class="text-sm font-bold text-white mb-2 flex items-center space-x-2">
-                        <i class="ph-bold ph-chart-line text-sky-400"></i>
-                        <span>30-Day AutoRegressive Cash Flow Forecast (95% CI)</span>
-                    </h3>
-                    <p class="text-xs text-slate-400 mb-4">Projected inflows and burn rate with confidence interval bounds</p>
-                    <div class="h-64 relative flex items-center justify-center">
-                        <canvas id="mlForecastChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Isolation Forest Distribution -->
-                <div class="rzp-card p-6">
-                    <h3 class="text-sm font-bold text-white mb-2 flex items-center space-x-2">
-                        <i class="ph-bold ph-radar text-purple-400"></i>
-                        <span>Isolation Forest Anomaly Probability Distribution</span>
-                    </h3>
-                    <p class="text-xs text-slate-400 mb-4">Multi-factor clustering: Fee variance delta vs Settlement latency</p>
-                    <div class="h-64 relative flex items-center justify-center">
-                        <canvas id="mlRadarChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ML Scored Anomaly Table -->
-            <div class="rzp-card overflow-hidden">
-                <div class="p-5 border-b border-white/10 flex items-center justify-between">
-                    <div>
-                        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                            <i class="ph-bold ph-cpu text-purple-400"></i>
-                            <span>Isolation Forest Scored Transaction Matrix</span>
+                        <h3 class="text-sm font-bold text-purple-950 flex items-center space-x-2">
+                            <span>Isolation Forest Anomaly Scorer & Multi-Feature Regression</span>
+                            <span class="px-2 py-0.5 text-[9px] font-bold uppercase rounded bg-purple-200 text-purple-900 font-mono">scikit-learn Inspired</span>
                         </h3>
-                        <p class="text-xs text-slate-400 mt-0.5">Explainable AI feature weights and outlier probabilities for each order</p>
+                        <p class="text-xs text-purple-800 mt-1 max-w-2xl leading-relaxed">
+                            Continuous multi-dimensional anomaly detection evaluating fee variance impact, settlement SLA latency, and volume outliers.
+                        </p>
                     </div>
-                    <span class="badge-pill bg-purple-500/20 text-purple-300 border border-purple-500/40 font-mono">
-                        Model v2.4 Active
-                    </span>
                 </div>
+                <div class="text-right flex-shrink-0 font-mono">
+                    <div class="text-xs text-purple-700 font-bold uppercase">Model Confidence</div>
+                    <div class="text-2xl font-black text-purple-950 mt-0.5">98.4% Precision</div>
+                </div>
+            </div>
 
+            <!-- ML Anomaly Matrix Table -->
+            <div class="rzp-card overflow-hidden bg-white">
+                <div class="p-5 border-b border-slate-100">
+                    <h3 class="text-sm font-bold text-slate-900">Isolation Forest Anomaly Scoring Matrix</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Transactions ranked by machine-learning computed anomaly probability</p>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
-                        <thead class="bg-[#0B132B]/80 text-slate-400 uppercase font-bold text-[11px] border-b border-white/10">
+                        <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[11px] border-b border-slate-200">
                             <tr>
-                                <th class="px-5 py-3.5">Order ID</th>
-                                <th class="px-4 py-3.5">Customer</th>
+                                <th class="px-5 py-3.5">Transaction / Order</th>
                                 <th class="px-4 py-3.5">Amount</th>
-                                <th class="px-4 py-3.5">Anomaly Probability</th>
-                                <th class="px-4 py-3.5">Risk Tier</th>
+                                <th class="px-4 py-3.5">Anomaly Score</th>
+                                <th class="px-4 py-3.5">Risk Level</th>
                                 <th class="px-4 py-3.5">Primary Driver</th>
-                                <th class="px-4 py-3.5">Feature Impact Weights</th>
+                                <th class="px-5 py-3.5">Feature Weights</th>
                             </tr>
                         </thead>
-                        <tbody id="mlAnomalyTableBody" class="divide-y divide-white/5 text-slate-200">
+                        <tbody id="mlAnomalyTableBody" class="divide-y divide-slate-100 text-slate-800">
                             <!-- Populated dynamically via app.js -->
                         </tbody>
                     </table>
@@ -1025,144 +864,143 @@
     </section>
 
     <!-- =========================================================================
-         RAZORPAY FEATURES SHOWCASE GRID (Razorpay.com Style Product Pillars)
+         PRODUCT FEATURE SHOWCASE PILLARS (Luxury White Grid)
          ========================================================================= -->
-    <section id="featuresGrid" class="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-white/10 space-y-8">
-        <div class="text-center max-w-2xl mx-auto space-y-2">
-            <h2 class="text-3xl font-extrabold text-white">
-                Everything you need to automate modern accounting
+    <section id="featuresGrid" class="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-200">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight">
+                Autonomous Finance Architecture
             </h2>
-            <p class="text-xs sm:text-sm text-slate-400">
-                Built specifically for Indian fast-growing merchants, D2C brands, and startups to replace manual Excel calculations.
+            <p class="text-xs sm:text-sm text-slate-600 mt-2">
+                Built specifically for Indian internet businesses, e-commerce brands, and enterprises operating on Razorpay.
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Feature 1 -->
-            <div class="rzp-card p-6 flex flex-col justify-between space-y-4">
-                <div class="w-12 h-12 rounded-2xl bg-blue-500/20 text-sky-400 flex items-center justify-center">
-                    <i class="ph-bold ph-shield-check text-2xl"></i>
-                </div>
-                <div class="space-y-1">
-                    <h3 class="text-base font-bold text-white">Zero-Leak Gateway Audit</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Matches your store orders against Razorpay fee debits and bank settlements in milliseconds.
+            <div class="rzp-card p-6 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-5 shadow-sm">
+                        <i class="ph-bold ph-shield-check"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-2">Zero-Leak Gateway Audit</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Matches your merchant agreement MDR (2.0%) and 18% GST against exact Razorpay settlement deductions to eliminate silent overcharges.
                     </p>
                 </div>
-                <div class="text-xs font-bold text-sky-400 flex items-center space-x-1">
-                    <span>100% Precision</span>
+                <div class="mt-6 pt-4 border-t border-slate-100 text-xs font-bold text-blue-600 flex items-center space-x-1">
+                    <span>Explore Recon</span> <i class="ph-bold ph-arrow-right"></i>
                 </div>
             </div>
 
             <!-- Feature 2 -->
-            <div class="rzp-card p-6 flex flex-col justify-between space-y-4">
-                <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                    <i class="ph-bold ph-users-three text-2xl"></i>
-                </div>
-                <div class="space-y-1">
-                    <h3 class="text-base font-bold text-white">Payroll Delay Shield</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Detects salary delays, auto-generates employee status notices, and disburses via 1-click IMPS.
+            <div class="rzp-card p-6 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl mb-5 shadow-sm">
+                        <i class="ph-bold ph-users-three"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-2">Salary Delay Prevention</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Flags delayed salary credits before employees notice. Automatically drafts employee delay notices and calculates TDS Sec 192 withholding.
                     </p>
                 </div>
-                <div class="text-xs font-bold text-emerald-400 flex items-center space-x-1">
-                    <span>TDS Sec 192 Automated</span>
+                <div class="mt-6 pt-4 border-t border-slate-100 text-xs font-bold text-red-600 flex items-center space-x-1">
+                    <span>Explore Payroll</span> <i class="ph-bold ph-arrow-right"></i>
                 </div>
             </div>
 
             <!-- Feature 3 -->
-            <div class="rzp-card p-6 flex flex-col justify-between space-y-4">
-                <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
-                    <i class="ph-bold ph-receipt text-2xl"></i>
-                </div>
-                <div class="space-y-1">
-                    <h3 class="text-base font-bold text-white">MSME Sec 43B(h) Shield</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Live 45-day countdown on all MSME vendor bills to safeguard against 30% IT tax disallowance.
+            <div class="rzp-card p-6 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-5 shadow-sm">
+                        <i class="ph-bold ph-receipt"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-2">MSME Sec 43B(h) Shield</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Maintains live 45-day countdown timers for all Micro & Small vendor invoices to prevent heavy 30% tax penalties and interest disallowances.
                     </p>
                 </div>
-                <div class="text-xs font-bold text-amber-400 flex items-center space-x-1">
-                    <span>FY 2026-27 Compliant</span>
+                <div class="mt-6 pt-4 border-t border-slate-100 text-xs font-bold text-amber-600 flex items-center space-x-1">
+                    <span>Explore MSME</span> <i class="ph-bold ph-arrow-right"></i>
                 </div>
             </div>
 
             <!-- Feature 4 -->
-            <div class="rzp-card p-6 flex flex-col justify-between space-y-4">
-                <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
-                    <i class="ph-bold ph-robot text-2xl"></i>
-                </div>
-                <div class="space-y-1">
-                    <h3 class="text-base font-bold text-white">AI Munimji Copilot</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Ask any question about your taxes, runway, fees, or delayed payouts in plain English or Hindi.
+            <div class="rzp-card p-6 flex flex-col justify-between bg-white">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-5 shadow-sm">
+                        <i class="ph-bold ph-chat-circle-dots"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-2">AI Munimji Copilot</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Multilingual financial copilot answering complex questions in English, Hindi, and Hinglish with exact transaction ledger citations.
                     </p>
                 </div>
-                <div class="text-xs font-bold text-purple-400 flex items-center space-x-1">
-                    <span>Multilingual AI</span>
+                <div class="mt-6 pt-4 border-t border-slate-100 text-xs font-bold text-emerald-600 flex items-center space-x-1">
+                    <span>Chat with Munimji</span> <i class="ph-bold ph-arrow-right"></i>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- =========================================================================
-         FLOATING AI MUNIMJI COPILOT WIDGET
+         AI MUNIMJI FLOATING FINANCIAL COPILOT
          ========================================================================= -->
-    <div id="aiChatWidget" class="fixed bottom-6 right-6 z-50">
+    <div class="fixed bottom-6 right-6 z-40">
         <!-- Floating Trigger Button -->
-        <button id="btnToggleFloatingChat" onclick="toggleFloatingChat()" class="px-4 py-3 rounded-full flex items-center space-x-2 shadow-2xl active:scale-95 transition">
-            <i class="ph-fill ph-sparkle text-lg text-white"></i>
-            <span class="text-xs font-bold text-white">Ask AI Munimji</span>
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <button id="btnToggleFloatingChat" onclick="toggleFloatingChat()" class="h-14 px-5 rounded-full flex items-center space-x-2.5 text-white font-bold text-sm shadow-xl active:scale-95 transition-all">
+            <i class="ph-fill ph-sparkle text-xl text-yellow-300"></i>
+            <span>Ask AI Munimji</span>
         </button>
 
-        <!-- Floating Chat Window -->
-        <div id="floatingChatWindow" class="hidden absolute bottom-14 right-0 w-[360px] sm:w-[420px] rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[520px]">
+        <!-- Floating Chat Window Container -->
+        <div id="floatingChatWindow" class="hidden absolute bottom-16 right-0 w-[90vw] sm:w-[420px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 flex flex-col h-[520px]">
             <!-- Header -->
-            <div class="p-4 border-b border-white/10 bg-[#0E1A38] flex items-center justify-between">
+            <div class="p-4 bg-white border-b border-slate-100 flex items-center justify-between">
                 <div class="flex items-center space-x-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
+                    <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
                         <i class="ph-fill ph-robot text-lg"></i>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold text-white flex items-center space-x-1.5">
+                        <div class="font-bold text-slate-900 text-xs flex items-center space-x-1.5">
                             <span>AI Munimji Copilot</span>
-                            <span class="px-1.5 py-0.2 bg-emerald-500/20 text-emerald-400 rounded text-[9px] font-mono font-bold">ONLINE</span>
-                        </h4>
-                        <p class="text-[10px] text-slate-400">Autonomous Financial Operations & ML Copilot</p>
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        </div>
+                        <div class="text-[10px] text-slate-500">Multilingual Accounting Intelligence</div>
                     </div>
                 </div>
-                <button onclick="toggleFloatingChat()" class="text-slate-400 hover:text-white p-1">
+                <button onclick="toggleFloatingChat()" class="text-slate-400 hover:text-slate-700 p-1">
                     <i class="ph-bold ph-x text-base"></i>
                 </button>
             </div>
 
             <!-- Messages Area -->
-            <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs bg-[#02042B]/95">
+            <div id="floatingChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs bg-slate-50">
                 <div class="flex items-start space-x-2">
-                    <div class="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center text-white text-xs flex-shrink-0">
-                        <i class="ph-bold ph-sparkle text-xs"></i>
+                    <div class="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 text-xs">
+                        <i class="ph-bold ph-robot"></i>
                     </div>
-                    <div class="p-3 rounded-2xl bg-[#0E1A38] border border-white/10 text-slate-200 text-xs leading-relaxed max-w-[85%]">
-                        Namaste! I am <b>AI Munimji</b>. I have reconciled your 35 store orders, 8 employee payroll records, and 5 vendor bills. How can I assist your financial operations today?
+                    <div class="p-3 bg-white border border-slate-200 rounded-2xl rounded-tl-none text-slate-800 max-w-[85%] leading-relaxed shadow-sm">
+                        Namaste! I am your <b>AI Munimji</b>. I have audited ₹1,69,600 across 35 Razorpay orders. How can I help you today?
                     </div>
                 </div>
             </div>
 
             <!-- Quick Action Chips -->
-            <div class="px-3 py-2 bg-[#0E1A38] border-t border-white/5 flex gap-1.5 overflow-x-auto text-[10px]">
-                <button onclick="sendChatMessage('How much fee did Razorpay overcharge us?')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 whitespace-nowrap">
+            <div class="px-3 py-2 bg-white border-t border-slate-100 flex gap-1.5 overflow-x-auto text-[10px]">
+                <button onclick="sendChatMessage('How much fee did Razorpay overcharge us?')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap">
                     💰 Fee Overcharge?
                 </button>
-                <button onclick="sendChatMessage('Which salaries are delayed?')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 whitespace-nowrap">
+                <button onclick="sendChatMessage('Which salaries are delayed?')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap">
                     👥 Salary Delays?
                 </button>
-                <button onclick="sendChatMessage('Explain ML anomaly detection')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 whitespace-nowrap">
+                <button onclick="sendChatMessage('Explain ML anomaly detection')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap">
                     🧠 ML Outliers?
                 </button>
             </div>
 
             <!-- Input Box -->
-            <form id="chatForm" onsubmit="handleChatSubmit(event)" class="p-3 bg-[#0E1A38] border-t border-white/10 flex items-center space-x-2">
+            <form id="chatForm" onsubmit="handleChatSubmit(event)" class="p-3 bg-white border-t border-slate-200 flex items-center space-x-2">
                 <input type="text" id="chatInput" placeholder="Ask AI Munimji about cash flow, fees, taxes..." class="glass-input flex-1 px-3 py-2 text-xs">
                 <button type="submit" class="rzp-btn-primary px-3 py-2 text-xs flex items-center justify-center">
                     <i class="ph-bold ph-paper-plane-right"></i>
@@ -1172,12 +1010,12 @@
     </div>
 
     <!-- =========================================================================
-         FOOTER (Razorpay Fintech Compliant)
+         FOOTER (Luxury White Compliant)
          ========================================================================= -->
-    <footer class="border-t border-white/10 bg-[#02042B] py-10 mt-auto">
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+    <footer class="border-t border-slate-200 bg-white py-10 mt-auto">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <div class="flex items-center space-x-2">
-                <span class="font-extrabold text-sm text-white">AutoRecon<span class="text-sky-400">.AI</span></span>
+                <span class="font-extrabold text-sm text-slate-900">AutoRecon<span class="text-blue-600">.AI</span></span>
                 <span>&copy; 2026 AutoRecon AI Inc. Razorpay Autonomous Operations Partner.</span>
             </div>
             <div class="flex items-center space-x-4">
@@ -1195,22 +1033,22 @@
          ========================================================================= -->
 
     <!-- Modal: Razorpay Direct Webhook Setup & Live Simulator -->
-    <div id="webhookModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-[#0E1A38] border border-blue-500/30 rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-5">
-            <div class="flex items-center justify-between pb-3 border-b border-white/10">
+    <div id="webhookModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-sky-400">
-                        <i class="ph-fill ph-plugs-connected text-xl"></i>
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                        <i class="ph-fill ph-plugs-connected"></i>
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+                        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
                             <span>Direct Razorpay Webhook Configuration</span>
-                            <span class="px-2 py-0.5 text-[9px] font-bold uppercase rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/35 font-mono">Live Listening</span>
+                            <span class="px-2 py-0.5 text-[9px] font-bold uppercase rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono">Live Listening</span>
                         </h3>
-                        <p class="text-xs text-slate-400">Connect your Razorpay Merchant Dashboard for real-time 3-way reconciliation</p>
+                        <p class="text-xs text-slate-500">Connect your Razorpay Merchant Dashboard for real-time 3-way reconciliation</p>
                     </div>
                 </div>
-                <button onclick="document.getElementById('webhookModal').classList.add('hidden')" class="text-slate-400 hover:text-white p-1.5">
+                <button onclick="document.getElementById('webhookModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 p-1.5">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
@@ -1218,9 +1056,9 @@
             <!-- Credentials Box -->
             <div class="space-y-3 text-xs">
                 <div>
-                    <label class="block text-slate-300 font-semibold mb-1">Your Live Webhook Endpoint URL (Enter in Razorpay Dashboard):</label>
+                    <label class="block text-slate-700 font-semibold mb-1">Your Live Webhook Endpoint URL (Enter in Razorpay Dashboard):</label>
                     <div class="flex items-center space-x-2">
-                        <input type="text" readonly id="webhookUrlDisplay" value="https://razorpay-autorecon.vercel.app/api/webhooks/razorpay" class="glass-input flex-1 px-3.5 py-2.5 font-mono text-sky-300 text-xs select-all">
+                        <input type="text" readonly id="webhookUrlDisplay" value="https://razorpay-autorecon.vercel.app/api/webhooks/razorpay" class="glass-input flex-1 px-3.5 py-2.5 font-mono text-blue-700 text-xs select-all bg-slate-50">
                         <button onclick="copyWebhookUrl()" class="rzp-btn-primary px-3.5 py-2.5 text-xs font-bold flex items-center space-x-1 shadow-sm">
                             <i class="ph-bold ph-copy"></i>
                             <span>Copy URL</span>
@@ -1230,15 +1068,15 @@
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-slate-300 font-semibold mb-1">Webhook Secret Key:</label>
+                        <label class="block text-slate-700 font-semibold mb-1">Webhook Secret Key:</label>
                         <div class="flex items-center space-x-2">
-                            <input type="text" readonly id="webhookSecretDisplay" value="autorecon_rzp_secret_2026" class="glass-input flex-1 px-3 py-2 font-mono text-slate-200 text-xs">
-                            <button onclick="copyWebhookSecret()" class="glass-btn px-3 py-2 text-xs font-bold text-sky-400">Copy</button>
+                            <input type="text" readonly id="webhookSecretDisplay" value="autorecon_rzp_secret_2026" class="glass-input flex-1 px-3 py-2 font-mono text-slate-800 text-xs bg-slate-50">
+                            <button onclick="copyWebhookSecret()" class="glass-btn px-3 py-2 text-xs font-bold text-blue-600">Copy</button>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-slate-300 font-semibold mb-1">Subscribed Events:</label>
-                        <div class="p-2 bg-[#02042B] rounded-xl border border-white/10 text-[11px] font-mono text-slate-300 truncate">
+                        <label class="block text-slate-700 font-semibold mb-1">Subscribed Events:</label>
+                        <div class="p-2 bg-slate-50 rounded-xl border border-slate-200 text-[11px] font-mono text-slate-700 truncate">
                             payment.captured, settlement.processed, payout.processed
                         </div>
                     </div>
@@ -1246,19 +1084,19 @@
             </div>
 
             <!-- Live Webhook Test Dispatcher -->
-            <div class="bg-[#02042B] p-4 rounded-2xl border border-white/10 space-y-3 text-xs">
-                <div class="flex items-center justify-between border-b border-white/10 pb-2">
-                    <span class="font-bold text-white flex items-center space-x-1.5">
-                        <i class="ph-bold ph-lightning text-sky-400"></i>
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3 text-xs">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <span class="font-bold text-slate-900 flex items-center space-x-1.5">
+                        <i class="ph-bold ph-lightning text-blue-600"></i>
                         <span>Live Webhook Event Simulator</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-mono">Dispatches authentic HMAC-SHA256 payload</span>
+                    <span class="text-[10px] text-slate-500 font-mono">Dispatches authentic HMAC-SHA256 payload</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                        <label class="block text-slate-300 text-[11px] mb-1">Event Scenario:</label>
-                        <select id="webhookScenario" class="glass-input w-full p-2 text-xs bg-[#0E1A38] text-white">
+                        <label class="block text-slate-700 text-[11px] mb-1">Event Scenario:</label>
+                        <select id="webhookScenario" class="glass-input w-full p-2 text-xs bg-white text-slate-900">
                             <option value="CLEAN">payment.captured (2.0% MDR Normal)</option>
                             <option value="OVERCHARGE">payment.captured (3.5% MDR Fee Leak)</option>
                             <option value="SETTLEMENT">settlement.processed (Bank UTR Match)</option>
@@ -1266,11 +1104,11 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-slate-300 text-[11px] mb-1">Customer / Entity:</label>
+                        <label class="block text-slate-700 text-[11px] mb-1">Customer / Entity:</label>
                         <input type="text" id="webhookCustomer" value="Aarav Sharma" class="glass-input w-full p-2 text-xs">
                     </div>
                     <div>
-                        <label class="block text-slate-300 text-[11px] mb-1">Amount (₹):</label>
+                        <label class="block text-slate-700 text-[11px] mb-1">Amount (₹):</label>
                         <input type="number" id="webhookAmount" value="7500" class="glass-input w-full p-2 text-xs font-mono">
                     </div>
                 </div>
@@ -1290,20 +1128,20 @@
     </div>
 
     <!-- Modal: Dispute Room Letter -->
-    <div id="disputeModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-[#0E1A38] border border-amber-500/30 rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-4">
-            <div class="flex items-center justify-between pb-3 border-b border-white/10">
+    <div id="disputeModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div class="flex items-center space-x-2">
-                    <i class="ph-bold ph-scales text-amber-400 text-lg"></i>
-                    <h3 class="text-sm font-bold text-white">Razorpay MDR Fee Dispute Room</h3>
+                    <i class="ph-bold ph-scales text-amber-600 text-lg"></i>
+                    <h3 class="text-sm font-bold text-slate-900">Razorpay MDR Fee Dispute Room</h3>
                 </div>
-                <button onclick="document.getElementById('disputeModal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                <button onclick="document.getElementById('disputeModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
             <div class="space-y-2 text-xs">
-                <p class="text-slate-300">Auto-drafted formal contractual dispute communication for Razorpay merchant support:</p>
-                <div class="p-4 bg-[#02042B] rounded-xl border border-white/10 font-mono text-slate-200 max-h-72 overflow-y-auto whitespace-pre-wrap" id="dispEmailBody"></div>
+                <p class="text-slate-600">Auto-drafted formal contractual dispute communication for Razorpay merchant support:</p>
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 font-mono text-slate-800 max-h-72 overflow-y-auto whitespace-pre-wrap" id="dispEmailBody"></div>
             </div>
             <div class="pt-2 flex justify-end space-x-2">
                 <button onclick="copyDisputeToClipboard()" class="rzp-btn-primary px-4 py-2 text-xs font-bold">Copy Letter</button>
@@ -1313,20 +1151,20 @@
     </div>
 
     <!-- Modal: Salary Delay Notice -->
-    <div id="salaryNoticeModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-[#0E1A38] border border-red-500/30 rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4">
-            <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                    <i class="ph-bold ph-envelope-open text-red-400"></i>
+    <div id="salaryNoticeModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                    <i class="ph-bold ph-envelope-open text-red-600"></i>
                     <span>AI Salary Delay Notification (To Employees)</span>
                 </h3>
-                <button onclick="document.getElementById('salaryNoticeModal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                <button onclick="document.getElementById('salaryNoticeModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
             <div class="space-y-2 text-xs">
-                <p class="text-slate-300">AI Munimji formal delay notification for employees citing banking clearing:</p>
-                <div class="bg-[#02042B] p-4 rounded-xl border border-white/10 font-mono text-slate-200 max-h-60 overflow-y-auto leading-relaxed">
+                <p class="text-slate-600">AI Munimji formal delay notification for employees citing banking clearing:</p>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-slate-800 max-h-60 overflow-y-auto leading-relaxed">
 Subject: Update: August 2026 Salary Disbursement Schedule
 
 Dear Team Members,
@@ -1350,32 +1188,32 @@ Zenith Retail India Pvt Ltd
     </div>
 
     <!-- Modal: CSV Upload -->
-    <div id="uploadModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-[#0E1A38] border border-white/10 rounded-3xl max-w-lg w-full p-6 shadow-2xl">
-            <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                    <i class="ph-bold ph-cloud-arrow-up text-sky-400"></i>
+    <div id="uploadModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                    <i class="ph-bold ph-cloud-arrow-up text-blue-600"></i>
                     <span>Smart Auto-Detecting CSV Ingestion Engine</span>
                 </h3>
-                <button onclick="document.getElementById('uploadModal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                <button onclick="document.getElementById('uploadModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
             <form id="uploadCsvForm" class="py-4 space-y-4 text-xs">
-                <div class="border-2 border-dashed border-white/15 hover:border-sky-400/60 rounded-2xl p-6 text-center transition bg-[#02042B]/50 cursor-pointer relative" onclick="document.getElementById('csvFileInput').click()">
+                <div class="border-2 border-dashed border-slate-300 hover:border-blue-500 rounded-2xl p-6 text-center transition bg-slate-50 cursor-pointer relative" onclick="document.getElementById('csvFileInput').click()">
                     <input type="file" id="csvFileInput" accept=".csv" class="hidden">
-                    <i class="ph-bold ph-cloud-arrow-up text-3xl text-sky-400 mb-2"></i>
-                    <p class="font-bold text-white">Click to browse or drop CSV file here</p>
-                    <p class="text-slate-400 text-[11px] mt-1">Accepts CSV with order_id, amount, customer_name, etc.</p>
-                    <div id="selectedFileName" class="text-xs text-emerald-400 font-mono font-bold mt-2 truncate"></div>
+                    <i class="ph-bold ph-cloud-arrow-up text-3xl text-blue-600 mb-2"></i>
+                    <p class="font-bold text-slate-900">Click to browse or drop CSV file here</p>
+                    <p class="text-slate-500 text-[11px] mt-1">Accepts CSV with order_id, amount, customer_name, etc.</p>
+                    <div id="selectedFileName" class="text-xs text-emerald-600 font-mono font-bold mt-2 truncate"></div>
                 </div>
 
-                <div class="flex items-center justify-between bg-blue-500/10 border border-blue-500/20 rounded-xl px-3.5 py-2.5">
-                    <div class="flex items-center space-x-2 text-slate-300">
-                        <i class="ph-bold ph-file-csv text-sky-400 text-base"></i>
+                <div class="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-xl px-3.5 py-2.5">
+                    <div class="flex items-center space-x-2 text-slate-700">
+                        <i class="ph-bold ph-file-csv text-blue-600 text-base"></i>
                         <span>Need a sample CSV format?</span>
                     </div>
-                    <a href="/api/ingest/sample-csv" download="autorecon_sample_orders.csv" class="px-2.5 py-1 bg-sky-500 text-black rounded-lg font-bold hover:bg-sky-400 transition text-[11px] flex items-center space-x-1 shadow-sm">
+                    <a href="/api/ingest/sample-csv" download="autorecon_sample_orders.csv" class="px-2.5 py-1 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition text-[11px] flex items-center space-x-1 shadow-sm">
                         <i class="ph-bold ph-download-simple"></i>
                         <span>Download Sample CSV</span>
                     </a>

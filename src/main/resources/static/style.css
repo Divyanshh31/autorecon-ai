@@ -1,39 +1,44 @@
 /* ==========================================================================
-   AutoRecon AI — PayPath Modern Fintech Glassmorphism & Motion System
+   AutoRecon AI — Luxury Pearl White Fintech Glassmorphism Design System
+   Modern Light Architecture with Iridescent Aurora Waves, Specular Hover & Precision Motion
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-    --rzp-bg: #03071E;
-    --rzp-bg-secondary: #081028;
-    --rzp-surface: #0B1536;
-    --rzp-surface-card: rgba(11, 21, 54, 0.75);
-    --rzp-surface-card-hover: rgba(16, 32, 78, 0.88);
-    --rzp-surface-elevated: #10204C;
+    /* Base Pearl White Palette */
+    --rzp-bg: #F8FAFC;
+    --rzp-bg-secondary: #F1F5F9;
+    --rzp-surface: #FFFFFF;
+    --rzp-surface-card: rgba(255, 255, 255, 0.85);
+    --rzp-surface-card-hover: rgba(255, 255, 255, 0.98);
+    --rzp-surface-elevated: #FFFFFF;
     
+    /* Vibrant Fintech Accents */
     --rzp-blue: #0066FF;
     --rzp-blue-hover: #0052CC;
-    --rzp-azure: #3395FF;
-    --rzp-cyan: #00F2FE;
-    --rzp-aqua: #4FACFE;
+    --rzp-azure: #0284C7;
+    --rzp-cyan: #06B6D4;
+    --rzp-indigo: #4F46E5;
     
-    --rzp-emerald: #00D09C;
-    --rzp-emerald-soft: rgba(0, 208, 156, 0.15);
+    --rzp-emerald: #059669;
+    --rzp-emerald-soft: rgba(5, 150, 105, 0.1);
     
-    --rzp-amber: #FF9900;
-    --rzp-amber-soft: rgba(255, 153, 0, 0.15);
+    --rzp-amber: #D97706;
+    --rzp-amber-soft: rgba(217, 119, 6, 0.1);
     
-    --rzp-red: #FF4D4D;
-    --rzp-red-soft: rgba(255, 77, 77, 0.15);
+    --rzp-red: #DC2626;
+    --rzp-red-soft: rgba(220, 38, 38, 0.1);
     
-    --rzp-border: rgba(255, 255, 255, 0.12);
-    --rzp-border-hover: rgba(0, 242, 254, 0.6);
-    --rzp-border-glow: rgba(0, 102, 255, 0.4);
+    /* Light Theme Specular Borders & Text */
+    --rzp-border: rgba(226, 232, 240, 0.9);
+    --rzp-border-hover: rgba(0, 102, 255, 0.4);
+    --rzp-border-glow: rgba(0, 102, 255, 0.2);
     
-    --rzp-text-white: #FFFFFF;
-    --rzp-text-slate: #94A3B8;
+    --rzp-text-main: #0F172A;
+    --rzp-text-body: #334155;
     --rzp-text-muted: #64748B;
+    --rzp-text-light: #94A3B8;
     
     --rzp-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     --rzp-ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -52,7 +57,7 @@ html {
 body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--rzp-bg);
-    color: var(--rzp-text-white);
+    color: var(--rzp-text-main);
     min-height: 100vh;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -63,24 +68,24 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   1. PAYPATH FLUID AURORA GRADIENT ENGINE
+   1. FLUID AURORA GRADIENT ENGINE (Light Theme Optimized)
    ========================================================================== */
 .rzp-gradient-text {
-    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 25%, #00F2FE 55%, #00D09C 85%, #3395FF 100%);
+    background: linear-gradient(135deg, #0066FF 0%, #0284C7 30%, #059669 65%, #4F46E5 100%);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: paypathGradientFlow 7s infinite alternate ease-in-out;
+    animation: lightGradientFlow 7s infinite alternate ease-in-out;
 }
 
-@keyframes paypathGradientFlow {
+@keyframes lightGradientFlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
 /* ==========================================================================
-   2. MODERN SLICK LIVE BACKGROUND (Canvas Waves + Ambient Light Nodes)
+   2. PEARL WHITE LIVE BACKGROUND (Canvas Waves + Iridescent Orbs)
    ========================================================================== */
 #liveBgCanvas {
     position: fixed;
@@ -103,71 +108,72 @@ pre, code, .font-mono {
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(130px);
-    opacity: 0.45;
-    animation: paypathOrbMotion 20s infinite alternate ease-in-out;
+    filter: blur(120px);
+    opacity: 0.55;
+    animation: lightOrbMotion 18s infinite alternate ease-in-out;
     will-change: transform;
 }
 
 .orb-1 {
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, #0066FF 0%, rgba(0, 102, 255, 0) 70%);
+    width: 750px;
+    height: 750px;
+    background: radial-gradient(circle, rgba(191, 219, 254, 0.8) 0%, rgba(219, 234, 254, 0) 70%);
     top: -150px;
-    left: 10%;
+    left: 5%;
 }
 
 .orb-2 {
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, #00F2FE 0%, rgba(0, 242, 254, 0) 70%);
-    bottom: -200px;
+    background: radial-gradient(circle, rgba(224, 231, 255, 0.8) 0%, rgba(238, 242, 255, 0) 70%);
+    bottom: -150px;
     right: 5%;
     animation-delay: -5s;
 }
 
 .orb-3 {
-    width: 550px;
-    height: 550px;
-    background: radial-gradient(circle, #00D09C 0%, rgba(0, 208, 156, 0) 70%);
-    top: 40%;
-    right: -120px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(209, 250, 229, 0.7) 0%, rgba(236, 253, 245, 0) 70%);
+    top: 35%;
+    right: -100px;
     animation-delay: -10s;
 }
 
 .orb-4 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, #7928CA 0%, rgba(121, 40, 202, 0) 70%);
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, rgba(254, 226, 226, 0.5) 0%, rgba(255, 241, 242, 0) 70%);
     top: 20%;
-    left: -100px;
-    animation-delay: -15s;
+    left: -80px;
+    animation-delay: -14s;
 }
 
-@keyframes paypathOrbMotion {
+@keyframes lightOrbMotion {
     0% { transform: translate3d(0, 0, 0) scale(1); }
-    50% { transform: translate3d(40px, 45px, 0) scale(1.1); }
-    100% { transform: translate3d(-35px, -35px, 0) scale(0.94); }
+    50% { transform: translate3d(40px, 40px, 0) scale(1.08); }
+    100% { transform: translate3d(-35px, -35px, 0) scale(0.95); }
 }
 
 /* ==========================================================================
-   3. PAYPATH GLASS CARDS WITH SPECULAR SHINE & NEON HOVER
+   3. LUXURY PEARL WHITE GLASS CARDS & HIGH-IMPACT HOVER
    ========================================================================== */
 .rzp-card, .pine-card, .glass-card {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(11, 21, 54, 0.8) 40%, rgba(5, 11, 30, 0.95) 100%);
-    backdrop-filter: blur(28px) saturate(210%);
-    -webkit-backdrop-filter: blur(28px) saturate(210%);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid var(--rzp-border);
-    border-radius: 24px;
+    border-radius: 20px;
     box-shadow: 
-        0 20px 45px -10px rgba(0, 0, 0, 0.6),
-        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.2);
+        0 10px 30px -5px rgba(15, 23, 42, 0.05),
+        0 2px 6px 0 rgba(15, 23, 42, 0.02),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 1);
     transition: transform 0.32s var(--rzp-ease-spring), border-color 0.32s var(--rzp-ease-spring), box-shadow 0.32s var(--rzp-ease-spring), background 0.32s ease;
     position: relative;
     overflow: hidden;
 }
 
-/* Specular Light Reflection Sweep on Card */
+/* Specular Light Sweep on Card Hover */
 .rzp-card::before, .pine-card::before, .glass-card::before {
     content: '';
     position: absolute;
@@ -175,7 +181,7 @@ pre, code, .font-mono {
     left: -100%;
     width: 60%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), rgba(0, 242, 254, 0.15), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), rgba(0, 102, 255, 0.1), transparent);
     transform: skewX(-20deg);
     transition: left 0.75s var(--rzp-ease-smooth);
     pointer-events: none;
@@ -186,36 +192,36 @@ pre, code, .font-mono {
 }
 
 .rzp-card:hover, .pine-card:hover, .glass-card:hover {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(16, 32, 78, 0.9) 40%, rgba(8, 16, 42, 0.98) 100%);
-    border-color: var(--rzp-border-hover);
+    background: linear-gradient(145deg, #FFFFFF 0%, rgba(241, 245, 249, 0.95) 100%);
+    border-color: var(--rzp-blue);
     box-shadow: 
-        0 28px 55px -10px rgba(0, 0, 0, 0.75),
-        0 0 35px rgba(0, 194, 255, 0.25),
-        inset 0 1px 2px 0 rgba(255, 255, 255, 0.35);
-    transform: translateY(-4px);
+        0 22px 45px -10px rgba(0, 102, 255, 0.14),
+        0 0 0 1px rgba(0, 102, 255, 0.25),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+    transform: translateY(-5px);
 }
 
 /* Glass Header */
 .glass-header {
-    background: rgba(3, 7, 30, 0.88);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
     border-bottom: 1px solid var(--rzp-border);
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* ==========================================================================
-   4. FLOATING MICRO-WIDGETS (PayPath Signature Hero Accents)
+   4. FLOATING MICRO-WIDGETS (Light Theme Accents)
    ========================================================================== */
 .floating-pill {
-    background: rgba(8, 16, 42, 0.85);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 242, 254, 0.3);
+    border: 1px solid rgba(0, 102, 255, 0.25);
     border-radius: 9999px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 194, 255, 0.2);
-    animation: paypathFloat 5s ease-in-out infinite alternate;
+    box-shadow: 0 10px 25px -5px rgba(0, 102, 255, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+    animation: lightFloat 5s ease-in-out infinite alternate;
 }
 
 .floating-pill-alt {
@@ -223,13 +229,13 @@ pre, code, .font-mono {
     animation-delay: -2.5s;
 }
 
-@keyframes paypathFloat {
+@keyframes lightFloat {
     0% { transform: translateY(0px); }
-    100% { transform: translateY(-8px); }
+    100% { transform: translateY(-7px); }
 }
 
 /* ==========================================================================
-   5. BESPOKE ACTION BUTTONS (High-Glow Ray & Tactile Press)
+   5. BESPOKE BUTTONS (Gradient Sheen & Tactile Press)
    ========================================================================== */
 .rzp-btn-primary {
     display: inline-flex;
@@ -238,12 +244,12 @@ pre, code, .font-mono {
     white-space: nowrap;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 50%, #00F2FE 100%);
+    background: linear-gradient(135deg, #0066FF 0%, #0284C7 100%);
     background-size: 200% 200%;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     font-weight: 700;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 102, 255, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+    box-shadow: 0 4px 14px rgba(0, 102, 255, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.3);
     transition: transform 0.22s var(--rzp-ease-spring), box-shadow 0.22s var(--rzp-ease-spring), background-position 0.4s ease;
 }
@@ -256,7 +262,7 @@ pre, code, .font-mono {
     left: -75%;
     width: 250%;
     height: 200%;
-    background: linear-gradient(60deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
+    background: linear-gradient(60deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
     transform: rotate(25deg);
     transition: left 0.75s var(--rzp-ease-smooth);
     opacity: 0;
@@ -265,7 +271,7 @@ pre, code, .font-mono {
 
 .rzp-btn-primary:hover {
     background-position: 100% 0;
-    box-shadow: 0 8px 30px rgba(0, 102, 255, 0.7), 0 0 25px rgba(0, 242, 254, 0.5), inset 0 1px 1.5px rgba(255, 255, 255, 0.65);
+    box-shadow: 0 8px 24px rgba(0, 102, 255, 0.45), inset 0 1px 1.5px rgba(255, 255, 255, 0.6);
     transform: translateY(-2px);
 }
 
@@ -278,25 +284,27 @@ pre, code, .font-mono {
     transform: scale(0.97);
 }
 
-/* Secondary Glass Buttons */
+/* Secondary White Glass Buttons */
 .glass-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    background: rgba(255, 255, 255, 0.06);
+    background: #FFFFFF;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--rzp-border);
     border-radius: 12px;
-    color: var(--rzp-text-white);
+    color: var(--rzp-text-body) !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
     transition: all 0.22s var(--rzp-ease-spring);
 }
 
 .glass-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--rzp-border-hover);
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), 0 0 18px rgba(0, 242, 254, 0.25);
+    background: #F1F5F9;
+    border-color: #CBD5E1;
+    color: var(--rzp-text-main) !important;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
     transform: translateY(-1.5px);
 }
 
@@ -306,71 +314,73 @@ pre, code, .font-mono {
 
 /* Glass Inputs */
 .glass-input {
-    background: rgba(8, 16, 42, 0.85);
+    background: #FFFFFF;
     border: 1px solid var(--rzp-border);
     border-radius: 12px;
-    color: #FFFFFF;
+    color: var(--rzp-text-main);
     transition: all 0.22s ease;
 }
 
 .glass-input:focus {
-    background: rgba(11, 21, 54, 0.98);
-    border-color: var(--rzp-cyan);
-    box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.3), 0 0 20px rgba(0, 242, 254, 0.25);
+    background: #FFFFFF;
+    border-color: var(--rzp-blue);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
     outline: none;
 }
 
 /* ==========================================================================
-   6. TAB SWITCHER WITH RADIANT ACTIVE GLOW
+   6. TAB SWITCHER (Luxury White Capsule)
    ========================================================================== */
 .nav-tab-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    color: #94A3B8;
+    color: var(--rzp-text-muted);
     background: transparent;
     border-radius: 12px;
+    font-weight: 600;
     transition: all 0.25s var(--rzp-ease-spring);
 }
 
 .nav-tab-btn:hover {
-    color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.08);
+    color: var(--rzp-text-main);
+    background: rgba(15, 23, 42, 0.05);
 }
 
 .nav-tab-btn.active {
-    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 100%);
-    color: #FFFFFF;
+    background: linear-gradient(135deg, #0066FF 0%, #0284C7 100%);
+    color: #FFFFFF !important;
     font-weight: 800;
-    box-shadow: 0 6px 24px rgba(0, 102, 255, 0.55), 0 0 15px rgba(0, 242, 254, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 16px rgba(0, 102, 255, 0.35);
 }
 
 /* Module View Transitions */
 .module-view {
-    animation: paypathFadeIn 0.35s var(--rzp-ease-spring);
+    animation: lightFadeIn 0.35s var(--rzp-ease-spring);
 }
 
-@keyframes paypathFadeIn {
+@keyframes lightFadeIn {
     0% { opacity: 0; transform: translateY(10px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================================
-   7. INTERACTIVE TABLE ROW HOVER WITH CYAN ACCENT
+   7. INTERACTIVE TABLE ROW HOVER & PRECISION STYLING
    ========================================================================== */
 tbody tr {
     transition: all 0.22s var(--rzp-ease-spring);
     position: relative;
+    border-bottom: 1px solid rgba(241, 245, 249, 0.8);
 }
 
 tbody tr:hover {
-    background: rgba(0, 242, 254, 0.04) !important;
-    box-shadow: inset 3px 0 0 0 #00F2FE;
+    background: #F8FAFC !important;
+    box-shadow: inset 3px 0 0 0 #0066FF;
 }
 
 /* ==========================================================================
-   8. STATUS BADGES WITH LUMINOUS HALO
+   8. STATUS BADGES WITH SOFT PASTEL TINTS
    ========================================================================== */
 .badge-pill {
     display: inline-flex;
@@ -385,49 +395,49 @@ tbody tr:hover {
 }
 
 .badge-reconciled {
-    background: rgba(0, 208, 156, 0.15);
-    color: #00D09C;
-    border: 1px solid rgba(0, 208, 156, 0.4);
-    box-shadow: 0 0 12px rgba(0, 208, 156, 0.18);
+    background: #ECFDF5;
+    color: #047857;
+    border: 1px solid #A7F3D0;
+    box-shadow: 0 1px 3px rgba(4, 120, 87, 0.08);
 }
 
 .badge-fee-mismatch {
-    background: rgba(255, 153, 0, 0.15);
-    color: #FF9900;
-    border: 1px solid rgba(255, 153, 0, 0.4);
-    box-shadow: 0 0 12px rgba(255, 153, 0, 0.18);
+    background: #FFFBEB;
+    color: #B45309;
+    border: 1px solid #FDE68A;
+    box-shadow: 0 1px 3px rgba(180, 83, 9, 0.08);
 }
 
 .badge-delayed {
-    background: rgba(255, 77, 77, 0.15);
-    color: #FF4D4D;
-    border: 1px solid rgba(255, 77, 77, 0.4);
-    box-shadow: 0 0 12px rgba(255, 77, 77, 0.18);
+    background: #FEF2F2;
+    color: #B91C1C;
+    border: 1px solid #FECACA;
+    box-shadow: 0 1px 3px rgba(185, 28, 28, 0.08);
 }
 
 /* ==========================================================================
    9. DYNAMIC ISLAND LIVE STREAM CAPSULE & PULSE DOT
    ========================================================================== */
 .live-stream-ticker {
-    background: rgba(8, 16, 42, 0.88);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(0, 242, 254, 0.2);
+    border: 1px solid var(--rzp-border);
     border-radius: 9999px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 102, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.06);
 }
 
 .live-pulse-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #00D09C;
-    box-shadow: 0 0 12px #00D09C;
-    animation: paypathPulse 1.6s infinite ease-in-out;
+    background-color: #059669;
+    box-shadow: 0 0 10px rgba(5, 150, 105, 0.6);
+    animation: lightPulse 1.6s infinite ease-in-out;
 }
 
-@keyframes paypathPulse {
+@keyframes lightPulse {
     0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.35); opacity: 0.55; }
+    50% { transform: scale(1.35); opacity: 0.65; }
 }
 
 /* ==========================================================================
@@ -437,7 +447,7 @@ tbody tr:hover {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #03071E;
+    background: #F8FAFC;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -452,10 +462,10 @@ tbody tr:hover {
 }
 
 .minimal-glass-emblem {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(0, 102, 255, 0.25) 100%);
+    background: #FFFFFF;
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(0, 242, 254, 0.3);
-    box-shadow: 0 15px 35px rgba(0, 102, 255, 0.4), 0 0 25px rgba(0, 242, 254, 0.2);
+    border: 1px solid var(--rzp-border);
+    box-shadow: 0 15px 35px rgba(0, 102, 255, 0.12);
     animation: emblemFloat 3s infinite alternate ease-in-out;
 }
 
@@ -466,14 +476,14 @@ tbody tr:hover {
 
 .hairline-loader {
     height: 3px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.08);
     border-radius: 9999px;
     overflow: hidden;
 }
 
 .hairline-loader-bar {
     height: 100%;
-    background: linear-gradient(90deg, #0066FF, #00C2FF, #00F2FE, #00D09C, #0066FF);
+    background: linear-gradient(90deg, #0066FF, #0284C7, #059669, #0066FF);
     background-size: 200% 100%;
     animation: loaderShimmer 2s infinite linear;
 }
@@ -487,10 +497,10 @@ tbody tr:hover {
    11. AI MUNIMJI FLOATING COPILOT
    ========================================================================== */
 #btnToggleFloatingChat {
-    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 50%, #00D09C 100%);
+    background: linear-gradient(135deg, #0066FF 0%, #0284C7 50%, #059669 100%);
     background-size: 200% 200%;
-    box-shadow: 0 12px 35px rgba(0, 102, 255, 0.55), 0 0 20px rgba(0, 242, 254, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 10px 25px rgba(0, 102, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     transition: all 0.25s var(--rzp-ease-spring);
     animation: chatBtnShimmer 6s infinite alternate ease-in-out;
 }
@@ -501,15 +511,15 @@ tbody tr:hover {
 }
 
 #btnToggleFloatingChat:hover {
-    box-shadow: 0 18px 45px rgba(0, 102, 255, 0.75), 0 0 30px rgba(0, 242, 254, 0.5);
+    box-shadow: 0 16px 35px rgba(0, 102, 255, 0.5);
     transform: translateY(-3px) scale(1.02);
 }
 
 #floatingChatWindow {
-    background: rgba(5, 11, 30, 0.97);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(35px);
-    border: 1px solid rgba(0, 242, 254, 0.25);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 0 0 40px rgba(0, 102, 255, 0.3);
+    border: 1px solid var(--rzp-border);
+    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.15);
     animation: windowPopup 0.3s var(--rzp-ease-spring);
 }
 
@@ -527,14 +537,14 @@ tbody tr:hover {
 }
 
 ::-webkit-scrollbar-track {
-    background: #03071E;
+    background: #F8FAFC;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(15, 23, 42, 0.15);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 242, 254, 0.6);
+    background: rgba(0, 102, 255, 0.4);
 }
