@@ -638,6 +638,29 @@ async function fetchDiscrepancies() {
     }
 }
 
+window.setLedgerFilter = function(filter) {
+    currentFilter = filter;
+    const btnAll = document.getElementById('filterBtnAll');
+    const btnDisc = document.getElementById('filterBtnDisc');
+    const btnFee = document.getElementById('filterBtnFee');
+    const btnRec = document.getElementById('filterBtnRec');
+
+    [btnAll, btnDisc, btnFee, btnRec].forEach(b => {
+        if (b) {
+            b.className = 'px-2.5 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition';
+        }
+    });
+
+    if (filter === 'ALL' && btnAll) btnAll.className = 'px-2.5 py-1 rounded-lg font-semibold text-white bg-blue-600 shadow-sm';
+    if (filter === 'DISCREPANCY' && btnDisc) btnDisc.className = 'px-2.5 py-1 rounded-lg font-semibold text-white bg-blue-600 shadow-sm';
+    if (filter === 'FEE_MISMATCH' && btnFee) btnFee.className = 'px-2.5 py-1 rounded-lg font-semibold text-white bg-blue-600 shadow-sm';
+    if (filter === 'RECONCILED' && btnRec) btnRec.className = 'px-2.5 py-1 rounded-lg font-semibold text-white bg-blue-600 shadow-sm';
+
+    const searchInput = document.getElementById('ledgerSearchInput');
+    const sq = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    renderOrdersTable(sq);
+};
+
 function renderOrdersTable(searchQuery = '') {
     const tbody = document.getElementById('ordersTableBody');
     if (!tbody) return;
@@ -659,25 +682,25 @@ function renderOrdersTable(searchQuery = '') {
     }
 
     if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sand-200/50">No transaction records found matching filter.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-slate-400">No transaction records found matching filter.</td></tr>`;
         return;
     }
 
     tbody.innerHTML = filtered.map(order => {
         let statusBadge = '';
-        let rowClass = 'hover:bg-[#16221b] transition cursor-pointer';
+        let rowClass = 'hover:bg-[#182645] transition cursor-pointer border-b border-white/5';
 
         if (order.reconStatus === 'RECONCILED') {
             statusBadge = '<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check"></i> Safe</span>';
         } else if (order.reconStatus === 'FEE_MISMATCH') {
             statusBadge = '<span class="badge-pill badge-fee-mismatch"><i class="ph-bold ph-warning"></i> Fee Leak</span>';
-            rowClass += ' bg-sand-300/[0.04]';
+            rowClass += ' bg-amber-500/[0.04]';
         } else if (order.reconStatus === 'DELAYED_SLA') {
             statusBadge = '<span class="badge-pill badge-delayed"><i class="ph-bold ph-clock"></i> SLA Breach</span>';
-            rowClass += ' bg-terracotta-500/[0.04]';
+            rowClass += ' bg-red-500/[0.04]';
         } else if (order.reconStatus === 'MISSING_BANK_CREDIT') {
             statusBadge = '<span class="badge-pill badge-delayed"><i class="ph-bold ph-x"></i> Missing UTR</span>';
-            rowClass += ' bg-terracotta-500/[0.06]';
+            rowClass += ' bg-red-500/[0.06]';
         } else {
             statusBadge = `<span class="badge-pill badge-delayed">${order.reconStatus}</span>`;
         }
@@ -685,21 +708,21 @@ function renderOrdersTable(searchQuery = '') {
         const expectedMdr = Number(order.amount * 0.02);
         const actualMdr = (order.reconStatus === 'FEE_MISMATCH') ? Number(order.amount * 0.035) : expectedMdr;
         const totalFeeTax = (actualMdr * 1.18).toFixed(2);
-        const utr = (order.reconStatus === 'DELAYED_SLA') ? '<span class="text-terracotta-400 font-mono">Pending SLA</span>' : `UTR_AXIS_${order.orderId.slice(-4)}`;
+        const utr = (order.reconStatus === 'DELAYED_SLA') ? '<span class="text-red-400 font-mono">Pending SLA</span>' : `UTR_AXIS_${order.orderId.slice(-4)}`;
 
         return `
             <tr class="${rowClass}" onclick="openDiffDrawer('${order.orderId}')">
                 <td class="px-5 py-3.5">
-                    <div class="font-bold text-sand-100">${order.orderId}</div>
-                    <div class="text-[11px] text-sand-200/60">${order.customerName} &middot; <span class="capitalize text-sand-300">${order.paymentMethod || 'UPI'}</span></div>
+                    <div class="font-bold text-white">${order.orderId}</div>
+                    <div class="text-[11px] text-slate-400">${order.customerName} &middot; <span class="capitalize text-sky-400">${order.paymentMethod || 'UPI'}</span></div>
                 </td>
-                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-4 py-3.5 font-mono text-sand-200/80">pay_RZP_${order.orderId.slice(-4)}</td>
-                <td class="px-4 py-3.5 font-mono text-sand-300">₹${totalFeeTax}</td>
-                <td class="px-4 py-3.5 font-mono text-xs text-jade-300">${utr}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-white">₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-4 py-3.5 font-mono text-slate-300">pay_RZP_${order.orderId.slice(-4)}</td>
+                <td class="px-4 py-3.5 font-mono text-sky-400">₹${totalFeeTax}</td>
+                <td class="px-4 py-3.5 font-mono text-xs text-emerald-400">${utr}</td>
                 <td class="px-4 py-3.5">${statusBadge}</td>
                 <td class="px-5 py-3.5 text-right">
-                    <button class="text-sand-300 hover:text-sand-100 font-semibold text-xs flex items-center space-x-1 ml-auto">
+                    <button class="text-sky-400 hover:text-white font-semibold text-xs flex items-center space-x-1 ml-auto">
                         <span>Check</span> <i class="ph-bold ph-caret-right"></i>
                     </button>
                 </td>
@@ -762,7 +785,7 @@ function renderPayrollTable() {
     if (!tbody) return;
 
     if (currentPayroll.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sand-200/50">No payroll records found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-slate-400">No payroll records found.</td></tr>`;
         return;
     }
 
@@ -772,15 +795,15 @@ function renderPayrollTable() {
 
         if (emp.status === 'DISBURSED') {
             statusBadge = `<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check-circle"></i> Transferred (1st Aug)</span>`;
-            actionBtn = `<span class="text-jade-400 font-mono text-[11px]">${emp.bankUtr}</span>`;
+            actionBtn = `<span class="text-emerald-400 font-mono text-[11px]">${emp.bankUtr}</span>`;
         } else if (emp.status === 'DELAYED') {
             statusBadge = `<span class="badge-pill badge-delayed"><i class="ph-bold ph-warning"></i> Delayed (${emp.delayDays}d SLA Breach)</span>`;
             actionBtn = `
                 <div class="flex items-center justify-end space-x-1.5">
-                    <button onclick="disburseSalary('${emp.empId}')" class="px-2.5 py-1 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-lg font-bold text-[11px] shadow-sm">
+                    <button onclick="disburseSalary('${emp.empId}')" class="rzp-btn-primary px-2.5 py-1 text-[11px] font-bold shadow-sm">
                         Disburse
                     </button>
-                    <button onclick="openSalaryNoticeModal()" class="px-2.5 py-1 bg-terracotta-500/15 hover:bg-terracotta-500/25 text-terracotta-400 border border-terracotta-500/30 rounded-lg font-semibold text-[11px]">
+                    <button onclick="openSalaryNoticeModal()" class="px-2.5 py-1 bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 rounded-lg font-semibold text-[11px]">
                         Notice
                     </button>
                 </div>
@@ -788,24 +811,24 @@ function renderPayrollTable() {
         } else {
             statusBadge = `<span class="badge-pill badge-fee-mismatch"><i class="ph-bold ph-hourglass"></i> Pending Clearance</span>`;
             actionBtn = `
-                <button onclick="disburseSalary('${emp.empId}')" class="px-2.5 py-1 bg-sand-300/20 hover:bg-sand-300/30 text-sand-300 border border-sand-300/35 rounded-lg font-bold text-[11px]">
+                <button onclick="disburseSalary('${emp.empId}')" class="px-2.5 py-1 bg-blue-500/20 hover:bg-blue-500/30 text-sky-300 border border-blue-500/35 rounded-lg font-bold text-[11px]">
                     Verify & Pay
                 </button>
             `;
         }
 
         return `
-            <tr class="hover:bg-[#16221b] transition ${emp.status === 'DELAYED' ? 'bg-terracotta-500/[0.04]' : ''}">
+            <tr class="hover:bg-[#182645] transition border-b border-white/5 ${emp.status === 'DELAYED' ? 'bg-red-500/[0.04]' : ''}">
                 <td class="px-5 py-3.5">
-                    <div class="font-bold text-sand-100">${emp.name}</div>
-                    <div class="text-[11px] text-sand-200/60">${emp.role} &middot; <span class="font-mono text-sand-300">${emp.empId}</span></div>
+                    <div class="font-bold text-white">${emp.name}</div>
+                    <div class="text-[11px] text-slate-400">${emp.role} &middot; <span class="font-mono text-sky-400">${emp.empId}</span></div>
                 </td>
-                <td class="px-4 py-3.5 text-sand-200">${emp.department}</td>
-                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${Number(emp.grossSalary).toLocaleString('en-IN')}</td>
-                <td class="px-4 py-3.5 font-mono text-xs text-sand-300">
+                <td class="px-4 py-3.5 text-slate-300">${emp.department}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-white">₹${Number(emp.grossSalary).toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono text-xs text-sky-300">
                     TDS: ₹${Number(emp.tdsDeduction).toLocaleString('en-IN')} | PF: ₹${Number(emp.pfDeduction).toLocaleString('en-IN')}
                 </td>
-                <td class="px-4 py-3.5 font-mono font-bold text-jade-300">₹${Number(emp.netPayable).toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-emerald-400">₹${Number(emp.netPayable).toLocaleString('en-IN')}</td>
                 <td class="px-4 py-3.5">${statusBadge}</td>
                 <td class="px-5 py-3.5 text-right">${actionBtn}</td>
             </tr>
@@ -911,7 +934,7 @@ function renderVendorsTable() {
     if (!tbody) return;
 
     if (currentVendors.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sand-200/50">No vendor invoices found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-slate-400">No vendor invoices found.</td></tr>`;
         return;
     }
 
@@ -921,43 +944,43 @@ function renderVendorsTable() {
 
         if (v.paymentStatus === 'PAID') {
             agingBadge = `<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check"></i> Paid (UTR Matched)</span>`;
-            actionBtn = `<span class="text-jade-400 font-mono text-[11px]">${v.bankUtr}</span>`;
+            actionBtn = `<span class="text-emerald-400 font-mono text-[11px]">${v.bankUtr}</span>`;
         } else if (v.paymentStatus === 'CRITICAL_MSME' || v.msmeDaysRemaining <= 2) {
-            agingBadge = `<span class="badge-pill bg-terracotta-500/20 text-terracotta-400 border border-terracotta-500/40"><i class="ph-bold ph-warning"></i> 2 Days Left (Sec 43B-h)</span>`;
+            agingBadge = `<span class="badge-pill bg-red-500/20 text-red-400 border border-red-500/40"><i class="ph-bold ph-warning"></i> 2 Days Left (Sec 43B-h)</span>`;
             actionBtn = `
-                <button onclick="payVendorBill('${v.billId}')" class="px-3 py-1 bg-gradient-to-r from-terracotta-500 to-sand-400 hover:from-terracotta-400 hover:to-sand-300 text-[#131c17] rounded-lg font-bold text-[11px] shadow-sm">
+                <button onclick="payVendorBill('${v.billId}')" class="rzp-btn-primary px-3 py-1 text-[11px] font-bold shadow-sm">
                     Clear Bill ➔
                 </button>
             `;
         } else if (v.msmeDaysRemaining <= 10) {
-            agingBadge = `<span class="badge-pill bg-sand-300/20 text-sand-300 border border-sand-300/40"><i class="ph-bold ph-clock"></i> ${v.msmeDaysRemaining} Days (MSME)</span>`;
+            agingBadge = `<span class="badge-pill bg-amber-500/20 text-amber-300 border border-amber-500/40"><i class="ph-bold ph-clock"></i> ${v.msmeDaysRemaining} Days (MSME)</span>`;
             actionBtn = `
-                <button onclick="payVendorBill('${v.billId}')" class="px-3 py-1 bg-sand-300 hover:bg-sand-200 text-[#131c17] rounded-lg font-bold text-[11px] shadow-sm">
+                <button onclick="payVendorBill('${v.billId}')" class="rzp-btn-primary px-3 py-1 text-[11px] font-bold shadow-sm">
                     Pay Now
                 </button>
             `;
         } else {
-            agingBadge = `<span class="badge-pill bg-sand-200/10 text-sand-200 border border-sand-200/20">${v.paymentStatus}</span>`;
+            agingBadge = `<span class="badge-pill bg-slate-800 text-slate-300 border border-white/10">${v.paymentStatus}</span>`;
             actionBtn = `
-                <button onclick="payVendorBill('${v.billId}')" class="px-3 py-1 bg-sand-300/20 hover:bg-sand-300/30 text-sand-300 border border-sand-300/30 rounded-lg font-bold text-[11px]">
+                <button onclick="payVendorBill('${v.billId}')" class="px-3 py-1 bg-blue-500/20 hover:bg-blue-500/30 text-sky-300 border border-blue-500/30 rounded-lg font-bold text-[11px]">
                     Pay
                 </button>
             `;
         }
 
         return `
-            <tr class="hover:bg-[#16221b] transition ${v.paymentStatus === 'CRITICAL_MSME' ? 'bg-terracotta-500/[0.04]' : ''}">
+            <tr class="hover:bg-[#182645] transition border-b border-white/5 ${v.paymentStatus === 'CRITICAL_MSME' ? 'bg-red-500/[0.04]' : ''}">
                 <td class="px-5 py-3.5">
-                    <div class="font-bold text-sand-100">${v.vendorName} ${v.isMsme ? '<span class="px-1.5 py-0.2 bg-sand-300/20 text-sand-300 border border-sand-300/30 rounded text-[9px] font-bold uppercase font-mono">MSME</span>' : ''}</div>
-                    <div class="text-[11px] text-sand-200/60">${v.category} &middot; <span class="font-mono text-sand-200/70">${v.gstin}</span></div>
+                    <div class="font-bold text-white">${v.vendorName} ${v.isMsme ? '<span class="px-1.5 py-0.2 bg-blue-500/20 text-sky-300 border border-blue-500/30 rounded text-[9px] font-bold uppercase font-mono">MSME</span>' : ''}</div>
+                    <div class="text-[11px] text-slate-400">${v.category} &middot; <span class="font-mono text-slate-300">${v.gstin}</span></div>
                 </td>
                 <td class="px-4 py-3.5">
-                    <div class="font-mono text-sand-100">${v.invoiceNo}</div>
-                    <div class="text-[11px] text-sand-200/60">Due: ${v.dueDate}</div>
+                    <div class="font-mono text-white">${v.invoiceNo}</div>
+                    <div class="text-[11px] text-slate-400">Due: ${v.dueDate}</div>
                 </td>
-                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${Number(v.amount).toLocaleString('en-IN')}</td>
-                <td class="px-4 py-3.5 font-mono text-xs text-jade-300">₹${Number(v.gstAmount).toFixed(2)}</td>
-                <td class="px-4 py-3.5 font-mono font-bold text-sand-300">₹${Number(v.netPayable).toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-white">₹${Number(v.amount).toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono text-xs text-emerald-400">₹${Number(v.gstAmount).toFixed(2)}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-sky-300">₹${Number(v.netPayable).toLocaleString('en-IN')}</td>
                 <td class="px-4 py-3.5">${agingBadge}</td>
                 <td class="px-5 py-3.5 text-right">${actionBtn}</td>
             </tr>
@@ -1064,7 +1087,7 @@ function renderCashFlowTable() {
     });
 
     if (transactions.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sand-200/50">No cash flow transaction records found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-slate-400">No cash flow transaction records found.</td></tr>`;
         return;
     }
 
@@ -1072,20 +1095,20 @@ function renderCashFlowTable() {
         const isIncome = t.type === 'INFLOW';
         const typeBadge = isIncome 
             ? `<span class="badge-pill badge-reconciled font-mono text-[10px]">+ INFLOW</span>`
-            : `<span class="badge-pill bg-terracotta-500/20 text-terracotta-400 border border-terracotta-500/35 font-mono text-[10px]">- OUTFLOW</span>`;
-        const netColor = isIncome ? 'text-jade-400' : 'text-sand-300';
-        const utrColor = (t.utr && (t.utr.includes('UTR') || t.utr.includes('SAL_'))) ? 'text-jade-300' : ((t.utr && (t.utr.includes('Delayed') || t.utr.includes('Critical'))) ? 'text-terracotta-400' : 'text-sand-300');
+            : `<span class="badge-pill bg-red-500/20 text-red-400 border border-red-500/35 font-mono text-[10px]">- OUTFLOW</span>`;
+        const netColor = isIncome ? 'text-emerald-400' : 'text-sky-300';
+        const utrColor = (t.utr && (t.utr.includes('UTR') || t.utr.includes('SAL_'))) ? 'text-emerald-400' : ((t.utr && (t.utr.includes('Delayed') || t.utr.includes('Critical'))) ? 'text-red-400' : 'text-slate-300');
 
         return `
-            <tr class="hover:bg-[#16221b] transition">
-                <td class="px-5 py-3.5 font-mono text-[11px] text-sand-200/80">${t.date}</td>
+            <tr class="hover:bg-[#182645] transition border-b border-white/5">
+                <td class="px-5 py-3.5 font-mono text-[11px] text-slate-400">${t.date}</td>
                 <td class="px-4 py-3.5">
-                    <div class="font-bold text-sand-100">${t.entity}</div>
-                    <div class="text-[11px] text-sand-200/60">${t.category}</div>
+                    <div class="font-bold text-white">${t.entity}</div>
+                    <div class="text-[11px] text-slate-400">${t.category}</div>
                 </td>
                 <td class="px-4 py-3.5">${typeBadge}</td>
-                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${t.gross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-4 py-3.5 font-mono text-xs text-sand-300">₹${t.tax.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-white">₹${t.gross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-4 py-3.5 font-mono text-xs text-sky-300">₹${t.tax.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
                 <td class="px-4 py-3.5 font-mono font-bold ${netColor}">
                     ${isIncome ? '+' : '-'}₹${t.net.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </td>
@@ -1754,40 +1777,40 @@ function renderMlAnomalyTable(scoredOrders) {
     if (!tbody) return;
 
     if (!scoredOrders || scoredOrders.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-sand-200/50">No transaction records available to score.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400">No transaction records available to score.</td></tr>`;
         return;
     }
 
     tbody.innerHTML = scoredOrders.slice(0, 15).map(o => {
-        let badgeColor = 'bg-jade-500/15 text-jade-400 border-jade-500/35';
-        let barColor = 'bg-jade-400';
+        let badgeColor = 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/35';
+        let barColor = 'bg-emerald-400';
         if (o.riskLevel === 'CRITICAL') {
-            badgeColor = 'bg-terracotta-500/20 text-terracotta-400 border-terracotta-500/40';
-            barColor = 'bg-terracotta-400';
+            badgeColor = 'bg-red-500/20 text-red-400 border border-red-500/40';
+            barColor = 'bg-red-400';
         } else if (o.riskLevel === 'MODERATE') {
-            badgeColor = 'bg-sand-300/20 text-sand-300 border-sand-300/40';
-            barColor = 'bg-sand-300';
+            badgeColor = 'bg-amber-500/20 text-amber-300 border border-amber-500/40';
+            barColor = 'bg-amber-400';
         }
 
         return `
-            <tr class="hover:bg-[#18261e] transition ${o.isAnomaly ? 'bg-terracotta-950/20' : ''}">
-                <td class="px-5 py-3.5 font-mono font-bold text-sand-100">${o.orderId}</td>
-                <td class="px-4 py-3.5 font-medium text-sand-100">${o.customerName}</td>
-                <td class="px-4 py-3.5 font-mono text-sand-200">₹${Number(o.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+            <tr class="hover:bg-[#182645] transition border-b border-white/5 ${o.isAnomaly ? 'bg-red-950/20' : ''}">
+                <td class="px-5 py-3.5 font-mono font-bold text-white">${o.orderId}</td>
+                <td class="px-4 py-3.5 font-medium text-slate-200">${o.customerName}</td>
+                <td class="px-4 py-3.5 font-mono text-white">₹${Number(o.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
                 <td class="px-4 py-3.5">
                     <div class="flex items-center space-x-2">
                         <div class="w-16 bg-black/40 h-2 rounded-full overflow-hidden">
                             <div class="h-full ${barColor}" style="width: ${o.anomalyProbability}%"></div>
                         </div>
-                        <span class="font-mono font-bold text-xs ${o.anomalyProbability >= 70 ? 'text-terracotta-400' : 'text-sand-200'}">${o.anomalyProbability}%</span>
+                        <span class="font-mono font-bold text-xs ${o.anomalyProbability >= 70 ? 'text-red-400' : 'text-slate-300'}">${o.anomalyProbability}%</span>
                     </div>
                 </td>
                 <td class="px-4 py-3.5">
                     <span class="badge-pill ${badgeColor} text-[10px] uppercase tracking-wider">${o.riskLevel}</span>
                 </td>
-                <td class="px-4 py-3.5 text-xs text-sand-200 font-medium">${o.primaryDriver}</td>
-                <td class="px-4 py-3.5 font-mono text-[11px] text-sand-200/70">
-                    MDR: <b class="text-sand-300">${o.features ? o.features.feeVarianceImpact : '0%'}</b> · SLA: <b class="text-sand-300">${o.features ? o.features.slaLatencyImpact : '0%'}</b>
+                <td class="px-4 py-3.5 text-xs text-slate-300 font-medium">${o.primaryDriver}</td>
+                <td class="px-4 py-3.5 font-mono text-[11px] text-slate-400">
+                    MDR: <b class="text-sky-400">${o.features ? o.features.feeVarianceImpact : '0%'}</b> · SLA: <b class="text-sky-400">${o.features ? o.features.slaLatencyImpact : '0%'}</b>
                 </td>
             </tr>
         `;
