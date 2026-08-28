@@ -549,7 +549,7 @@ function initCharts() {
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#334155', font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' }, padding: 14 }
+                        labels: { color: '#334155', font: { size: 11, family: 'Outfit', weight: '600' }, padding: 14 }
                     }
                 },
                 cutout: '70%'
@@ -576,7 +576,7 @@ function initCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { ticks: { color: '#475569', font: { size: 10, family: 'Plus Jakarta Sans', weight: '600' } }, grid: { display: false } },
+                    x: { ticks: { color: '#475569', font: { size: 10, family: 'Outfit', weight: '600' } }, grid: { display: false } },
                     y: { ticks: { color: '#475569', font: { size: 10, family: 'JetBrains Mono', weight: '600' } }, grid: { color: 'rgba(226, 232, 240, 0.8)' } }
                 }
             }
