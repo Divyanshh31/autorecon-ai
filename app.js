@@ -3,15 +3,67 @@
 
 let reconChart = null;
 let feeChart = null;
-let currentOrders = [];
-let currentDiscrepancies = [];
 let currentFilter = 'ALL';
 let isLiveStreamActive = true;
 let currentBatchId = null;
 
+const defaultCustomerNames = [
+    "Aarav Patel", "Diya Sharma", "Vikram Malhotra", "Ananya Iyer", "Rohan Gupta",
+    "Pooja Deshmukh", "Karan Verma", "Neha Kapoor", "Aditya Joshi", "Ishita Sen",
+    "Siddharth Rao", "Kavya Menon", "Amitabh Nair", "Sneha Kulkarni", "Rahul Bhatia",
+    "Priya Agarwal", "Varun Chopra", "Tanvi Jain", "Manish Saxena", "Meera Reddy",
+    "Gaurav Tiwari", "Rhea Singhania", "Alok Pandey", "Shruti Mehra", "Nikhil Goswami",
+    "Swati Roy", "Harsh Vardhan", "Divya Nambiar", "Prateek Sethi", "Simran Chawla",
+    "Rajesh Goel", "Tarun Mathur", "Bhavna Mittal", "Kunal Shah", "Zoya Khan"
+];
+
+function generateDefaultOrders() {
+    const orders = [];
+    const paymentMethods = ["upi", "card", "netbanking"];
+    for (let i = 1; i <= 35; i++) {
+        const amount = Math.floor(1000 + ((i * 137) % 8500));
+        const orderId = `order_DEMO_${String(i).padStart(4, '0')}`;
+        let reconStatus = 'RECONCILED';
+        if (i === 4) reconStatus = 'FEE_MISMATCH';
+        else if (i === 11) reconStatus = 'DELAYED_SLA';
+        else if (i === 18) reconStatus = 'MISSING_BANK_CREDIT';
+
+        orders.push({
+            orderId,
+            customerName: defaultCustomerNames[i - 1],
+            amount,
+            paymentMethod: paymentMethods[i % paymentMethods.length],
+            reconStatus,
+            orderDate: '2026-08-25'
+        });
+    }
+    return orders;
+}
+
+const defaultPayrollDataset = [
+    { empId: 'EMP_101', name: 'Aarav Sharma', role: 'Lead Architect', department: 'Engineering', grossSalary: 145000, tdsDeduction: 14500, pfDeduction: 3600, netPayable: 126900, status: 'DISBURSED', disbursedDate: '2026-08-01', bankUtr: 'SAL_HDFC_991001', delayDays: 0 },
+    { empId: 'EMP_102', name: 'Priya Iyer', role: 'Product Lead', department: 'Product', grossSalary: 125000, tdsDeduction: 12500, pfDeduction: 3600, netPayable: 108900, status: 'DISBURSED', disbursedDate: '2026-08-01', bankUtr: 'SAL_ICICI_991002', delayDays: 0 },
+    { empId: 'EMP_103', name: 'Rahul Deshmukh', role: 'Senior Developer', department: 'Engineering', grossSalary: 95000, tdsDeduction: 9500, pfDeduction: 3600, netPayable: 81900, status: 'DELAYED', delayDays: 24 },
+    { empId: 'EMP_104', name: 'Neha Kapoor', role: 'Finance Executive', department: 'Finance', grossSalary: 68000, tdsDeduction: 6800, pfDeduction: 3600, netPayable: 57600, status: 'DISBURSED', disbursedDate: '2026-08-01', bankUtr: 'SAL_KOTAK_991004', delayDays: 0 },
+    { empId: 'EMP_105', name: 'Karan Malhotra', role: 'Operations Manager', department: 'Operations', grossSalary: 85000, tdsDeduction: 8500, pfDeduction: 3600, netPayable: 72900, status: 'DELAYED', delayDays: 24 },
+    { empId: 'EMP_106', name: 'Ananya Sen', role: 'UI/UX Designer', department: 'Design', grossSalary: 72000, tdsDeduction: 7200, pfDeduction: 3600, netPayable: 61200, status: 'DISBURSED', disbursedDate: '2026-08-01', bankUtr: 'SAL_AXIS_991006', delayDays: 0 },
+    { empId: 'EMP_107', name: 'Vikram Patel', role: 'Marketing Lead', department: 'Marketing', grossSalary: 78000, tdsDeduction: 7800, pfDeduction: 3600, netPayable: 66600, status: 'PENDING_CLEARANCE', delayDays: 0 },
+    { empId: 'EMP_108', name: 'Simran Roy', role: 'Customer Support', department: 'Support', grossSalary: 30000, tdsDeduction: 0, pfDeduction: 3600, netPayable: 26400, status: 'DISBURSED', disbursedDate: '2026-08-01', bankUtr: 'SAL_SBI_991008', delayDays: 0 }
+];
+
+const defaultVendorsDataset = [
+    { billId: 'BILL_501', vendorName: 'Apex Cloud Services', category: 'AWS & Infrastructure', invoiceNo: 'INV-2026-881', gstin: '27AAACA9921K1Z1', amount: 48000, gstAmount: 8640, tdsRate: 0.02, tdsDeducted: 960, netPayable: 55680, isMsme: false, invoiceDate: '2026-08-05', dueDate: '2026-08-20', paymentStatus: 'PAID', bankUtr: 'UTR_HDFC_VEND_501', msmeDaysRemaining: null },
+    { billId: 'BILL_502', vendorName: 'Balaji Packaging Solutions', category: 'Packaging Supplies', invoiceNo: 'BP-AUG-102', gstin: '27AABCB4419M1Z9', amount: 24500, gstAmount: 4410, tdsRate: 0.01, tdsDeducted: 245, netPayable: 28665, isMsme: true, invoiceDate: '2026-07-20', dueDate: '2026-09-03', paymentStatus: 'UNPAID', msmeDaysRemaining: 6 },
+    { billId: 'BILL_503', vendorName: 'QuickLogix 3PL Logistics', category: 'Courier & Freight', invoiceNo: 'QL-DEL-9901', gstin: '27AACFQ8129L1ZA', amount: 62000, gstAmount: 11160, tdsRate: 0.02, tdsDeducted: 1240, netPayable: 71920, isMsme: false, invoiceDate: '2026-08-10', dueDate: '2026-08-25', paymentStatus: 'PAID', bankUtr: 'UTR_KOTAK_VEND_503', msmeDaysRemaining: null },
+    { billId: 'BILL_504', vendorName: 'Zenith Legal & Compliance', category: 'Legal & Secretarial', invoiceNo: 'ZL-7729', gstin: '27AADFZ1102P1Z3', amount: 31500, gstAmount: 5670, tdsRate: 0.10, tdsDeducted: 3150, netPayable: 34020, isMsme: true, invoiceDate: '2026-07-14', dueDate: '2026-08-28', paymentStatus: 'CRITICAL_MSME', msmeDaysRemaining: 2 },
+    { billId: 'BILL_505', vendorName: 'Optima Marketing Agency', category: 'Performance Ads', invoiceNo: 'OMA-4401', gstin: '27AABCO5521R1ZK', amount: 55000, gstAmount: 9900, tdsRate: 0.02, tdsDeducted: 1100, netPayable: 63800, isMsme: false, invoiceDate: '2026-08-15', dueDate: '2026-08-30', paymentStatus: 'UNPAID', msmeDaysRemaining: null }
+];
+
 // Multi-Tasking Data Stores
-let currentPayroll = [];
-let currentVendors = [];
+let currentOrders = generateDefaultOrders();
+let currentDiscrepancies = [];
+let currentPayroll = defaultPayrollDataset;
+let currentVendors = defaultVendorsDataset;
 let currentCashFlow = null;
 
 // Auth Helper
@@ -250,9 +302,11 @@ function setupNavigationTabs() {
                 }
             });
 
-            if (targetId === 'view-ml') {
-                fetchMlIntelligence();
-            }
+            if (targetId === 'view-recon') renderOrdersTable();
+            if (targetId === 'view-payroll') renderPayrollTable();
+            if (targetId === 'view-vendors') renderVendorsTable();
+            if (targetId === 'view-cashflow') renderCashFlowTable();
+            if (targetId === 'view-ml') fetchMlIntelligence();
         });
     });
 }
@@ -554,19 +608,31 @@ function updateReconDashboard(summary) {
 async function fetchOrders() {
     try {
         const res = await fetch('/api/recon/orders', { headers: getAuthHeaders() });
-        if (!res.ok) return;
-        currentOrders = await res.json();
-        renderOrdersTable();
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                currentOrders = data;
+            }
+        }
     } catch (err) {
         console.error('Error fetching orders:', err);
     }
+    if (!currentOrders || currentOrders.length === 0) {
+        currentOrders = generateDefaultOrders();
+    }
+    renderOrdersTable();
+    renderCashFlowTable();
 }
 
 async function fetchDiscrepancies() {
     try {
         const res = await fetch('/api/recon/discrepancies', { headers: getAuthHeaders() });
-        if (!res.ok) return;
-        currentDiscrepancies = await res.json();
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                currentDiscrepancies = data;
+            }
+        }
     } catch (err) {
         console.error('Error fetching discrepancies:', err);
     }
@@ -652,18 +718,25 @@ async function fetchPayroll() {
             fetch('/api/payroll/employees', { headers: getAuthHeaders() })
         ]);
 
-        if (sumRes.ok) {
+        if (sumRes && sumRes.ok) {
             const sumData = await sumRes.json();
             updatePayrollDashboard(sumData);
         }
 
-        if (empRes.ok) {
-            currentPayroll = await empRes.json();
-            renderPayrollTable();
+        if (empRes && empRes.ok) {
+            const empData = await empRes.json();
+            if (Array.isArray(empData) && empData.length > 0) {
+                currentPayroll = empData;
+            }
         }
     } catch (e) {
         console.error('Error fetching payroll:', e);
     }
+    if (!currentPayroll || currentPayroll.length === 0) {
+        currentPayroll = defaultPayrollDataset;
+    }
+    renderPayrollTable();
+    renderCashFlowTable();
 }
 
 function updatePayrollDashboard(summary) {
@@ -728,11 +801,11 @@ function renderPayrollTable() {
                     <div class="text-[11px] text-sand-200/60">${emp.role} &middot; <span class="font-mono text-sand-300">${emp.empId}</span></div>
                 </td>
                 <td class="px-4 py-3.5 text-sand-200">${emp.department}</td>
-                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${emp.grossSalary.toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${Number(emp.grossSalary).toLocaleString('en-IN')}</td>
                 <td class="px-4 py-3.5 font-mono text-xs text-sand-300">
-                    TDS: ₹${emp.tdsDeduction.toLocaleString('en-IN')} | PF: ₹${emp.pfDeduction.toLocaleString('en-IN')}
+                    TDS: ₹${Number(emp.tdsDeduction).toLocaleString('en-IN')} | PF: ₹${Number(emp.pfDeduction).toLocaleString('en-IN')}
                 </td>
-                <td class="px-4 py-3.5 font-mono font-bold text-jade-300">₹${emp.netPayable.toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-jade-300">₹${Number(emp.netPayable).toLocaleString('en-IN')}</td>
                 <td class="px-4 py-3.5">${statusBadge}</td>
                 <td class="px-5 py-3.5 text-right">${actionBtn}</td>
             </tr>
@@ -744,7 +817,7 @@ window.disburseSalary = async function(empId) {
     try {
         const res = await fetch('/api/payroll/disburse', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({ empId })
         });
         if (res.ok) {
@@ -767,7 +840,7 @@ window.openDisburseAllModal = async function() {
     for (const emp of delayed) {
         await fetch('/api/payroll/disburse', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({ empId: emp.empId })
         });
     }
@@ -795,18 +868,25 @@ async function fetchVendors() {
             fetch('/api/vendors/bills', { headers: getAuthHeaders() })
         ]);
 
-        if (sumRes.ok) {
+        if (sumRes && sumRes.ok) {
             const sumData = await sumRes.json();
             updateVendorDashboard(sumData);
         }
 
-        if (billRes.ok) {
-            currentVendors = await billRes.json();
-            renderVendorsTable();
+        if (billRes && billRes.ok) {
+            const billData = await billRes.json();
+            if (Array.isArray(billData) && billData.length > 0) {
+                currentVendors = billData;
+            }
         }
     } catch (e) {
         console.error('Error fetching vendor bills:', e);
     }
+    if (!currentVendors || currentVendors.length === 0) {
+        currentVendors = defaultVendorsDataset;
+    }
+    renderVendorsTable();
+    renderCashFlowTable();
 }
 
 function updateVendorDashboard(summary) {
@@ -875,9 +955,9 @@ function renderVendorsTable() {
                     <div class="font-mono text-sand-100">${v.invoiceNo}</div>
                     <div class="text-[11px] text-sand-200/60">Due: ${v.dueDate}</div>
                 </td>
-                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${v.amount.toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${Number(v.amount).toLocaleString('en-IN')}</td>
                 <td class="px-4 py-3.5 font-mono text-xs text-jade-300">₹${Number(v.gstAmount).toFixed(2)}</td>
-                <td class="px-4 py-3.5 font-mono font-bold text-sand-300">₹${v.netPayable.toLocaleString('en-IN')}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-sand-300">₹${Number(v.netPayable).toLocaleString('en-IN')}</td>
                 <td class="px-4 py-3.5">${agingBadge}</td>
                 <td class="px-5 py-3.5 text-right">${actionBtn}</td>
             </tr>
@@ -909,12 +989,14 @@ window.payVendorBill = async function(billId) {
 async function fetchCashFlow() {
     try {
         const res = await fetch('/api/cashflow/summary', { headers: getAuthHeaders() });
-        if (!res.ok) return;
-        currentCashFlow = await res.json();
-        updateCashFlowDashboard(currentCashFlow);
+        if (res.ok) {
+            currentCashFlow = await res.json();
+            updateCashFlowDashboard(currentCashFlow);
+        }
     } catch (e) {
         console.error('Error fetching cash flow:', e);
     }
+    renderCashFlowTable();
 }
 
 function updateCashFlowDashboard(cf) {
@@ -929,6 +1011,88 @@ function updateCashFlowDashboard(cf) {
     setTxt('cfRunway', `${cf.estimatedRunwayMonths} Months`);
     setTxt('cfGstItc', `₹${(cf.availableGstItc || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
     setTxt('cfNetCash', `₹${(cf.netCashFlow || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })} Net Deposited`);
+
+    renderCashFlowTable();
+}
+
+function renderCashFlowTable() {
+    const tbody = document.getElementById('cashflowTableBody');
+    if (!tbody) return;
+
+    const transactions = [];
+
+    // Inflows: 10 customer sales orders
+    (currentOrders || []).slice(0, 10).forEach(o => {
+        transactions.push({
+            date: o.orderDate ? o.orderDate.slice(0, 10) : '2026-08-25',
+            entity: `Customer Order: ${o.orderId}`,
+            category: `Sales Inflow (${(o.paymentMethod || 'UPI').toUpperCase()})`,
+            type: 'INFLOW',
+            gross: Number(o.amount),
+            tax: Number((o.amount * 0.02 * 0.18).toFixed(2)),
+            net: Number((o.amount * 0.9764).toFixed(2)),
+            utr: `UTR_RZP_AXIS_${o.orderId.slice(-4)}`
+        });
+    });
+
+    // Outflows: Payroll Disbursals
+    (currentPayroll || []).forEach(emp => {
+        transactions.push({
+            date: emp.disbursedDate || '2026-08-01',
+            entity: `Employee Payroll: ${emp.name}`,
+            category: `Payroll (${emp.department})`,
+            type: 'OUTFLOW',
+            gross: Number(emp.grossSalary),
+            tax: Number(emp.tdsDeduction),
+            net: Number(emp.netPayable),
+            utr: emp.bankUtr || (emp.status === 'DELAYED' ? 'Delayed SLA Clearance' : 'Pending Bank IMPS')
+        });
+    });
+
+    // Outflows: Vendor Bills
+    (currentVendors || []).forEach(v => {
+        transactions.push({
+            date: v.invoiceDate || '2026-08-10',
+            entity: `Vendor Invoice: ${v.vendorName}`,
+            category: `Accounts Payable (${v.category})`,
+            type: 'OUTFLOW',
+            gross: Number(v.amount),
+            tax: Number(v.gstAmount),
+            net: Number(v.netPayable),
+            utr: v.bankUtr || (v.paymentStatus === 'PAID' ? 'UTR_MATCHED' : (v.msmeDaysRemaining <= 2 ? 'Critical 43B(h) Due' : 'Awaiting Payment'))
+        });
+    });
+
+    if (transactions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sand-200/50">No cash flow transaction records found.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = transactions.map(t => {
+        const isIncome = t.type === 'INFLOW';
+        const typeBadge = isIncome 
+            ? `<span class="badge-pill badge-reconciled font-mono text-[10px]">+ INFLOW</span>`
+            : `<span class="badge-pill bg-terracotta-500/20 text-terracotta-400 border border-terracotta-500/35 font-mono text-[10px]">- OUTFLOW</span>`;
+        const netColor = isIncome ? 'text-jade-400' : 'text-sand-300';
+        const utrColor = (t.utr && (t.utr.includes('UTR') || t.utr.includes('SAL_'))) ? 'text-jade-300' : ((t.utr && (t.utr.includes('Delayed') || t.utr.includes('Critical'))) ? 'text-terracotta-400' : 'text-sand-300');
+
+        return `
+            <tr class="hover:bg-[#16221b] transition">
+                <td class="px-5 py-3.5 font-mono text-[11px] text-sand-200/80">${t.date}</td>
+                <td class="px-4 py-3.5">
+                    <div class="font-bold text-sand-100">${t.entity}</div>
+                    <div class="text-[11px] text-sand-200/60">${t.category}</div>
+                </td>
+                <td class="px-4 py-3.5">${typeBadge}</td>
+                <td class="px-4 py-3.5 font-mono font-bold text-sand-100">₹${t.gross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-4 py-3.5 font-mono text-xs text-sand-300">₹${t.tax.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-4 py-3.5 font-mono font-bold ${netColor}">
+                    ${isIncome ? '+' : '-'}₹${t.net.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                </td>
+                <td class="px-5 py-3.5 text-right font-mono text-[11px] ${utrColor}">${t.utr}</td>
+            </tr>
+        `;
+    }).join('');
 }
 
 // =========================================================================

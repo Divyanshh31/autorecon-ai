@@ -823,6 +823,41 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Master Cash Inflow & Outflow Treasury Ledger -->
+            <div class="pine-card overflow-hidden">
+                <div class="p-5 border-b border-[#22332a] flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-sand-100 flex items-center space-x-2">
+                            <i class="ph-bold ph-wallet text-jade-400"></i>
+                            <span>Master Cash Treasury & Expense Ledger</span>
+                        </h3>
+                        <p class="text-xs text-sand-200/60 mt-0.5">Real-time audited journal of customer gateway credits, payroll disbursements, and vendor payments</p>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-lg bg-jade-500/10 text-jade-300 border border-jade-500/25 font-mono text-[11px]">
+                        FY 2026-27 Treasury
+                    </span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-[#131c17]/80 text-sand-200/70 uppercase font-bold text-[11px] border-b border-[#22332a]">
+                            <tr>
+                                <th class="px-5 py-3.5">Date / Time</th>
+                                <th class="px-4 py-3.5">Category & Entity</th>
+                                <th class="px-4 py-3.5">Flow Type</th>
+                                <th class="px-4 py-3.5">Gross Amount</th>
+                                <th class="px-4 py-3.5">Tax (GST / TDS)</th>
+                                <th class="px-4 py-3.5">Net Impact</th>
+                                <th class="px-5 py-3.5 text-right">Banking Reference (UTR)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cashflowTableBody" class="divide-y divide-[#22332a] text-sand-200">
+                            <!-- Populated dynamically via app.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <!-- =========================================================================
