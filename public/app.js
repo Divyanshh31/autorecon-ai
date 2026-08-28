@@ -766,18 +766,18 @@ function renderOrdersTable(searchQuery = '') {
 
         return `
             <tr class="${rowClass}" onclick="openDiffDrawer('${order.orderId}')">
-                <td class="px-5 py-3.5">
-                    <div class="font-bold text-slate-900">${order.orderId}</div>
-                    <div class="text-[11px] text-slate-500">${order.customerName} &middot; <span class="capitalize text-blue-600">${order.paymentMethod || 'UPI'}</span></div>
+                <td class="px-6 py-4.5">
+                    <div class="font-black text-slate-900 text-sm sm:text-base">${order.orderId}</div>
+                    <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">${order.customerName} &middot; <span class="capitalize text-blue-700 font-bold">${order.paymentMethod || 'UPI'}</span></div>
                 </td>
-                <td class="px-4 py-3.5 font-mono font-bold text-slate-900">₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-4 py-3.5 font-mono text-slate-600">pay_RZP_${order.orderId.slice(-4)}</td>
-                <td class="px-4 py-3.5 font-mono text-blue-600 font-bold">₹${totalFeeTax}</td>
-                <td class="px-4 py-3.5 font-mono text-xs">${utr}</td>
-                <td class="px-4 py-3.5">${statusBadge}</td>
-                <td class="px-5 py-3.5 text-right">
-                    <button class="text-blue-600 hover:text-blue-800 font-semibold text-xs flex items-center space-x-1 ml-auto">
-                        <span>Check</span> <i class="ph-bold ph-caret-right"></i>
+                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-5 py-4.5 font-mono text-slate-700 text-xs sm:text-sm font-semibold">pay_RZP_${order.orderId.slice(-4)}</td>
+                <td class="px-5 py-4.5 font-mono text-blue-700 font-black text-sm sm:text-base">₹${totalFeeTax}</td>
+                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm font-bold">${utr}</td>
+                <td class="px-5 py-4.5">${statusBadge}</td>
+                <td class="px-6 py-4.5 text-right">
+                    <button class="text-blue-700 hover:text-blue-900 font-extrabold text-xs sm:text-sm flex items-center space-x-1 ml-auto">
+                        <span>Inspect</span> <i class="ph-bold ph-caret-right"></i>
                     </button>
                 </td>
             </tr>
@@ -848,43 +848,43 @@ function renderPayrollTable() {
         let actionBtn = '';
 
         if (emp.status === 'DISBURSED') {
-            statusBadge = `<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check-circle"></i> Transferred (1st Aug)</span>`;
-            actionBtn = `<span class="text-emerald-700 font-mono text-[11px] font-bold">${emp.bankUtr}</span>`;
+            statusBadge = `<span class="badge-pill badge-reconciled font-bold"><i class="ph-bold ph-check-circle"></i> Transferred (1st Aug)</span>`;
+            actionBtn = `<span class="text-emerald-800 font-mono text-xs sm:text-sm font-extrabold">${emp.bankUtr}</span>`;
         } else if (emp.status === 'DELAYED') {
-            statusBadge = `<span class="badge-pill badge-delayed"><i class="ph-bold ph-warning"></i> Delayed (${emp.delayDays}d SLA Breach)</span>`;
+            statusBadge = `<span class="badge-pill badge-delayed font-bold"><i class="ph-bold ph-warning"></i> Delayed (${emp.delayDays}d Breach)</span>`;
             actionBtn = `
-                <div class="flex items-center justify-end space-x-1.5">
-                    <button onclick="disburseSalary('${emp.empId}')" class="rzp-btn-primary px-2.5 py-1 text-[11px] font-bold shadow-sm">
+                <div class="flex items-center justify-end space-x-2">
+                    <button onclick="disburseSalary('${emp.empId}')" class="rzp-btn-primary px-3.5 py-1.5 text-xs sm:text-sm font-extrabold shadow-sm">
                         Disburse
                     </button>
-                    <button onclick="openSalaryNoticeModal()" class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded-lg font-semibold text-[11px]">
+                    <button onclick="openSalaryNoticeModal()" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-800 border border-red-300 rounded-xl font-bold text-xs sm:text-sm">
                         Notice
                     </button>
                 </div>
             `;
         } else {
-            statusBadge = `<span class="badge-pill badge-fee-mismatch"><i class="ph-bold ph-hourglass"></i> Pending Clearance</span>`;
+            statusBadge = `<span class="badge-pill badge-fee-mismatch font-bold"><i class="ph-bold ph-hourglass"></i> Pending Clearance</span>`;
             actionBtn = `
-                <button onclick="disburseSalary('${emp.empId}')" class="px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-lg font-bold text-[11px]">
+                <button onclick="disburseSalary('${emp.empId}')" class="px-3.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-300 rounded-xl font-extrabold text-xs sm:text-sm">
                     Verify & Pay
                 </button>
             `;
         }
 
         return `
-            <tr class="hover:bg-slate-50 transition border-b border-slate-100 ${emp.status === 'DELAYED' ? 'bg-red-50/50' : ''}">
-                <td class="px-5 py-3.5">
-                    <div class="font-bold text-slate-900">${emp.name}</div>
-                    <div class="text-[11px] text-slate-500">${emp.role} &middot; <span class="font-mono text-blue-600">${emp.empId}</span></div>
+            <tr class="hover:bg-slate-50 transition border-b border-slate-200 ${emp.status === 'DELAYED' ? 'bg-red-50/50' : ''}">
+                <td class="px-6 py-4.5">
+                    <div class="font-black text-slate-900 text-sm sm:text-base">${emp.name}</div>
+                    <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">${emp.role} &middot; <span class="font-mono text-blue-700 font-bold">${emp.empId}</span></div>
                 </td>
-                <td class="px-4 py-3.5 text-slate-700 font-medium">${emp.department}</td>
-                <td class="px-4 py-3.5 font-mono font-bold text-slate-900">₹${Number(emp.grossSalary).toLocaleString('en-IN')}</td>
-                <td class="px-4 py-3.5 font-mono text-xs text-blue-700">
+                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${Number(emp.grossSalary).toLocaleString('en-IN')}</td>
+                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm text-blue-800 font-bold">
                     TDS: ₹${Number(emp.tdsDeduction).toLocaleString('en-IN')} | PF: ₹${Number(emp.pfDeduction).toLocaleString('en-IN')}
                 </td>
-                <td class="px-4 py-3.5 font-mono font-bold text-emerald-700">₹${Number(emp.netPayable).toLocaleString('en-IN')}</td>
-                <td class="px-4 py-3.5">${statusBadge}</td>
-                <td class="px-5 py-3.5 text-right">${actionBtn}</td>
+                <td class="px-5 py-4.5 font-mono font-black text-emerald-800 text-sm sm:text-base">₹${Number(emp.netPayable).toLocaleString('en-IN')}</td>
+                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm font-semibold">${actionBtn.includes('UTR') ? actionBtn : `<span class="text-slate-500 font-mono">Pending</span>`}</td>
+                <td class="px-5 py-4.5">${statusBadge}</td>
+                <td class="px-6 py-4.5 text-right">${actionBtn.includes('UTR') ? '<span class="text-emerald-700 font-extrabold text-xs sm:text-sm">● Settled</span>' : actionBtn}</td>
             </tr>
         `;
     }).join('');
@@ -1023,20 +1023,20 @@ function renderVendorsTable() {
         }
 
         return `
-            <tr class="hover:bg-slate-50 transition border-b border-slate-100 ${v.paymentStatus === 'CRITICAL_MSME' ? 'bg-red-50/50' : ''}">
-                <td class="px-5 py-3.5">
-                    <div class="font-bold text-slate-900">${v.vendorName} ${v.isMsme ? '<span class="px-1.5 py-0.2 bg-blue-100 text-blue-700 border border-blue-200 rounded text-[9px] font-bold uppercase font-mono">MSME</span>' : ''}</div>
-                    <div class="text-[11px] text-slate-500">${v.category} &middot; <span class="font-mono text-slate-600">${v.gstin}</span></div>
+            <tr class="hover:bg-slate-50 transition border-b border-slate-200 ${v.paymentStatus === 'CRITICAL_MSME' ? 'bg-red-50/50' : ''}">
+                <td class="px-6 py-4.5">
+                    <div class="font-black text-slate-900 text-sm sm:text-base">${v.vendorName} ${v.isMsme ? '<span class="px-2 py-0.5 bg-blue-100 text-blue-800 border border-blue-300 rounded text-[10px] font-black uppercase font-mono">MSME</span>' : ''}</div>
+                    <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">${v.category} &middot; <span class="font-mono text-slate-700 font-bold">${v.gstin}</span></div>
                 </td>
-                <td class="px-4 py-3.5">
-                    <div class="font-mono text-slate-900 font-bold">${v.invoiceNo}</div>
-                    <div class="text-[11px] text-slate-500">Due: ${v.dueDate}</div>
+                <td class="px-5 py-4.5">
+                    <div class="font-mono text-slate-900 font-black text-sm sm:text-base">${v.invoiceNo}</div>
+                    <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">Due: ${v.dueDate}</div>
                 </td>
-                <td class="px-4 py-3.5 font-mono font-bold text-slate-900">₹${Number(v.amount).toLocaleString('en-IN')}</td>
-                <td class="px-4 py-3.5 font-mono text-xs text-emerald-700 font-bold">₹${Number(v.gstAmount).toFixed(2)}</td>
-                <td class="px-4 py-3.5 font-mono font-bold text-blue-600">₹${Number(v.netPayable).toLocaleString('en-IN')}</td>
-                <td class="px-4 py-3.5">${agingBadge}</td>
-                <td class="px-5 py-3.5 text-right">${actionBtn}</td>
+                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${Number(v.amount).toLocaleString('en-IN')}</td>
+                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm text-emerald-800 font-black">₹${Number(v.gstAmount).toFixed(2)}</td>
+                <td class="px-5 py-4.5 font-mono font-black text-blue-700 text-sm sm:text-base">₹${Number(v.netPayable).toLocaleString('en-IN')}</td>
+                <td class="px-5 py-4.5">${agingBadge}</td>
+                <td class="px-6 py-4.5 text-right">${actionBtn}</td>
             </tr>
         `;
     }).join('');
@@ -1148,25 +1148,25 @@ function renderCashFlowTable() {
     tbody.innerHTML = transactions.map(t => {
         const isIncome = t.type === 'INFLOW';
         const typeBadge = isIncome 
-            ? `<span class="badge-pill badge-reconciled font-mono text-[10px]">+ INFLOW</span>`
-            : `<span class="badge-pill bg-red-50 text-red-700 border border-red-200 font-mono text-[10px]">- OUTFLOW</span>`;
-        const netColor = isIncome ? 'text-emerald-700' : 'text-blue-700';
-        const utrColor = (t.utr && (t.utr.includes('UTR') || t.utr.includes('SAL_'))) ? 'text-emerald-700 font-bold' : ((t.utr && (t.utr.includes('Delayed') || t.utr.includes('Critical'))) ? 'text-red-600 font-bold' : 'text-slate-600');
+            ? `<span class="badge-pill badge-reconciled font-mono text-xs font-bold">+ INFLOW</span>`
+            : `<span class="badge-pill bg-red-50 text-red-800 border border-red-300 font-mono text-xs font-bold">- OUTFLOW</span>`;
+        const netColor = isIncome ? 'text-emerald-800' : 'text-blue-800';
+        const utrColor = (t.utr && (t.utr.includes('UTR') || t.utr.includes('SAL_'))) ? 'text-emerald-800 font-bold' : ((t.utr && (t.utr.includes('Delayed') || t.utr.includes('Critical'))) ? 'text-red-700 font-bold' : 'text-slate-700');
 
         return `
-            <tr class="hover:bg-slate-50 transition border-b border-slate-100">
-                <td class="px-5 py-3.5 font-mono text-[11px] text-slate-500">${t.date}</td>
-                <td class="px-4 py-3.5">
-                    <div class="font-bold text-slate-900">${t.entity}</div>
-                    <div class="text-[11px] text-slate-500">${t.category}</div>
+            <tr class="hover:bg-slate-50 transition border-b border-slate-200">
+                <td class="px-6 py-4.5 font-mono text-xs sm:text-sm text-slate-700 font-bold">${t.date}</td>
+                <td class="px-5 py-4.5">
+                    <div class="font-black text-slate-900 text-sm sm:text-base">${t.entity}</div>
+                    <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">${t.category}</div>
                 </td>
-                <td class="px-4 py-3.5">${typeBadge}</td>
-                <td class="px-4 py-3.5 font-mono font-bold text-slate-900">₹${t.gross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-4 py-3.5 font-mono text-xs text-blue-700">₹${t.tax.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-4 py-3.5 font-mono font-bold ${netColor}">
+                <td class="px-5 py-4.5">${typeBadge}</td>
+                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${t.gross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm text-blue-800 font-bold">₹${t.tax.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-5 py-4.5 font-mono font-black text-sm sm:text-base ${netColor}">
                     ${isIncome ? '+' : '-'}₹${t.net.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </td>
-                <td class="px-5 py-3.5 text-right font-mono text-[11px] ${utrColor}">${t.utr}</td>
+                <td class="px-6 py-4.5 text-right font-mono text-xs sm:text-sm font-semibold ${utrColor}">${t.utr}</td>
             </tr>
         `;
     }).join('');
@@ -1312,17 +1312,18 @@ window.askCopilotForDrawerOrder = function() {
 // 12. MULTI-DOMAIN AI MUNIMJI CHAT
 // =========================================================================
 async function sendChatMessage(query) {
-    const container = document.getElementById('chatMessages');
+    const container = document.getElementById('floatingChatMessages') || document.getElementById('chatMessages');
+    if (!container) return;
     
     // User message
     const userMsg = document.createElement('div');
-    userMsg.className = 'bg-sand-300 text-[#131c17] rounded-2xl p-3 text-xs font-semibold self-end ml-auto max-w-[85%] shadow-sm';
+    userMsg.className = 'bg-blue-600 text-white rounded-2xl rounded-tr-none p-3.5 text-sm font-bold self-end ml-auto max-w-[85%] shadow-md';
     userMsg.textContent = query;
     container.appendChild(userMsg);
 
     // AI typing indicator
     const typing = document.createElement('div');
-    typing.className = 'bg-[#131c17] border border-[#22332a] rounded-2xl p-3 text-xs text-sand-200 font-mono animate-pulse';
+    typing.className = 'bg-white border border-slate-200 rounded-2xl p-3.5 text-xs sm:text-sm text-slate-700 font-mono animate-pulse shadow-sm';
     typing.textContent = 'AI Munimji is analyzing accounts across Gateway, Payroll & Vendors...';
     container.appendChild(typing);
     container.scrollTop = container.scrollHeight;
@@ -1337,14 +1338,14 @@ async function sendChatMessage(query) {
         typing.remove();
 
         const aiMsg = document.createElement('div');
-        aiMsg.className = 'bg-[#131c17] border border-[#22332a] rounded-2xl p-3.5 text-xs text-sand-200 leading-relaxed shadow-sm whitespace-pre-wrap';
-        aiMsg.innerHTML = data.reply.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+        aiMsg.className = 'bg-white border border-slate-200 rounded-2xl rounded-tl-none p-4 text-sm sm:text-[15px] text-slate-900 leading-relaxed shadow-sm whitespace-pre-wrap font-medium';
+        aiMsg.innerHTML = (data.reply || '').replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b class="font-extrabold text-blue-900">$1</b>');
         container.appendChild(aiMsg);
         container.scrollTop = container.scrollHeight;
     } catch (e) {
         typing.remove();
         const errMsg = document.createElement('div');
-        errMsg.className = 'bg-terracotta-500/20 text-terracotta-400 p-3 rounded-xl text-xs';
+        errMsg.className = 'bg-red-50 text-red-800 border border-red-200 p-3.5 rounded-xl text-xs sm:text-sm font-bold';
         errMsg.textContent = 'Error querying AI Munimji. Please try again.';
         container.appendChild(errMsg);
     }
@@ -1836,35 +1837,35 @@ function renderMlAnomalyTable(scoredOrders) {
     }
 
     tbody.innerHTML = scoredOrders.slice(0, 15).map(o => {
-        let badgeColor = 'bg-emerald-50 text-emerald-700 border border-emerald-200';
-        let barColor = 'bg-emerald-500';
+        let badgeColor = 'bg-emerald-50 text-emerald-800 border border-emerald-300';
+        let barColor = 'bg-emerald-600';
         if (o.riskLevel === 'CRITICAL') {
-            badgeColor = 'bg-red-50 text-red-700 border border-red-200';
-            barColor = 'bg-red-500';
+            badgeColor = 'bg-red-50 text-red-800 border border-red-300';
+            barColor = 'bg-red-600';
         } else if (o.riskLevel === 'MODERATE') {
-            badgeColor = 'bg-amber-50 text-amber-800 border border-amber-200';
-            barColor = 'bg-amber-500';
+            badgeColor = 'bg-amber-50 text-amber-900 border border-amber-300';
+            barColor = 'bg-amber-600';
         }
 
         return `
-            <tr class="hover:bg-slate-50 transition border-b border-slate-100 ${o.isAnomaly ? 'bg-red-50/40' : ''}">
-                <td class="px-5 py-3.5 font-mono font-bold text-slate-900">${o.orderId}</td>
-                <td class="px-4 py-3.5 font-medium text-slate-700">${o.customerName}</td>
-                <td class="px-4 py-3.5 font-mono font-bold text-slate-900">₹${Number(o.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-4 py-3.5">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-16 bg-slate-200 h-2 rounded-full overflow-hidden">
+            <tr class="hover:bg-slate-50 transition border-b border-slate-200 ${o.isAnomaly ? 'bg-red-50/50' : ''}">
+                <td class="px-6 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">${o.orderId}</td>
+                <td class="px-5 py-4.5 font-bold text-slate-900 text-sm sm:text-base">${o.customerName}</td>
+                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${Number(o.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="px-5 py-4.5">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-20 bg-slate-200 h-2.5 rounded-full overflow-hidden">
                             <div class="h-full ${barColor}" style="width: ${o.anomalyProbability}%"></div>
                         </div>
-                        <span class="font-mono font-bold text-xs ${o.anomalyProbability >= 70 ? 'text-red-600' : 'text-slate-700'}">${o.anomalyProbability}%</span>
+                        <span class="font-mono font-extrabold text-xs sm:text-sm ${o.anomalyProbability >= 70 ? 'text-red-700' : 'text-slate-800'}">${o.anomalyProbability}%</span>
                     </div>
                 </td>
-                <td class="px-4 py-3.5">
-                    <span class="badge-pill ${badgeColor} text-[10px] uppercase tracking-wider">${o.riskLevel}</span>
+                <td class="px-5 py-4.5">
+                    <span class="badge-pill ${badgeColor} text-xs uppercase tracking-wider font-extrabold">${o.riskLevel}</span>
                 </td>
-                <td class="px-4 py-3.5 text-xs text-slate-700 font-medium">${o.primaryDriver}</td>
-                <td class="px-4 py-3.5 font-mono text-[11px] text-slate-500">
-                    MDR: <b class="text-blue-600">${o.features ? o.features.feeVarianceImpact : '0%'}</b> · SLA: <b class="text-blue-600">${o.features ? o.features.slaLatencyImpact : '0%'}</b>
+                <td class="px-5 py-4.5 text-xs sm:text-sm text-slate-800 font-semibold">${o.primaryDriver}</td>
+                <td class="px-6 py-4.5 font-mono text-xs text-slate-600 font-semibold">
+                    MDR: <b class="text-blue-700 font-bold">${o.features ? o.features.feeVarianceImpact : '0%'}</b> · SLA: <b class="text-blue-700 font-bold">${o.features ? o.features.slaLatencyImpact : '0%'}</b>
                 </td>
             </tr>
         `;
