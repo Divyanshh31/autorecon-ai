@@ -216,7 +216,13 @@
             </div>
 
             <!-- Right Hero Interactive 3-Way Flow Simulator Widget -->
-            <div class="lg:col-span-5">
+            <div class="lg:col-span-5 relative">
+                <!-- Floating Micro-Pill (Top) -->
+                <div class="floating-pill px-3.5 py-1.5 inline-flex items-center space-x-2 text-[11px] font-bold text-sky-300 mb-3 ml-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>⚡ Live Ingestion: <b class="text-white">payment.captured (₹4,500)</b></span>
+                </div>
+
                 <div class="rzp-card p-6 border-blue-500/30 shadow-2xl relative overflow-hidden">
                     <div class="absolute -top-12 -right-12 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
                     
@@ -231,7 +237,7 @@
                     <!-- 3-Way Step Breakdown -->
                     <div class="space-y-3 text-xs">
                         <!-- Step 1 -->
-                        <div class="p-3.5 rounded-2xl bg-[#0B132B] border border-white/10 flex items-center justify-between">
+                        <div class="p-3.5 rounded-2xl bg-[#081028] border border-white/10 flex items-center justify-between transition hover:border-blue-500/40">
                             <div class="flex items-center space-x-3">
                                 <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-sky-400 flex items-center justify-center font-bold">
                                     1
@@ -245,7 +251,7 @@
                         </div>
 
                         <!-- Step 2 -->
-                        <div class="p-3.5 rounded-2xl bg-[#0B132B] border border-white/10 flex items-center justify-between">
+                        <div class="p-3.5 rounded-2xl bg-[#081028] border border-white/10 flex items-center justify-between transition hover:border-sky-500/40">
                             <div class="flex items-center space-x-3">
                                 <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-300 flex items-center justify-center font-bold">
                                     2
@@ -259,7 +265,7 @@
                         </div>
 
                         <!-- Step 3 -->
-                        <div class="p-3.5 rounded-2xl bg-[#0B132B] border border-emerald-500/30 flex items-center justify-between">
+                        <div class="p-3.5 rounded-2xl bg-[#081028] border border-emerald-500/30 flex items-center justify-between transition hover:border-emerald-500/60">
                             <div class="flex items-center space-x-3">
                                 <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
                                     3
@@ -279,6 +285,18 @@
                         <button onclick="dispatchLiveWebhookTest()" class="text-sky-400 hover:text-white font-bold text-[11px] flex items-center space-x-1">
                             <span>Simulate New Event</span> <i class="ph-bold ph-arrow-right"></i>
                         </button>
+                    </div>
+                </div>
+
+                <!-- Floating Micro-Pills (Bottom Row) -->
+                <div class="flex items-center justify-between mt-3 px-1">
+                    <div class="floating-pill floating-pill-alt px-3 py-1.5 text-[11px] font-bold text-emerald-300 flex items-center space-x-1.5">
+                        <i class="ph-bold ph-shield-check text-emerald-400 text-sm"></i>
+                        <span>MSME 43B(h): 100% In Sync</span>
+                    </div>
+                    <div class="floating-pill px-3 py-1.5 text-[11px] font-bold text-sky-300 flex items-center space-x-1.5">
+                        <i class="ph-bold ph-bank text-sky-400 text-sm"></i>
+                        <span>Axis Bank UTR Verified</span>
                     </div>
                 </div>
             </div>

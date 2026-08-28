@@ -1,22 +1,22 @@
 /* ==========================================================================
-   AutoRecon AI — Razorpay Flagship Motion & Gradient Glassmorphism Engine
-   Bespoke Fintech Animations, Fluid Aurora Mesh & Specular Hover Transitions
+   AutoRecon AI — PayPath Modern Fintech Glassmorphism & Motion System
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-    --rzp-bg: #02042B;
-    --rzp-bg-secondary: #0B132B;
-    --rzp-surface: #0E1A38;
-    --rzp-surface-card: rgba(14, 26, 56, 0.75);
-    --rzp-surface-card-hover: rgba(22, 38, 78, 0.9);
-    --rzp-surface-elevated: #132247;
+    --rzp-bg: #03071E;
+    --rzp-bg-secondary: #081028;
+    --rzp-surface: #0B1536;
+    --rzp-surface-card: rgba(11, 21, 54, 0.75);
+    --rzp-surface-card-hover: rgba(16, 32, 78, 0.88);
+    --rzp-surface-elevated: #10204C;
     
     --rzp-blue: #0066FF;
     --rzp-blue-hover: #0052CC;
     --rzp-azure: #3395FF;
-    --rzp-cyan: #00C2FF;
+    --rzp-cyan: #00F2FE;
+    --rzp-aqua: #4FACFE;
     
     --rzp-emerald: #00D09C;
     --rzp-emerald-soft: rgba(0, 208, 156, 0.15);
@@ -27,8 +27,9 @@
     --rzp-red: #FF4D4D;
     --rzp-red-soft: rgba(255, 77, 77, 0.15);
     
-    --rzp-border: rgba(255, 255, 255, 0.1);
-    --rzp-border-hover: rgba(51, 149, 255, 0.55);
+    --rzp-border: rgba(255, 255, 255, 0.12);
+    --rzp-border-hover: rgba(0, 242, 254, 0.6);
+    --rzp-border-glow: rgba(0, 102, 255, 0.4);
     
     --rzp-text-white: #FFFFFF;
     --rzp-text-slate: #94A3B8;
@@ -62,24 +63,24 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   1. RAZORPAY AURORA GRADIENTS & FLUID TEXT ANIMATIONS
+   1. PAYPATH FLUID AURORA GRADIENT ENGINE
    ========================================================================== */
 .rzp-gradient-text {
-    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 35%, #3395FF 70%, #00D09C 100%);
+    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 25%, #00F2FE 55%, #00D09C 85%, #3395FF 100%);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: rzpGradientShift 8s infinite alternate ease-in-out;
+    animation: paypathGradientFlow 7s infinite alternate ease-in-out;
 }
 
-@keyframes rzpGradientShift {
+@keyframes paypathGradientFlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
 /* ==========================================================================
-   2. ATMOSPHERIC BACKGROUND CANVAS & LUMINOUS ORB MESH
+   2. MODERN SLICK LIVE BACKGROUND (Canvas Waves + Ambient Light Nodes)
    ========================================================================== */
 #liveBgCanvas {
     position: fixed;
@@ -102,63 +103,65 @@ pre, code, .font-mono {
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(140px);
-    opacity: 0.42;
-    animation: rzpOrbFloat 22s infinite alternate ease-in-out;
+    filter: blur(130px);
+    opacity: 0.45;
+    animation: paypathOrbMotion 20s infinite alternate ease-in-out;
     will-change: transform;
 }
 
 .orb-1 {
-    width: 750px;
-    height: 750px;
+    width: 700px;
+    height: 700px;
     background: radial-gradient(circle, #0066FF 0%, rgba(0, 102, 255, 0) 70%);
     top: -150px;
     left: 10%;
 }
 
 .orb-2 {
-    width: 850px;
-    height: 850px;
-    background: radial-gradient(circle, #3395FF 0%, rgba(51, 149, 255, 0) 70%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, #00F2FE 0%, rgba(0, 242, 254, 0) 70%);
     bottom: -200px;
     right: 5%;
-    animation-delay: -6s;
+    animation-delay: -5s;
 }
 
 .orb-3 {
     width: 550px;
     height: 550px;
     background: radial-gradient(circle, #00D09C 0%, rgba(0, 208, 156, 0) 70%);
-    top: 45%;
+    top: 40%;
     right: -120px;
-    animation-delay: -12s;
+    animation-delay: -10s;
 }
 
 .orb-4 {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, #6366F1 0%, rgba(99, 102, 241, 0) 70%);
-    top: 25%;
+    background: radial-gradient(circle, #7928CA 0%, rgba(121, 40, 202, 0) 70%);
+    top: 20%;
     left: -100px;
-    animation-delay: -16s;
+    animation-delay: -15s;
 }
 
-@keyframes rzpOrbFloat {
+@keyframes paypathOrbMotion {
     0% { transform: translate3d(0, 0, 0) scale(1); }
-    50% { transform: translate3d(35px, 50px, 0) scale(1.08); }
-    100% { transform: translate3d(-30px, -40px, 0) scale(0.95); }
+    50% { transform: translate3d(40px, 45px, 0) scale(1.1); }
+    100% { transform: translate3d(-35px, -35px, 0) scale(0.94); }
 }
 
 /* ==========================================================================
-   3. RAZORPAY GLASS CARDS WITH SPECULAR SHINE & HOVER GLOW
+   3. PAYPATH GLASS CARDS WITH SPECULAR SHINE & NEON HOVER
    ========================================================================== */
 .rzp-card, .pine-card, .glass-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(14, 26, 56, 0.82) 45%, rgba(8, 15, 36, 0.94) 100%);
-    backdrop-filter: blur(28px) saturate(200%);
-    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(11, 21, 54, 0.8) 40%, rgba(5, 11, 30, 0.95) 100%);
+    backdrop-filter: blur(28px) saturate(210%);
+    -webkit-backdrop-filter: blur(28px) saturate(210%);
     border: 1px solid var(--rzp-border);
     border-radius: 24px;
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 
+        0 20px 45px -10px rgba(0, 0, 0, 0.6),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.2);
     transition: transform 0.32s var(--rzp-ease-spring), border-color 0.32s var(--rzp-ease-spring), box-shadow 0.32s var(--rzp-ease-spring), background 0.32s ease;
     position: relative;
     overflow: hidden;
@@ -172,7 +175,7 @@ pre, code, .font-mono {
     left: -100%;
     width: 60%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), rgba(51, 149, 255, 0.12), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), rgba(0, 242, 254, 0.15), transparent);
     transform: skewX(-20deg);
     transition: left 0.75s var(--rzp-ease-smooth);
     pointer-events: none;
@@ -183,27 +186,50 @@ pre, code, .font-mono {
 }
 
 .rzp-card:hover, .pine-card:hover, .glass-card:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(20, 38, 80, 0.9) 45%, rgba(12, 22, 48, 0.98) 100%);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(16, 32, 78, 0.9) 40%, rgba(8, 16, 42, 0.98) 100%);
     border-color: var(--rzp-border-hover);
     box-shadow: 
-        0 25px 50px -10px rgba(0, 0, 0, 0.7),
-        0 0 30px rgba(0, 102, 255, 0.25),
-        inset 0 1px 2px 0 rgba(255, 255, 255, 0.3);
+        0 28px 55px -10px rgba(0, 0, 0, 0.75),
+        0 0 35px rgba(0, 194, 255, 0.25),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 0.35);
     transform: translateY(-4px);
 }
 
-/* Razorpay Header */
+/* Glass Header */
 .glass-header {
-    background: rgba(2, 4, 43, 0.88);
+    background: rgba(3, 7, 30, 0.88);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     border-bottom: 1px solid var(--rzp-border);
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* ==========================================================================
-   4. BESPOKE RAZORPAY ACTION BUTTONS (Specular Shine Ray & Glow)
+   4. FLOATING MICRO-WIDGETS (PayPath Signature Hero Accents)
+   ========================================================================== */
+.floating-pill {
+    background: rgba(8, 16, 42, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 9999px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 194, 255, 0.2);
+    animation: paypathFloat 5s ease-in-out infinite alternate;
+}
+
+.floating-pill-alt {
+    animation-duration: 6s;
+    animation-delay: -2.5s;
+}
+
+@keyframes paypathFloat {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-8px); }
+}
+
+/* ==========================================================================
+   5. BESPOKE ACTION BUTTONS (High-Glow Ray & Tactile Press)
    ========================================================================== */
 .rzp-btn-primary {
     display: inline-flex;
@@ -212,13 +238,13 @@ pre, code, .font-mono {
     white-space: nowrap;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #0066FF 0%, #3395FF 50%, #00C2FF 100%);
+    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 50%, #00F2FE 100%);
     background-size: 200% 200%;
     color: #FFFFFF;
     font-weight: 700;
     border-radius: 12px;
-    box-shadow: 0 4px 18px rgba(0, 102, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 102, 255, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     transition: transform 0.22s var(--rzp-ease-spring), box-shadow 0.22s var(--rzp-ease-spring), background-position 0.4s ease;
 }
 
@@ -230,7 +256,7 @@ pre, code, .font-mono {
     left: -75%;
     width: 250%;
     height: 200%;
-    background: linear-gradient(60deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
+    background: linear-gradient(60deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
     transform: rotate(25deg);
     transition: left 0.75s var(--rzp-ease-smooth);
     opacity: 0;
@@ -239,7 +265,7 @@ pre, code, .font-mono {
 
 .rzp-btn-primary:hover {
     background-position: 100% 0;
-    box-shadow: 0 8px 28px rgba(0, 102, 255, 0.65), 0 0 20px rgba(0, 194, 255, 0.4), inset 0 1px 1.5px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 30px rgba(0, 102, 255, 0.7), 0 0 25px rgba(0, 242, 254, 0.5), inset 0 1px 1.5px rgba(255, 255, 255, 0.65);
     transform: translateY(-2px);
 }
 
@@ -270,7 +296,7 @@ pre, code, .font-mono {
 .glass-btn:hover {
     background: rgba(255, 255, 255, 0.12);
     border-color: var(--rzp-border-hover);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(51, 149, 255, 0.2);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), 0 0 18px rgba(0, 242, 254, 0.25);
     transform: translateY(-1.5px);
 }
 
@@ -280,7 +306,7 @@ pre, code, .font-mono {
 
 /* Glass Inputs */
 .glass-input {
-    background: rgba(11, 19, 43, 0.8);
+    background: rgba(8, 16, 42, 0.85);
     border: 1px solid var(--rzp-border);
     border-radius: 12px;
     color: #FFFFFF;
@@ -288,14 +314,14 @@ pre, code, .font-mono {
 }
 
 .glass-input:focus {
-    background: rgba(14, 26, 56, 0.95);
-    border-color: var(--rzp-azure);
-    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.3), 0 0 20px rgba(0, 102, 255, 0.2);
+    background: rgba(11, 21, 54, 0.98);
+    border-color: var(--rzp-cyan);
+    box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.3), 0 0 20px rgba(0, 242, 254, 0.25);
     outline: none;
 }
 
 /* ==========================================================================
-   5. RAZORPAY TAB SWITCHER WITH FLUID GLOW
+   6. TAB SWITCHER WITH RADIANT ACTIVE GLOW
    ========================================================================== */
 .nav-tab-btn {
     display: inline-flex;
@@ -306,7 +332,6 @@ pre, code, .font-mono {
     background: transparent;
     border-radius: 12px;
     transition: all 0.25s var(--rzp-ease-spring);
-    position: relative;
 }
 
 .nav-tab-btn:hover {
@@ -315,30 +340,24 @@ pre, code, .font-mono {
 }
 
 .nav-tab-btn.active {
-    background: linear-gradient(135deg, #0066FF 0%, #3395FF 100%);
+    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 100%);
     color: #FFFFFF;
     font-weight: 800;
-    box-shadow: 0 6px 22px rgba(0, 102, 255, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-    animation: tabPulse 3s infinite alternate ease-in-out;
-}
-
-@keyframes tabPulse {
-    0% { box-shadow: 0 6px 20px rgba(0, 102, 255, 0.45); }
-    100% { box-shadow: 0 6px 28px rgba(51, 149, 255, 0.65), 0 0 15px rgba(0, 194, 255, 0.35); }
+    box-shadow: 0 6px 24px rgba(0, 102, 255, 0.55), 0 0 15px rgba(0, 242, 254, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
 }
 
 /* Module View Transitions */
 .module-view {
-    animation: rzpFadeIn 0.35s var(--rzp-ease-spring);
+    animation: paypathFadeIn 0.35s var(--rzp-ease-spring);
 }
 
-@keyframes rzpFadeIn {
+@keyframes paypathFadeIn {
     0% { opacity: 0; transform: translateY(10px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================================
-   6. INTERACTIVE TABLE ROW HOVER WITH GLOW ACCENT
+   7. INTERACTIVE TABLE ROW HOVER WITH CYAN ACCENT
    ========================================================================== */
 tbody tr {
     transition: all 0.22s var(--rzp-ease-spring);
@@ -346,12 +365,12 @@ tbody tr {
 }
 
 tbody tr:hover {
-    background: rgba(255, 255, 255, 0.04) !important;
-    box-shadow: inset 3px 0 0 0 #3395FF;
+    background: rgba(0, 242, 254, 0.04) !important;
+    box-shadow: inset 3px 0 0 0 #00F2FE;
 }
 
 /* ==========================================================================
-   7. RAZORPAY FINTECH PILL BADGES WITH SUBTLE BREATHING
+   8. STATUS BADGES WITH LUMINOUS HALO
    ========================================================================== */
 .badge-pill {
     display: inline-flex;
@@ -368,33 +387,33 @@ tbody tr:hover {
 .badge-reconciled {
     background: rgba(0, 208, 156, 0.15);
     color: #00D09C;
-    border: 1px solid rgba(0, 208, 156, 0.35);
-    box-shadow: 0 0 10px rgba(0, 208, 156, 0.12);
+    border: 1px solid rgba(0, 208, 156, 0.4);
+    box-shadow: 0 0 12px rgba(0, 208, 156, 0.18);
 }
 
 .badge-fee-mismatch {
     background: rgba(255, 153, 0, 0.15);
     color: #FF9900;
-    border: 1px solid rgba(255, 153, 0, 0.35);
-    box-shadow: 0 0 10px rgba(255, 153, 0, 0.12);
+    border: 1px solid rgba(255, 153, 0, 0.4);
+    box-shadow: 0 0 12px rgba(255, 153, 0, 0.18);
 }
 
 .badge-delayed {
     background: rgba(255, 77, 77, 0.15);
     color: #FF4D4D;
-    border: 1px solid rgba(255, 77, 77, 0.35);
-    box-shadow: 0 0 10px rgba(255, 77, 77, 0.12);
+    border: 1px solid rgba(255, 77, 77, 0.4);
+    box-shadow: 0 0 12px rgba(255, 77, 77, 0.18);
 }
 
 /* ==========================================================================
-   8. DYNAMIC ISLAND LIVE STREAM CAPSULE & PULSE DOT
+   9. DYNAMIC ISLAND LIVE STREAM CAPSULE & PULSE DOT
    ========================================================================== */
 .live-stream-ticker {
-    background: rgba(11, 19, 43, 0.85);
+    background: rgba(8, 16, 42, 0.88);
     backdrop-filter: blur(24px);
-    border: 1px solid var(--rzp-border);
+    border: 1px solid rgba(0, 242, 254, 0.2);
     border-radius: 9999px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 102, 255, 0.15);
 }
 
 .live-pulse-dot {
@@ -403,22 +422,22 @@ tbody tr:hover {
     border-radius: 50%;
     background-color: #00D09C;
     box-shadow: 0 0 12px #00D09C;
-    animation: rzpPulse 1.6s infinite ease-in-out;
+    animation: paypathPulse 1.6s infinite ease-in-out;
 }
 
-@keyframes rzpPulse {
+@keyframes paypathPulse {
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.35); opacity: 0.55; }
 }
 
 /* ==========================================================================
-   9. MINIMALISTIC OPENING SPLASH
+   10. MINIMALISTIC OPENING SPLASH
    ========================================================================== */
 #splashScreen {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #02042B;
+    background: #03071E;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -435,8 +454,8 @@ tbody tr:hover {
 .minimal-glass-emblem {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(0, 102, 255, 0.25) 100%);
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 15px 35px rgba(0, 102, 255, 0.35);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 102, 255, 0.4), 0 0 25px rgba(0, 242, 254, 0.2);
     animation: emblemFloat 3s infinite alternate ease-in-out;
 }
 
@@ -454,7 +473,7 @@ tbody tr:hover {
 
 .hairline-loader-bar {
     height: 100%;
-    background: linear-gradient(90deg, #0066FF, #00C2FF, #00D09C, #0066FF);
+    background: linear-gradient(90deg, #0066FF, #00C2FF, #00F2FE, #00D09C, #0066FF);
     background-size: 200% 100%;
     animation: loaderShimmer 2s infinite linear;
 }
@@ -465,13 +484,13 @@ tbody tr:hover {
 }
 
 /* ==========================================================================
-   10. AI MUNIMJI FLOATING COPILOT
+   11. AI MUNIMJI FLOATING COPILOT
    ========================================================================== */
 #btnToggleFloatingChat {
-    background: linear-gradient(135deg, #0066FF 0%, #3395FF 50%, #00D09C 100%);
+    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 50%, #00D09C 100%);
     background-size: 200% 200%;
-    box-shadow: 0 12px 35px rgba(0, 102, 255, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 35px rgba(0, 102, 255, 0.55), 0 0 20px rgba(0, 242, 254, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.35);
     transition: all 0.25s var(--rzp-ease-spring);
     animation: chatBtnShimmer 6s infinite alternate ease-in-out;
 }
@@ -482,15 +501,15 @@ tbody tr:hover {
 }
 
 #btnToggleFloatingChat:hover {
-    box-shadow: 0 18px 45px rgba(0, 102, 255, 0.75), 0 0 25px rgba(0, 208, 156, 0.4);
+    box-shadow: 0 18px 45px rgba(0, 102, 255, 0.75), 0 0 30px rgba(0, 242, 254, 0.5);
     transform: translateY(-3px) scale(1.02);
 }
 
 #floatingChatWindow {
-    background: rgba(8, 15, 36, 0.96);
+    background: rgba(5, 11, 30, 0.97);
     backdrop-filter: blur(35px);
-    border: 1px solid var(--rzp-border);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 35px rgba(0, 102, 255, 0.25);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 0 0 40px rgba(0, 102, 255, 0.3);
     animation: windowPopup 0.3s var(--rzp-ease-spring);
 }
 
@@ -500,7 +519,7 @@ tbody tr:hover {
 }
 
 /* ==========================================================================
-   11. CUSTOM SCROLLBARS
+   12. CUSTOM SCROLLBARS
    ========================================================================== */
 ::-webkit-scrollbar {
     width: 6px;
@@ -508,7 +527,7 @@ tbody tr:hover {
 }
 
 ::-webkit-scrollbar-track {
-    background: #02042B;
+    background: #03071E;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -517,5 +536,5 @@ tbody tr:hover {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(51, 149, 255, 0.6);
+    background: rgba(0, 242, 254, 0.6);
 }

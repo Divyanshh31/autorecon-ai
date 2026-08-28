@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // =========================================================================
-// 1. LIVE BACKGROUND PARTICLES (Physics & Constellations)
+// 1. MODERN AESTHETIC FINTECH BACKGROUND (Waves + Interactive Luminescent Grid)
 // =========================================================================
 function initLiveBackground() {
     const canvas = document.getElementById('liveBgCanvas');
@@ -157,67 +157,123 @@ function initLiveBackground() {
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
 
+    let mouse = { x: width / 2, y: height / 2, active: false };
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        mouse.active = true;
+    });
+
+    window.addEventListener('mouseleave', () => {
+        mouse.active = false;
+    });
+
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
     });
 
-    const particles = [];
-    const numParticles = Math.min(Math.floor(window.innerWidth / 25), 45);
+    // Interactive Nodes
+    const nodes = [];
+    const numNodes = Math.min(Math.floor(window.innerWidth / 30), 40);
 
-    for (let i = 0; i < numParticles; i++) {
-        particles.push({
+    for (let i = 0; i < numNodes; i++) {
+        nodes.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            radius: Math.random() * 2 + 1,
-            color: (i % 4 === 0) ? '#0066FF' : (i % 4 === 1 ? '#3395FF' : (i % 4 === 2 ? '#38BDF8' : '#10B981')),
-            vx: (Math.random() - 0.5) * 0.45,
-            vy: (Math.random() - 0.5) * 0.45,
-            alpha: Math.random() * 0.4 + 0.2
+            radius: Math.random() * 2.2 + 1.2,
+            color: (i % 4 === 0) ? '#0066FF' : (i % 4 === 1 ? '#00F2FE' : (i % 4 === 2 ? '#4FACFE' : '#00D09C')),
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            glow: Math.random() * 8 + 4
         });
     }
 
-    function animateParticles() {
+    let waveStep = 0;
+
+    function renderFintechCanvas() {
         ctx.clearRect(0, 0, width, height);
 
-        // Draw connecting constellation lines
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
+        // 1. Draw Flowing Ethereal Sine Wave Ribbons
+        waveStep += 0.015;
+        const waves = [
+            { y: height * 0.75, amp: 45, freq: 0.002, speed: 1.0, color: 'rgba(0, 102, 255, 0.12)', lineWidth: 2 },
+            { y: height * 0.82, amp: 35, freq: 0.0025, speed: -0.8, color: 'rgba(0, 242, 254, 0.10)', lineWidth: 1.5 },
+            { y: height * 0.88, amp: 25, freq: 0.003, speed: 1.2, color: 'rgba(121, 40, 202, 0.08)', lineWidth: 1 }
+        ];
+
+        waves.forEach(w => {
+            ctx.beginPath();
+            ctx.strokeStyle = w.color;
+            ctx.lineWidth = w.lineWidth;
+            for (let x = 0; x <= width; x += 10) {
+                const y = w.y + Math.sin(x * w.freq + waveStep * w.speed) * w.amp;
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        });
+
+        // 2. Draw Dynamic Specular Node Network
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const dx = nodes[i].x - nodes[j].x;
+                const dy = nodes[i].y - nodes[j].y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < 130) {
+                if (dist < 140) {
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(51, 149, 255, ${0.15 * (1 - dist / 130)})`;
+                    const alpha = (1 - dist / 140) * 0.18;
+                    ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`;
                     ctx.lineWidth = 0.75;
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                    ctx.lineTo(nodes[j].x, nodes[j].y);
                     ctx.stroke();
                 }
             }
         }
 
-        // Draw and update particles
-        particles.forEach(p => {
+        // 3. Mouse Interactive Rays
+        if (mouse.active) {
+            nodes.forEach(n => {
+                const dx = mouse.x - n.x;
+                const dy = mouse.y - n.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 180) {
+                    ctx.beginPath();
+                    const alpha = (1 - dist / 180) * 0.28;
+                    ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(n.x, n.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
+            });
+        }
+
+        // 4. Update and Render Nodes with Soft Glow
+        nodes.forEach(n => {
+            ctx.save();
+            ctx.shadowColor = n.color;
+            ctx.shadowBlur = n.glow;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.globalAlpha = p.alpha;
+            ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+            ctx.fillStyle = n.color;
             ctx.fill();
-            ctx.globalAlpha = 1;
+            ctx.restore();
 
-            p.x += p.vx;
-            p.y += p.vy;
+            n.x += n.vx;
+            n.y += n.vy;
 
-            if (p.x < 0 || p.x > width) p.vx *= -1;
-            if (p.y < 0 || p.y > height) p.vy *= -1;
+            if (n.x < 0 || n.x > width) n.vx *= -1;
+            if (n.y < 0 || n.y > height) n.vy *= -1;
         });
 
-        requestAnimationFrame(animateParticles);
+        requestAnimationFrame(renderFintechCanvas);
     }
 
-    animateParticles();
+    renderFintechCanvas();
 }
 
 // =========================================================================
