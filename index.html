@@ -230,75 +230,96 @@
                 </div>
             </div>
 
-            <!-- Right Hero: 3D Visual & Interactive Live 3-Way Card Container -->
+            <!-- Right Hero: Juspay-Style Interactive Live Animation Ecosystem -->
             <div class="lg:col-span-6 relative">
                 
-                <!-- Main 3D Card Visual with Overlay Glass Widgets -->
-                <div class="rzp-card border-slate-200 shadow-xl overflow-hidden bg-white group hover:shadow-2xl transition-all">
+                <div class="juspay-hero-visual p-6 relative select-none">
                     
-                    <!-- 3D Luxury Card Image Banner -->
-                    <div class="relative h-44 sm:h-52 w-full overflow-hidden bg-slate-100">
-                        <img src="assets/hero_card.jpg" alt="Fintech 3D Card Visual" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out">
-                        
-                        <!-- Image Gradient Vignette -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent"></div>
-                        
-                        <!-- Floating Pill Badge over Image -->
-                        <div class="absolute top-3 right-3 floating-pill px-3 py-1.5 text-xs font-extrabold text-blue-800 flex items-center space-x-1.5 bg-white/95 border-blue-200 backdrop-blur-md shadow-md">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                            <span>⚡ Live Ingestion: <b class="text-slate-900">₹4,500 UPI</b></span>
+                    <!-- Concentric Rotating Orbital Rings -->
+                    <div class="orbit-ring orbit-ring-1"></div>
+                    <div class="orbit-ring orbit-ring-2"></div>
+                    <div class="orbit-ring orbit-ring-3"></div>
+                    
+                    <!-- 360-Degree Radar Sweep Beam -->
+                    <div class="radar-sweep"></div>
+
+                    <!-- SVG Animated Data Flow Rays -->
+                    <svg class="svg-flow-path" viewBox="0 0 500 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Path Top Left to Core -->
+                        <path d="M 120 80 Q 200 160 250 240" stroke="#0066FF" stroke-width="2" stroke-opacity="0.4" class="flow-dash-line" />
+                        <!-- Path Top Right to Core -->
+                        <path d="M 380 80 Q 300 160 250 240" stroke="#0284C7" stroke-width="2" stroke-opacity="0.4" class="flow-dash-line" />
+                        <!-- Path Bottom Left to Core -->
+                        <path d="M 120 400 Q 200 320 250 240" stroke="#D97706" stroke-width="2" stroke-opacity="0.4" class="flow-dash-line" />
+                        <!-- Path Bottom Right to Core -->
+                        <path d="M 380 400 Q 300 320 250 240" stroke="#059669" stroke-width="2" stroke-opacity="0.4" class="flow-dash-line" />
+                    </svg>
+
+                    <!-- Node 1: Top Left (Razorpay Ingestion) -->
+                    <div class="orbit-node-card node-pos-top-left" onclick="dispatchLiveWebhookTest()">
+                        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg flex-shrink-0">
+                            <i class="ph-fill ph-credit-card"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-xs font-black text-slate-900 leading-tight">Razorpay Gateway</div>
+                            <div class="text-[10px] text-blue-600 font-bold font-mono mt-0.5">⚡ UPI Inflow +₹4,500</div>
                         </div>
                     </div>
 
-                    <!-- 3-Way Interactive Recon Feed -->
-                    <div class="p-5 pt-2 space-y-3">
-                        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                            <div class="flex items-center space-x-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-900">Real-Time 3-Way Audit Trail</span>
-                            </div>
-                            <span class="badge-pill badge-reconciled text-[11px] font-bold">Node #ORD_88192</span>
+                    <!-- Node 2: Top Right (3-Way MDR Audit) -->
+                    <div class="orbit-node-card node-pos-top-right" onclick="switchToTab('view-recon')">
+                        <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-lg flex-shrink-0">
+                            <i class="ph-fill ph-scales"></i>
                         </div>
-
-                        <!-- 3-Step Mini Flow -->
-                        <div class="grid grid-cols-3 gap-2 text-left">
-                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                                <div class="text-[10px] text-slate-500 font-bold uppercase">1. Store Order</div>
-                                <div class="text-xs sm:text-sm font-black text-slate-900 font-mono mt-0.5">₹4,500.00</div>
-                                <div class="text-[10px] text-blue-600 font-semibold">Captured</div>
-                            </div>
-                            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                                <div class="text-[10px] text-slate-500 font-bold uppercase">2. Gateway Fee</div>
-                                <div class="text-xs sm:text-sm font-black text-blue-600 font-mono mt-0.5">- ₹106.20</div>
-                                <div class="text-[10px] text-slate-500 font-semibold">2% MDR + GST</div>
-                            </div>
-                            <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
-                                <div class="text-[10px] text-emerald-800 font-bold uppercase">3. Bank Credit</div>
-                                <div class="text-xs sm:text-sm font-black text-emerald-700 font-mono mt-0.5">₹4,393.80</div>
-                                <div class="text-[10px] text-emerald-600 font-semibold">Axis UTR Match</div>
-                            </div>
-                        </div>
-
-                        <!-- Simulator Trigger -->
-                        <div class="pt-2 flex items-center justify-between text-xs">
-                            <span class="text-slate-500 font-medium">Reconciliation Latency: <b class="text-slate-800 font-bold">180ms</b></span>
-                            <button onclick="dispatchLiveWebhookTest()" class="text-blue-600 hover:text-blue-800 font-extrabold text-xs flex items-center space-x-1">
-                                <span>Simulate Event ➔</span>
-                            </button>
+                        <div class="text-left">
+                            <div class="text-xs font-black text-slate-900 leading-tight">3-Way MDR Audit</div>
+                            <div class="text-[10px] text-emerald-600 font-bold font-mono mt-0.5">✓ 0% Fee Overcharge</div>
                         </div>
                     </div>
+
+                    <!-- Central Quantum Core -->
+                    <div class="quantum-recon-core cursor-pointer" onclick="dispatchLiveWebhookTest()" title="Click to Simulate Event">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-400 text-white flex items-center justify-center text-xl shadow-md mb-1">
+                            <i class="ph-fill ph-lightning"></i>
+                        </div>
+                        <span class="text-[11px] font-black text-slate-900 tracking-tight leading-none">AutoRecon</span>
+                        <span class="text-[9px] font-black uppercase text-blue-600 font-mono mt-0.5">Engine OS</span>
+                    </div>
+
+                    <!-- Node 3: Bottom Left (MSME 43B(h) Shield) -->
+                    <div class="orbit-node-card node-pos-bottom-left" onclick="switchToTab('view-vendors')">
+                        <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg flex-shrink-0">
+                            <i class="ph-fill ph-shield-check"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-xs font-black text-slate-900 leading-tight">MSME 43B(h) Shield</div>
+                            <div class="text-[10px] text-amber-700 font-bold font-mono mt-0.5">🛡️ 45-Day Aging Safe</div>
+                        </div>
+                    </div>
+
+                    <!-- Node 4: Bottom Right (Instant Bank Settlement) -->
+                    <div class="orbit-node-card node-pos-bottom-right" onclick="switchToTab('view-recon')">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg flex-shrink-0">
+                            <i class="ph-fill ph-bank"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-xs font-black text-slate-900 leading-tight">Bank Settlement</div>
+                            <div class="text-[10px] text-emerald-700 font-bold font-mono mt-0.5">✓ Axis UTR Matched</div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- Floating Micro Pills under Widget -->
-                <div class="flex items-center justify-between mt-3 px-1">
-                    <div class="floating-pill floating-pill-alt px-3 py-1.5 text-xs font-bold text-emerald-800 flex items-center space-x-1.5 bg-white border-emerald-200">
-                        <i class="ph-bold ph-shield-check text-emerald-600 text-sm"></i>
-                        <span>MSME 43B(h): In Sync</span>
+                <!-- Interactive Floating Simulator Control underneath -->
+                <div class="flex items-center justify-between mt-3 px-2">
+                    <div class="text-xs text-slate-500 font-medium flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span>Telemetry: <b class="text-slate-900 font-bold">180ms Latency</b> · <b class="text-emerald-700 font-bold">99.98% SLA</b></span>
                     </div>
-                    <div class="floating-pill px-3 py-1.5 text-xs font-bold text-blue-800 flex items-center space-x-1.5 bg-white border-blue-200">
-                        <i class="ph-bold ph-bank text-blue-600 text-sm"></i>
-                        <span>Axis Bank UTR Verified</span>
-                    </div>
+                    <button onclick="dispatchLiveWebhookTest()" class="text-xs font-extrabold text-blue-600 hover:text-blue-800 flex items-center space-x-1 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-xs active:scale-95 transition">
+                        <i class="ph-bold ph-play"></i>
+                        <span>Simulate Live Event ➔</span>
+                    </button>
                 </div>
 
             </div>
