@@ -486,6 +486,30 @@ function setupEventListeners() {
     if (uploadForm) {
         uploadForm.addEventListener('submit', handleCsvUpload);
     }
+
+    // 3D Parallax Tilt & Specular Light on Card Hover
+    initInteractiveHoverEffects();
+}
+
+function initInteractiveHoverEffects() {
+    const cards = document.querySelectorAll('.rzp-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -4;
+            const rotateY = ((x - centerX) / centerX) * 4;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
+    });
 }
 
 // Toggle Floating Amazon-style AI Chatbot Window
