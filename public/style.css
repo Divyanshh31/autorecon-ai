@@ -159,19 +159,23 @@ pre, code, .font-mono {
 
 /* Razorpay Primary Buttons */
 .rzp-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
     background: linear-gradient(135deg, #0066FF 0%, #3395FF 100%);
     color: #FFFFFF;
     font-weight: 700;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 102, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.22s ease;
 }
 
 .rzp-btn-primary:hover {
     background: linear-gradient(135deg, #0052CC 0%, #1A82FF 100%);
-    box-shadow: 0 8px 28px rgba(0, 102, 255, 0.65), inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
-    transform: translateY(-1.5px);
+    box-shadow: 0 8px 24px rgba(0, 102, 255, 0.65), inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
 }
 
 .rzp-btn-primary:active {
@@ -180,11 +184,15 @@ pre, code, .font-mono {
 
 /* Razorpay Secondary Glass Buttons */
 .glass-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--rzp-border);
-    border-radius: 14px;
+    border-radius: 12px;
     color: var(--rzp-text-white);
     transition: all 0.22s ease;
 }
@@ -203,7 +211,7 @@ pre, code, .font-mono {
 .glass-input {
     background: rgba(11, 19, 43, 0.8);
     border: 1px solid var(--rzp-border);
-    border-radius: 14px;
+    border-radius: 12px;
     color: #FFFFFF;
     transition: all 0.2s ease;
 }
@@ -219,9 +227,13 @@ pre, code, .font-mono {
    RAZORPAY TAB SWITCHER
    ========================================================================== */
 .nav-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
     color: #94A3B8;
     background: transparent;
-    border-radius: 14px;
+    border-radius: 12px;
     transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
