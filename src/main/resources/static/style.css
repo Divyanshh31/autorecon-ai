@@ -1,5 +1,6 @@
 /* ==========================================================================
-   AutoRecon AI — Razorpay.com World-Class Fintech Glassmorphism Design System
+   AutoRecon AI — Razorpay Flagship Motion & Gradient Glassmorphism Engine
+   Bespoke Fintech Animations, Fluid Aurora Mesh & Specular Hover Transitions
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
@@ -9,7 +10,7 @@
     --rzp-bg-secondary: #0B132B;
     --rzp-surface: #0E1A38;
     --rzp-surface-card: rgba(14, 26, 56, 0.75);
-    --rzp-surface-card-hover: rgba(22, 38, 78, 0.85);
+    --rzp-surface-card-hover: rgba(22, 38, 78, 0.9);
     --rzp-surface-elevated: #132247;
     
     --rzp-blue: #0066FF;
@@ -27,11 +28,14 @@
     --rzp-red-soft: rgba(255, 77, 77, 0.15);
     
     --rzp-border: rgba(255, 255, 255, 0.1);
-    --rzp-border-hover: rgba(51, 149, 255, 0.5);
+    --rzp-border-hover: rgba(51, 149, 255, 0.55);
     
     --rzp-text-white: #FFFFFF;
     --rzp-text-slate: #94A3B8;
     --rzp-text-muted: #64748B;
+    
+    --rzp-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+    --rzp-ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 * {
@@ -58,7 +62,24 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   RAZORPAY ATMOSPHERIC BACKGROUND MESH & LIGHTING
+   1. RAZORPAY AURORA GRADIENTS & FLUID TEXT ANIMATIONS
+   ========================================================================== */
+.rzp-gradient-text {
+    background: linear-gradient(135deg, #0066FF 0%, #00C2FF 35%, #3395FF 70%, #00D09C 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rzpGradientShift 8s infinite alternate ease-in-out;
+}
+
+@keyframes rzpGradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ==========================================================================
+   2. ATMOSPHERIC BACKGROUND CANVAS & LUMINOUS ORB MESH
    ========================================================================== */
 #liveBgCanvas {
     position: fixed;
@@ -82,8 +103,9 @@ pre, code, .font-mono {
     position: absolute;
     border-radius: 50%;
     filter: blur(140px);
-    opacity: 0.45;
+    opacity: 0.42;
     animation: rzpOrbFloat 22s infinite alternate ease-in-out;
+    will-change: transform;
 }
 
 .orb-1 {
@@ -122,30 +144,52 @@ pre, code, .font-mono {
 }
 
 @keyframes rzpOrbFloat {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(35px, 50px) scale(1.1); }
-    100% { transform: translate(-30px, -40px) scale(0.95); }
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(35px, 50px, 0) scale(1.08); }
+    100% { transform: translate3d(-30px, -40px, 0) scale(0.95); }
 }
 
 /* ==========================================================================
-   RAZORPAY GLASS CARDS & FINTECH PANELS
+   3. RAZORPAY GLASS CARDS WITH SPECULAR SHINE & HOVER GLOW
    ========================================================================== */
 .rzp-card, .pine-card, .glass-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(14, 26, 56, 0.8) 45%, rgba(8, 15, 36, 0.92) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(14, 26, 56, 0.82) 45%, rgba(8, 15, 36, 0.94) 100%);
     backdrop-filter: blur(28px) saturate(200%);
     -webkit-backdrop-filter: blur(28px) saturate(200%);
     border: 1px solid var(--rzp-border);
     border-radius: 24px;
     box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.15);
-    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.32s var(--rzp-ease-spring), border-color 0.32s var(--rzp-ease-spring), box-shadow 0.32s var(--rzp-ease-spring), background 0.32s ease;
     position: relative;
+    overflow: hidden;
+}
+
+/* Specular Light Reflection Sweep on Card */
+.rzp-card::before, .pine-card::before, .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), rgba(51, 149, 255, 0.12), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.75s var(--rzp-ease-smooth);
+    pointer-events: none;
+}
+
+.rzp-card:hover::before, .pine-card:hover::before, .glass-card:hover::before {
+    left: 180%;
 }
 
 .rzp-card:hover, .pine-card:hover, .glass-card:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(20, 36, 76, 0.88) 45%, rgba(12, 22, 48, 0.96) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(20, 38, 80, 0.9) 45%, rgba(12, 22, 48, 0.98) 100%);
     border-color: var(--rzp-border-hover);
-    box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.65), 0 0 30px rgba(0, 102, 255, 0.22), inset 0 1px 2px 0 rgba(255, 255, 255, 0.25);
-    transform: translateY(-3px);
+    box-shadow: 
+        0 25px 50px -10px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(0, 102, 255, 0.25),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-4px);
 }
 
 /* Razorpay Header */
@@ -155,34 +199,60 @@ pre, code, .font-mono {
     -webkit-backdrop-filter: blur(30px);
     border-bottom: 1px solid var(--rzp-border);
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.35);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Razorpay Primary Buttons */
+/* ==========================================================================
+   4. BESPOKE RAZORPAY ACTION BUTTONS (Specular Shine Ray & Glow)
+   ========================================================================== */
 .rzp-btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    background: linear-gradient(135deg, #0066FF 0%, #3395FF 100%);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0066FF 0%, #3395FF 50%, #00C2FF 100%);
+    background-size: 200% 200%;
     color: #FFFFFF;
     font-weight: 700;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 102, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.22s ease;
+    box-shadow: 0 4px 18px rgba(0, 102, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transition: transform 0.22s var(--rzp-ease-spring), box-shadow 0.22s var(--rzp-ease-spring), background-position 0.4s ease;
+}
+
+/* Light Beam Glint Traversing across the Button */
+.rzp-btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -75%;
+    width: 250%;
+    height: 200%;
+    background: linear-gradient(60deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
+    transform: rotate(25deg);
+    transition: left 0.75s var(--rzp-ease-smooth);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .rzp-btn-primary:hover {
-    background: linear-gradient(135deg, #0052CC 0%, #1A82FF 100%);
-    box-shadow: 0 8px 24px rgba(0, 102, 255, 0.65), inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
-    transform: translateY(-1px);
+    background-position: 100% 0;
+    box-shadow: 0 8px 28px rgba(0, 102, 255, 0.65), 0 0 20px rgba(0, 194, 255, 0.4), inset 0 1px 1.5px rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+.rzp-btn-primary:hover::after {
+    left: 100%;
+    opacity: 1;
 }
 
 .rzp-btn-primary:active {
     transform: scale(0.97);
 }
 
-/* Razorpay Secondary Glass Buttons */
+/* Secondary Glass Buttons */
 .glass-btn {
     display: inline-flex;
     align-items: center;
@@ -194,13 +264,14 @@ pre, code, .font-mono {
     border: 1px solid var(--rzp-border);
     border-radius: 12px;
     color: var(--rzp-text-white);
-    transition: all 0.22s ease;
+    transition: all 0.22s var(--rzp-ease-spring);
 }
 
 .glass-btn:hover {
     background: rgba(255, 255, 255, 0.12);
     border-color: var(--rzp-border-hover);
-    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(51, 149, 255, 0.2);
+    transform: translateY(-1.5px);
 }
 
 .glass-btn:active {
@@ -213,18 +284,18 @@ pre, code, .font-mono {
     border: 1px solid var(--rzp-border);
     border-radius: 12px;
     color: #FFFFFF;
-    transition: all 0.2s ease;
+    transition: all 0.22s ease;
 }
 
 .glass-input:focus {
     background: rgba(14, 26, 56, 0.95);
     border-color: var(--rzp-azure);
-    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.3);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.3), 0 0 20px rgba(0, 102, 255, 0.2);
     outline: none;
 }
 
 /* ==========================================================================
-   RAZORPAY TAB SWITCHER
+   5. RAZORPAY TAB SWITCHER WITH FLUID GLOW
    ========================================================================== */
 .nav-tab-btn {
     display: inline-flex;
@@ -234,33 +305,53 @@ pre, code, .font-mono {
     color: #94A3B8;
     background: transparent;
     border-radius: 12px;
-    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.25s var(--rzp-ease-spring);
+    position: relative;
 }
 
 .nav-tab-btn:hover {
     color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .nav-tab-btn.active {
     background: linear-gradient(135deg, #0066FF 0%, #3395FF 100%);
     color: #FFFFFF;
     font-weight: 800;
-    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 22px rgba(0, 102, 255, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    animation: tabPulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes tabPulse {
+    0% { box-shadow: 0 6px 20px rgba(0, 102, 255, 0.45); }
+    100% { box-shadow: 0 6px 28px rgba(51, 149, 255, 0.65), 0 0 15px rgba(0, 194, 255, 0.35); }
 }
 
 /* Module View Transitions */
 .module-view {
-    animation: rzpFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: rzpFadeIn 0.35s var(--rzp-ease-spring);
 }
 
 @keyframes rzpFadeIn {
-    0% { opacity: 0; transform: translateY(8px); }
+    0% { opacity: 0; transform: translateY(10px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================================
-   RAZORPAY FINTECH PILL BADGES
+   6. INTERACTIVE TABLE ROW HOVER WITH GLOW ACCENT
+   ========================================================================== */
+tbody tr {
+    transition: all 0.22s var(--rzp-ease-spring);
+    position: relative;
+}
+
+tbody tr:hover {
+    background: rgba(255, 255, 255, 0.04) !important;
+    box-shadow: inset 3px 0 0 0 #3395FF;
+}
+
+/* ==========================================================================
+   7. RAZORPAY FINTECH PILL BADGES WITH SUBTLE BREATHING
    ========================================================================== */
 .badge-pill {
     display: inline-flex;
@@ -271,27 +362,33 @@ pre, code, .font-mono {
     font-weight: 700;
     border-radius: 9999px;
     backdrop-filter: blur(12px);
+    transition: all 0.2s ease;
 }
 
 .badge-reconciled {
     background: rgba(0, 208, 156, 0.15);
     color: #00D09C;
     border: 1px solid rgba(0, 208, 156, 0.35);
+    box-shadow: 0 0 10px rgba(0, 208, 156, 0.12);
 }
 
 .badge-fee-mismatch {
     background: rgba(255, 153, 0, 0.15);
     color: #FF9900;
     border: 1px solid rgba(255, 153, 0, 0.35);
+    box-shadow: 0 0 10px rgba(255, 153, 0, 0.12);
 }
 
 .badge-delayed {
     background: rgba(255, 77, 77, 0.15);
     color: #FF4D4D;
     border: 1px solid rgba(255, 77, 77, 0.35);
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.12);
 }
 
-/* Dynamic Island Live Stream Capsule */
+/* ==========================================================================
+   8. DYNAMIC ISLAND LIVE STREAM CAPSULE & PULSE DOT
+   ========================================================================== */
 .live-stream-ticker {
     background: rgba(11, 19, 43, 0.85);
     backdrop-filter: blur(24px);
@@ -306,7 +403,7 @@ pre, code, .font-mono {
     border-radius: 50%;
     background-color: #00D09C;
     box-shadow: 0 0 12px #00D09C;
-    animation: rzpPulse 1.5s infinite ease-in-out;
+    animation: rzpPulse 1.6s infinite ease-in-out;
 }
 
 @keyframes rzpPulse {
@@ -314,7 +411,9 @@ pre, code, .font-mono {
     50% { transform: scale(1.35); opacity: 0.55; }
 }
 
-/* Splash Screen */
+/* ==========================================================================
+   9. MINIMALISTIC OPENING SPLASH
+   ========================================================================== */
 #splashScreen {
     position: fixed;
     inset: 0;
@@ -338,6 +437,12 @@ pre, code, .font-mono {
     backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 15px 35px rgba(0, 102, 255, 0.35);
+    animation: emblemFloat 3s infinite alternate ease-in-out;
+}
+
+@keyframes emblemFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-6px); }
 }
 
 .hairline-loader {
@@ -349,7 +454,7 @@ pre, code, .font-mono {
 
 .hairline-loader-bar {
     height: 100%;
-    background: linear-gradient(90deg, #0066FF, #00C2FF, #00D09C);
+    background: linear-gradient(90deg, #0066FF, #00C2FF, #00D09C, #0066FF);
     background-size: 200% 100%;
     animation: loaderShimmer 2s infinite linear;
 }
@@ -359,27 +464,44 @@ pre, code, .font-mono {
     100% { background-position: -100% 0; }
 }
 
-/* AI Munimji Floating Button */
+/* ==========================================================================
+   10. AI MUNIMJI FLOATING COPILOT
+   ========================================================================== */
 #btnToggleFloatingChat {
     background: linear-gradient(135deg, #0066FF 0%, #3395FF 50%, #00D09C 100%);
+    background-size: 200% 200%;
     box-shadow: 0 12px 35px rgba(0, 102, 255, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.25s ease;
+    transition: all 0.25s var(--rzp-ease-spring);
+    animation: chatBtnShimmer 6s infinite alternate ease-in-out;
+}
+
+@keyframes chatBtnShimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
 }
 
 #btnToggleFloatingChat:hover {
-    box-shadow: 0 18px 45px rgba(0, 102, 255, 0.7);
-    transform: translateY(-2px);
+    box-shadow: 0 18px 45px rgba(0, 102, 255, 0.75), 0 0 25px rgba(0, 208, 156, 0.4);
+    transform: translateY(-3px) scale(1.02);
 }
 
 #floatingChatWindow {
     background: rgba(8, 15, 36, 0.96);
     backdrop-filter: blur(35px);
     border: 1px solid var(--rzp-border);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 35px rgba(0, 102, 255, 0.2);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 35px rgba(0, 102, 255, 0.25);
+    animation: windowPopup 0.3s var(--rzp-ease-spring);
 }
 
-/* Custom Scrollbars */
+@keyframes windowPopup {
+    0% { opacity: 0; transform: translateY(12px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ==========================================================================
+   11. CUSTOM SCROLLBARS
+   ========================================================================== */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
