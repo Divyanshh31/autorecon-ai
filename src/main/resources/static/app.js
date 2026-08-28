@@ -289,10 +289,8 @@ function setupNavigationTabs() {
 
             tabButtons.forEach(b => {
                 b.classList.remove('active');
-                b.classList.add('text-sand-200/70');
             });
             btn.classList.add('active');
-            btn.classList.remove('text-sand-200/70');
 
             views.forEach(v => {
                 if (v.id === targetId) {
