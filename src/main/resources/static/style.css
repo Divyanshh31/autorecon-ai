@@ -1,30 +1,31 @@
 /* ==========================================================================
-   AutoRecon AI — Authentic iPhone / iOS Glassmorphism & Vibrant Liquid Materials
-   Multi-Tasking Accounting OS: Gateway Recon, Payroll & Delays, Vendor MSME, Cash Flow
+   AutoRecon AI — Razorpay Obsidian Navy & Royal Blue Glassmorphism Design System
+   Inspired by Razorpay.com & RazorpayX Fintech Platform
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg-main: #0a110d;
-    --bg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 32, 25, 0.52) 40%, rgba(14, 22, 18, 0.68) 100%);
-    --bg-glass-card-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(26, 42, 33, 0.65) 40%, rgba(18, 29, 23, 0.78) 100%);
-    --bg-glass-header: rgba(12, 19, 15, 0.68);
-    --bg-glass-drawer: rgba(16, 26, 20, 0.88);
+    --bg-main: #02042B;
+    --bg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(13, 27, 60, 0.72) 45%, rgba(6, 15, 38, 0.9) 100%);
+    --bg-glass-card-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(18, 38, 84, 0.82) 45%, rgba(10, 22, 54, 0.95) 100%);
+    --bg-glass-header: rgba(4, 9, 34, 0.82);
+    --bg-glass-drawer: rgba(8, 16, 44, 0.92);
     
-    --border-glass: rgba(255, 255, 255, 0.14);
-    --border-glass-hover: rgba(229, 169, 93, 0.45);
-    --border-glass-glow: rgba(46, 196, 182, 0.45);
+    --border-glass: rgba(255, 255, 255, 0.12);
+    --border-glass-hover: rgba(51, 149, 255, 0.55);
+    --border-glass-glow: rgba(0, 102, 255, 0.45);
     
-    --text-primary: #f5eedc;
-    --text-secondary: #b5c4b8;
-    --text-muted: #7e9182;
+    --text-primary: #FFFFFF;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
     
-    --brand-gold: #e5a95d;
-    --brand-ochre: #d48b38;
-    --brand-jade: #2ec4b6;
-    --brand-sage: #81b29a;
-    --brand-terracotta: #e76f51;
+    --brand-blue: #0066FF;
+    --brand-azure: #3395FF;
+    --brand-cyan: #38BDF8;
+    --brand-emerald: #10B981;
+    --brand-amber: #F59E0B;
+    --brand-coral: #EF4444;
 }
 
 * {
@@ -32,7 +33,7 @@
 }
 
 body {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
     background-color: var(--bg-main);
     color: var(--text-primary);
     overflow-x: hidden;
@@ -46,7 +47,7 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   LIVE INTERACTIVE BACKGROUND CANVAS & ETHEREAL ORBS
+   RAZORPAY ATMOSPHERIC BACKGROUND CANVAS & LUMINOUS ORBS
    ========================================================================== */
 #liveBgCanvas, #liveSalaryCanvas {
     position: fixed;
@@ -69,24 +70,24 @@ pre, code, .font-mono {
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.42;
+    filter: blur(120px);
+    opacity: 0.45;
     animation: orbFloat 24s infinite alternate ease-in-out;
 }
 
 .orb-1 {
-    width: 580px;
-    height: 580px;
-    background: radial-gradient(circle, #e5a95d 0%, rgba(229, 169, 93, 0) 70%);
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, #0066FF 0%, rgba(0, 102, 255, 0) 70%);
     top: -120px;
     right: 5%;
     animation-duration: 24s;
 }
 
 .orb-2 {
-    width: 680px;
-    height: 680px;
-    background: radial-gradient(circle, #2ec4b6 0%, rgba(46, 196, 182, 0) 70%);
+    width: 720px;
+    height: 720px;
+    background: radial-gradient(circle, #3395FF 0%, rgba(51, 149, 255, 0) 70%);
     bottom: -150px;
     left: -100px;
     animation-duration: 28s;
@@ -94,9 +95,9 @@ pre, code, .font-mono {
 }
 
 .orb-3 {
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, #e76f51 0%, rgba(231, 111, 81, 0) 70%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #10B981 0%, rgba(16, 185, 129, 0) 70%);
     top: 38%;
     right: -100px;
     animation-duration: 22s;
@@ -104,9 +105,9 @@ pre, code, .font-mono {
 }
 
 .orb-4 {
-    width: 440px;
-    height: 440px;
-    background: radial-gradient(circle, #81b29a 0%, rgba(129, 178, 154, 0) 70%);
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, #6366F1 0%, rgba(99, 102, 241, 0) 70%);
     top: 15%;
     left: 18%;
     animation-duration: 26s;
@@ -120,13 +121,13 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   MINIMALISTIC OPENING SCREEN
+   MINIMALISTIC OPENING SPLASH
    ========================================================================== */
 #splashScreen {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: radial-gradient(circle at 50% 50%, #15241d 0%, #080e0a 100%);
+    background: radial-gradient(circle at 50% 50%, #081238 0%, #02042B 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -142,17 +143,17 @@ pre, code, .font-mono {
 }
 
 .minimal-glass-emblem {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(51, 149, 255, 0.15) 100%);
     backdrop-filter: blur(30px) saturate(200%);
     -webkit-backdrop-filter: blur(30px) saturate(200%);
     border: 1px solid rgba(255, 255, 255, 0.22);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 50px rgba(229, 169, 93, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 102, 255, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4);
     animation: gentlePulse 3s infinite ease-in-out;
 }
 
 @keyframes gentlePulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(229, 169, 93, 0.18); }
-    50% { transform: scale(1.03); box-shadow: 0 0 65px rgba(229, 169, 93, 0.38); }
+    0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(0, 102, 255, 0.25); }
+    50% { transform: scale(1.03); box-shadow: 0 0 65px rgba(0, 102, 255, 0.5); }
 }
 
 .hairline-loader {
@@ -166,7 +167,7 @@ pre, code, .font-mono {
 
 .hairline-loader-bar {
     height: 100%;
-    background: linear-gradient(90deg, #e5a95d, #2ec4b6, #e5a95d);
+    background: linear-gradient(90deg, #0066FF, #38BDF8, #10B981, #0066FF);
     background-size: 200% 100%;
     animation: loaderShimmer 2s infinite linear;
     transition: width 0.25s ease-out;
@@ -178,107 +179,133 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   AUTHENTIC IPHONE / IOS GLASSMORPHISM CORE MATERIALS
+   RAZORPAY FINTECH GLASSMORPHISM CARDS & CONTAINERS
    ========================================================================== */
 
-/* iPhone Frosted Glass Cards (Squircle 26px, Specular Rim Shine, Vibrancy) */
-.pine-card, .glass-card {
+/* Elevated Razorpay Glass Card */
+.pine-card, .glass-card, .rzp-card {
     background: var(--bg-glass-card);
     backdrop-filter: blur(36px) saturate(210%) contrast(105%);
     -webkit-backdrop-filter: blur(36px) saturate(210%) contrast(105%);
     border: 1px solid var(--border-glass);
     border-radius: 26px;
     box-shadow: 
-        0 20px 45px -10px rgba(0, 0, 0, 0.55),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.28),
-        inset 0 0 0 0.5px rgba(255, 255, 255, 0.08),
+        0 20px 45px -10px rgba(0, 0, 0, 0.6),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 0 0 0.5px rgba(255, 255, 255, 0.06),
         inset 0 -1px 1px 0 rgba(0, 0, 0, 0.3);
     transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
 }
 
-.pine-card:hover, .glass-card:hover {
+.pine-card:hover, .glass-card:hover, .rzp-card:hover {
     background: var(--bg-glass-card-hover);
-    border-color: rgba(229, 169, 93, 0.38);
+    border-color: rgba(51, 149, 255, 0.45);
     transform: translateY(-2px);
     box-shadow: 
-        0 28px 55px -10px rgba(0, 0, 0, 0.65),
-        0 0 30px rgba(229, 169, 93, 0.12),
-        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.38),
+        0 28px 55px -10px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(0, 102, 255, 0.18),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.3),
         inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
 }
 
-/* iPhone Glass Header Bar */
+/* Razorpay Glass Header */
 .glass-header {
     background: var(--bg-glass-header);
     backdrop-filter: blur(40px) saturate(200%);
     -webkit-backdrop-filter: blur(40px) saturate(200%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* iPhone Glass Buttons (Tactile Squircle with Specular Top Highlight) */
+/* Razorpay Tactile Buttons */
 .glass-btn {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 16px;
     color: var(--text-primary);
     box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.25),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.25),
         inset 0 -1px 1px 0 rgba(0, 0, 0, 0.2);
     transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-btn:hover {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.07) 100%);
-    border-color: rgba(229, 169, 93, 0.45);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(51, 149, 255, 0.12) 100%);
+    border-color: rgba(51, 149, 255, 0.55);
     transform: translateY(-1px);
     box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.35),
-        0 0 15px rgba(229, 169, 93, 0.15),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
+        0 8px 20px rgba(0, 0, 0, 0.4),
+        0 0 18px rgba(0, 102, 255, 0.25),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .glass-btn:active {
     transform: scale(0.97);
 }
 
-/* iPhone Glass Input (Deep Translucent Well) */
+/* Razorpay Primary Electric Blue Button */
+.rzp-btn-primary {
+    background: linear-gradient(135deg, #0066FF 0%, #3395FF 100%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    color: #FFFFFF;
+    font-weight: 700;
+    box-shadow: 
+        0 8px 25px -4px rgba(0, 102, 255, 0.5),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+    transition: all 0.22s ease;
+}
+
+.rzp-btn-primary:hover {
+    background: linear-gradient(135deg, #0052CC 0%, #1A82FF 100%);
+    box-shadow: 
+        0 12px 30px -4px rgba(0, 102, 255, 0.65),
+        0 0 20px rgba(51, 149, 255, 0.4),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6);
+    transform: translateY(-1px);
+}
+
+.rzp-btn-primary:active {
+    transform: scale(0.97);
+}
+
+/* Glass Inputs */
 .glass-input {
-    background: rgba(10, 16, 13, 0.65);
+    background: rgba(6, 14, 38, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 14px;
     color: var(--text-primary);
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.05);
     transition: all 0.2s ease;
 }
 
 .glass-input:focus {
-    background: rgba(10, 16, 13, 0.85);
-    border-color: var(--brand-gold);
-    box-shadow: 0 0 18px rgba(229, 169, 93, 0.25), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    background: rgba(8, 18, 48, 0.9);
+    border-color: var(--brand-azure);
+    box-shadow: 0 0 20px rgba(0, 102, 255, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================================================
-   IOS SEGMENTED MODULE SWITCHER PILLS
+   RAZORPAY SEGMENTED MODULE SWITCHER
    ========================================================================== */
 .nav-tab-btn {
-    color: #b5c4b8;
+    color: #94A3B8;
     background: transparent;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-tab-btn.active {
-    background: linear-gradient(135deg, rgba(229, 169, 93, 0.95) 0%, rgba(212, 139, 56, 0.95) 100%);
-    color: #131c17;
+    background: linear-gradient(135deg, #0066FF 0%, #3395FF 100%);
+    color: #FFFFFF;
     box-shadow: 
-        0 4px 15px rgba(0, 0, 0, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5);
+        0 6px 20px rgba(0, 102, 255, 0.45),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4);
     font-weight: 800;
 }
 
@@ -293,17 +320,17 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   IPHONE DYNAMIC ISLAND LIVE WEBHOOK STREAM CAPSULE
+   DYNAMIC ISLAND LIVE WEBHOOK STREAM CAPSULE
    ========================================================================== */
 .live-stream-ticker {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(12, 19, 15, 0.85) 50%, rgba(8, 14, 11, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(8, 18, 48, 0.88) 50%, rgba(4, 10, 32, 0.95) 100%);
     backdrop-filter: blur(32px) saturate(220%);
     -webkit-backdrop-filter: blur(32px) saturate(220%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 9999px;
     box-shadow: 
-        0 12px 32px rgba(0, 0, 0, 0.5),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+        0 12px 32px rgba(0, 0, 0, 0.55),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.25),
         inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
 }
 
@@ -311,8 +338,8 @@ pre, code, .font-mono {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #2ec4b6;
-    box-shadow: 0 0 12px #2ec4b6, 0 0 4px #2ec4b6;
+    background-color: #10B981;
+    box-shadow: 0 0 12px #10B981, 0 0 4px #10B981;
     animation: livePulse 1.5s infinite ease-in-out;
 }
 
@@ -322,7 +349,7 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   IOS CONTROL CENTER BADGES & PILLS
+   RAZORPAY FINTECH PILL BADGES
    ========================================================================== */
 .badge-pill {
     display: inline-flex;
@@ -334,58 +361,58 @@ pre, code, .font-mono {
     border-radius: 9999px;
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .badge-reconciled {
-    background: rgba(46, 196, 182, 0.18);
-    color: #48e5c2;
-    border: 1px solid rgba(46, 196, 182, 0.45);
-    box-shadow: 0 0 15px rgba(46, 196, 182, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    background: rgba(16, 185, 129, 0.16);
+    color: #34D399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .badge-fee-mismatch {
-    background: rgba(229, 169, 93, 0.18);
-    color: #f7be78;
-    border: 1px solid rgba(229, 169, 93, 0.45);
-    box-shadow: 0 0 15px rgba(229, 169, 93, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    background: rgba(245, 158, 11, 0.16);
+    color: #FBBF24;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .badge-delayed {
-    background: rgba(231, 111, 81, 0.18);
-    color: #f89d89;
-    border: 1px solid rgba(231, 111, 81, 0.45);
-    box-shadow: 0 0 15px rgba(231, 111, 81, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    background: rgba(239, 68, 68, 0.16);
+    color: #F87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 /* ==========================================================================
-   AMAZON RUFUS / SIRI FLOATING GLASS WIDGET
+   AI MUNIMJI FLOATING GLASS COPILOT
    ========================================================================== */
 #floatingChatWindow {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(20, 32, 25, 0.88) 35%, rgba(12, 19, 15, 0.96) 100%);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(13, 27, 60, 0.88) 35%, rgba(6, 15, 38, 0.97) 100%);
     backdrop-filter: blur(48px) saturate(230%);
     -webkit-backdrop-filter: blur(48px) saturate(230%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 
-        0 30px 70px rgba(0, 0, 0, 0.7),
-        0 0 40px rgba(229, 169, 93, 0.15),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
-        inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
+        0 30px 70px rgba(0, 0, 0, 0.75),
+        0 0 40px rgba(0, 102, 255, 0.25),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 0 0 0.5px rgba(255, 255, 255, 0.1);
 }
 
 #btnToggleFloatingChat {
-    background: linear-gradient(135deg, #e5a95d 0%, #d48b38 50%, #2ec4b6 100%);
+    background: linear-gradient(135deg, #0066FF 0%, #3395FF 50%, #10B981 100%);
     box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.5),
-        0 0 25px rgba(229, 169, 93, 0.35),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+        0 15px 35px rgba(0, 0, 0, 0.55),
+        0 0 25px rgba(0, 102, 255, 0.4),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
 #btnToggleFloatingChat:hover {
     box-shadow: 
-        0 20px 45px rgba(0, 0, 0, 0.6),
-        0 0 35px rgba(229, 169, 93, 0.5),
+        0 20px 45px rgba(0, 0, 0, 0.65),
+        0 0 35px rgba(0, 102, 255, 0.6),
         inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6);
     transform: translateY(-2px);
 }
@@ -397,7 +424,7 @@ pre, code, .font-mono {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(10, 16, 13, 0.6);
+    background: rgba(4, 10, 32, 0.6);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -406,5 +433,5 @@ pre, code, .font-mono {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(229, 169, 93, 0.5);
+    background: rgba(51, 149, 255, 0.6);
 }

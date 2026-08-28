@@ -170,7 +170,7 @@ function initLiveBackground() {
             x: Math.random() * width,
             y: Math.random() * height,
             radius: Math.random() * 2 + 1,
-            color: (i % 3 === 0) ? '#e5a95d' : (i % 3 === 1 ? '#2ec4b6' : '#81b29a'),
+            color: (i % 4 === 0) ? '#0066FF' : (i % 4 === 1 ? '#3395FF' : (i % 4 === 2 ? '#38BDF8' : '#10B981')),
             vx: (Math.random() - 0.5) * 0.45,
             vy: (Math.random() - 0.5) * 0.45,
             alpha: Math.random() * 0.4 + 0.2
@@ -189,7 +189,7 @@ function initLiveBackground() {
 
                 if (dist < 130) {
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(229, 169, 93, ${0.12 * (1 - dist / 130)})`;
+                    ctx.strokeStyle = `rgba(51, 149, 255, ${0.15 * (1 - dist / 130)})`;
                     ctx.lineWidth = 0.75;
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
@@ -460,7 +460,7 @@ function initCharts() {
                 labels: ['Credited in Bank (Safe)', 'MDR Overcharged by Razorpay', 'Delayed Payout (>2 Days)', 'Missing Bank Credit'],
                 datasets: [{
                     data: [32, 1, 1, 1],
-                    backgroundColor: ['#2ec4b6', '#e5a95d', '#e76f51', '#d48b38'],
+                    backgroundColor: ['#10B981', '#3395FF', '#F59E0B', '#EF4444'],
                     borderWidth: 0,
                     hoverOffset: 6
                 }]
@@ -471,7 +471,7 @@ function initCharts() {
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#b5c4b8', font: { size: 11, family: 'Plus Jakarta Sans', weight: '500' }, padding: 14 }
+                        labels: { color: '#CBD5E1', font: { size: 11, family: 'Plus Jakarta Sans', weight: '500' }, padding: 14 }
                     }
                 },
                 cutout: '70%'
@@ -489,7 +489,7 @@ function initCharts() {
                 datasets: [{
                     label: 'INR',
                     data: [3392.00, 3531.50, 635.67, 139.50],
-                    backgroundColor: ['#e5a95d', '#d48b38', '#81b29a', '#e76f51'],
+                    backgroundColor: ['#0066FF', '#3395FF', '#34D399', '#F59E0B'],
                     borderRadius: 8
                 }]
             },
@@ -498,8 +498,8 @@ function initCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { ticks: { color: '#b5c4b8', font: { size: 10, family: 'Plus Jakarta Sans' } }, grid: { display: false } },
-                    y: { ticks: { color: '#b5c4b8', font: { size: 10, family: 'JetBrains Mono' } }, grid: { color: 'rgba(37, 54, 44, 0.6)' } }
+                    x: { ticks: { color: '#94A3B8', font: { size: 10, family: 'Plus Jakarta Sans' } }, grid: { display: false } },
+                    y: { ticks: { color: '#94A3B8', font: { size: 10, family: 'JetBrains Mono' } }, grid: { color: 'rgba(255, 255, 255, 0.08)' } }
                 }
             }
         });
