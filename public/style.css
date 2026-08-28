@@ -1,6 +1,6 @@
 /* ==========================================================================
-   AutoRecon AI — Modern Luxury Pearl White Fintech Design System
-   Sleek Balanced Typography, 3D Parallax Tilt, Specular Sheen & Interactive Motion
+   AutoRecon AI — High-Clarity Luxury Pearl White Fintech Design System
+   Google Font 'Outfit', Razor-Sharp Contrast, Defined Glass Cards & Precision Motion
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
@@ -10,7 +10,7 @@
     --rzp-bg: #F8FAFC;
     --rzp-bg-secondary: #F1F5F9;
     --rzp-surface: #FFFFFF;
-    --rzp-surface-card: rgba(255, 255, 255, 0.96);
+    --rzp-surface-card: #FFFFFF;
     --rzp-surface-card-hover: #FFFFFF;
     
     /* Vibrant High-Clarity Fintech Accents */
@@ -20,24 +20,24 @@
     --rzp-cyan: #06B6D4;
     --rzp-indigo: #4F46E5;
     
-    --rzp-emerald: #059669;
-    --rzp-emerald-soft: rgba(5, 150, 105, 0.1);
+    --rzp-emerald: #047857;
+    --rzp-emerald-soft: rgba(4, 120, 87, 0.1);
     
-    --rzp-amber: #D97706;
-    --rzp-amber-soft: rgba(217, 119, 6, 0.1);
+    --rzp-amber: #B45309;
+    --rzp-amber-soft: rgba(180, 83, 9, 0.1);
     
-    --rzp-red: #DC2626;
-    --rzp-red-soft: rgba(220, 38, 38, 0.1);
+    --rzp-red: #B91C1C;
+    --rzp-red-soft: rgba(185, 28, 28, 0.1);
     
-    /* Crisp Borders & Deep Slate Text */
-    --rzp-border: #E2E8F0;
+    /* Sharp High-Definition Borders & Deep Jet Text */
+    --rzp-border: #CBD5E1;
     --rzp-border-hover: #0066FF;
-    --rzp-border-glow: rgba(0, 102, 255, 0.25);
+    --rzp-border-glow: rgba(0, 102, 255, 0.3);
     
-    --rzp-text-main: #0F172A;       /* Deep Jet Slate */
-    --rzp-text-body: #334155;       /* Crisp Charcoal Slate */
-    --rzp-text-muted: #64748B;      /* Balanced Slate */
-    --rzp-text-light: #94A3B8;
+    --rzp-text-main: #0F172A;       /* Deep Jet Slate (100% Contrast) */
+    --rzp-text-body: #1E293B;       /* Crisp Charcoal Slate */
+    --rzp-text-muted: #475569;      /* Dark Slate for High Legibility */
+    --rzp-text-light: #64748B;
     
     --rzp-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     --rzp-ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -74,7 +74,7 @@ pre, code, .font-mono {
    1. FLUID AURORA GRADIENT TEXT
    ========================================================================== */
 .rzp-gradient-text {
-    background: linear-gradient(135deg, #0052CC 0%, #0284C7 30%, #059669 65%, #4338CA 100%);
+    background: linear-gradient(135deg, #0052CC 0%, #0284C7 30%, #047857 65%, #4338CA 100%);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -112,7 +112,7 @@ pre, code, .font-mono {
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
-    opacity: 0.55;
+    opacity: 0.45;
     animation: lightOrbMotion 18s infinite alternate ease-in-out;
     will-change: transform;
 }
@@ -120,7 +120,7 @@ pre, code, .font-mono {
 .orb-1 {
     width: 650px;
     height: 650px;
-    background: radial-gradient(circle, rgba(186, 230, 253, 0.8) 0%, rgba(224, 242, 254, 0) 70%);
+    background: radial-gradient(circle, rgba(186, 230, 253, 0.75) 0%, rgba(224, 242, 254, 0) 70%);
     top: -120px;
     left: 5%;
 }
@@ -128,7 +128,7 @@ pre, code, .font-mono {
 .orb-2 {
     width: 700px;
     height: 700px;
-    background: radial-gradient(circle, rgba(199, 210, 254, 0.8) 0%, rgba(238, 242, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(199, 210, 254, 0.75) 0%, rgba(238, 242, 255, 0) 70%);
     bottom: -120px;
     right: 5%;
     animation-delay: -5s;
@@ -137,7 +137,7 @@ pre, code, .font-mono {
 .orb-3 {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(167, 243, 208, 0.7) 0%, rgba(209, 250, 229, 0) 70%);
+    background: radial-gradient(circle, rgba(167, 243, 208, 0.65) 0%, rgba(209, 250, 229, 0) 70%);
     top: 35%;
     right: -80px;
     animation-delay: -10s;
@@ -150,15 +150,15 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   3. 3D INTERACTIVE CARDS & SPECULAR HOVER EFFECTS
+   3. HIGH-DEFINITION GLASS CARDS & 3D HOVER EFFECTS
    ========================================================================== */
 .rzp-card, .pine-card, .glass-card {
     background: #FFFFFF;
     border: 1px solid var(--rzp-border);
     border-radius: 18px;
     box-shadow: 
-        0 4px 20px -2px rgba(15, 23, 42, 0.05),
-        0 1px 3px 0 rgba(15, 23, 42, 0.03);
+        0 4px 16px -2px rgba(15, 23, 42, 0.06),
+        0 1px 3px 0 rgba(15, 23, 42, 0.04);
     transition: transform 0.28s var(--rzp-ease-spring), border-color 0.28s var(--rzp-ease-spring), box-shadow 0.28s var(--rzp-ease-spring);
     position: relative;
     overflow: hidden;
@@ -187,18 +187,18 @@ pre, code, .font-mono {
 .rzp-card:hover, .pine-card:hover, .glass-card:hover {
     border-color: var(--rzp-blue);
     box-shadow: 
-        0 18px 36px -8px rgba(0, 102, 255, 0.14),
-        0 0 0 1px rgba(0, 102, 255, 0.3);
+        0 18px 36px -8px rgba(0, 102, 255, 0.16),
+        0 0 0 1px rgba(0, 102, 255, 0.35);
     transform: translateY(-4px);
 }
 
 /* Glass Header */
 .glass-header {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--rzp-border);
-    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
 }
 
 /* ==========================================================================
@@ -206,9 +206,9 @@ pre, code, .font-mono {
    ========================================================================== */
 .floating-pill {
     background: #FFFFFF;
-    border: 1px solid rgba(0, 102, 255, 0.3);
+    border: 1px solid rgba(0, 102, 255, 0.35);
     border-radius: 9999px;
-    box-shadow: 0 8px 20px -4px rgba(0, 102, 255, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 8px 20px -4px rgba(0, 102, 255, 0.14), 0 2px 6px rgba(15, 23, 42, 0.05);
     font-size: 0.75rem;
     font-weight: 700;
     animation: lightFloat 5s ease-in-out infinite alternate;
@@ -247,8 +247,8 @@ pre, code, .font-mono {
     font-size: 0.8125rem;
     font-weight: 800;
     border-radius: 10px;
-    box-shadow: 0 3px 12px rgba(0, 102, 255, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 3px 12px rgba(0, 102, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     transition: transform 0.2s var(--rzp-ease-spring), box-shadow 0.2s var(--rzp-ease-spring), background-position 0.35s ease;
 }
 
@@ -269,7 +269,7 @@ pre, code, .font-mono {
 
 .rzp-btn-primary:hover {
     background-position: 100% 0;
-    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.45);
+    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5);
     transform: translateY(-1.5px);
 }
 
@@ -291,10 +291,10 @@ pre, code, .font-mono {
     background: #FFFFFF;
     border: 1px solid var(--rzp-border);
     border-radius: 10px;
-    color: var(--rzp-text-body) !important;
+    color: var(--rzp-text-main) !important;
     font-size: 0.8125rem;
     font-weight: 700;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
     transition: all 0.2s var(--rzp-ease-spring);
 }
 
@@ -313,23 +313,23 @@ pre, code, .font-mono {
 /* Glass Inputs */
 .glass-input {
     background: #FFFFFF;
-    border: 1px solid var(--rzp-border);
+    border: 1.5px solid var(--rzp-border);
     border-radius: 10px;
     color: var(--rzp-text-main);
     font-size: 0.8125rem;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.2s ease;
 }
 
 .glass-input:focus {
     background: #FFFFFF;
     border-color: var(--rzp-blue);
-    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.16);
     outline: none;
 }
 
 /* ==========================================================================
-   6. TAB SWITCHER (Compact Capsule)
+   6. TAB SWITCHER (Compact High-Contrast Capsule)
    ========================================================================== */
 .nav-tab-btn {
     display: inline-flex;
@@ -346,14 +346,14 @@ pre, code, .font-mono {
 
 .nav-tab-btn:hover {
     color: var(--rzp-text-main);
-    background: rgba(15, 23, 42, 0.05);
+    background: rgba(15, 23, 42, 0.06);
 }
 
 .nav-tab-btn.active {
     background: linear-gradient(135deg, #0066FF 0%, #0284C7 100%);
     color: #FFFFFF !important;
     font-weight: 800;
-    box-shadow: 0 3px 14px rgba(0, 102, 255, 0.35);
+    box-shadow: 0 3px 14px rgba(0, 102, 255, 0.38);
 }
 
 /* Module View Transitions */
@@ -377,22 +377,22 @@ table {
 tbody tr {
     transition: all 0.18s var(--rzp-ease-spring);
     position: relative;
-    border-bottom: 1px solid #F1F5F9;
+    border-bottom: 1px solid #E2E8F0;
 }
 
 tbody tr:hover {
-    background: #F8FAFC !important;
-    box-shadow: inset 3px 0 0 0 #0066FF;
+    background: #F1F5F9 !important;
+    box-shadow: inset 3.5px 0 0 0 #0066FF;
 }
 
 /* ==========================================================================
-   8. STATUS BADGES WITH READABLE PILLS
+   8. STATUS BADGES WITH VIVID READABLE PILLS
    ========================================================================== */
 .badge-pill {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    padding: 0.25rem 0.65rem;
+    padding: 0.28rem 0.7rem;
     font-size: 0.725rem;
     font-weight: 800;
     border-radius: 9999px;
@@ -401,20 +401,20 @@ tbody tr:hover {
 
 .badge-reconciled {
     background: #ECFDF5;
-    color: #059669;
-    border: 1px solid #A7F3D0;
+    color: #047857;
+    border: 1.5px solid #6EE7B7;
 }
 
 .badge-fee-mismatch {
     background: #FFFBEB;
-    color: #B45309;
-    border: 1px solid #FDE68A;
+    color: #92400E;
+    border: 1.5px solid #FCD34D;
 }
 
 .badge-delayed {
     background: #FEF2F2;
-    color: #DC2626;
-    border: 1px solid #FECACA;
+    color: #991B1B;
+    border: 1.5px solid #FCA5A5;
 }
 
 /* ==========================================================================
@@ -424,7 +424,7 @@ tbody tr:hover {
     background: #FFFFFF;
     border: 1px solid var(--rzp-border);
     border-radius: 9999px;
-    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
     font-size: 0.75rem;
 }
 
@@ -535,7 +535,7 @@ tbody tr:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(15, 23, 42, 0.15);
+    background: rgba(15, 23, 42, 0.2);
     border-radius: 4px;
 }
 
