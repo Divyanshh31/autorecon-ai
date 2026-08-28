@@ -230,96 +230,223 @@
                 </div>
             </div>
 
-            <!-- Right Hero: Juspay-Style Interactive Live Animation Ecosystem -->
+            <!-- Right Hero: Interactive Autonomous Operating Terminal (Juspay / Stripe Style) -->
             <div class="lg:col-span-6 relative">
                 
-                <div class="juspay-hero-visual p-6 relative select-none">
+                <div class="hero-simulator-terminal p-0 bg-white">
                     
-                    <!-- Concentric Rotating Orbital Rings -->
-                    <div class="orbit-ring orbit-ring-1"></div>
-                    <div class="orbit-ring orbit-ring-2"></div>
-                    <div class="orbit-ring orbit-ring-3"></div>
-                    
-                    <!-- 360-Degree Radar Sweep Beam -->
-                    <div class="radar-sweep"></div>
-
-                    <!-- SVG Animated Data Flow Rays -->
-                    <svg class="svg-flow-path" viewBox="0 0 500 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Path Top Left to Core -->
-                        <path d="M 120 80 Q 200 160 250 240" stroke="#0066FF" stroke-width="2" stroke-opacity="0.4" class="flow-dash-line" />
-                        <!-- Path Top Right to Core -->
-                        <path d="M 380 80 Q 300 160 250 240" stroke="#0284C7" stroke-width="2" stroke-opacity="0.4" class="flow-dash-line" />
-                        <!-- Path Bottom Left to Core -->
-                        <path d="M 120 400 Q 200 320 250 240" stroke="#D97706" stroke-width="2" stroke-opacity="0.4" class="flow-dash-line" />
-                        <!-- Path Bottom Right to Core -->
-                        <path d="M 380 400 Q 300 320 250 240" stroke="#059669" stroke-width="2" stroke-opacity="0.4" class="flow-dash-line" />
-                    </svg>
-
-                    <!-- Node 1: Top Left (Razorpay Ingestion) -->
-                    <div class="orbit-node-card node-pos-top-left" onclick="dispatchLiveWebhookTest()">
-                        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg flex-shrink-0">
-                            <i class="ph-fill ph-credit-card"></i>
+                    <!-- Terminal Header Bar -->
+                    <div class="px-4 py-3 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            <span class="text-xs font-mono font-bold text-slate-300 pl-2">AutoRecon Kernel · Real-Time Sandbox</span>
                         </div>
-                        <div class="text-left">
-                            <div class="text-xs font-black text-slate-900 leading-tight">Razorpay Gateway</div>
-                            <div class="text-[10px] text-blue-600 font-bold font-mono mt-0.5">⚡ UPI Inflow +₹4,500</div>
+                        <div class="flex items-center space-x-1.5 text-[11px] font-mono text-emerald-400 font-bold">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span>LIVE ENGINE</span>
                         </div>
                     </div>
 
-                    <!-- Node 2: Top Right (3-Way MDR Audit) -->
-                    <div class="orbit-node-card node-pos-top-right" onclick="switchToTab('view-recon')">
-                        <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-lg flex-shrink-0">
-                            <i class="ph-fill ph-scales"></i>
+                    <!-- Simulator Mode Switcher Tabs -->
+                    <div class="p-2 bg-slate-100 border-b border-slate-200 flex items-center gap-1 overflow-x-auto text-xs">
+                        <button onclick="switchSimTab('recon')" id="simTabBtn-recon" class="sim-tab-btn active flex items-center space-x-1">
+                            <i class="ph-bold ph-arrows-merge"></i>
+                            <span>1. 3-Way Recon</span>
+                        </button>
+                        <button onclick="switchSimTab('mdr')" id="simTabBtn-mdr" class="sim-tab-btn flex items-center space-x-1">
+                            <i class="ph-bold ph-scales"></i>
+                            <span>2. MDR Leak Shield</span>
+                        </button>
+                        <button onclick="switchSimTab('payroll')" id="simTabBtn-payroll" class="sim-tab-btn flex items-center space-x-1">
+                            <i class="ph-bold ph-users-three"></i>
+                            <span>3. Instant Payroll</span>
+                        </button>
+                        <button onclick="switchSimTab('msme')" id="simTabBtn-msme" class="sim-tab-btn flex items-center space-x-1">
+                            <i class="ph-bold ph-shield-check"></i>
+                            <span>4. MSME 43B(h)</span>
+                        </button>
+                    </div>
+
+                    <!-- PANE 1: 3-WAY LIVE RECONCILIATION -->
+                    <div id="simPane-recon" class="p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider">Simulate Incoming Transaction</h3>
+                                <p class="text-xs text-slate-500">Select an amount to trace Store &rarr; Gateway &rarr; Bank matching</p>
+                            </div>
+                            <div class="flex gap-1.5">
+                                <button onclick="setSimAmount(2500)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-mono font-bold text-xs">₹2,500</button>
+                                <button onclick="setSimAmount(7500)" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 font-mono font-bold text-xs">₹7,500</button>
+                                <button onclick="setSimAmount(25000)" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-mono font-bold text-xs">₹25,000</button>
+                            </div>
                         </div>
-                        <div class="text-left">
-                            <div class="text-xs font-black text-slate-900 leading-tight">3-Way MDR Audit</div>
-                            <div class="text-[10px] text-emerald-600 font-bold font-mono mt-0.5">✓ 0% Fee Overcharge</div>
+
+                        <!-- 3-Stage Interactive Flow Cards -->
+                        <div class="space-y-2.5">
+                            <!-- Node 1: Store -->
+                            <div class="sim-flow-node flex items-center justify-between" id="simNodeStore">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">1</div>
+                                    <div>
+                                        <div class="text-xs font-black text-slate-900">Merchant Store Order</div>
+                                        <div class="text-[11px] text-slate-500 font-mono" id="simStoreOrderId">#ORD_9941 · Razorpay Checkout</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs sm:text-sm font-black text-slate-900 font-mono" id="simStoreVal">₹7,500.00</div>
+                                    <span class="badge-pill badge-reconciled text-[10px]">Captured</span>
+                                </div>
+                            </div>
+
+                            <!-- Connector 1 -->
+                            <div class="sim-connector-line mx-4"></div>
+
+                            <!-- Node 2: Razorpay Gateway -->
+                            <div class="sim-flow-node flex items-center justify-between" id="simNodeGateway">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center font-bold text-sm">2</div>
+                                    <div>
+                                        <div class="text-xs font-black text-slate-900">Razorpay MDR Fee & GST</div>
+                                        <div class="text-[11px] text-slate-500 font-mono" id="simGatewayRate">2.0% MDR + 18% GST (SLA Rate)</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs sm:text-sm font-black text-blue-600 font-mono" id="simGatewayFee">- ₹177.00</div>
+                                    <span class="badge-pill bg-blue-50 text-blue-700 text-[10px] font-bold" id="simFeeBadge">Exact SLA Match</span>
+                                </div>
+                            </div>
+
+                            <!-- Connector 2 -->
+                            <div class="sim-connector-line mx-4"></div>
+
+                            <!-- Node 3: Bank Account -->
+                            <div class="sim-flow-node flex items-center justify-between" id="simNodeBank">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm">3</div>
+                                    <div>
+                                        <div class="text-xs font-black text-slate-900">Axis Bank Current A/c</div>
+                                        <div class="text-[11px] text-emerald-700 font-mono font-bold" id="simBankUtr">UTR_AXIS_9941_CLEARED</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs sm:text-sm font-black text-emerald-700 font-mono" id="simBankVal">₹7,323.00</div>
+                                    <span class="badge-pill badge-reconciled text-[10px]" id="simBankBadge">Bank Credit Verified</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Simulator Controls -->
+                        <div class="pt-2 flex items-center justify-between border-t border-slate-100 gap-2">
+                            <button onclick="runCleanReconSim()" class="rzp-btn-primary px-4 py-2 text-xs font-extrabold flex-1 shadow-xs">
+                                ⚡ Match Clean (2.0% SLA)
+                            </button>
+                            <button onclick="runOverchargeSim()" class="px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 rounded-lg text-xs font-extrabold flex-1 transition">
+                                ⚠️ Inject Fee Overcharge (3.5%)
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Central Quantum Core -->
-                    <div class="quantum-recon-core cursor-pointer" onclick="dispatchLiveWebhookTest()" title="Click to Simulate Event">
-                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-400 text-white flex items-center justify-center text-xl shadow-md mb-1">
-                            <i class="ph-fill ph-lightning"></i>
+                    <!-- PANE 2: MDR LEAK SHIELD -->
+                    <div id="simPane-mdr" class="p-5 space-y-4 hidden">
+                        <div>
+                            <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider">MDR Overcharge Leakage Calculator</h3>
+                            <p class="text-xs text-slate-500">Calculate annual revenue leakage from unmonitored gateway fee deductions</p>
                         </div>
-                        <span class="text-[11px] font-black text-slate-900 tracking-tight leading-none">AutoRecon</span>
-                        <span class="text-[9px] font-black uppercase text-blue-600 font-mono mt-0.5">Engine OS</span>
+
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="font-bold text-slate-700">Monthly Processing Volume:</span>
+                                <span class="font-black text-blue-600 font-mono text-sm" id="mdrSliderVolumeVal">₹25,00,000</span>
+                            </div>
+                            <input type="range" min="500000" max="10000000" step="500000" value="2500000" id="mdrVolSlider" oninput="calculateMdrLeak(this.value)" class="w-full accent-blue-600 cursor-pointer">
+                            
+                            <div class="grid grid-cols-2 gap-2 pt-2 text-xs">
+                                <div class="p-2.5 bg-white rounded-lg border border-slate-200">
+                                    <div class="text-[10px] text-slate-500 uppercase font-bold">Contracted (2.0%)</div>
+                                    <div class="text-xs font-black text-slate-900 font-mono mt-0.5" id="mdrContractedVal">₹59,000.00</div>
+                                </div>
+                                <div class="p-2.5 bg-white rounded-lg border border-red-200 bg-red-50/50">
+                                    <div class="text-[10px] text-red-700 uppercase font-bold">Overcharged (3.5%)</div>
+                                    <div class="text-xs font-black text-red-600 font-mono mt-0.5" id="mdrOverchargeVal">₹1,03,250.00</div>
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 flex items-center justify-between">
+                                <div>
+                                    <div class="text-[10px] text-amber-800 font-black uppercase">Annual Recoverable Leakage</div>
+                                    <div class="text-base font-black text-amber-950 font-mono" id="mdrAnnualLeakVal">₹5,31,000.00 / yr</div>
+                                </div>
+                                <button onclick="openDisputeModal()" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-extrabold transition">
+                                    Claim Refund ➔
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Node 3: Bottom Left (MSME 43B(h) Shield) -->
-                    <div class="orbit-node-card node-pos-bottom-left" onclick="switchToTab('view-vendors')">
-                        <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg flex-shrink-0">
-                            <i class="ph-fill ph-shield-check"></i>
+                    <!-- PANE 3: INSTANT PAYROLL -->
+                    <div id="simPane-payroll" class="p-5 space-y-4 hidden">
+                        <div>
+                            <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider">Instant Salary Disbursal & SLA Guard</h3>
+                            <p class="text-xs text-slate-500">Prevent employee payment delays with direct IMPS banking clearing</p>
                         </div>
-                        <div class="text-left">
-                            <div class="text-xs font-black text-slate-900 leading-tight">MSME 43B(h) Shield</div>
-                            <div class="text-[10px] text-amber-700 font-bold font-mono mt-0.5">🛡️ 45-Day Aging Safe</div>
+
+                        <div class="space-y-2">
+                            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
+                                <div>
+                                    <div class="font-bold text-slate-900">Ananya Sharma (Tech Lead)</div>
+                                    <div class="text-[10px] text-emerald-700 font-mono font-semibold">UTR_SAL_HDFC_991001</div>
+                                </div>
+                                <span class="badge-pill badge-reconciled text-[10px]">₹83,600 Cleared</span>
+                            </div>
+
+                            <div class="p-2.5 bg-red-50 rounded-xl border border-red-200 flex items-center justify-between text-xs" id="simPayrollDelayedRow">
+                                <div>
+                                    <div class="font-bold text-red-950">Rahul Deshmukh (DevOps)</div>
+                                    <div class="text-[10px] text-red-700 font-mono font-semibold">T+1 SLA Exceeded · Pending</div>
+                                </div>
+                                <span class="badge-pill badge-delayed text-[10px]" id="simPayrollStatusBadge">₹58,700 Delayed</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-1 flex items-center justify-between">
+                            <button onclick="disburseInstantPayrollSim()" id="btnSimDisbursePayroll" class="rzp-btn-primary w-full py-2 text-xs font-extrabold shadow-xs">
+                                ⚡ Disburse Rahul Deshmukh Salary via IMPS (T+0)
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Node 4: Bottom Right (Instant Bank Settlement) -->
-                    <div class="orbit-node-card node-pos-bottom-right" onclick="switchToTab('view-recon')">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg flex-shrink-0">
-                            <i class="ph-fill ph-bank"></i>
+                    <!-- PANE 4: MSME 43B(h) -->
+                    <div id="simPane-msme" class="p-5 space-y-4 hidden">
+                        <div>
+                            <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider">Income Tax Section 43B(h) Shield</h3>
+                            <p class="text-xs text-slate-500">Live 45-day statutory payment clock for MSME vendor invoices</p>
                         </div>
-                        <div class="text-left">
-                            <div class="text-xs font-black text-slate-900 leading-tight">Bank Settlement</div>
-                            <div class="text-[10px] text-emerald-700 font-bold font-mono mt-0.5">✓ Axis UTR Matched</div>
+
+                        <div class="space-y-2">
+                            <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 flex items-center justify-between text-xs" id="simMsmeRow1">
+                                <div>
+                                    <div class="font-black text-amber-950">Zenith Legal & Compliance</div>
+                                    <div class="text-[10px] text-amber-800 font-mono">Invoice #ZL-7729 · Micro Enterprise</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-black text-amber-950 font-mono">₹34,020.00</div>
+                                    <span class="px-2 py-0.5 bg-red-100 text-red-800 rounded font-black text-[10px] animate-pulse">02 Days Left!</span>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center text-xs">
+                            <span class="text-slate-600 font-bold">Tax Penalty Defense (30% Disallowance):</span>
+                            <span class="font-black text-emerald-700 font-mono">₹43,500.00 Protected</span>
+                        </div>
+
+                        <button onclick="clearMsmeInvoiceSim()" id="btnSimClearMsme" class="rzp-btn-primary w-full py-2 text-xs font-extrabold shadow-xs">
+                            🛡️ Clear Zenith Legal Invoice (Protect Deduction)
+                        </button>
                     </div>
 
-                </div>
-
-                <!-- Interactive Floating Simulator Control underneath -->
-                <div class="flex items-center justify-between mt-3 px-2">
-                    <div class="text-xs text-slate-500 font-medium flex items-center space-x-1.5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                        <span>Telemetry: <b class="text-slate-900 font-bold">180ms Latency</b> · <b class="text-emerald-700 font-bold">99.98% SLA</b></span>
-                    </div>
-                    <button onclick="dispatchLiveWebhookTest()" class="text-xs font-extrabold text-blue-600 hover:text-blue-800 flex items-center space-x-1 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-xs active:scale-95 transition">
-                        <i class="ph-bold ph-play"></i>
-                        <span>Simulate Live Event ➔</span>
-                    </button>
                 </div>
 
             </div>

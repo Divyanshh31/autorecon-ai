@@ -1945,4 +1945,174 @@ window.dispatchLiveWebhookTest = async function() {
     }
 };
 
+// =========================================================================
+// 13. HERO INTERACTIVE CONSOLE SIMULATOR (JUSPAY / STRIPE STYLE)
+// =========================================================================
+let currentSimAmountVal = 7500;
+
+window.switchSimTab = function(tabKey) {
+    const tabs = ['recon', 'mdr', 'payroll', 'msme'];
+    tabs.forEach(t => {
+        const btn = document.getElementById(`simTabBtn-${t}`);
+        const pane = document.getElementById(`simPane-${t}`);
+        if (btn) {
+            if (t === tabKey) btn.classList.add('active');
+            else btn.classList.remove('active');
+        }
+        if (pane) {
+            if (t === tabKey) pane.classList.remove('hidden');
+            else pane.classList.add('hidden');
+        }
+    });
+};
+
+window.setSimAmount = function(amount) {
+    currentSimAmountVal = amount;
+    const storeEl = document.getElementById('simStoreVal');
+    const feeEl = document.getElementById('simGatewayFee');
+    const bankEl = document.getElementById('simBankVal');
+    const feeBadge = document.getElementById('simFeeBadge');
+    const nodeGateway = document.getElementById('simNodeGateway');
+
+    const mdrFee = amount * 0.02;
+    const gstFee = mdrFee * 0.18;
+    const totalDeduction = mdrFee + gstFee;
+    const netBank = amount - totalDeduction;
+
+    if (storeEl) storeEl.textContent = `₹${amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+    if (feeEl) {
+        feeEl.textContent = `- ₹${totalDeduction.toFixed(2)}`;
+        feeEl.className = 'text-xs sm:text-sm font-black text-blue-600 font-mono';
+    }
+    if (bankEl) bankEl.textContent = `₹${netBank.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+    if (feeBadge) {
+        feeBadge.textContent = 'Exact SLA Match';
+        feeBadge.className = 'badge-pill bg-blue-50 text-blue-700 text-[10px] font-bold';
+    }
+    if (nodeGateway) nodeGateway.className = 'sim-flow-node flex items-center justify-between';
+};
+
+window.runCleanReconSim = function() {
+    setSimAmount(currentSimAmountVal);
+    const nodeStore = document.getElementById('simNodeStore');
+    const nodeGateway = document.getElementById('simNodeGateway');
+    const nodeBank = document.getElementById('simNodeBank');
+
+    if (nodeStore) nodeStore.classList.add('cleared');
+    if (nodeGateway) nodeGateway.classList.add('cleared');
+    if (nodeBank) nodeBank.classList.add('cleared');
+
+    showToast(`⚡ 3-Way Match Verified! 0% Fee Leak on ₹${currentSimAmountVal.toLocaleString('en-IN')}`);
+};
+
+window.runOverchargeSim = function() {
+    const storeEl = document.getElementById('simStoreVal');
+    const feeEl = document.getElementById('simGatewayFee');
+    const bankEl = document.getElementById('simBankVal');
+    const feeBadge = document.getElementById('simFeeBadge');
+    const rateEl = document.getElementById('simGatewayRate');
+    const nodeGateway = document.getElementById('simNodeGateway');
+
+    const contractedFee = (currentSimAmountVal * 0.02) * 1.18;
+    const actualOverchargeFee = (currentSimAmountVal * 0.035) * 1.18;
+    const leakAmount = actualOverchargeFee - contractedFee;
+    const netBank = currentSimAmountVal - actualOverchargeFee;
+
+    if (feeEl) {
+        feeEl.textContent = `- ₹${actualOverchargeFee.toFixed(2)}`;
+        feeEl.className = 'text-xs sm:text-sm font-black text-amber-600 font-mono';
+    }
+    if (bankEl) bankEl.textContent = `₹${netBank.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+    if (rateEl) rateEl.textContent = `3.5% Overcharge (MDR + GST)`;
+    if (feeBadge) {
+        feeBadge.textContent = `⚠️ ₹${leakAmount.toFixed(2)} Fee Leak Detected!`;
+        feeBadge.className = 'badge-pill bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-black animate-pulse';
+    }
+    if (nodeGateway) {
+        nodeGateway.className = 'sim-flow-node overcharge flex items-center justify-between';
+    }
+
+    showToast(`⚠️ MDR Overcharge Detected: ₹${leakAmount.toFixed(2)} excess fee flagged!`);
+};
+
+window.calculateMdrLeak = function(volume) {
+    const vol = parseFloat(volume) || 2500000;
+    const volEl = document.getElementById('mdrSliderVolumeVal');
+    const contEl = document.getElementById('mdrContractedVal');
+    const overEl = document.getElementById('mdrOverchargeVal');
+    const annualEl = document.getElementById('mdrAnnualLeakVal');
+
+    const contracted = (vol * 0.02) * 1.18;
+    const overcharge = (vol * 0.035) * 1.18;
+    const monthlyLeak = overcharge - contracted;
+    const annualLeak = monthlyLeak * 12;
+
+    if (volEl) volEl.textContent = `₹${vol.toLocaleString('en-IN')}`;
+    if (contEl) contEl.textContent = `₹${contracted.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+    if (overEl) overEl.textContent = `₹${overcharge.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+    if (annualEl) annualEl.textContent = `₹${annualLeak.toLocaleString('en-IN', { minimumFractionDigits: 2 })} / yr`;
+};
+
+window.disburseInstantPayrollSim = function() {
+    const row = document.getElementById('simPayrollDelayedRow');
+    const badge = document.getElementById('simPayrollStatusBadge');
+    const btn = document.getElementById('btnSimDisbursePayroll');
+
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="animate-spin mr-1">⚙️</span> Processing Instant IMPS Batch...`;
+    }
+
+    setTimeout(() => {
+        if (row) {
+            row.className = 'p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between text-xs transition-all';
+            row.innerHTML = `
+                <div>
+                    <div class="font-bold text-slate-900">Rahul Deshmukh (DevOps)</div>
+                    <div class="text-[10px] text-emerald-700 font-mono font-bold">UTR_SAL_IMPS_${Date.now().toString().slice(-6)} · Instant T+0</div>
+                </div>
+                <span class="badge-pill badge-reconciled text-[10px]">₹58,700 Cleared</span>
+            `;
+        }
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = `✓ Salary Disbursed (IMPS Cleared)`;
+            btn.className = 'px-4 py-2 bg-emerald-600 text-white rounded-lg text-xs font-black w-full';
+        }
+        showToast('⚡ Instant IMPS Salary Payout Cleared with Bank UTR!');
+    }, 600);
+};
+
+window.clearMsmeInvoiceSim = function() {
+    const row = document.getElementById('simMsmeRow1');
+    const btn = document.getElementById('btnSimClearMsme');
+
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="animate-spin mr-1">⚙️</span> Authorizing MSME Payment...`;
+    }
+
+    setTimeout(() => {
+        if (row) {
+            row.className = 'p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between text-xs transition-all';
+            row.innerHTML = `
+                <div>
+                    <div class="font-black text-slate-900">Zenith Legal & Compliance</div>
+                    <div class="text-[10px] text-emerald-700 font-mono font-bold">Invoice #ZL-7729 · MSME Safe · UTR_MSME_${Date.now().toString().slice(-6)}</div>
+                </div>
+                <div class="text-right">
+                    <div class="font-black text-emerald-800 font-mono">₹34,020.00</div>
+                    <span class="badge-pill badge-reconciled text-[10px]">Tax Deduction Protected</span>
+                </div>
+            `;
+        }
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = `✓ MSME Invoice Paid (Deduction Safe)`;
+            btn.className = 'px-4 py-2 bg-emerald-600 text-white rounded-lg text-xs font-black w-full';
+        }
+        showToast('🛡️ Section 43B(h) MSME invoice cleared! 30% Tax Penalty Defended.');
+    }, 600);
+};
+
 
