@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // =========================================================================
-// 1. MODERN PEARL WHITE FINTECH BACKGROUND (Waves + Interactive Node Network)
+// 1. MINIMALISTIC PEARL WHITE FINTECH BACKGROUND (Soft Waves & Ambient Atmosphere)
 // =========================================================================
 function initLiveBackground() {
     const canvas = document.getElementById('liveBgCanvas');
@@ -174,19 +174,18 @@ function initLiveBackground() {
         height = canvas.height = window.innerHeight;
     });
 
-    // Interactive Nodes
+    // Minimal Subtle Ambient Micro-Particles
     const nodes = [];
-    const numNodes = Math.min(Math.floor(window.innerWidth / 28), 45);
+    const numNodes = Math.min(Math.floor(window.innerWidth / 90), 16);
 
     for (let i = 0; i < numNodes; i++) {
         nodes.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            radius: Math.random() * 2.5 + 1.5,
-            color: (i % 4 === 0) ? '#0066FF' : (i % 4 === 1 ? '#0284C7' : (i % 4 === 2 ? '#4F46E5' : '#059669')),
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4,
-            glow: Math.random() * 8 + 4
+            radius: Math.random() * 1.2 + 0.8,
+            color: (i % 3 === 0) ? 'rgba(0, 102, 255, 0.22)' : (i % 3 === 1 ? 'rgba(2, 132, 199, 0.18)' : 'rgba(5, 150, 105, 0.18)'),
+            vx: (Math.random() - 0.5) * 0.2,
+            vy: (Math.random() - 0.5) * 0.2
         });
     }
 
@@ -195,38 +194,31 @@ function initLiveBackground() {
     function renderFintechCanvas() {
         ctx.clearRect(0, 0, width, height);
 
-        // 1. Draw Flowing Ethereal Sine Wave Ribbons (Light Theme High-Contrast)
-        waveStep += 0.015;
-        const waves = [
-            { y: height * 0.72, amp: 45, freq: 0.002, speed: 1.0, color: 'rgba(0, 102, 255, 0.20)', lineWidth: 2.2 },
-            { y: height * 0.80, amp: 35, freq: 0.0025, speed: -0.8, color: 'rgba(2, 132, 199, 0.18)', lineWidth: 1.8 },
-            { y: height * 0.88, amp: 28, freq: 0.003, speed: 1.2, color: 'rgba(79, 70, 229, 0.15)', lineWidth: 1.5 }
-        ];
+        // 1. Single Whisper-Thin Ethereal Bottom Sine Wave (Non-Distracting)
+        waveStep += 0.008;
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(0, 102, 255, 0.06)';
+        ctx.lineWidth = 1.2;
+        const waveY = height * 0.88;
+        for (let x = 0; x <= width; x += 15) {
+            const y = waveY + Math.sin(x * 0.002 + waveStep) * 22;
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
 
-        waves.forEach(w => {
-            ctx.beginPath();
-            ctx.strokeStyle = w.color;
-            ctx.lineWidth = w.lineWidth;
-            for (let x = 0; x <= width; x += 10) {
-                const y = w.y + Math.sin(x * w.freq + waveStep * w.speed) * w.amp;
-                if (x === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-        });
-
-        // 2. Draw Dynamic Specular Node Network
+        // 2. Faint Micro-Particle Connections
         for (let i = 0; i < nodes.length; i++) {
             for (let j = i + 1; j < nodes.length; j++) {
                 const dx = nodes[i].x - nodes[j].x;
                 const dy = nodes[i].y - nodes[j].y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < 140) {
+                if (dist < 110) {
                     ctx.beginPath();
-                    const alpha = (1 - dist / 140) * 0.28;
+                    const alpha = (1 - dist / 110) * 0.08;
                     ctx.strokeStyle = `rgba(0, 102, 255, ${alpha})`;
-                    ctx.lineWidth = 0.9;
+                    ctx.lineWidth = 0.6;
                     ctx.moveTo(nodes[i].x, nodes[i].y);
                     ctx.lineTo(nodes[j].x, nodes[j].y);
                     ctx.stroke();
@@ -234,34 +226,12 @@ function initLiveBackground() {
             }
         }
 
-        // 3. Mouse Interactive Rays
-        if (mouse.active) {
-            nodes.forEach(n => {
-                const dx = mouse.x - n.x;
-                const dy = mouse.y - n.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 180) {
-                    ctx.beginPath();
-                    const alpha = (1 - dist / 180) * 0.40;
-                    ctx.strokeStyle = `rgba(0, 102, 255, ${alpha})`;
-                    ctx.lineWidth = 1.2;
-                    ctx.moveTo(n.x, n.y);
-                    ctx.lineTo(mouse.x, mouse.y);
-                    ctx.stroke();
-                }
-            });
-        }
-
-        // 4. Update and Render Nodes with Soft Glow
+        // 3. Render Subtle Micro-Dots
         nodes.forEach(n => {
-            ctx.save();
-            ctx.shadowColor = n.color;
-            ctx.shadowBlur = n.glow;
             ctx.beginPath();
             ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
             ctx.fillStyle = n.color;
             ctx.fill();
-            ctx.restore();
 
             n.x += n.vx;
             n.y += n.vy;
