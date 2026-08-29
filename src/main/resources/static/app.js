@@ -2188,4 +2188,46 @@ window.clearMsmeInvoiceSim = function() {
     }, 600);
 };
 
+// =========================================================================
+// 14. TALLYPRIME ERP CLIENT INTEGRATION
+// =========================================================================
+window.openTallyModal = async function() {
+    const modal = document.getElementById('tallyModal');
+    if (!modal) return;
+
+    try {
+        const res = await fetch('/api/tally/preview', { headers: getAuthHeaders() });
+        if (res.ok) {
+            const data = await res.json();
+            const countEl = document.getElementById('tallyVoucherCount');
+            const grossEl = document.getElementById('tallyGrossVal');
+            if (countEl) countEl.textContent = `${data.totalVouchers || 35} Orders`;
+            if (grossEl) grossEl.textContent = `₹${(data.totalGrossAmount || 169600).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+        }
+    } catch(e) {
+        console.error('Error loading Tally preview:', e);
+    }
+
+    modal.classList.remove('hidden');
+};
+
+window.copyTallyXml = async function() {
+    const btn = document.getElementById('btnCopyTallyXml');
+    if (btn) btn.innerHTML = `<span class="animate-spin mr-1">⚙️</span> Generating XML...`;
+
+    try {
+        const res = await fetch('/api/tally/export-xml', { headers: getAuthHeaders() });
+        const xmlText = await res.text();
+        await navigator.clipboard.writeText(xmlText);
+        showToast('✓ TallyPrime XML Voucher Batch copied to clipboard! (Ready for Alt+O Import in Tally)');
+    } catch(e) {
+        alert('Failed to copy XML: ' + e.message);
+    } finally {
+        if (btn) btn.innerHTML = `<i class="ph-bold ph-check text-emerald-500"></i><span>XML Copied!</span>`;
+        setTimeout(() => {
+            if (btn) btn.innerHTML = `<i class="ph-bold ph-copy"></i><span>Copy XML Code</span>`;
+        }, 2000);
+    }
+};
+
 

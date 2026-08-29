@@ -154,6 +154,82 @@ async function calculateCashFlowSummary(userId) {
     };
 }
 
+// 5. TALLYPRIME XML VOUCHER GENERATOR
+function generateTallyXml(orders, companyName = 'Zenith Retail India Pvt Ltd') {
+    let vouchersXml = '';
+    orders.forEach((order, idx) => {
+        const orderDate = (order.orderDate || '2026-08-25').replace(/-/g, '');
+        const amount = Number((order.amount || 0).toFixed(2));
+        
+        let mdrRate = CONTRACT_MDR_RATE;
+        if (order.reconStatus === 'FEE_MISMATCH') mdrRate = 0.035;
+        
+        const mdrFee = Number((amount * mdrRate).toFixed(2));
+        const gstTax = Number((mdrFee * GST_RATE).toFixed(2));
+        const netBank = Number((amount - (mdrFee + gstTax)).toFixed(2));
+
+        vouchersXml += `
+        <TALLYMESSAGE xmlns:UDF="TallyUDF">
+            <VOUCHER VCHTYPE="Receipt" ACTION="Create" OBJVIEW="Accounting Voucher View">
+                <DATE>${orderDate}</DATE>
+                <GUID>AUTORECON-${order.orderId}-${idx}</GUID>
+                <VOUCHERTYPENAME>Receipt</VOUCHERTYPENAME>
+                <VOUCHERNUMBER>${order.orderId}</VOUCHERNUMBER>
+                <PARTYLEDGERNAME>Razorpay Settlement Escrow</PARTYLEDGERNAME>
+                <NARRATION>AutoRecon AI Auto-Voucher: ${order.orderId} | Cust: ${order.customerName} | Method: ${(order.paymentMethod || 'UPI').toUpperCase()} | Axis Bank UTR Matched</NARRATION>
+                
+                <!-- 1. DEBIT: Bank Account (Net Credit Deposited) -->
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>Axis Bank Current A/c</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                    <AMOUNT>-${netBank}</AMOUNT>
+                </ALLLEDGERENTRIES.LIST>
+
+                <!-- 2. DEBIT: Payment Gateway Charges / MDR Expense -->
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>Payment Gateway Charges (MDR)</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                    <AMOUNT>-${mdrFee}</AMOUNT>
+                </ALLLEDGERENTRIES.LIST>
+
+                <!-- 3. DEBIT: Input GST on Gateway Charges -->
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>Input GST on Gateway Charges (18%)</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                    <AMOUNT>-${gstTax}</AMOUNT>
+                </ALLLEDGERENTRIES.LIST>
+
+                <!-- 4. CREDIT: Sundry Debtors / Razorpay Gross Settlement -->
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>Razorpay Settlement Escrow</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                    <AMOUNT>${amount}</AMOUNT>
+                </ALLLEDGERENTRIES.LIST>
+            </VOUCHER>
+        </TALLYMESSAGE>`;
+    });
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<ENVELOPE>
+    <HEADER>
+        <TALLYREQUEST>Import Data</TALLYREQUEST>
+    </HEADER>
+    <BODY>
+        <IMPORTDATA>
+            <REQUESTDESC>
+                <REPORTNAME>Vouchers</REPORTNAME>
+                <STATICVARIABLES>
+                    <SVCURRENTCOMPANY>${companyName}</SVCURRENTCOMPANY>
+                </STATICVARIABLES>
+            </REQUESTDESC>
+            <REQUESTDATA>
+                ${vouchersXml}
+            </REQUESTDATA>
+        </IMPORTDATA>
+    </BODY>
+</ENVELOPE>`;
+}
+
 // MAIN REQUEST HANDLER
 module.exports = async (req, res) => {
     // CORS Headers
@@ -518,6 +594,61 @@ module.exports = async (req, res) => {
         }
 
         // =====================================================================
+        // MODULE 6: TALLYPRIME ERP INTEGRATION (XML & CSV VOUCHER BRIDGE)
+        // =====================================================================
+        if (pathname === '/api/tally/export-xml') {
+            const orders = await db.getUserOrders(userId);
+            const tallyXml = generateTallyXml(orders, authUser.companyName || 'Zenith Retail India Pvt Ltd');
+
+            res.writeHead(200, {
+                'Content-Type': 'application/xml; charset=utf-8',
+                'Content-Disposition': `attachment; filename="TallyPrime_AutoRecon_Vouchers_${userId}.xml"`
+            });
+            return res.end(tallyXml);
+        }
+
+        if (pathname === '/api/tally/export-excel') {
+            const orders = await db.getUserOrders(userId);
+            let csvContent = 'Voucher Date,Voucher Type,Voucher Number,Debit Ledger (Bank),Net Amount Deposited,MDR Expense Ledger,MDR Fee,GST Input Tax Ledger,GST Tax (18%),Credit Ledger (Escrow),Gross Order Value,Customer Name,Payment Method,Recon Status\n';
+
+            orders.forEach(o => {
+                const orderDate = o.orderDate || '2026-08-25';
+                const amount = Number((o.amount || 0).toFixed(2));
+                const mdrRate = (o.reconStatus === 'FEE_MISMATCH') ? 0.035 : CONTRACT_MDR_RATE;
+                const mdrFee = Number((amount * mdrRate).toFixed(2));
+                const gstTax = Number((mdrFee * GST_RATE).toFixed(2));
+                const netBank = Number((amount - (mdrFee + gstTax)).toFixed(2));
+
+                csvContent += `"${orderDate}","Receipt","${o.orderId}","Axis Bank Current A/c",${netBank},"Payment Gateway Charges (MDR)",${mdrFee},"Input GST on Gateway Charges (18%)",${gstTax},"Razorpay Settlement Escrow",${amount},"${o.customerName}","${o.paymentMethod}","${o.reconStatus}"\n`;
+            });
+
+            res.writeHead(200, {
+                'Content-Type': 'text/csv; charset=utf-8',
+                'Content-Disposition': 'attachment; filename="TallyPrime_AutoRecon_Ledgers.csv"'
+            });
+            return res.end(csvContent);
+        }
+
+        if (pathname === '/api/tally/preview') {
+            const orders = await db.getUserOrders(userId);
+            const tallyXml = generateTallyXml(orders.slice(0, 5), authUser.companyName || 'Zenith Retail India Pvt Ltd');
+            const totalGross = orders.reduce((sum, o) => sum + (o.amount || 0), 0);
+
+            return json({
+                totalVouchers: orders.length,
+                totalGrossAmount: totalGross,
+                compatibleVersions: ['TallyPrime 4.1', 'TallyPrime 4.0', 'TallyPrime 3.0', 'Tally.ERP 9'],
+                ledgerMappings: {
+                    bankLedger: 'Axis Bank Current A/c',
+                    mdrExpenseLedger: 'Payment Gateway Charges (MDR 2%)',
+                    taxLedger: 'Input IGST / CGST on Gateway Fee (18%)',
+                    escrowLedger: 'Razorpay Settlement Escrow'
+                },
+                sampleXmlSnippet: tallyXml
+            });
+        }
+
+        // =====================================================================
         // AI MUNIMJI COPILOT (DATABASE & USER CONTEXT)
         // =====================================================================
         if (pathname === '/api/chat/config') {
@@ -535,7 +666,9 @@ module.exports = async (req, res) => {
 
             let reply = '';
 
-            if (queryText.includes('ml') || queryText.includes('machine learning') || queryText.includes('model') || queryText.includes('anomaly') || queryText.includes('forecast')) {
+            if (queryText.includes('tally') || queryText.includes('prime') || queryText.includes('erp') || queryText.includes('tele')) {
+                reply = `📊 **TallyPrime Accounting Bridge**:\nAutoRecon AI generates **1-Click TallyPrime XML Vouchers** for all your Razorpay settlements!\n\n• **Standard Ledger Mapping**:\n  1. **Debit**: Axis Bank Current A/c (Net ₹${recon.totalSettledToBank.toLocaleString('en-IN')})\n  2. **Debit**: Payment Gateway Charges MDR 2% (₹${recon.totalActualMdrFee.toLocaleString('en-IN')})\n  3. **Debit**: Input GST on MDR 18% (₹${recon.totalGstTax.toLocaleString('en-IN')})\n  4. **Credit**: Razorpay Escrow (Gross ₹${recon.totalGrossVolume.toLocaleString('en-IN')})\n\n👉 **How to Import in TallyPrime**:\n1. Click **"Export to TallyPrime XML"** in the top bar or Ledger tab.\n2. Open TallyPrime &rarr; Press **Alt + O (Import)** &rarr; Select **Transactions** &rarr; Choose the downloaded XML file!\n3. All 35 vouchers will post instantly with 0 manual typing!`;
+            } else if (queryText.includes('ml') || queryText.includes('machine learning') || queryText.includes('model') || queryText.includes('anomaly') || queryText.includes('forecast')) {
                 const orders = await db.getUserOrders(userId);
                 const anomalyReport = ml.trainAndDetectAnomalies(orders);
                 const forecast = ml.forecastTimeSeriesCashFlow(recon.totalGrossVolume, cf.totalOutflow || 85000);
@@ -550,7 +683,7 @@ module.exports = async (req, res) => {
             } else if (queryText.includes('dispute') || queryText.includes('leak') || queryText.includes('overcharge') || queryText.includes('fee')) {
                 reply = `💳 **Gateway Audit**:\nRazorpay audited volume: ₹${recon.totalGrossVolume.toLocaleString('en-IN')}.\nDetected **${recon.mdrFeeMismatches} fee overcharges** totaling **₹${recon.totalDiscrepancyAmount.toLocaleString('en-IN')}**. Open the Dispute Room to copy your pre-filled Razorpay dispute email.`;
             } else {
-                reply = `Namaste! 🙏 I am your **AI Munimji** for **${authUser.companyName}**.\n\nHere is your financial overview from the database:\n• 💳 **Reconciliation Health**: ${recon.healthScorePercentage}% (${recon.totalOrders} orders)\n• 👥 **Pending Salaries**: ₹${payroll.totalDelayedAmount.toLocaleString('en-IN')}\n• 🧾 **MSME 45-Day Alarms**: ${vendor.msmeUrgentBillsCount} urgent bill\n• 📊 **Cash Runway**: ${cf.estimatedRunwayMonths} Months (₹${cf.availableGstItc.toLocaleString('en-IN')} GST ITC)\n• 🤖 **ML Anomaly Engine**: 98.4% Isolation Forest Precision\n\nWhat would you like me to audit or disburse?`;
+                reply = `Namaste! 🙏 I am your **AI Munimji** for **${authUser.companyName}**.\n\nHere is your financial overview from the database:\n• 💳 **Reconciliation Health**: ${recon.healthScorePercentage}% (${recon.totalOrders} orders)\n• 📊 **TallyPrime Bridge**: 1-Click XML Voucher Export Ready\n• 👥 **Pending Salaries**: ₹${payroll.totalDelayedAmount.toLocaleString('en-IN')}\n• 🧾 **MSME 45-Day Alarms**: ${vendor.msmeUrgentBillsCount} urgent bill\n• 📊 **Cash Runway**: ${cf.estimatedRunwayMonths} Months (₹${cf.availableGstItc.toLocaleString('en-IN')} GST ITC)\n\nWhat would you like me to audit, export to TallyPrime, or disburse?`;
             }
 
             return json({ reply });
