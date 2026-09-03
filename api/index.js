@@ -154,12 +154,28 @@ async function calculateCashFlowSummary(userId) {
     };
 }
 
+// XML Sanitization Helper for TallyPrime
+function xmlEscape(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+}
+
 // 5. TALLYPRIME XML VOUCHER GENERATOR
 function generateTallyXml(orders, companyName = 'Zenith Retail India Pvt Ltd') {
     let vouchersXml = '';
+    const safeCompanyName = xmlEscape(companyName);
+
     orders.forEach((order, idx) => {
         const orderDate = (order.orderDate || '2026-08-25').replace(/-/g, '');
         const amount = Number((order.amount || 0).toFixed(2));
+        const safeOrderId = xmlEscape(order.orderId);
+        const safeCustName = xmlEscape(order.customerName);
+        const safeMethod = xmlEscape((order.paymentMethod || 'UPI').toUpperCase());
         
         let mdrRate = CONTRACT_MDR_RATE;
         if (order.reconStatus === 'FEE_MISMATCH') mdrRate = 0.035;
@@ -172,11 +188,11 @@ function generateTallyXml(orders, companyName = 'Zenith Retail India Pvt Ltd') {
         <TALLYMESSAGE xmlns:UDF="TallyUDF">
             <VOUCHER VCHTYPE="Receipt" ACTION="Create" OBJVIEW="Accounting Voucher View">
                 <DATE>${orderDate}</DATE>
-                <GUID>AUTORECON-${order.orderId}-${idx}</GUID>
+                <GUID>AUTORECON-${safeOrderId}-${idx}</GUID>
                 <VOUCHERTYPENAME>Receipt</VOUCHERTYPENAME>
-                <VOUCHERNUMBER>${order.orderId}</VOUCHERNUMBER>
+                <VOUCHERNUMBER>${safeOrderId}</VOUCHERNUMBER>
                 <PARTYLEDGERNAME>Razorpay Settlement Escrow</PARTYLEDGERNAME>
-                <NARRATION>AutoRecon AI Auto-Voucher: ${order.orderId} | Cust: ${order.customerName} | Method: ${(order.paymentMethod || 'UPI').toUpperCase()} | Axis Bank UTR Matched</NARRATION>
+                <NARRATION>AutoRecon AI Auto-Voucher: ${safeOrderId} | Cust: ${safeCustName} | Method: ${safeMethod} | Axis Bank UTR Matched</NARRATION>
                 
                 <!-- 1. DEBIT: Bank Account (Net Credit Deposited) -->
                 <ALLLEDGERENTRIES.LIST>
@@ -219,7 +235,7 @@ function generateTallyXml(orders, companyName = 'Zenith Retail India Pvt Ltd') {
             <REQUESTDESC>
                 <REPORTNAME>Vouchers</REPORTNAME>
                 <STATICVARIABLES>
-                    <SVCURRENTCOMPANY>${companyName}</SVCURRENTCOMPANY>
+                    <SVCURRENTCOMPANY>${safeCompanyName}</SVCURRENTCOMPANY>
                 </STATICVARIABLES>
             </REQUESTDESC>
             <REQUESTDATA>

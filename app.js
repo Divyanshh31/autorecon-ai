@@ -1850,50 +1850,101 @@ function renderMlCharts(data) {
     }
 }
 
+window.currentMlOrders = [];
+
 function renderMlAnomalyTable(scoredOrders) {
+    window.currentMlOrders = scoredOrders || [];
     const tbody = document.getElementById('mlAnomalyTableBody');
     if (!tbody) return;
 
     if (!scoredOrders || scoredOrders.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400">No transaction records available to score.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400">No transaction records available to score.</td></tr>`;
         return;
     }
 
-    tbody.innerHTML = scoredOrders.slice(0, 15).map(o => {
-        let badgeColor = 'bg-emerald-50 text-emerald-800 border border-emerald-300';
+    tbody.innerHTML = scoredOrders.slice(0, 20).map(o => {
+        let badgeColor = 'bg-emerald-50 text-emerald-800 border border-emerald-300 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800';
         let barColor = 'bg-emerald-600';
+        let statusIcon = '✓';
         if (o.riskLevel === 'CRITICAL') {
-            badgeColor = 'bg-red-50 text-red-800 border border-red-300';
+            badgeColor = 'bg-red-50 text-red-800 border border-red-300 dark:bg-red-950/40 dark:text-red-300 dark:border-red-800';
             barColor = 'bg-red-600';
+            statusIcon = '⚠️';
         } else if (o.riskLevel === 'MODERATE') {
-            badgeColor = 'bg-amber-50 text-amber-900 border border-amber-300';
+            badgeColor = 'bg-amber-50 text-amber-900 border border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800';
             barColor = 'bg-amber-600';
+            statusIcon = '⏱️';
         }
 
         return `
-            <tr class="hover:bg-slate-50 transition border-b border-slate-200 ${o.isAnomaly ? 'bg-red-50/50' : ''}">
-                <td class="px-6 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">${o.orderId}</td>
-                <td class="px-5 py-4.5 font-bold text-slate-900 text-sm sm:text-base">${o.customerName}</td>
-                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${Number(o.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-5 py-4.5">
-                    <div class="flex items-center space-x-2.5">
-                        <div class="w-20 bg-slate-200 h-2.5 rounded-full overflow-hidden">
+            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition border-b border-slate-100 dark:border-slate-800 ${o.isAnomaly ? 'bg-red-50/40 dark:bg-red-950/20' : ''}">
+                <td class="px-5 py-3.5">
+                    <div class="font-mono font-black text-slate-900 dark:text-white text-xs sm:text-sm">${o.orderId}</div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">${o.customerName}</div>
+                </td>
+                <td class="px-4 py-3.5 font-mono font-black text-slate-900 dark:text-white text-xs sm:text-sm">
+                    ₹${Number(o.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                </td>
+                <td class="px-4 py-3.5">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-16 bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
                             <div class="h-full ${barColor}" style="width: ${o.anomalyProbability}%"></div>
                         </div>
-                        <span class="font-mono font-extrabold text-xs sm:text-sm ${o.anomalyProbability >= 70 ? 'text-red-700' : 'text-slate-800'}">${o.anomalyProbability}%</span>
+                        <span class="font-mono font-extrabold text-xs ${o.anomalyProbability >= 70 ? 'text-red-700 dark:text-red-400' : 'text-slate-700 dark:text-slate-300'}">${o.anomalyProbability}%</span>
                     </div>
+                    <span class="badge-pill ${badgeColor} text-[9px] uppercase tracking-wider font-extrabold mt-1 inline-block">${statusIcon} ${o.riskLevel}</span>
                 </td>
-                <td class="px-5 py-4.5">
-                    <span class="badge-pill ${badgeColor} text-xs uppercase tracking-wider font-extrabold">${o.riskLevel}</span>
+                <td class="px-4 py-3.5 text-xs">
+                    <div class="font-bold text-slate-900 dark:text-white">${o.whatThisMeans || o.primaryDriver}</div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5 line-clamp-1">${o.laymanImpact || o.primaryDriver}</div>
                 </td>
-                <td class="px-5 py-4.5 text-xs sm:text-sm text-slate-800 font-semibold">${o.primaryDriver}</td>
-                <td class="px-6 py-4.5 font-mono text-xs text-slate-600 font-semibold">
-                    MDR: <b class="text-blue-700 font-bold">${o.features ? o.features.feeVarianceImpact : '0%'}</b> · SLA: <b class="text-blue-700 font-bold">${o.features ? o.features.slaLatencyImpact : '0%'}</b>
+                <td class="px-5 py-3.5 text-right">
+                    <button onclick="openMlExplainModal('${o.orderId}')" class="px-3 py-1.5 rounded-lg ${o.isAnomaly ? 'bg-purple-600 hover:bg-purple-700 text-white font-extrabold' : 'glass-btn text-slate-700 dark:text-slate-300 font-bold'} text-xs inline-flex items-center space-x-1 shadow-xs transition active:scale-95">
+                        <i class="ph-bold ph-brain"></i>
+                        <span>Explain in Plain English</span>
+                    </button>
                 </td>
             </tr>
         `;
     }).join('');
 }
+
+window.openMlExplainModal = function(orderId) {
+    const order = (window.currentMlOrders || []).find(o => o.orderId === orderId);
+    if (!order) return;
+
+    const modal = document.getElementById('mlExplainModal');
+    if (!modal) return;
+
+    const badge = document.getElementById('mlModalRiskBadge');
+    const expl = document.getElementById('mlModalExplanation');
+    const amt = document.getElementById('mlModalAmount');
+    const cust = document.getElementById('mlModalCustomer');
+    const impact = document.getElementById('mlModalImpact');
+    const score = document.getElementById('mlModalScore');
+    const action = document.getElementById('mlModalAction');
+    const wMdr = document.getElementById('mlModalWeightMdr');
+    const wLatency = document.getElementById('mlModalWeightLatency');
+    const wSize = document.getElementById('mlModalWeightSize');
+
+    if (badge) {
+        badge.textContent = order.riskLevel;
+        badge.className = `px-2 py-0.2 text-[10px] font-black uppercase rounded ${order.riskLevel === 'CRITICAL' ? 'bg-red-100 text-red-700' : (order.riskLevel === 'MODERATE' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800')} font-mono`;
+    }
+
+    if (expl) expl.textContent = order.plainEnglishExplanation || order.primaryDriver;
+    if (amt) amt.textContent = `₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+    if (cust) cust.textContent = `Customer: ${order.customerName} (ID: ${order.orderId})`;
+    if (impact) impact.textContent = order.laymanImpact || (order.isAnomaly ? 'Discrepancy Detected' : 'Verified Safe');
+    if (score) score.textContent = `Anomaly Probability: ${order.anomalyProbability}%`;
+    if (action) action.textContent = order.recommendedAction || 'No action needed.';
+
+    if (wMdr) wMdr.textContent = order.features ? order.features.feeVarianceImpact : '0.0%';
+    if (wLatency) wLatency.textContent = order.features ? order.features.slaLatencyImpact : '0.0%';
+    if (wSize) wSize.textContent = order.features ? order.features.amountDeviationImpact : '0.0%';
+
+    modal.classList.remove('hidden');
+};
 
 // =========================================================================
 // 13. DIRECT RAZORPAY WEBHOOK MODAL & SIMULATOR
