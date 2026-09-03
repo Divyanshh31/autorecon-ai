@@ -358,7 +358,10 @@ function setupNavigationTabs() {
             if (targetId === 'view-recon') renderOrdersTable();
             if (targetId === 'view-payroll') renderPayrollTable();
             if (targetId === 'view-vendors') renderVendorsTable();
-            if (targetId === 'view-cashflow') renderCashFlowTable();
+            if (targetId === 'view-cashflow') {
+                renderCashFlowTable();
+                setTimeout(() => { if (window.renderCashFlowChart) window.renderCashFlowChart(); }, 50);
+            }
             if (targetId === 'view-ml') fetchMlIntelligence();
         });
     });
@@ -580,6 +583,10 @@ function initCharts() {
                 }
             }
         });
+    }
+
+    if (window.renderCashFlowChart) {
+        window.renderCashFlowChart();
     }
 }
 
@@ -1086,6 +1093,8 @@ window.payVendorBill = async function(billId) {
 // =========================================================================
 // 10. MODULE 4: CASH FLOW & TAX COMPASS
 // =========================================================================
+let cashFlowChart = null;
+
 async function fetchCashFlow() {
     try {
         const res = await fetch('/api/cashflow/summary', { headers: getAuthHeaders() });
@@ -1097,6 +1106,7 @@ async function fetchCashFlow() {
         console.error('Error fetching cash flow:', e);
     }
     renderCashFlowTable();
+    renderCashFlowChart();
 }
 
 function updateCashFlowDashboard(cf) {
@@ -1106,90 +1116,216 @@ function updateCashFlowDashboard(cf) {
         if (el) el.textContent = val;
     };
 
-    setTxt('cfInflow', `₹${(cf.totalInflow || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
-    setTxt('cfOutflow', `₹${(cf.totalOutflow || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
-    setTxt('cfRunway', `${cf.estimatedRunwayMonths} Months`);
-    setTxt('cfGstItc', `₹${(cf.availableGstItc || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
-    setTxt('cfNetCash', `₹${(cf.netCashFlow || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })} Net Deposited`);
+    setTxt('cfSalesVal', `₹${(cf.grossSales || 169600).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('cfPayrollVal', `₹${(cf.pendingSalaries || 168000).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('cfVendorVal', `₹${(cf.pendingVendorBills || 145000).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
+    setTxt('cfRunwayVal', `${cf.estimatedRunwayMonths || 8.4} Months`);
 
     renderCashFlowTable();
+    renderCashFlowChart();
 }
 
+window.renderCashFlowChart = function() {
+    const el = document.getElementById('cashFlowChart');
+    if (!el || !window.Chart) return;
+
+    if (window.cashFlowChartInstance) {
+        window.cashFlowChartInstance.destroy();
+    }
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const textColor = isDark ? '#94A3B8' : '#475569';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(226, 232, 240, 0.8)';
+
+    const days = [
+        'Aug 01', 'Aug 03', 'Aug 05', 'Aug 07', 'Aug 09', 'Aug 11',
+        'Aug 13', 'Aug 15', 'Aug 17', 'Aug 19', 'Aug 21', 'Aug 23',
+        'Aug 25', 'Aug 27', 'Aug 29', 'Aug 31'
+    ];
+
+    const projectedBalances = [
+        1150000, 1185000, 1140000, 1195000, 1220000, 1265000,
+        1240000, 1285000, 1270000, 1315000, 1330000, 1375000,
+        1360000, 1410000, 1395000, 1445000
+    ];
+
+    const inflows = [
+        25000, 42000, 31000, 68000, 54000, 72000,
+        38000, 85000, 49000, 92000, 61000, 98000,
+        52000, 105000, 67000, 118000
+    ];
+
+    const outflows = [
+        12000, 7000, 76000, 13000, 29000, 27000,
+        63000, 40000, 64000, 47000, 46000, 53000,
+        67000, 55000, 82000, 68000
+    ];
+
+    const ctx = el.getContext('2d');
+    window.cashFlowChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: days,
+            datasets: [
+                {
+                    label: 'Net Treasury Reserve (₹)',
+                    data: projectedBalances,
+                    borderColor: '#10B981',
+                    backgroundColor: isDark ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.08)',
+                    fill: true,
+                    tension: 0.35,
+                    borderWidth: 2.5,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#10B981',
+                    pointHoverRadius: 6
+                },
+                {
+                    label: 'Razorpay Gateway Inflows (₹)',
+                    data: inflows,
+                    borderColor: '#0066FF',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: 0
+                },
+                {
+                    label: 'Operating Outflows (Payroll + AP)',
+                    data: outflows,
+                    borderColor: '#EF4444',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.8,
+                    borderDash: [4, 4],
+                    tension: 0.2,
+                    pointRadius: 0
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: textColor,
+                        font: { size: 11, family: 'Outfit', weight: '600' },
+                        boxWidth: 12,
+                        padding: 12
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return ` ${context.dataset.label}: ₹${context.raw.toLocaleString('en-IN')}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: textColor, font: { size: 10, family: 'Outfit', weight: '600' } },
+                    grid: { display: false }
+                },
+                y: {
+                    ticks: {
+                        color: textColor,
+                        font: { size: 10, family: 'JetBrains Mono', weight: '600' },
+                        callback: (v) => '₹' + (v / 1000).toFixed(0) + 'k'
+                    },
+                    grid: { color: gridColor }
+                }
+            }
+        }
+    });
+};
+
 function renderCashFlowTable() {
-    const tbody = document.getElementById('cashflowTableBody');
+    const tbody = document.getElementById('cashFlowTableBody') || document.getElementById('cashflowTableBody');
     if (!tbody) return;
 
     const transactions = [];
 
-    // Inflows: 10 customer sales orders
-    (currentOrders || []).slice(0, 10).forEach(o => {
+    // 1. Inflows: Recent customer sales orders
+    (currentOrders || []).slice(0, 8).forEach(o => {
         transactions.push({
             date: o.orderDate ? o.orderDate.slice(0, 10) : '2026-08-25',
             entity: `Customer Order: ${o.orderId}`,
-            category: `Sales Inflow (${(o.paymentMethod || 'UPI').toUpperCase()})`,
+            category: `Sales (${(o.paymentMethod || 'UPI').toUpperCase()})`,
             type: 'INFLOW',
-            gross: Number(o.amount),
-            tax: Number((o.amount * 0.02 * 0.18).toFixed(2)),
-            net: Number((o.amount * 0.9764).toFixed(2)),
-            utr: `UTR_RZP_AXIS_${o.orderId.slice(-4)}`
+            amount: Number(o.amount) || 2500,
+            utr: `UTR_RZP_AXIS_${(o.orderId || '101').slice(-4)}`,
+            status: 'CLEARED'
         });
     });
 
-    // Outflows: Payroll Disbursals
+    // 2. Outflows: Payroll Disbursals
     (currentPayroll || []).forEach(emp => {
         transactions.push({
             date: emp.disbursedDate || '2026-08-01',
-            entity: `Employee Payroll: ${emp.name}`,
-            category: `Payroll (${emp.department})`,
+            entity: `Salary: ${emp.name}`,
+            category: `Payroll (${emp.department || 'Operations'})`,
             type: 'OUTFLOW',
-            gross: Number(emp.grossSalary),
-            tax: Number(emp.tdsDeduction),
-            net: Number(emp.netPayable),
-            utr: emp.bankUtr || (emp.status === 'DELAYED' ? 'Delayed SLA Clearance' : 'Pending Bank IMPS')
+            amount: Number(emp.netPayable) || 45000,
+            utr: emp.bankUtr || (emp.status === 'DELAYED' ? 'Delayed Bank SLA' : 'Pending IMPS'),
+            status: emp.status
         });
     });
 
-    // Outflows: Vendor Bills
+    // 3. Outflows: Vendor Bills
     (currentVendors || []).forEach(v => {
         transactions.push({
             date: v.invoiceDate || '2026-08-10',
-            entity: `Vendor Invoice: ${v.vendorName}`,
-            category: `Accounts Payable (${v.category})`,
+            entity: `Vendor: ${v.vendorName}`,
+            category: `Vendor AP (${v.category || 'Supplies'})`,
             type: 'OUTFLOW',
-            gross: Number(v.amount),
-            tax: Number(v.gstAmount),
-            net: Number(v.netPayable),
-            utr: v.bankUtr || (v.paymentStatus === 'PAID' ? 'UTR_MATCHED' : (v.msmeDaysRemaining <= 2 ? 'Critical 43B(h) Due' : 'Awaiting Payment'))
+            amount: Number(v.netPayable) || 18500,
+            utr: v.bankUtr || (v.paymentStatus === 'PAID' ? 'UTR_MATCHED' : (v.msmeDaysRemaining <= 2 ? 'Critical 43B(h)' : 'Pending Due')),
+            status: v.paymentStatus
         });
     });
 
     if (transactions.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-slate-400">No cash flow transaction records found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-8 text-center text-slate-400">No cash flow transaction records found.</td></tr>`;
         return;
     }
 
+    // Sort descending by date
+    transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    let runningBalance = 1250000;
     tbody.innerHTML = transactions.map(t => {
         const isIncome = t.type === 'INFLOW';
+        if (isIncome) runningBalance += t.amount;
+        else runningBalance -= t.amount;
+
         const typeBadge = isIncome 
-            ? `<span class="badge-pill badge-reconciled font-mono text-xs font-bold">+ INFLOW</span>`
-            : `<span class="badge-pill bg-red-50 text-red-800 border border-red-300 font-mono text-xs font-bold">- OUTFLOW</span>`;
-        const netColor = isIncome ? 'text-emerald-800' : 'text-blue-800';
-        const utrColor = (t.utr && (t.utr.includes('UTR') || t.utr.includes('SAL_'))) ? 'text-emerald-800 font-bold' : ((t.utr && (t.utr.includes('Delayed') || t.utr.includes('Critical'))) ? 'text-red-700 font-bold' : 'text-slate-700');
+            ? `<span class="badge-pill badge-reconciled font-mono text-[10px] font-bold">+₹${t.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>`
+            : `<span class="badge-pill bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300 border border-red-200 dark:border-red-800 font-mono text-[10px] font-bold">-₹${t.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>`;
+
+        let statusBadge = `<span class="badge-pill badge-reconciled text-[10px] font-bold">Cleared</span>`;
+        if (t.status === 'DELAYED' || t.status === 'CRITICAL_MSME') {
+            statusBadge = `<span class="badge-pill bg-red-100 text-red-800 dark:bg-red-950/50 dark:text-red-300 border border-red-300 text-[10px] font-bold">Action Needed</span>`;
+        } else if (t.status === 'PENDING' || t.status === 'PENDING_CLEARANCE') {
+            statusBadge = `<span class="badge-pill bg-amber-50 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300 border border-amber-300 text-[10px] font-bold">In Clearing</span>`;
+        }
 
         return `
-            <tr class="hover:bg-slate-50 transition border-b border-slate-200">
-                <td class="px-6 py-4.5 font-mono text-xs sm:text-sm text-slate-700 font-bold">${t.date}</td>
-                <td class="px-5 py-4.5">
-                    <div class="font-black text-slate-900 text-sm sm:text-base">${t.entity}</div>
-                    <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">${t.category}</div>
+            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition border-b border-slate-100 dark:border-slate-800">
+                <td class="px-5 py-3.5 font-mono text-xs text-slate-600 dark:text-slate-400 font-semibold">${t.date}</td>
+                <td class="px-4 py-3.5">
+                    <div class="font-black text-slate-900 dark:text-white text-xs sm:text-sm">${t.entity}</div>
+                    <div class="text-[11px] text-slate-400 font-mono mt-0.5">${t.utr}</div>
                 </td>
-                <td class="px-5 py-4.5">${typeBadge}</td>
-                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${t.gross.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm text-blue-800 font-bold">₹${t.tax.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-5 py-4.5 font-mono font-black text-sm sm:text-base ${netColor}">
-                    ${isIncome ? '+' : '-'}₹${t.net.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                <td class="px-4 py-3.5 text-xs font-semibold text-slate-600 dark:text-slate-400">${t.category}</td>
+                <td class="px-4 py-3.5">${typeBadge}</td>
+                <td class="px-4 py-3.5 font-mono font-black text-xs sm:text-sm text-slate-900 dark:text-white">
+                    ₹${runningBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </td>
-                <td class="px-6 py-4.5 text-right font-mono text-xs sm:text-sm font-semibold ${utrColor}">${t.utr}</td>
+                <td class="px-5 py-3.5 text-right">${statusBadge}</td>
             </tr>
         `;
     }).join('');
