@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=inter:wght@100..900&family=outfit:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"tertiary-container":"#cc4204","secondary-container":"#dae2fd","surface-bright":"#f8f9ff","on-background":"#0b1c30","surface-variant":"#d3e4fe","on-error":"#ffffff","on-tertiary":"#ffffff","tertiary":"#a33200","on-primary":"#ffffff","surface-container":"#e5eeff","on-tertiary-fixed":"#390c00","tertiary-fixed-dim":"#ffb59d","primary-container":"#0066ff","inverse-on-surface":"#eaf1ff","primary":"#0050cb","surface-dim":"#cbdbf5","secondary":"#565e74","outline-variant":"#c2c6d8","on-secondary-container":"#5c647a","secondary-fixed":"#dae2fd","surface":"#f8f9ff","error-container":"#ffdad6","surface-container-low":"#eff4ff","on-surface-variant":"#424656","on-secondary":"#ffffff","on-tertiary-container":"#fff6f4","secondary-fixed-dim":"#bec6e0","on-secondary-fixed":"#131b2e","primary-fixed":"#dae1ff","error":"#ba1a1a","surface-container-lowest":"#ffffff","surface-container-high":"#dce9ff","tertiary-fixed":"#ffdbd0","on-tertiary-fixed-variant":"#832600","on-primary-fixed-variant":"#003fa4","inverse-primary":"#b3c5ff","surface-container-highest":"#d3e4fe","primary-fixed-dim":"#b3c5ff","outline":"#727687","on-error-container":"#93000a","background":"#f8f9ff","on-primary-fixed":"#001849","on-secondary-fixed-variant":"#3f465c","inverse-surface":"#213145","on-primary-container":"#f8f7ff","on-surface":"#0b1c30","surface-tint":"#0054d6"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"grid-margin":"1.5rem","grid-gutter":"1rem","table-cell-y":"0.5rem","section-gap":"1.5rem","panel-padding":"1rem","compact-row":"0.375rem","table-cell-x":"0.75rem"},"fontFamily":{"mono-kpi":["jetbrainsMono"],"headline-xl":["outfit"],"headline-sm":["outfit"],"headline-md":["outfit"],"mono-sm":["jetbrainsMono"],"body-lg":["inter"],"mono-data":["jetbrainsMono"],"body-sm":["inter"],"body-md":["inter"],"headline-lg":["outfit"]},"fontSize":{"mono-kpi":["22px",{"lineHeight":"26px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-xl":["32px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-sm":["15px",{"lineHeight":"20px","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"700"}],"mono-sm":["10px",{"lineHeight":"13px","fontWeight":"400"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"500"}],"mono-data":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-sm":["11px",{"lineHeight":"15px","fontWeight":"400"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-14 w-full px-grid-margin flex items-center justify-between gap-grid-gutter"><div class="flex items-center gap-3 shrink-0"><img alt="AutoRecon AI Brand Mark" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wo0YO1-_SRDWIjvp4DhyPKV_q6Q3k_HSGCyTYeZnRI00m7e7mv-e2_o055l9CnZyh3pV3_pHru4at_xhWguLARIpqydJ2lhppDDo23j5MPBaz9Jzdz7kzNl8BqMzdS6YjOEtE5gIclEmNJGwQx9nPBYXRYI6T4bMuvSC4Eo3jrjLDGO5IScn7AKUImBmVgN312BxI7SY7lEZOMv5lk1BACWNCzZ2OjBymPK9Cn6ujeFPilPVhqTRH2QAQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight uppercase">AutoRecon AI</span><div class="flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span>LIVE RECON FEED • SYNCED 4s AGO</span></div></div><nav class="hidden xl:flex items-center h-full gap-4" data-active-classes="text-primary border-b-2 border-primary font-body-lg"><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="operating-console" href="#">Operating Console</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="gateway-recon" href="#">Gateway Recon (3-Way Check)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="payroll-and-salaries" href="#">Payroll & Salaries (IMPS / TDS 192)</a><a aria-current="page" class="h-full flex items-center px-1 transition-colors whitespace-nowrap text-primary border-b-2 border-primary font-body-lg" data-path="msme-43b-h" href="#">MSME 43B(h) (45-Day Aging)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="cash-compass" href="#">Cash Compass (30-Day Forecast)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="ml-intelligence-lab" href="#">ML Intelligence Lab</a></nav><div class="flex items-center gap-3 shrink-0"><div class="hidden md:flex items-center bg-surface border border-outline-variant rounded-DEFAULT px-2 py-1 gap-2 w-56"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">search</span><span class="font-mono-data text-mono-data text-on-surface-variant flex-1 select-none">Search UTR, Order, GSTIN...</span><kbd class="bg-surface-container px-1.5 py-0.5 rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant border border-outline-variant">⌘K</kbd></div><button class="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary rounded-DEFAULT font-body-md text-body-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-none"><span class="material-symbols-outlined text-[16px]">description</span><span>Export Tally XML</span></button><div class="hidden lg:flex items-center gap-1 px-2 py-1 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface"><span class="material-symbols-outlined text-[14px] text-primary">check_circle</span><span>Webhook: 200 OK</span></div><button aria-label="Toggle Theme" class="h-8 w-8 flex items-center justify-center rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">light_mode</span></button><div class="flex items-center gap-2 pl-2 border-l border-outline-variant"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden 2xl:flex flex-col text-left"><span class="font-body-md text-body-md text-on-surface leading-none font-semibold">D2C Merchant FinOps</span><span class="font-mono-sm text-mono-sm text-on-surface-variant leading-none mt-0.5">GSTIN: 27AAACR1234F1Z5</span></div></div></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Statutory Warning & Audit Context Ribbon -->
+<section class="w-full px-grid-margin py-4 bg-surface-container-low">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div class="space-y-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2 py-0.5 bg-error text-on-error font-mono-sm text-mono-sm rounded-DEFAULT uppercase tracking-wider font-semibold">Statutory Compliance Alert</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">IT ACT 1961 • FY 2024-25 Q4 MANDATE</span>
+<span class="text-on-surface-variant font-mono-sm text-mono-sm">•</span>
+<span class="font-mono-sm text-mono-sm text-primary font-medium">Auto-Reconciled with HDFC CMS Node 11</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">MSME Section 43B(h) 45-Day Invoice Aging & Compliance Matrix</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-5xl leading-relaxed">
+          Tracking statutory settlements to verified Udyam Micro & Small suppliers. Invoices pending beyond 45 days (or 15 days sans explicit agreement) trigger immediate expense disallowance u/s 43B(h), resulting in an immediate 30% corporate tax add-back plus mandatory compound interest under Section 16 of MSMED Act.
+        </p>
+</div>
+<div class="flex items-center gap-2 self-start lg:self-center shrink-0">
+<button class="flex items-center gap-1.5 px-3 py-2 bg-primary text-on-primary font-body-md text-body-md rounded-DEFAULT hover:bg-primary-container hover:text-on-primary-container shadow-sm transition-all" id="batch-payout-cta">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>Initiate Priority Batch IMPS</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-highest text-on-surface font-body-md text-body-md rounded-DEFAULT hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span>Download Tally 43B(h) XML</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Risk KPI Metrics Deck -->
+<section class="w-full px-grid-margin py-4">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+<!-- Total Payables -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant uppercase tracking-wider block">Total Active MSME Inward</span>
+<span class="font-headline-md text-headline-md text-on-surface mt-1 block">₹84,20,500.00</span>
+</div>
+<div class="p-2 bg-surface-container rounded-lg text-primary">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-mono-sm text-mono-sm">
+<span class="text-on-surface-variant">Active Invoices</span>
+<span class="text-on-surface font-semibold">64 Ported Entries</span>
+</div>
+</div>
+<!-- Safe / Compliant (>15 Days) -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant uppercase tracking-wider block">Safe Zone (>15 Days Left)</span>
+<span class="font-headline-md text-headline-md text-on-surface mt-1 block">₹61,40,000.00</span>
+</div>
+<div class="p-2 bg-secondary-container text-on-secondary-fixed rounded-lg">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-mono-sm text-mono-sm">
+<span class="text-secondary font-medium">Low Exposure</span>
+<span class="text-on-surface font-semibold">42 Invoices (72.9%)</span>
+</div>
+</div>
+<!-- Approaching Deadline (<15 Days) -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-mono-sm text-mono-sm text-tertiary uppercase tracking-wider block font-semibold">Critical Window (<15 Days)</span>
+<span class="font-headline-md text-headline-md text-tertiary mt-1 block">₹18,20,500.00</span>
+</div>
+<div class="p-2 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-lg">
+<span class="material-symbols-outlined text-[20px]">alarm</span>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-mono-sm text-mono-sm">
+<span class="text-tertiary font-medium">Immediate Schedule</span>
+<span class="text-tertiary font-semibold">18 Invoices (21.6%)</span>
+</div>
+</div>
+<!-- Statutory Breach (>45 Days) -->
+<div class="p-4 bg-error-container text-on-error-container rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-mono-sm text-mono-sm text-error uppercase tracking-wider font-bold">Statutory Breach (>45D)</span>
+<span class="h-1.5 w-1.5 rounded-full bg-error animate-ping"></span>
+</div>
+<span class="font-headline-md text-headline-md text-error mt-1 block font-bold">₹4,60,000.00</span>
+</div>
+<div class="p-2 bg-error text-on-error rounded-lg">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-lowest -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-mono-sm text-mono-sm">
+<span class="text-error font-semibold">Tax Add-back (30%):</span>
+<span class="text-error font-mono-data text-mono-data font-bold">₹1,38,000.00 (4 Inv)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 45-Day Aging Visual Matrix & Heatmap Bar -->
+<section class="w-full px-grid-margin py-2">
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm space-y-4">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">analytics</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Statutory 45-Day Aging Spectrum & Exposure Distribution</h2>
+</div>
+<div class="flex items-center gap-3 font-mono-sm text-mono-sm text-on-surface-variant">
+<span>Formula: <span class="text-on-surface font-semibold">Min(Invoice + 45D, Acceptance + 45D)</span></span>
+<span class="hidden sm:inline">•</span>
+<span>Compound Interest: <span class="text-error font-semibold">3× RBI Bank Rate (20.25% p.a.)</span></span>
+</div>
+</div>
+<!-- Progressive Stacked Heatmap Bar -->
+<div class="space-y-1.5">
+<div class="w-full h-4 bg-surface-container-high rounded-DEFAULT flex overflow-hidden p-0.5 gap-0.5">
+<!-- Day 1-15: 54% -->
+<div class="h-full bg-primary rounded-DEFAULT hover:opacity-90 transition-opacity" style="width: 54%" title="Days 1-15: ₹45,50,000 (Safe)"></div>
+<!-- Day 16-30: 18% -->
+<div class="h-full bg-primary-fixed-dim rounded-DEFAULT hover:opacity-90 transition-opacity" style="width: 18%" title="Days 16-30: ₹15,90,000 (Caution)"></div>
+<!-- Day 31-40: 14% -->
+<div class="h-full bg-tertiary-fixed-dim rounded-DEFAULT hover:opacity-90 transition-opacity" style="width: 14%" title="Days 31-40: ₹11,80,000 (High Priority)"></div>
+<!-- Day 41-45: 8% -->
+<div class="h-full bg-tertiary-container rounded-DEFAULT hover:opacity-90 transition-opacity" style="width: 8%" title="Days 41-45: ₹6,40,500 (Critical Countdown)"></div>
+<!-- Day 45+: 6% -->
+<div class="h-full bg-error rounded-DEFAULT hover:opacity-90 transition-opacity animate-pulse" style="width: 6%" title="Day 45+: ₹4,60,000 (Disallowed Expense)"></div>
+</div>
+<!-- Legend Ribbon with Metadata -->
+<div class="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-1 font-mono-sm text-mono-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-DEFAULT bg-primary shrink-0"></span>
+<div class="truncate">
+<span class="text-on-surface font-semibold">D 1-15 Safe</span>
+<span class="text-on-surface-variant block">₹45.5L • 31 Inv</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-DEFAULT bg-primary-fixed-dim shrink-0"></span>
+<div class="truncate">
+<span class="text-on-surface font-semibold">D 16-30 Caution</span>
+<span class="text-on-surface-variant block">₹15.9L • 11 Inv</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-DEFAULT bg-tertiary-fixed-dim shrink-0"></span>
+<div class="truncate">
+<span class="text-tertiary font-semibold">D 31-40 High Risk</span>
+<span class="text-on-surface-variant block">₹11.8L • 10 Inv</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-DEFAULT bg-tertiary-container shrink-0"></span>
+<div class="truncate">
+<span class="text-tertiary-container font-semibold">D 41-45 Critical</span>
+<span class="text-on-surface-variant block">₹6.4L • 8 Inv</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-DEFAULT bg-error shrink-0"></span>
+<div class="truncate">
+<span class="text-error font-bold">D 45+ Disallowed</span>
+<span class="text-error block font-mono-data">₹4.6L • 4 Inv</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Action Filtering Strip -->
+<div class="flex flex-wrap items-center justify-between gap-3 pt-3 bg-surface-container-low -mx-4 -mb-4 px-4 py-3">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant mr-1">Filter Risk:</span>
+<button class="px-2 py-1 bg-surface-container-lowest text-primary font-mono-sm text-mono-sm rounded-DEFAULT shadow-sm font-semibold">All (64)</button>
+<button class="px-2 py-1 bg-surface-container text-on-surface font-mono-sm text-mono-sm rounded-DEFAULT hover:bg-surface-container-high transition-colors">Critical Countdown (8)</button>
+<button class="px-2 py-1 bg-error text-on-error font-mono-sm text-mono-sm rounded-DEFAULT font-semibold">Breached Only (4)</button>
+<button class="px-2 py-1 bg-surface-container text-on-surface font-mono-sm text-mono-sm rounded-DEFAULT hover:bg-surface-container-high transition-colors">Micro Category (39)</button>
+<button class="px-2 py-1 bg-surface-container text-on-surface font-mono-sm text-mono-sm rounded-DEFAULT hover:bg-surface-container-high transition-colors">Small Category (25)</button>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center bg-surface-container-lowest px-2 py-1 rounded-DEFAULT">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant mr-1">search</span>
+<input class="bg-transparent font-mono-sm text-mono-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none w-44" placeholder="Filter Vendor or Udyam..." type="text"/>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Sorted by: <strong class="text-on-surface font-mono-data">Days Elapsed DESC</strong></span>
+</div>
+</div>
+</div>
+</section>
+<!-- Full MSME Vendor Invoice Ledger Table -->
+<section class="w-full px-grid-margin py-4">
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Table Header & Bulk Controls -->
+<div class="px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<input class="h-3.5 w-3.5 rounded-DEFAULT text-primary focus:ring-0" id="select-all-invoices" type="checkbox"/>
+<label class="font-mono-sm text-mono-sm text-on-surface font-semibold uppercase tracking-wide" for="select-all-invoices">Select All Pending Invoices</label>
+<span class="px-1.5 py-0.5 bg-surface-container text-secondary font-mono-sm text-mono-sm rounded-DEFAULT">64 Records</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Bulk Action:</span>
+<button class="px-2 py-1 bg-surface-container text-on-surface font-mono-sm text-mono-sm rounded-DEFAULT hover:bg-surface-container-high">Export HDFC CMS TXT</button>
+<button class="px-2 py-1 bg-primary text-on-primary font-mono-sm text-mono-sm rounded-DEFAULT hover:bg-primary-container shadow-none">Pay Selected via IMPS</button>
+</div>
+</div>
+<!-- Responsive Data Grid -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left font-body-md text-body-md">
+<thead class="bg-surface-container-low font-mono-sm text-mono-sm text-on-surface-variant uppercase">
+<tr>
+<th class="py-2.5 px-3 w-10 text-center">
+<span class="sr-only">Selection</span>
+</th>
+<th class="py-2.5 px-3">Vendor / Udyam Reg.</th>
+<th class="py-2.5 px-3">Category</th>
+<th class="py-2.5 px-3">Invoice Ref & Date</th>
+<th class="py-2.5 px-3">Acceptance</th>
+<th class="py-2.5 px-3 text-right">Gross Value</th>
+<th class="py-2.5 px-3 text-right">Pending Balance</th>
+<th class="py-2.5 px-3 text-center">Days Elapsed</th>
+<th class="py-2.5 px-3 text-left">Statutory Status</th>
+<th class="py-2.5 px-3 text-right">30% Tax Exposure</th>
+<th class="py-2.5 px-3 text-center">Audit Actions</th>
+</tr>
+</thead>
+<tbody class="text-on-surface">
+<!-- Row 1: Breached -->
+<tr class="bg-error-container/20 hover:bg-error-container/35 transition-colors">
+<td class="py-2.5 px-3 text-center">
+<input checked="" class="h-3.5 w-3.5 rounded-DEFAULT text-primary focus:ring-0" type="checkbox"/>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-body-lg text-body-lg text-on-surface font-semibold">Apex Micro Packaging LLP</div>
+<div class="font-mono-data text-mono-data text-secondary">UDYAM-MH-02-0019284</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 bg-surface-container-highest text-on-surface-variant font-mono-sm text-mono-sm rounded-DEFAULT font-semibold">MICRO</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-data text-mono-data font-semibold">INV-2024-8841</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">08 Jan 2025</div>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-sm text-mono-sm text-on-surface">10 Jan 2025</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Physical GRN</div>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data">₹1,85,000.00</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data font-bold text-error">₹1,85,000.00</td>
+<td class="py-2.5 px-3 text-center">
+<div class="font-mono-data text-mono-data font-bold text-error">47 / 45</div>
+<div class="w-16 h-1 bg-surface-container mx-auto rounded-full mt-1 overflow-hidden">
+<div class="bg-error h-full w-full"></div>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-error text-on-error rounded-DEFAULT font-mono-sm text-mono-sm font-bold tracking-tight">
+<span class="material-symbols-outlined text-[13px]">block</span>
+                  BREACHED: 47D (Disallowed)
+                </span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data font-bold text-error">
+                ₹55,500.00
+                <span class="block font-mono-sm text-mono-sm text-on-surface-variant">+ Int: ₹4,890</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 bg-primary text-on-primary rounded-DEFAULT hover:bg-primary-container transition-colors" title="Instant IMPS Release">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+<button class="p-1.5 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-variant transition-colors" title="Voucher XML">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Breached -->
+<tr class="bg-error-container/20 hover:bg-error-container/35 transition-colors">
+<td class="py-2.5 px-3 text-center">
+<input checked="" class="h-3.5 w-3.5 rounded-DEFAULT text-primary focus:ring-0" type="checkbox"/>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-body-lg text-body-lg text-on-surface font-semibold">Shree Krishna Precision Tools</div>
+<div class="font-mono-data text-mono-data text-secondary">UDYAM-GJ-01-0083119</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 bg-surface-container-highest text-on-surface-variant font-mono-sm text-mono-sm rounded-DEFAULT font-semibold">MICRO</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-data text-mono-data font-semibold">SK/24-25/0932</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">09 Jan 2025</div>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-sm text-mono-sm text-on-surface">11 Jan 2025</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Quality Signoff</div>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data">₹1,40,000.00</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data font-bold text-error">₹1,40,000.00</td>
+<td class="py-2.5 px-3 text-center">
+<div class="font-mono-data text-mono-data font-bold text-error">46 / 45</div>
+<div class="w-16 h-1 bg-surface-container mx-auto rounded-full mt-1 overflow-hidden">
+<div class="bg-error h-full w-full"></div>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-error text-on-error rounded-DEFAULT font-mono-sm text-mono-sm font-bold tracking-tight">
+<span class="material-symbols-outlined text-[13px]">block</span>
+                  BREACHED: 46D (Disallowed)
+                </span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data font-bold text-error">
+                ₹42,000.00
+                <span class="block font-mono-sm text-mono-sm text-on-surface-variant">+ Int: ₹3,510</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 bg-primary text-on-primary rounded-DEFAULT hover:bg-primary-container transition-colors" title="Instant IMPS Release">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+<button class="p-1.5 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-variant transition-colors" title="Voucher XML">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Critical Countdown (Day 44) -->
+<tr class="bg-tertiary-fixed/30 hover:bg-tertiary-fixed/50 transition-colors">
+<td class="py-2.5 px-3 text-center">
+<input class="h-3.5 w-3.5 rounded-DEFAULT text-primary focus:ring-0" type="checkbox"/>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-body-lg text-body-lg text-on-surface font-semibold">Zenith Bio-Polymers India</div>
+<div class="font-mono-data text-mono-data text-secondary">UDYAM-TN-03-0044192</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed font-mono-sm text-mono-sm rounded-DEFAULT font-semibold">SMALL</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-data text-mono-data font-semibold">ZBP-99238</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">12 Jan 2025</div>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-sm text-mono-sm text-on-surface">13 Jan 2025</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Auto-Deemed</div>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data">₹3,20,500.00</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data font-bold text-tertiary">₹3,20,500.00</td>
+<td class="py-2.5 px-3 text-center">
+<div class="font-mono-data text-mono-data font-bold text-tertiary">44 / 45</div>
+<div class="w-16 h-1 bg-surface-container mx-auto rounded-full mt-1 overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 97%"></div>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-tertiary text-on-tertiary rounded-DEFAULT font-mono-sm text-mono-sm font-semibold animate-pulse">
+<span class="material-symbols-outlined text-[13px]">alarm</span>
+                  1 Day to Statutory Breach!
+                </span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data font-semibold text-on-surface">
+                ₹96,150.00
+                <span class="block font-mono-sm text-mono-sm text-tertiary font-medium">Pending Disallow</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 bg-primary text-on-primary rounded-DEFAULT hover:bg-primary-container transition-colors" title="Instant IMPS Release">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+<button class="p-1.5 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-variant transition-colors" title="Voucher XML">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Critical Countdown (Day 42) -->
+<tr class="bg-tertiary-fixed/20 hover:bg-tertiary-fixed/35 transition-colors">
+<td class="py-2.5 px-3 text-center">
+<input class="h-3.5 w-3.5 rounded-DEFAULT text-primary focus:ring-0" type="checkbox"/>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-body-lg text-body-lg text-on-surface font-semibold">Vanguard Corrugated Boxes</div>
+<div class="font-mono-data text-mono-data text-secondary">UDYAM-DL-08-0112445</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 bg-surface-container-highest text-on-surface-variant font-mono-sm text-mono-sm rounded-DEFAULT font-semibold">MICRO</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-data text-mono-data font-semibold">VCB/JAN/019</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">14 Jan 2025</div>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-sm text-mono-sm text-on-surface">15 Jan 2025</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Physical GRN</div>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data">₹2,10,000.00</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data font-bold text-tertiary">₹2,10,000.00</td>
+<td class="py-2.5 px-3 text-center">
+<div class="font-mono-data text-mono-data font-bold text-tertiary">42 / 45</div>
+<div class="w-16 h-1 bg-surface-container mx-auto rounded-full mt-1 overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 93%"></div>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-DEFAULT font-mono-sm text-mono-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">alarm</span>
+                  3 Days to Statutory Breach!
+                </span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data font-semibold text-on-surface">
+                ₹63,000.00
+                <span class="block font-mono-sm text-mono-sm text-tertiary font-medium">Pending Disallow</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 bg-primary text-on-primary rounded-DEFAULT hover:bg-primary-container transition-colors" title="Instant IMPS Release">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+<button class="p-1.5 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-variant transition-colors" title="Voucher XML">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Safe / Standard (Day 21) -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-2.5 px-3 text-center">
+<input class="h-3.5 w-3.5 rounded-DEFAULT text-primary focus:ring-0" type="checkbox"/>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-body-lg text-body-lg text-on-surface font-semibold">Delta Logistics & Transport</div>
+<div class="font-mono-data text-mono-data text-secondary">UDYAM-KA-03-0098124</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed font-mono-sm text-mono-sm rounded-DEFAULT font-semibold">SMALL</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-data text-mono-data font-semibold">DLT/8812</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">04 Feb 2025</div>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-sm text-mono-sm text-on-surface">05 Feb 2025</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">e-Way Verified</div>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data">₹4,90,000.00</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data">₹4,90,000.00</td>
+<td class="py-2.5 px-3 text-center">
+<div class="font-mono-data text-mono-data text-on-surface-variant font-medium">21 / 45</div>
+<div class="w-16 h-1 bg-surface-container mx-auto rounded-full mt-1 overflow-hidden">
+<div class="bg-primary h-full" style="width: 46%"></div>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container text-on-surface-variant rounded-DEFAULT font-mono-sm text-mono-sm font-medium">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  24 Days Remaining
+                </span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data text-on-surface-variant">
+                ₹1,47,000.00
+                <span class="block font-mono-sm text-mono-sm text-secondary">Safe Category</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-variant transition-colors" title="Instant IMPS Release">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+<button class="p-1.5 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-variant transition-colors" title="Voucher XML">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Safe / Fresh (Day 11) -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-2.5 px-3 text-center">
+<input class="h-3.5 w-3.5 rounded-DEFAULT text-primary focus:ring-0" type="checkbox"/>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-body-lg text-body-lg text-on-surface font-semibold">Orbit Silicon Solutions</div>
+<div class="font-mono-data text-mono-data text-secondary">UDYAM-MH-12-0051187</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-2 py-0.5 bg-surface-container-highest text-on-surface-variant font-mono-sm text-mono-sm rounded-DEFAULT font-semibold">MICRO</span>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-data text-mono-data font-semibold">OSS-44102</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">14 Feb 2025</div>
+</td>
+<td class="py-2.5 px-3">
+<div class="font-mono-sm text-mono-sm text-on-surface">15 Feb 2025</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Physical GRN</div>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data">₹6,80,000.00</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data">₹6,80,000.00</td>
+<td class="py-2.5 px-3 text-center">
+<div class="font-mono-data text-mono-data text-on-surface-variant font-medium">11 / 45</div>
+<div class="w-16 h-1 bg-surface-container mx-auto rounded-full mt-1 overflow-hidden">
+<div class="bg-primary h-full" style="width: 24%"></div>
+</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container text-on-surface-variant rounded-DEFAULT font-mono-sm text-mono-sm font-medium">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  34 Days Remaining
+                </span>
+</td>
+<td class="py-2.5 px-3 text-right font-mono-data text-mono-data text-on-surface-variant">
+                ₹2,04,000.00
+                <span class="block font-mono-sm text-mono-sm text-secondary">Safe Category</span>
+</td>
+<td class="py-2.5 px-3 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1.5 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-variant transition-colors" title="Instant IMPS Release">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+<button class="p-1.5 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-variant transition-colors" title="Voucher XML">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Ledger Table Footer & Summary Actions -->
+<div class="px-4 py-3 bg-surface-container-low flex flex-col md:flex-row items-center justify-between gap-3">
+<div class="flex items-center gap-3 font-mono-sm text-mono-sm text-on-surface-variant">
+<span>Showing <strong class="text-on-surface font-mono-data">1–6 of 64</strong> active MSME vouchers</span>
+<span>•</span>
+<span>Total Filtered Exposure: <strong class="text-error font-mono-data font-semibold">₹1,38,000.00 (Active Disallowance)</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 bg-surface-container-lowest text-on-surface-variant font-mono-sm text-mono-sm rounded-DEFAULT hover:text-on-surface transition-colors disabled:opacity-50" disabled="">Previous</button>
+<span class="px-2 py-1 bg-surface-container-highest font-mono-sm text-mono-sm text-on-surface rounded-DEFAULT">1 of 11</span>
+<button class="px-3 py-1.5 bg-surface-container-lowest text-on-surface font-mono-sm text-mono-sm rounded-DEFAULT hover:bg-surface-container transition-colors">Next</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Deep Audit & Statutory Override Panel (Split Inspection Drawer) -->
+<section class="w-full px-grid-margin py-2 pb-6">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+<!-- Legal Provision Callout -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm space-y-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">gavel</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Legal Clause & Disallowance Rule</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          As per amendment introduced via <strong>Finance Act 2023</strong>, any sum payable to a Micro or Small Enterprise beyond the time limit specified in <strong>Section 15 of the MSMED Act</strong> shall be allowed as a deduction only in the previous year in which such sum is actually paid.
+        </p>
+<div class="p-3 bg-surface-container rounded-DEFAULT font-mono-sm text-mono-sm space-y-1">
+<div class="text-on-surface font-semibold">Statutory Settlement Ceilings:</div>
+<div class="text-secondary">• With written agreement: <strong>Maximum 45 Days</strong></div>
+<div class="text-secondary">• Without written agreement: <strong>Maximum 15 Days</strong></div>
+<div class="text-error font-semibold pt-1">No relief under Section 43B proviso (Deposit before ITR filing does not cure breach).</div>
+</div>
+</div>
+<!-- Quick Bank Direct IMPS Node -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">account_balance</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Direct Bank IMPS Node</h3>
+</div>
+<span class="px-2 py-0.5 bg-surface-container text-primary font-mono-sm text-mono-sm rounded-DEFAULT font-semibold">API LINKED</span>
+</div>
+<div class="space-y-2 font-mono-sm text-mono-sm">
+<div class="flex justify-between py-1 bg-surface-container-low px-2 rounded-DEFAULT">
+<span class="text-on-surface-variant">Clearing Source:</span>
+<span class="font-mono-data text-mono-data text-on-surface font-semibold">HDFC CMS •• 9012</span>
+</div>
+<div class="flex justify-between py-1 bg-surface-container-low px-2 rounded-DEFAULT">
+<span class="text-on-surface-variant">Available Float:</span>
+<span class="font-mono-data text-mono-data text-on-surface font-semibold">₹1,14,20,000.00</span>
+</div>
+<div class="flex justify-between py-1 bg-surface-container-low px-2 rounded-DEFAULT">
+<span class="text-on-surface-variant">Recommended Immediate Release:</span>
+<span class="font-mono-data text-mono-data text-error font-bold">₹7,80,500.00</span>
+</div>
+</div>
+<button class="w-full py-2 bg-primary text-on-primary font-body-md text-body-md rounded-DEFAULT hover:bg-primary-container shadow-sm flex items-center justify-center gap-2 transition-all" id="quick-clear-btn">
+<span class="material-symbols-outlined text-[16px]">sync_alt</span>
+<span>Clear Critical 12 Invoices (0-3 Days Left)</span>
+</button>
+</div>
+<!-- Live Notification Feed & Audit Hash -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between space-y-3">
+<div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">history</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Statutory Audit Activity</h3>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Hash Verified</span>
+</div>
+<div class="mt-2 space-y-2 font-mono-sm text-mono-sm">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[14px] text-error mt-0.5">error</span>
+<div>
+<span class="text-on-surface font-semibold">Apex Micro Packaging:</span>
+<span class="text-on-surface-variant">Day 46 breached. Expense tagged disallowed for Q4 computation.</span>
+</div>
+</div>
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[14px] text-primary mt-0.5">check</span>
+<div>
+<span class="text-on-surface font-semibold">Udyam Verification API:</span>
+<span class="text-on-surface-variant">Re-checked 64 registrations against MSME Ministry portal.</span>
+</div>
+</div>
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[14px] text-tertiary mt-0.5">schedule</span>
+<div>
+<span class="text-on-surface font-semibold">Countdown Advance:</span>
+<span class="text-on-surface-variant">Zenith Bio-Polymers entered final 24h compliance buffer.</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-2 bg-surface-container-low -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-mono-sm text-mono-sm">
+<span class="text-on-surface-variant">Audit Signature:</span>
+<span class="font-mono-data text-mono-data text-secondary">0x882f...c31b</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Feedback Dialog (Micro-Interaction) -->
+<div class="fixed bottom-6 right-6 hidden z-50 bg-inverse-surface text-inverse-on-surface px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 font-mono-sm text-mono-sm" id="status-toast">
+<span class="material-symbols-outlined text-[20px] text-primary-fixed">task_alt</span>
+<div>
+<div class="font-body-md text-body-md font-semibold text-inverse-on-surface">Batch IMPS Instruction Queued</div>
+<div class="text-on-surface-variant text-inverse-on-surface/80 font-mono-sm text-mono-sm">Triggered direct settlement via HDFC CMS API for selected statutory breaches.</div>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const batchBtn = document.getElementById('batch-payout-cta');
+      const quickClearBtn = document.getElementById('quick-clear-btn');
+      const toast = document.getElementById('status-toast');
+
+      const triggerToast = (msg) => {
+        if (!toast) return;
+        toast.classList.remove('hidden');
+        toast.classList.add('flex');
+        setTimeout(() => {
+          toast.classList.add('hidden');
+          toast.classList.remove('flex');
+        }, 4000);
+      };
+
+      if (batchBtn) {
+        batchBtn.addEventListener('click', () => triggerToast());
+      }
+      if (quickClearBtn) {
+        quickClearBtn.addEventListener('click', () => triggerToast());
+      }
+    });
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant py-4"><div class="w-full px-grid-margin flex flex-col sm:flex-row items-center justify-between gap-2 font-mono-sm text-mono-sm text-on-surface-variant"><div>© 2024 AUTORECON AI • INSTITUTIONAL SETTLEMENT CONSOLE</div><div class="flex items-center gap-4"><span>CORE PROTOCOL: V4.12.0</span><span>ENCRYPTION: AES-256 GCM</span><span>DIRECT BANK FED: SECURE</span></div></div></footer></body></html>

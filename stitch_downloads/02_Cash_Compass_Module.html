@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=inter:wght@100..900&family=outfit:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"tertiary-container":"#cc4204","secondary-container":"#dae2fd","surface-bright":"#f8f9ff","on-background":"#0b1c30","surface-variant":"#d3e4fe","on-error":"#ffffff","on-tertiary":"#ffffff","tertiary":"#a33200","on-primary":"#ffffff","surface-container":"#e5eeff","on-tertiary-fixed":"#390c00","tertiary-fixed-dim":"#ffb59d","primary-container":"#0066ff","inverse-on-surface":"#eaf1ff","primary":"#0050cb","surface-dim":"#cbdbf5","secondary":"#565e74","outline-variant":"#c2c6d8","on-secondary-container":"#5c647a","secondary-fixed":"#dae2fd","surface":"#f8f9ff","error-container":"#ffdad6","surface-container-low":"#eff4ff","on-surface-variant":"#424656","on-secondary":"#ffffff","on-tertiary-container":"#fff6f4","secondary-fixed-dim":"#bec6e0","on-secondary-fixed":"#131b2e","primary-fixed":"#dae1ff","error":"#ba1a1a","surface-container-lowest":"#ffffff","surface-container-high":"#dce9ff","tertiary-fixed":"#ffdbd0","on-tertiary-fixed-variant":"#832600","on-primary-fixed-variant":"#003fa4","inverse-primary":"#b3c5ff","surface-container-highest":"#d3e4fe","primary-fixed-dim":"#b3c5ff","outline":"#727687","on-error-container":"#93000a","background":"#f8f9ff","on-primary-fixed":"#001849","on-secondary-fixed-variant":"#3f465c","inverse-surface":"#213145","on-primary-container":"#f8f7ff","on-surface":"#0b1c30","surface-tint":"#0054d6"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"grid-margin":"1.5rem","grid-gutter":"1rem","table-cell-y":"0.5rem","section-gap":"1.5rem","panel-padding":"1rem","compact-row":"0.375rem","table-cell-x":"0.75rem"},"fontFamily":{"mono-kpi":["jetbrainsMono"],"headline-xl":["outfit"],"headline-sm":["outfit"],"headline-md":["outfit"],"mono-sm":["jetbrainsMono"],"body-lg":["inter"],"mono-data":["jetbrainsMono"],"body-sm":["inter"],"body-md":["inter"],"headline-lg":["outfit"]},"fontSize":{"mono-kpi":["22px",{"lineHeight":"26px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-xl":["32px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-sm":["15px",{"lineHeight":"20px","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"700"}],"mono-sm":["10px",{"lineHeight":"13px","fontWeight":"400"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"500"}],"mono-data":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-sm":["11px",{"lineHeight":"15px","fontWeight":"400"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-14 w-full px-grid-margin flex items-center justify-between gap-grid-gutter"><div class="flex items-center gap-3 shrink-0"><img alt="AutoRecon AI Brand Mark" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wo0YO1-_SRDWIjvp4DhyPKV_q6Q3k_HSGCyTYeZnRI00m7e7mv-e2_o055l9CnZyh3pV3_pHru4at_xhWguLARIpqydJ2lhppDDo23j5MPBaz9Jzdz7kzNl8BqMzdS6YjOEtE5gIclEmNJGwQx9nPBYXRYI6T4bMuvSC4Eo3jrjLDGO5IScn7AKUImBmVgN312BxI7SY7lEZOMv5lk1BACWNCzZ2OjBymPK9Cn6ujeFPilPVhqTRH2QAQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight uppercase">AutoRecon AI</span><div class="flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span>LIVE RECON FEED • SYNCED 4s AGO</span></div></div><nav class="hidden xl:flex items-center h-full gap-4" data-active-classes="text-primary border-b-2 border-primary font-body-lg"><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="operating-console" href="#">Operating Console</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="gateway-recon" href="#">Gateway Recon (3-Way Check)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="payroll-and-salaries" href="#">Payroll & Salaries (IMPS / TDS 192)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="msme-43b-h" href="#">MSME 43B(h) (45-Day Aging)</a><a aria-current="page" class="h-full flex items-center px-1 transition-colors whitespace-nowrap text-primary border-b-2 border-primary font-body-lg" data-path="cash-compass" href="#">Cash Compass (30-Day Forecast)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="ml-intelligence-lab" href="#">ML Intelligence Lab</a></nav><div class="flex items-center gap-3 shrink-0"><div class="hidden md:flex items-center bg-surface border border-outline-variant rounded-DEFAULT px-2 py-1 gap-2 w-56"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">search</span><span class="font-mono-data text-mono-data text-on-surface-variant flex-1 select-none">Search UTR, Order, GSTIN...</span><kbd class="bg-surface-container px-1.5 py-0.5 rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant border border-outline-variant">⌘K</kbd></div><button class="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary rounded-DEFAULT font-body-md text-body-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-none"><span class="material-symbols-outlined text-[16px]">description</span><span>Export Tally XML</span></button><div class="hidden lg:flex items-center gap-1 px-2 py-1 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface"><span class="material-symbols-outlined text-[14px] text-primary">check_circle</span><span>Webhook: 200 OK</span></div><button aria-label="Toggle Theme" class="h-8 w-8 flex items-center justify-center rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">light_mode</span></button><div class="flex items-center gap-2 pl-2 border-l border-outline-variant"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden 2xl:flex flex-col text-left"><span class="font-body-md text-body-md text-on-surface leading-none font-semibold">D2C Merchant FinOps</span><span class="font-mono-sm text-mono-sm text-on-surface-variant leading-none mt-0.5">GSTIN: 27AAACR1234F1Z5</span></div></div></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Command & Executive Liquidity Header -->
+<section class="w-full px-grid-margin py-4 bg-surface-container-lowest">
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 bg-primary-fixed text-on-primary-fixed rounded font-mono-sm text-mono-sm uppercase tracking-wider font-semibold">Treasury Ops Engine</span>
+<span class="text-on-surface-variant font-mono-sm text-mono-sm">MODEL: ML-ARIMA-XGB-V3.8</span>
+<span class="flex items-center gap-1 font-mono-sm text-mono-sm text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+            Realtime Monte Carlo Simulation Active
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mt-1 tracking-tight">
+          Cash Compass <span class="text-on-surface-variant font-body-lg text-body-lg">/ 30-Day Predictive Liquidity & Settlement Corridor</span>
+</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Autonomous treasury reconciliation matching gateway T+1/T+2 sweeps, COD remittance cycles, and Section 43B(h) statutory vendor deadlines.
+        </p>
+</div>
+<div class="flex flex-wrap items-center gap-2 self-start xl:self-auto">
+<div class="flex items-center bg-surface-container-low px-2 py-1 rounded gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">tune</span>
+<span class="font-body-sm text-body-sm text-on-surface">Stress Test:</span>
+<select class="bg-transparent font-mono-data text-mono-data text-primary font-medium focus:outline-none cursor-pointer" id="sim-scenario">
+<option value="base">Baseline Model (Historical 90d)</option>
+<option value="conservative">Conservative (-15% COD Collection)</option>
+<option value="aggressive">Aggressive (Festival Sale Spurt)</option>
+<option value="delayed">Delayed Remittance (T+3 Drift)</option>
+</select>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-high hover:bg-surface-variant text-on-surface rounded font-body-md text-body-md transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary">download</span>
+<span>Liquidity Audit Pack</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary rounded font-body-md text-body-md hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-[16px]">sync_saved_locally</span>
+<span>Re-run Monte Carlo</span>
+</button>
+</div>
+</div>
+<!-- 4 High-Density KPI Anchor Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
+<div class="bg-surface-container-low p-3 rounded flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-mono-sm text-mono-sm uppercase tracking-wide">Realized Bank Balance</span>
+<span class="material-symbols-outlined text-[16px] text-primary">account_balance</span>
+</div>
+<div class="mt-2">
+<div class="font-mono-kpi text-mono-kpi text-on-surface font-bold">₹1,42,80,450<span class="text-on-surface-variant text-sm font-normal">.00</span></div>
+<div class="flex items-center justify-between mt-1 text-on-surface-variant font-mono-sm text-mono-sm">
+<span>HDFC Corp: ₹84.2L</span>
+<span>ICICI Current: ₹58.6L</span>
+</div>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-lowest/60 -mx-3 -mb-3 px-3 py-1.5 rounded-b flex items-center justify-between text-on-surface-variant">
+<span class="font-mono-sm text-mono-sm">Direct Bank API feed</span>
+<span class="font-mono-sm text-mono-sm text-primary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Live 2m ago
+          </span>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-mono-sm text-mono-sm uppercase tracking-wide">30-Day Net Cash Flow</span>
+<span class="material-symbols-outlined text-[16px] text-primary">trending_up</span>
+</div>
+<div class="mt-2">
+<div class="font-mono-kpi text-mono-kpi text-primary font-bold">+₹38,40,200<span class="text-on-surface-variant text-sm font-normal">.00</span></div>
+<div class="flex items-center justify-between mt-1 font-mono-sm text-mono-sm">
+<span class="text-on-surface-variant">In: ₹1,94,20,500</span>
+<span class="text-tertiary">Out: ₹1,55,80,300</span>
+</div>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-lowest/60 -mx-3 -mb-3 px-3 py-1.5 rounded-b flex items-center justify-between text-on-surface-variant">
+<span class="font-mono-sm text-mono-sm">Net Margin Delta</span>
+<span class="font-mono-sm text-mono-sm font-semibold text-primary">+26.8% vs last mo</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-mono-sm text-mono-sm uppercase tracking-wide">Projected Runway / Buffer</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">hourglass_top</span>
+</div>
+<div class="mt-2">
+<div class="font-mono-kpi text-mono-kpi text-on-surface font-bold">44.5 <span class="font-body-md text-body-md font-normal text-on-surface-variant">Days</span></div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 74%;"></div>
+</div>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-lowest/60 -mx-3 -mb-3 px-3 py-1.5 rounded-b flex items-center justify-between text-on-surface-variant">
+<span class="font-mono-sm text-mono-sm">Burn rate threshold: 30d</span>
+<span class="font-mono-sm text-mono-sm text-primary font-semibold">Healthy (+14.5d)</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-mono-sm text-mono-sm uppercase tracking-wide">Min Projected Cash Trough</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">warning</span>
+</div>
+<div class="mt-2">
+<div class="font-mono-kpi text-mono-kpi text-tertiary font-bold">₹88,10,000<span class="text-on-surface-variant text-sm font-normal">.00</span></div>
+<div class="flex items-center justify-between mt-1 text-on-surface-variant font-mono-sm text-mono-sm">
+<span class="text-tertiary font-medium">Critical Dip: 18-Apr</span>
+<span>Safety Margin: ₹38.1L</span>
+</div>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-lowest/60 -mx-3 -mb-3 px-3 py-1.5 rounded-b flex items-center justify-between text-on-surface-variant">
+<span class="font-mono-sm text-mono-sm">GSTR-3B + Advance TDS cluster</span>
+<span class="font-mono-sm text-mono-sm text-tertiary uppercase font-bold">Monitored</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive 30-Day Predictive Cash Flow Chart Section -->
+<section class="w-full px-grid-margin py-4">
+<div class="bg-surface-container-lowest rounded p-4 shadow-sm">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3">
+<div class="flex items-center gap-3">
+<span class="font-headline-sm text-headline-sm text-on-surface">Liquidity Corridor & Confidence Envelope (01-Apr to 30-Apr)</span>
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface-variant rounded font-mono-sm text-mono-sm font-medium">±8.5% StDev Bands</span>
+</div>
+<!-- Legend Pill Controls -->
+<div class="flex flex-wrap items-center gap-4 text-body-sm font-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-primary"></span>
+<span class="text-on-surface font-medium">Net Treasury Position</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-secondary"></span>
+<span>Razorpay / Marketplace Inflow</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-tertiary"></span>
+<span>Statutory & MSME Outflow</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-2 bg-primary-fixed rounded-sm opacity-60"></span>
+<span>Confidence Ribbon</span>
+</div>
+</div>
+</div>
+<!-- Chart Canvas / Precision SVG -->
+<div class="relative w-full h-80 bg-surface-container-low rounded p-2 overflow-hidden select-none">
+<!-- SVG Dual Curve & Confidence Interval Ribbon -->
+<svg class="w-full h-full text-primary overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="corridorGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#dae1ff" stop-opacity="0.65"></stop>
+<stop offset="100%" stop-color="#dae1ff" stop-opacity="0.10"></stop>
+</lineargradient>
+<lineargradient id="inflowGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#0066ff" stop-opacity="0.18"></stop>
+<stop offset="100%" stop-color="#0066ff" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Grid Lines & Value Coordinates -->
+<line opacity="0.5" stroke="#c2c6d8" stroke-dasharray="3 3" stroke-width="0.8" x1="40" x2="980" y1="40" y2="40"></line>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" text-anchor="end" x="35" y="44">₹2.0 Cr</text>
+<line opacity="0.5" stroke="#c2c6d8" stroke-dasharray="3 3" stroke-width="0.8" x1="40" x2="980" y1="100" y2="100"></line>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" text-anchor="end" x="35" y="104">₹1.6 Cr</text>
+<line opacity="0.5" stroke="#c2c6d8" stroke-dasharray="3 3" stroke-width="0.8" x1="40" x2="980" y1="160" y2="160"></line>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" text-anchor="end" x="35" y="164">₹1.2 Cr</text>
+<line opacity="0.5" stroke="#c2c6d8" stroke-dasharray="3 3" stroke-width="0.8" x1="40" x2="980" y1="220" y2="220"></line>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" text-anchor="end" x="35" y="224">₹80.0 L</text>
+<line opacity="0.7" stroke="#c2c6d8" stroke-width="1" x1="40" x2="980" y1="270" y2="270"></line>
+<!-- X-Axis Reference Days -->
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" x="50" y="285">01-Apr</text>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" x="210" y="285">07-Apr</text>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" x="370" y="285">14-Apr</text>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" x="530" y="285">18-Apr (Trough)</text>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" x="690" y="285">23-Apr</text>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" x="850" y="285">28-Apr</text>
+<text fill="#727687" font-family="jetbrainsMono" font-size="9" x="960" y="285">30-Apr</text>
+<!-- Confidence Interval Band (Envelope Polygon: Upper bound to Lower bound) -->
+<polygon fill="url(#corridorGrad)" points="
+            50,118 110,110 170,98 230,85 290,120 350,105 410,150 470,165 530,195 590,170 650,140 710,125 770,105 830,95 890,82 960,70
+            960,112 890,125 830,138 770,150 710,168 650,185 590,210 530,238 470,205 410,190 350,145 290,160 230,125 170,135 110,148 50,156
+          "></polygon>
+<!-- Curve 1: Cumulative Inflow Trajectory (Secondary Accent) -->
+<path d="M 50,260 C 180,240 260,200 400,160 C 550,120 700,80 960,45" fill="none" stroke="#565e74" stroke-dasharray="4 2" stroke-width="1.8"></path>
+<!-- Curve 2: Cumulative Outflows (Tertiary / Warning Indicator) -->
+<path d="M 50,265 C 150,250 250,240 350,205 C 480,160 550,120 700,95 C 800,80 900,70 960,60" fill="none" stroke="#a33200" stroke-dasharray="2 2" stroke-width="1.8"></path>
+<!-- Curve 3: Net Cash Balance (Primary Strong Trendline) -->
+<path d="M 50,137 Q 140,125 230,105 T 350,125 T 470,185 T 530,216 T 650,162 T 770,128 T 890,104 T 960,91" fill="none" stroke="#0050cb" stroke-width="2.5"></path>
+<!-- Key Event Annotation Markers -->
+<!-- Event 1: Advance TDS (Apr 10) -->
+<line stroke="#727687" stroke-dasharray="2 2" stroke-width="1" x1="290" x2="290" y1="50" y2="250"></line>
+<circle cx="290" cy="140" fill="#a33200" r="4.5"></circle>
+<!-- Event 2: MSME Statutory Batch (Apr 15) -->
+<line stroke="#727687" stroke-dasharray="2 2" stroke-width="1" x1="420" x2="420" y1="50" y2="250"></line>
+<circle cx="420" cy="170" fill="#a33200" r="4.5"></circle>
+<!-- Event 3: Minimum Trough - GSTR-3B Tax Outflow (Apr 18) -->
+<line stroke="#a33200" stroke-width="1.5" x1="530" x2="530" y1="40" y2="250"></line>
+<circle cx="530" cy="216" fill="#a33200" r="6"></circle>
+<circle cx="530" cy="216" fill="#a33200" opacity="0.25" r="10"></circle>
+<!-- Event 4: IMPS Payroll Batch (Apr 30) -->
+<line stroke="#0050cb" stroke-dasharray="2 2" stroke-width="1" x1="960" x2="960" y1="40" y2="250"></line>
+<circle cx="960" cy="91" fill="#0050cb" r="5"></circle>
+</svg>
+<!-- Dynamic Overlay Tags positioned relative to chart events -->
+<div class="absolute top-6 left-[28%] bg-surface-container-lowest px-2 py-1 rounded shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-mono-sm text-mono-sm text-on-surface font-semibold">10-Apr: Advance TDS ₹12.5L</span>
+</div>
+<div class="absolute top-14 left-[41%] bg-surface-container-lowest px-2 py-1 rounded shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-mono-sm text-mono-sm text-on-surface font-semibold">15-Apr: MSME Batch 1 ₹34.2L</span>
+</div>
+<div class="absolute bottom-12 left-[52%] bg-error-container text-on-error-container px-2.5 py-1 rounded shadow-sm flex items-center gap-1.5 font-mono-sm text-mono-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">crisis_alert</span>
+<span>18-Apr: Trough ₹88.1L (GST 3B ₹28.4L)</span>
+</div>
+<div class="absolute top-8 right-6 bg-surface-container-lowest px-2 py-1 rounded shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="font-mono-sm text-mono-sm text-on-surface font-semibold">30-Apr: Payroll Run ₹46.8L</span>
+</div>
+</div>
+<!-- Quick Analysis Snapshot Footer -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3 pt-3 bg-surface-container-lowest">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary shrink-0 mt-0.5">verified</span>
+<div>
+<div class="font-body-md text-body-md text-on-surface font-semibold">Razorpay Direct Sweep Resilience</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">T+1 automated sweeps predict ₹4.2L/day average influx based on 1,480 active Shopify orders.</div>
+</div>
+</div>
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0 mt-0.5">notification_important</span>
+<div>
+<div class="font-body-md text-body-md text-on-surface font-semibold">MSME 45-Day Statutory Wall</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">14 vendor invoices aggregate ₹34,20,000 reaching strict disallowance on 15-Apr under Sec 43B(h).</div>
+</div>
+</div>
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">calculate</span>
+<div>
+<div class="font-body-md text-body-md text-on-surface font-semibold">COD Remittance Variance</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Delhivery & BlueDart remittance cycles running with 3.2-day transit float; ₹28.5L buffer accounted.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Treasury Ledger Split System: Scheduled Inflows vs Outflows Feeding Model -->
+<section class="w-full px-grid-margin pb-6">
+<!-- Filter Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3 bg-surface-container-lowest p-3 rounded">
+<div class="flex flex-wrap items-center gap-2 flex-1">
+<div class="flex items-center bg-surface-container-low px-2.5 py-1.5 rounded gap-2 w-72">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">search</span>
+<input class="bg-transparent font-mono-data text-mono-data text-on-surface placeholder:text-on-surface-variant focus:outline-none w-full" placeholder="Filter UTR, Counterparty, Batch..." type="text"/>
+</div>
+<div class="flex items-center bg-surface-container-low px-2.5 py-1.5 rounded gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span class="font-mono-data text-mono-data text-on-surface">Next 30 Days (01-Apr – 30-Apr)</span>
+</div>
+<div class="flex items-center bg-surface-container-low px-2.5 py-1.5 rounded gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">filter_alt</span>
+<span class="font-body-sm text-body-sm text-on-surface">Source: All Channels (Direct, COD, Tax)</span>
+</div>
+</div>
+<div class="flex items-center gap-2 font-mono-sm text-mono-sm text-on-surface-variant">
+<span>Displaying: <strong>28 Model Feeders</strong></span>
+<span class="px-2 py-0.5 bg-surface-container rounded text-primary font-semibold">Confidence 96.4%</span>
+</div>
+</div>
+<!-- Dual Sub-Ledgers (Inflows Stream vs Outflows Stream) -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+<!-- SUB-LEDGER 1: INFLOW STREAM -->
+<div class="bg-surface-container-lowest rounded p-3.5 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-surface-container">
+<div class="flex items-center gap-2">
+<span class="p-1 rounded bg-secondary-container text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[18px]">south_east</span>
+</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Scheduled & Predicted Inflow Stream</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Aggregated Sweeps: Razorpay, Marketplaces & Logistics Remittance</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-mono-data text-mono-data font-bold text-primary">₹1,94,20,500.00</div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">16 Expected Batches</span>
+</div>
+</div>
+<!-- Inflow Table -->
+<div class="overflow-x-auto mt-2">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-mono-sm text-mono-sm text-on-surface-variant">
+<th class="py-2 px-table-cell-x">Date / Source</th>
+<th class="py-2 px-table-cell-x">Settlement Ref / Batch ID</th>
+<th class="py-2 px-table-cell-x text-right">Gross Amount</th>
+<th class="py-2 px-table-cell-x">Status / Source Model</th>
+<th class="py-2 px-table-cell-x text-center">Action</th>
+</tr>
+</thead>
+<tbody class="font-mono-data text-mono-data divide-y divide-surface-container text-on-surface">
+<!-- Item 1 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-on-surface">02-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Razorpay (Cards/UPI)</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-primary select-all">RZP-STMT-240402-99</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">T+1 Net Settle (ICICI)</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold">
+                    ₹18,45,210.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-primary-fixed text-on-primary-fixed font-mono-sm text-mono-sm rounded uppercase font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                      Confirmed UTR
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Inspect Ledger Match">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Item 2 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-on-surface">04-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Delhivery COD Remit</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">DEL-COD-APR04-A</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Air Waybill Cluster (628pk)</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold">
+                    ₹11,32,400.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-mono-sm text-mono-sm rounded uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+                      In-Transit Float
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Inspect Ledger Match">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Item 3 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-on-surface">07-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Amazon India Marketplace</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">AMZ-IN-SETTL-074</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Bi-weekly Remit (HDFC)</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold">
+                    ₹34,18,900.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-primary-fixed text-on-primary-fixed font-mono-sm text-mono-sm rounded uppercase font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                      Confirmed UTR
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Inspect Ledger Match">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Item 4 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-on-surface">12-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">BlueDart COD Remit</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">BD-COD-EST-1204</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">ML Projected Remittance</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold text-primary">
+                    ₹8,92,440.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-surface-container-high text-on-surface font-mono-sm text-mono-sm rounded uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px] text-primary">psychology</span>
+                      ML Predicted (94%)
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Adjust Parameters">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</td>
+</tr>
+<!-- Item 5 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-on-surface">19-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Flipkart Merchant Node</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">FK-SETTL-PRED-19</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Weekly Sweep Projection</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold text-primary">
+                    ₹22,10,000.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-surface-container-high text-on-surface font-mono-sm text-mono-sm rounded uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px] text-primary">psychology</span>
+                      ML Predicted (91%)
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Adjust Parameters">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</td>
+</tr>
+<!-- Item 6 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-on-surface">26-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Wholesale B2B Wire (Cred)</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">INV-B2B-2024-884</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Reliance Retail Bulk Lot</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold">
+                    ₹42,00,000.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-mono-sm text-mono-sm rounded uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+                      Due in 24 Days
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Inspect Ledger Match">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-surface-container font-mono-sm text-mono-sm text-on-surface-variant mt-2">
+<span>Viewing 6 of 16 Inflow lines</span>
+<button class="text-primary hover:underline font-semibold flex items-center gap-1">
+<span>Expand Full Inflow Register</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- SUB-LEDGER 2: OUTFLOW STREAM -->
+<div class="bg-surface-container-lowest rounded p-3.5 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-surface-container">
+<div class="flex items-center gap-2">
+<span class="p-1 rounded bg-error-container text-on-error-container">
+<span class="material-symbols-outlined text-[18px]">north_east</span>
+</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Scheduled Outflow & Statutory Demands</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Section 43B(h) MSME, GST 3B, TDS & Direct IMPS Payroll</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-mono-data text-mono-data font-bold text-tertiary">₹1,55,80,300.00</div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">12 Scheduled Vouchers</span>
+</div>
+</div>
+<!-- Outflow Table -->
+<div class="overflow-x-auto mt-2">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-mono-sm text-mono-sm text-on-surface-variant">
+<th class="py-2 px-table-cell-x">Deadline / Payee</th>
+<th class="py-2 px-table-cell-x">Voucher / Statutory Code</th>
+<th class="py-2 px-table-cell-x text-right">Commitment</th>
+<th class="py-2 px-table-cell-x">Risk Class / Status</th>
+<th class="py-2 px-table-cell-x text-center">Action</th>
+</tr>
+</thead>
+<tbody class="font-mono-data text-mono-data divide-y divide-surface-container text-on-surface">
+<!-- Outflow 1 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-on-surface">07-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Govt of India (TDS 194C/J)</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">CHALLAN-ITNS-281</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Direct NetBanking Auto-debit</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold text-tertiary">
+                    ₹6,40,000.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-primary-fixed text-on-primary-fixed font-mono-sm text-mono-sm rounded uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+                      Mandatory Lock
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Inspect Voucher">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Outflow 2 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-tertiary">15-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Apex Corrugated Box Mfg</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">VCH-MSME-24-118</span>
+<div class="font-mono-sm text-mono-sm text-tertiary font-medium">Sec 43B(h) Day 44 Trigger</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold text-tertiary">
+                    ₹18,20,500.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-error-container text-on-error-container font-mono-sm text-mono-sm rounded uppercase font-bold">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                      MSME 45d Penalty
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="px-2 py-0.5 bg-primary text-on-primary rounded font-mono-sm text-mono-sm hover:bg-primary-container">
+                      Queue
+                    </button>
+</td>
+</tr>
+<!-- Outflow 3 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-tertiary">15-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">SunPoly Bottles Ltd (Micro)</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">VCH-MSME-24-142</span>
+<div class="font-mono-sm text-mono-sm text-tertiary font-medium">Sec 43B(h) Day 45 Trigger</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold text-tertiary">
+                    ₹15,99,500.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-error-container text-on-error-container font-mono-sm text-mono-sm rounded uppercase font-bold">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                      MSME 45d Penalty
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="px-2 py-0.5 bg-primary text-on-primary rounded font-mono-sm text-mono-sm hover:bg-primary-container">
+                      Queue
+                    </button>
+</td>
+</tr>
+<!-- Outflow 4 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors bg-error-container/20">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-error">20-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">GSTN Portal (GSTR-3B)</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">GSTIN-27AAACR1234F</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Net Cash Ledger Offset</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold text-error">
+                    ₹28,40,000.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-tertiary text-on-tertiary font-mono-sm text-mono-sm rounded uppercase font-bold">
+<span class="material-symbols-outlined text-[12px]">account_balance</span>
+                      Tax Outflow
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Inspect GST Breakup">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Outflow 5 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-on-surface">25-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Bhiwandi Fulfillment Hub</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">LEASE-BHW-APR24</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Commercial Warehouse Lease</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold">
+                    ₹8,50,000.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-surface-container-high text-on-surface font-mono-sm text-mono-sm rounded uppercase font-semibold">
+                      Standing Order
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Inspect Voucher">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Outflow 6 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-table-cell-y px-table-cell-x">
+<div class="font-semibold text-on-surface">30-Apr-2024</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Corporate Payroll (184 Staff)</span>
+</td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="text-on-surface select-all">PAY-IMPS-APR-FINAL</span>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">Direct Salary Disbursal Batch</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-bold text-primary">
+                    ₹46,80,300.00
+                  </td>
+<td class="py-table-cell-y px-table-cell-x">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-primary-fixed text-on-primary-fixed font-mono-sm text-mono-sm rounded uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px]">group</span>
+                      IMPS Batch File
+                    </span>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-center">
+<button class="p-1 text-on-surface-variant hover:text-primary transition-colors" title="Inspect Payroll Batch">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-surface-container font-mono-sm text-mono-sm text-on-surface-variant mt-2">
+<span>Viewing 6 of 12 Outflow demands</span>
+<button class="text-primary hover:underline font-semibold flex items-center gap-1">
+<span>Export Statutory Payment Schedule</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Stress Engine & Buffer Calibration Panel -->
+<div class="mt-4 bg-surface-container-lowest p-4 rounded shadow-sm">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded bg-surface-container-low text-primary">
+<span class="material-symbols-outlined text-[24px]">smart_toy</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Auto-Rebalance Liquidity Recommendation</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+              The trough on <strong>18-Apr (₹88,10,000)</strong> remains above the safety floor of ₹50.0L. No working capital overdraft drawdown required.
+            </div>
+</div>
+</div>
+<div class="flex items-center gap-2 self-end lg:self-auto">
+<button class="px-3 py-1.5 bg-surface-container-low text-on-surface hover:bg-surface-container rounded font-body-sm text-body-sm transition-colors">
+            Configure Floor Thresholds
+          </button>
+<button class="px-3 py-1.5 bg-primary text-on-primary hover:bg-primary-container rounded font-body-sm text-body-sm transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock_clock</span>
+<span>Authorize Scheduled Batches</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+  (function() {
+    const scenarioSelect = document.getElementById('sim-scenario');
+    if (!scenarioSelect) return;
+
+    scenarioSelect.addEventListener('change', function(e) {
+      const mode = e.target.value;
+      const statusPill = e.target.closest('section')?.querySelector('.animate-pulse');
+      if (statusPill) {
+        statusPill.classList.add('bg-tertiary');
+        setTimeout(() => {
+          statusPill.classList.remove('bg-tertiary');
+        }, 1200);
+      }
+    });
+  })();
+</script></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant py-4"><div class="w-full px-grid-margin flex flex-col sm:flex-row items-center justify-between gap-2 font-mono-sm text-mono-sm text-on-surface-variant"><div>© 2024 AUTORECON AI • INSTITUTIONAL SETTLEMENT CONSOLE</div><div class="flex items-center gap-4"><span>CORE PROTOCOL: V4.12.0</span><span>ENCRYPTION: AES-256 GCM</span><span>DIRECT BANK FED: SECURE</span></div></div></footer></body></html>

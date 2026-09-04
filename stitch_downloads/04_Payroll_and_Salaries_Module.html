@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=inter:wght@100..900&family=outfit:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"tertiary-container":"#cc4204","secondary-container":"#dae2fd","surface-bright":"#f8f9ff","on-background":"#0b1c30","surface-variant":"#d3e4fe","on-error":"#ffffff","on-tertiary":"#ffffff","tertiary":"#a33200","on-primary":"#ffffff","surface-container":"#e5eeff","on-tertiary-fixed":"#390c00","tertiary-fixed-dim":"#ffb59d","primary-container":"#0066ff","inverse-on-surface":"#eaf1ff","primary":"#0050cb","surface-dim":"#cbdbf5","secondary":"#565e74","outline-variant":"#c2c6d8","on-secondary-container":"#5c647a","secondary-fixed":"#dae2fd","surface":"#f8f9ff","error-container":"#ffdad6","surface-container-low":"#eff4ff","on-surface-variant":"#424656","on-secondary":"#ffffff","on-tertiary-container":"#fff6f4","secondary-fixed-dim":"#bec6e0","on-secondary-fixed":"#131b2e","primary-fixed":"#dae1ff","error":"#ba1a1a","surface-container-lowest":"#ffffff","surface-container-high":"#dce9ff","tertiary-fixed":"#ffdbd0","on-tertiary-fixed-variant":"#832600","on-primary-fixed-variant":"#003fa4","inverse-primary":"#b3c5ff","surface-container-highest":"#d3e4fe","primary-fixed-dim":"#b3c5ff","outline":"#727687","on-error-container":"#93000a","background":"#f8f9ff","on-primary-fixed":"#001849","on-secondary-fixed-variant":"#3f465c","inverse-surface":"#213145","on-primary-container":"#f8f7ff","on-surface":"#0b1c30","surface-tint":"#0054d6"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"grid-margin":"1.5rem","grid-gutter":"1rem","table-cell-y":"0.5rem","section-gap":"1.5rem","panel-padding":"1rem","compact-row":"0.375rem","table-cell-x":"0.75rem"},"fontFamily":{"mono-kpi":["jetbrainsMono"],"headline-xl":["outfit"],"headline-sm":["outfit"],"headline-md":["outfit"],"mono-sm":["jetbrainsMono"],"body-lg":["inter"],"mono-data":["jetbrainsMono"],"body-sm":["inter"],"body-md":["inter"],"headline-lg":["outfit"]},"fontSize":{"mono-kpi":["22px",{"lineHeight":"26px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-xl":["32px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-sm":["15px",{"lineHeight":"20px","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"700"}],"mono-sm":["10px",{"lineHeight":"13px","fontWeight":"400"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"500"}],"mono-data":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-sm":["11px",{"lineHeight":"15px","fontWeight":"400"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-14 w-full px-grid-margin flex items-center justify-between gap-grid-gutter"><div class="flex items-center gap-3 shrink-0"><img alt="AutoRecon AI Brand Mark" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wo0YO1-_SRDWIjvp4DhyPKV_q6Q3k_HSGCyTYeZnRI00m7e7mv-e2_o055l9CnZyh3pV3_pHru4at_xhWguLARIpqydJ2lhppDDo23j5MPBaz9Jzdz7kzNl8BqMzdS6YjOEtE5gIclEmNJGwQx9nPBYXRYI6T4bMuvSC4Eo3jrjLDGO5IScn7AKUImBmVgN312BxI7SY7lEZOMv5lk1BACWNCzZ2OjBymPK9Cn6ujeFPilPVhqTRH2QAQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight uppercase">AutoRecon AI</span><div class="flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span>LIVE RECON FEED • SYNCED 4s AGO</span></div></div><nav class="hidden xl:flex items-center h-full gap-4" data-active-classes="text-primary border-b-2 border-primary font-body-lg"><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="operating-console" href="#">Operating Console</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="gateway-recon" href="#">Gateway Recon (3-Way Check)</a><a aria-current="page" class="h-full flex items-center px-1 transition-colors whitespace-nowrap text-primary border-b-2 border-primary font-body-lg" data-path="payroll-and-salaries" href="#">Payroll & Salaries (IMPS / TDS 192)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="msme-43b-h" href="#">MSME 43B(h) (45-Day Aging)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="cash-compass" href="#">Cash Compass (30-Day Forecast)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="ml-intelligence-lab" href="#">ML Intelligence Lab</a></nav><div class="flex items-center gap-3 shrink-0"><div class="hidden md:flex items-center bg-surface border border-outline-variant rounded-DEFAULT px-2 py-1 gap-2 w-56"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">search</span><span class="font-mono-data text-mono-data text-on-surface-variant flex-1 select-none">Search UTR, Order, GSTIN...</span><kbd class="bg-surface-container px-1.5 py-0.5 rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant border border-outline-variant">⌘K</kbd></div><button class="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary rounded-DEFAULT font-body-md text-body-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-none"><span class="material-symbols-outlined text-[16px]">description</span><span>Export Tally XML</span></button><div class="hidden lg:flex items-center gap-1 px-2 py-1 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface"><span class="material-symbols-outlined text-[14px] text-primary">check_circle</span><span>Webhook: 200 OK</span></div><button aria-label="Toggle Theme" class="h-8 w-8 flex items-center justify-center rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">light_mode</span></button><div class="flex items-center gap-2 pl-2 border-l border-outline-variant"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden 2xl:flex flex-col text-left"><span class="font-body-md text-body-md text-on-surface leading-none font-semibold">D2C Merchant FinOps</span><span class="font-mono-sm text-mono-sm text-on-surface-variant leading-none mt-0.5">GSTIN: 27AAACR1234F1Z5</span></div></div></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Sub-Header / Control Strip -->
+<div class="w-full bg-surface-container-lowest px-grid-margin py-4 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 shadow-sm relative z-10">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 bg-primary-container text-on-primary rounded-DEFAULT font-mono-sm text-mono-sm tracking-wider uppercase font-bold">DIRECT CIB API CONNECTED</span>
+<span class="font-mono-sm text-mono-sm text-secondary">EPFO EC-9428 • TRACES 24Q VALIDATED</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Autonomous Payroll Disbursal & Section 192 TDS Engine</h1>
+<p class="font-mono-data text-mono-data text-secondary">
+        Batch ID: <span class="text-on-surface font-semibold">PAY-2025-03-B1</span> • Cycle: <span class="text-on-surface font-semibold">March 2025 Cycle</span> • 48 Active Employees • Net Disbursal: <span class="font-mono-kpi text-body-lg text-primary font-bold">INR 44,92,400.00</span>
+</p>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-low text-on-surface rounded-DEFAULT font-body-md text-body-md hover:bg-surface-container transition-all shadow-sm" id="simBtn">
+<span class="material-symbols-outlined text-[16px] text-secondary">science</span>
+<span>Simulate IMPS Batch</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 bg-surface-container text-on-surface rounded-DEFAULT font-body-md text-body-md hover:bg-surface-container-high transition-all shadow-sm" id="exportChallanBtn">
+<span class="material-symbols-outlined text-[16px] text-primary">download</span>
+<span>Download Form 16 / TDS Challan XML</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 bg-primary text-on-primary rounded-DEFAULT font-body-md text-body-md hover:bg-primary-container transition-all shadow-md active:scale-95" id="triggerPayoutBtn">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span class="font-semibold">Trigger Instant Bank Disbursal via ICICI Direct API</span>
+</button>
+</div>
+</div>
+<div class="w-full px-grid-margin py-section-gap flex flex-col gap-6">
+<!-- Critical Alert & TDS Statutory Breakdown Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+<!-- Salary Delay Risk Watcher -->
+<div class="lg:col-span-4 bg-tertiary-container text-on-tertiary-container p-panel-padding rounded-DEFAULT flex flex-col justify-between shadow-md relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+<div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-error-container text-[20px]">warning</span>
+<span class="font-headline-sm text-headline-sm uppercase tracking-wider font-bold">Delay Risk Watcher</span>
+</div>
+<span class="font-mono-sm text-mono-sm bg-black/20 px-2 py-0.5 rounded-DEFAULT font-bold">2 FLAGS FOUND</span>
+</div>
+<p class="font-body-md text-body-md text-on-tertiary-container/90 leading-relaxed mb-3">
+            Two employee accounts detected with outdated merged IFSC records (Syndicate → Canara Bank & Allahabad → Indian Bank). Requires immediate internal routing swap to eliminate automated NPCI/IMPS bounce penalties.
+          </p>
+<div class="bg-black/20 p-2.5 rounded-DEFAULT flex flex-col gap-1.5 font-mono-sm text-mono-sm">
+<div class="flex justify-between items-center text-white">
+<span>EMP-0142 (SYNB0009102 → CNRB0009102)</span>
+<span class="underline cursor-pointer hover:text-primary-fixed" onclick="alert('Routing updated to new Canara IFSC. Ready for verify.')">Auto-Resolve</span>
+</div>
+<div class="flex justify-between items-center text-white">
+<span>EMP-0189 (ALLA0210384 → IDIB000A038)</span>
+<span class="underline cursor-pointer hover:text-primary-fixed" onclick="alert('Routing updated to Indian Bank IFSC. Ready for verify.')">Auto-Resolve</span>
+</div>
+</div>
+</div>
+<div class="mt-3 flex items-center justify-between text-on-tertiary-container/80 font-mono-sm text-mono-sm">
+<span>SLA Buffer: 02h 45m before cutoff</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-error-container animate-ping"></span> Priority Critical</span>
+</div>
+</div>
+<!-- Statutory TDS Section 192 Tax Calculation Summary Card -->
+<div class="lg:col-span-8 bg-surface-container-lowest p-panel-padding rounded-DEFAULT shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex flex-wrap items-center justify-between pb-3 mb-3 bg-surface-container-low -mx-panel-padding -mt-panel-padding px-panel-padding pt-3 rounded-t-DEFAULT">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Statutory Compliance: Section 192 TDS & Form 24Q Ledger</span>
+</div>
+<div class="flex items-center gap-2 font-mono-sm text-mono-sm">
+<span class="text-secondary">Challan ITNS 281</span>
+<span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-bold rounded-DEFAULT">BSR: 0210042</span>
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container font-bold rounded-DEFAULT">CIN: 02100422024032800192</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-1">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-secondary uppercase tracking-wider">Total Gross Payroll</span>
+<span class="font-mono-kpi text-mono-kpi text-on-surface mt-1">₹52,10,000</span>
+<span class="font-mono-sm text-mono-sm text-secondary mt-0.5">48 Headcount Full Month</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-secondary uppercase tracking-wider">Deductions / EPF / ESI</span>
+<span class="font-mono-kpi text-mono-kpi text-on-surface mt-1">₹2,84,200</span>
+<span class="font-mono-sm text-mono-sm text-secondary mt-0.5">EPF ₹1.98L • ESI ₹86.2K</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-secondary uppercase tracking-wider">TDS u/s 192 Deposited</span>
+<span class="font-mono-kpi text-mono-kpi text-tertiary mt-1">₹4,33,400</span>
+<span class="font-mono-sm text-mono-sm text-primary font-semibold mt-0.5">Deposited 28-Mar-2025</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-secondary uppercase tracking-wider">Net Batch Payout</span>
+<span class="font-mono-kpi text-mono-kpi text-primary mt-1">₹44,92,400</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant mt-0.5">Ready for instant push</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low -mx-panel-padding -mb-panel-padding px-panel-padding pb-3 flex items-center justify-between text-on-surface-variant font-mono-sm text-mono-sm rounded-b-DEFAULT">
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-primary">check_circle</span> Form 16 Part-A Pre-Populated</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-primary">check_circle</span> TRACES Hash Matched</span>
+</div>
+<span class="text-secondary font-mono-sm">Corporate Bank Token Valid (ICICI Treasury Feed)</span>
+</div>
+</div>
+</div>
+<!-- Live IMPS Batch Disbursal Flow & Verification Tracker -->
+<div class="bg-surface-container-lowest p-panel-padding rounded-DEFAULT shadow-sm">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between pb-3 mb-4">
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Execution Pipeline: 4-Stage IMPS Disbursal</span>
+<p class="font-body-sm text-body-sm text-secondary">Deterministic statutory lockdown and transactional clearing stream</p>
+</div>
+<div class="mt-2 md:mt-0 flex items-center gap-2 font-mono-sm text-mono-sm">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface-container text-on-surface rounded-DEFAULT">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            STAGE 3 IN FLIGHT
+          </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-3 relative">
+<!-- Step 1 -->
+<div class="bg-surface-container-low p-3 rounded-DEFAULT flex flex-col gap-2 relative">
+<div class="flex items-center justify-between">
+<span class="font-mono-sm text-mono-sm font-bold text-secondary">PHASE 01</span>
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Pre-Audit Register</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Reconciled against biometric records, unpaid leave & shift rosters.</p>
+<div class="mt-auto pt-2 flex items-center gap-1 text-primary font-mono-sm text-mono-sm font-bold">
+<span>AUDIT COMPLETED</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container-low p-3 rounded-DEFAULT flex flex-col gap-2 relative">
+<div class="flex items-center justify-between">
+<span class="font-mono-sm text-mono-sm font-bold text-secondary">PHASE 02</span>
+<span class="material-symbols-outlined text-primary text-[18px]">lock</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">TDS 192 & Challan Lock</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">ITNS 281 validated, slab tax applied per new/old scheme declaration.</p>
+<div class="mt-auto pt-2 flex items-center gap-1 text-primary font-mono-sm text-mono-sm font-bold">
+<span>CHALLAN LOCKED</span>
+</div>
+</div>
+<!-- Step 3: Active -->
+<div class="bg-primary text-on-primary p-3 rounded-DEFAULT flex flex-col gap-2 shadow-md relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-mono-sm text-mono-sm font-bold text-primary-fixed">PHASE 03 • ACTIVE</span>
+<span class="material-symbols-outlined text-on-primary text-[18px] animate-spin">sync</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-primary">Instant IMPS Push</span>
+<p class="font-body-sm text-body-sm text-primary-fixed-dim">Direct socket transmission to ICICI Corporate CIB API Gateway.</p>
+<div class="mt-auto pt-2 flex items-center justify-between text-on-primary font-mono-sm text-mono-sm">
+<span>34/48 Confirmed</span>
+<span class="font-bold">70.8% Cleared</span>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="bg-surface-container-low p-3 rounded-DEFAULT flex flex-col gap-2 relative opacity-75">
+<div class="flex items-center justify-between">
+<span class="font-mono-sm text-mono-sm font-bold text-secondary">PHASE 04</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">schedule</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">UTR Stamping & Slips</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Core Banking UTR ingest, automated WhatsApp/Email salary slips PDF.</p>
+<div class="mt-auto pt-2 flex items-center gap-1 text-secondary font-mono-sm text-mono-sm">
+<span>AWAITING FINAL UTR</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Employee Payroll Ledger Table -->
+<div class="bg-surface-container-lowest rounded-DEFAULT shadow-sm overflow-hidden flex flex-col">
+<div class="p-panel-padding bg-surface-container-low flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="font-headline-md text-headline-md text-on-surface">Employee Disbursal Ledger</span>
+<span class="px-2 py-0.5 bg-surface-container text-secondary font-mono-sm text-mono-sm rounded-DEFAULT">48 Line Items</span>
+</div>
+<div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+<div class="flex items-center bg-surface-container-lowest px-2 py-1 rounded-DEFAULT shadow-sm flex-1 sm:flex-initial">
+<span class="material-symbols-outlined text-secondary text-[16px] mr-1.5">filter_alt</span>
+<select class="bg-transparent font-body-sm text-body-sm text-on-surface outline-none cursor-pointer" id="statusFilter">
+<option value="ALL">All Statuses (48)</option>
+<option value="CONFIRMED">Disbursed (34)</option>
+<option value="IN_FLIGHT">In-Flight / Queued (12)</option>
+<option value="FLAGGED">Routing Flagged (2)</option>
+</select>
+</div>
+<div class="flex items-center bg-surface-container-lowest px-2 py-1 rounded-DEFAULT shadow-sm flex-1 sm:flex-initial">
+<span class="material-symbols-outlined text-secondary text-[16px] mr-1.5">search</span>
+<input class="bg-transparent font-mono-data text-mono-data text-on-surface outline-none w-36 sm:w-48 placeholder:text-secondary" id="searchInput" placeholder="Filter Name / PAN / UTR..." type="text"/>
+</div>
+<button class="px-2.5 py-1 bg-surface-container text-on-surface font-body-sm text-body-sm rounded-DEFAULT hover:bg-surface-container-high transition-colors" onclick="alert('Bulk PDF payslip generation scheduled in background queue.')">
+            Generate Bulk Slips
+          </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-secondary font-mono-sm text-mono-sm uppercase tracking-wider select-none">
+<th class="py-table-cell-y px-table-cell-x">Emp ID</th>
+<th class="py-table-cell-y px-table-cell-x">Employee & Role</th>
+<th class="py-table-cell-y px-table-cell-x">PAN / Aadhaar Hash</th>
+<th class="py-table-cell-y px-table-cell-x">Bank / IFSC</th>
+<th class="py-table-cell-y px-table-cell-x text-right">Gross (INR)</th>
+<th class="py-table-cell-y px-table-cell-x text-right">PT / ESI / PF</th>
+<th class="py-table-cell-y px-table-cell-x text-right">Sec 192 TDS</th>
+<th class="py-table-cell-y px-table-cell-x text-right">Net Payable</th>
+<th class="py-table-cell-y px-table-cell-x">Disbursal State & UTR</th>
+<th class="py-table-cell-y px-table-cell-x text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface divide-y divide-surface-container" id="payrollTableBody">
+<!-- Row 1: Confirmed -->
+<tr class="hover:bg-surface-container-low transition-colors payroll-row" data-search="EMP-0101 AARAV SHARMA HDFC0000060 CMS882910482 ABCPS1234F" data-status="CONFIRMED">
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data text-primary font-bold">EMP-0101</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Aarav Sharma</span>
+<span class="font-body-sm text-body-sm text-secondary">VP of Engineering</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">ABCPS1234F</span>
+<span class="text-secondary font-mono-sm text-mono-sm">AADHAAR: ••••-9821</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="text-on-surface">HDFC Bank ••4819</span>
+<span class="text-secondary font-mono-sm text-mono-sm">IFSC: HDFC0000060</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data">₹3,25,000.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-secondary">₹18,200.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-tertiary">₹44,800.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data font-bold text-on-surface">₹2,62,000.00</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container-high text-on-surface rounded-DEFAULT font-mono-sm text-mono-sm w-fit font-bold">
+<span class="material-symbols-outlined text-[13px] text-primary">verified</span>
+                    CONFIRMED
+                  </span>
+<span class="font-mono-sm text-mono-sm text-primary">UTR: CMS882910482</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 text-secondary hover:text-primary transition-colors" onclick="alert('Viewing Payslip: Aarav Sharma [March 2025] - TDS Form 16 matched.')" title="View Payslip">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+<button class="p-1 text-secondary hover:text-primary transition-colors" onclick="alert('Exported Ledger Voucher for TallyPrime: VCH-PAY-0101')" title="Tally Voucher">
+<span class="material-symbols-outlined text-[18px]">post_add</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Confirmed -->
+<tr class="hover:bg-surface-container-low transition-colors payroll-row" data-search="EMP-0104 PRIYA VENKATESH ICIC0000011 CMS882910483 BTYPV8821K" data-status="CONFIRMED">
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data text-primary font-bold">EMP-0104</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Priya Venkatesh</span>
+<span class="font-body-sm text-body-sm text-secondary">Lead Architect</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">BTYPV8821K</span>
+<span class="text-secondary font-mono-sm text-mono-sm">AADHAAR: ••••-4412</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="text-on-surface">ICICI Bank ••7721</span>
+<span class="text-secondary font-mono-sm text-mono-sm">IFSC: ICIC0000011</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data">₹2,80,000.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-secondary">₹14,400.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-tertiary">₹38,200.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data font-bold text-on-surface">₹2,27,400.00</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container-high text-on-surface rounded-DEFAULT font-mono-sm text-mono-sm w-fit font-bold">
+<span class="material-symbols-outlined text-[13px] text-primary">verified</span>
+                    CONFIRMED
+                  </span>
+<span class="font-mono-sm text-mono-sm text-primary">UTR: CMS882910483</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 text-secondary hover:text-primary transition-colors" onclick="alert('Viewing Payslip: Priya Venkatesh [March 2025]')" title="View Payslip">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+<button class="p-1 text-secondary hover:text-primary transition-colors" onclick="alert('Exported Ledger Voucher for TallyPrime: VCH-PAY-0104')" title="Tally Voucher">
+<span class="material-symbols-outlined text-[18px]">post_add</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: In Flight -->
+<tr class="hover:bg-surface-container-low transition-colors payroll-row" data-search="EMP-0122 ROHAN KULKARNI SBIN0001290 CKLPK9921Z" data-status="IN_FLIGHT">
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data text-primary font-bold">EMP-0122</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Rohan Kulkarni</span>
+<span class="font-body-sm text-body-sm text-secondary">Frontend Engineer</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">CKLPK9921Z</span>
+<span class="text-secondary font-mono-sm text-mono-sm">AADHAAR: ••••-1193</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="text-on-surface">State Bank of India ••3391</span>
+<span class="text-secondary font-mono-sm text-mono-sm">IFSC: SBIN0001290</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data">₹1,65,000.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-secondary">₹8,800.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-tertiary">₹14,600.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data font-bold text-on-surface">₹1,41,600.00</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container text-on-surface rounded-DEFAULT font-mono-sm text-mono-sm w-fit">
+<span class="material-symbols-outlined text-[13px] text-primary animate-spin">autorenew</span>
+                    TRANSMITTING
+                  </span>
+<span class="font-mono-sm text-mono-sm text-secondary">Socket Active (Node #3)</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 text-primary hover:text-primary-container transition-colors" onclick="alert('Forced immediate retry for Rohan Kulkarni via Secondary ICICI CIB Gateway.')" title="Re-trigger IMPS">
+<span class="material-symbols-outlined text-[18px]">replay</span>
+</button>
+<button class="p-1 text-secondary hover:text-on-surface" title="View Details">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Flagged Routing -->
+<tr class="hover:bg-error-container/20 transition-colors payroll-row" data-search="EMP-0142 ANANYA DESHMUKH SYNB0009102 CNRB0009102 DPEAD4412M" data-status="FLAGGED">
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data text-tertiary font-bold">EMP-0142</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Ananya Deshmukh</span>
+<span class="font-body-sm text-body-sm text-secondary">Product Designer</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">DPEAD4412M</span>
+<span class="text-secondary font-mono-sm text-mono-sm">AADHAAR: ••••-7264</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="text-on-surface">Canara (ex-Syndicate) ••9012</span>
+<span class="text-tertiary font-mono-sm text-mono-sm font-bold">IFSC: SYNB0009102 [MISMATCH]</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data">₹1,40,000.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-secondary">₹7,200.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-tertiary">₹9,800.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data font-bold text-on-surface">₹1,23,000.00</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-tertiary-container text-on-tertiary rounded-DEFAULT font-mono-sm text-mono-sm w-fit font-bold">
+<span class="material-symbols-outlined text-[13px]">report</span>
+                    MERGER BOUNCE RISK
+                  </span>
+<span class="font-mono-sm text-mono-sm text-tertiary">Target: CNRB0009102</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-0.5 bg-primary text-on-primary rounded-DEFAULT font-mono-sm text-mono-sm hover:bg-primary-container" onclick="alert('IFSC corrected to CNRB0009102. Bank master updated.')">
+                    Fix IFSC
+                  </button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Confirmed -->
+<tr class="hover:bg-surface-container-low transition-colors payroll-row" data-search="EMP-0155 VIKRAM SINGHANIA UTIB0000843 CMS882910484 GHTVS7710B" data-status="CONFIRMED">
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data text-primary font-bold">EMP-0155</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Vikram Singhania</span>
+<span class="font-body-sm text-body-sm text-secondary">DevOps & Infrastructure</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">GHTVS7710B</span>
+<span class="text-secondary font-mono-sm text-mono-sm">AADHAAR: ••••-5582</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="text-on-surface">Axis Bank ••1048</span>
+<span class="text-secondary font-mono-sm text-mono-sm">IFSC: UTIB0000843</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data">₹2,10,000.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-secondary">₹11,600.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-tertiary">₹26,400.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data font-bold text-on-surface">₹1,72,000.00</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container-high text-on-surface rounded-DEFAULT font-mono-sm text-mono-sm w-fit font-bold">
+<span class="material-symbols-outlined text-[13px] text-primary">verified</span>
+                    CONFIRMED
+                  </span>
+<span class="font-mono-sm text-mono-sm text-primary">UTR: CMS882910484</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 text-secondary hover:text-primary transition-colors" onclick="alert('Viewing Payslip: Vikram Singhania [March 2025]')" title="View Payslip">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+<button class="p-1 text-secondary hover:text-primary transition-colors" onclick="alert('Exported Ledger Voucher for TallyPrime: VCH-PAY-0155')" title="Tally Voucher">
+<span class="material-symbols-outlined text-[18px]">post_add</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Flagged Routing -->
+<tr class="hover:bg-error-container/20 transition-colors payroll-row" data-search="EMP-0189 DEEPALI MEHTA ALLA0210384 IDIB000A038 KPLDM3389J" data-status="FLAGGED">
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data text-tertiary font-bold">EMP-0189</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Deepali Mehta</span>
+<span class="font-body-sm text-body-sm text-secondary">QA Automation Lead</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">KPLDM3389J</span>
+<span class="text-secondary font-mono-sm text-mono-sm">AADHAAR: ••••-3901</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="text-on-surface">Indian Bank (ex-Allahabad) ••2204</span>
+<span class="text-tertiary font-mono-sm text-mono-sm font-bold">IFSC: ALLA0210384 [OBSOLETE]</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data">₹1,75,000.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-secondary">₹9,400.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-tertiary">₹17,200.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data font-bold text-on-surface">₹1,48,400.00</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-tertiary-container text-on-tertiary rounded-DEFAULT font-mono-sm text-mono-sm w-fit font-bold">
+<span class="material-symbols-outlined text-[13px]">report</span>
+                    OBSOLETE IFSC
+                  </span>
+<span class="font-mono-sm text-mono-sm text-tertiary">Target: IDIB000A038</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-0.5 bg-primary text-on-primary rounded-DEFAULT font-mono-sm text-mono-sm hover:bg-primary-container" onclick="alert('IFSC mapped to Indian Bank corporate branch IDIB000A038.')">
+                    Fix IFSC
+                  </button>
+</div>
+</td>
+</tr>
+<!-- Row 7: In-Flight -->
+<tr class="hover:bg-surface-container-low transition-colors payroll-row" data-search="EMP-0205 MANISH PATEL KKBK0000429 MMKPM9921D" data-status="IN_FLIGHT">
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data text-primary font-bold">EMP-0205</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Manish Patel</span>
+<span class="font-body-sm text-body-sm text-secondary">Backend Specialist</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">MMKPM9921D</span>
+<span class="text-secondary font-mono-sm text-mono-sm">AADHAAR: ••••-6641</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="text-on-surface">Kotak Mahindra ••5501</span>
+<span class="text-secondary font-mono-sm text-mono-sm">IFSC: KKBK0000429</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data">₹1,90,000.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-secondary">₹10,200.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data text-tertiary">₹21,800.00</td>
+<td class="py-table-cell-y px-table-cell-x text-right font-mono-data text-mono-data font-bold text-on-surface">₹1,58,000.00</td>
+<td class="py-table-cell-y px-table-cell-x">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container text-on-surface rounded-DEFAULT font-mono-sm text-mono-sm w-fit">
+<span class="material-symbols-outlined text-[13px] text-primary animate-spin">autorenew</span>
+                    TRANSMITTING
+                  </span>
+<span class="font-mono-sm text-mono-sm text-secondary">Awaiting Host ACK</span>
+</div>
+</td>
+<td class="py-table-cell-y px-table-cell-x text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 text-primary hover:text-primary-container transition-colors" onclick="alert('IMPS retry queued for Manish Patel.')" title="Re-trigger IMPS">
+<span class="material-symbols-outlined text-[18px]">replay</span>
+</button>
+<button class="p-1 text-secondary hover:text-on-surface" title="View Details">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Ledger Table Footer -->
+<div class="p-3 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-3 text-secondary font-mono-sm text-mono-sm">
+<div class="flex items-center gap-2">
+<span>Showing 7 of 48 total employees in batch</span>
+<span class="w-1 h-1 rounded-full bg-secondary"></span>
+<span>Pagination: Page 1 of 7</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2 py-1 bg-surface-container text-on-surface rounded-DEFAULT disabled:opacity-50 cursor-not-allowed">Previous</button>
+<button class="px-2 py-1 bg-primary text-on-primary rounded-DEFAULT">1</button>
+<button class="px-2 py-1 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-container-high">2</button>
+<button class="px-2 py-1 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-container-high">3</button>
+<button class="px-2 py-1 bg-surface-container text-on-surface rounded-DEFAULT hover:bg-surface-container-high">Next</button>
+</div>
+</div>
+</div>
+<!-- Deep Inspection Modal Simulation Tray (Inline Accordion Details) -->
+<div class="bg-surface-container-lowest p-panel-padding rounded-DEFAULT shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-DEFAULT bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">terminal</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Raw IMPS Payload & Core Banking Direct Log</span>
+<span class="font-mono-data text-mono-data text-secondary">Host: cib-api.icicibank.com:8443 • TLS 1.3 • Hash: SHA-256</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 bg-surface-container text-on-surface rounded-DEFAULT font-mono-sm text-mono-sm hover:bg-surface-container-high transition-colors flex items-center gap-1" onclick="document.getElementById('rawLogBox').classList.toggle('hidden')">
+<span class="material-symbols-outlined text-[16px]">code</span>
+<span>Toggle XML/JSON Stream</span>
+</button>
+</div>
+</div>
+<!-- Collapsible Raw Log Area -->
+<div class="hidden bg-surface-container-lowest p-panel-padding rounded-DEFAULT shadow-sm font-mono-data text-mono-data text-on-surface overflow-x-auto" id="rawLogBox">
+<pre class="text-on-surface-variant leading-relaxed"><?xml version="1.0" encoding="UTF-8"?>
+<IMPSBatchDisbursalRequest id="REQ-20250328-9921">
+  <CorporateHeader>
+    <CorpId>AUTORECON_D2C</CorpId>
+    <DebitAccount>000405009921</DebitAccount>
+    <GrossAmount currency="INR">4492400.00</GrossAmount>
+    <ChallanRef CIN="02100422024032800192" BSR="0210042" />
+  </CorporateHeader>
+  <BatchItems total="48" mode="IMPS_DIRECT">
+    <Record empId="EMP-0101" ifsc="HDFC0000060" amount="262000.00" status="CMS_ACK_200" utr="CMS882910482" />
+    <Record empId="EMP-0104" ifsc="ICIC0000011" amount="227400.00" status="CMS_ACK_200" utr="CMS882910483" />
+    <Record empId="EMP-0122" ifsc="SBIN0001290" amount="141600.00" status="IN_TRANSIT" />
+    <Record empId="EMP-0142" ifsc="SYNB0009102" amount="123000.00" status="ROUTING_RETRY_LOCK" />
+  </BatchItems>
+</IMPSBatchDisbursalRequest>
+      </pre>
+</div>
+</div>
+<!-- Interactive JavaScript logic for filtering, search, and action simulation -->
+<script>
+    (function() {
+      // Filter logic
+      const statusFilter = document.getElementById('statusFilter');
+      const searchInput = document.getElementById('searchInput');
+      const rows = document.querySelectorAll('.payroll-row');
+
+      function applyFilters() {
+        const selectedStatus = statusFilter.value;
+        const query = searchInput.value.toLowerCase().trim();
+
+        rows.forEach(row => {
+          const rowStatus = row.getAttribute('data-status');
+          const rowSearchText = (row.getAttribute('data-search') || '').toLowerCase();
+
+          const matchesStatus = (selectedStatus === 'ALL' || rowStatus === selectedStatus);
+          const matchesQuery = !query || rowSearchText.includes(query);
+
+          if (matchesStatus && matchesQuery) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      }
+
+      if (statusFilter) statusFilter.addEventListener('change', applyFilters);
+      if (searchInput) searchInput.addEventListener('input', applyFilters);
+
+      // Button micro-interactions
+      const triggerPayoutBtn = document.getElementById('triggerPayoutBtn');
+      if (triggerPayoutBtn) {
+        triggerPayoutBtn.addEventListener('click', function() {
+          const confirmAction = confirm("Initiate live IMPS API call to ICICI Corporate Server for INR 44,92,400.00? (Digital Certificate token required)");
+          if (confirmAction) {
+            this.disabled = true;
+            this.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">sync</span><span>Disbursing via Bank Gateway...</span>';
+            setTimeout(() => {
+              this.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span><span>Batch 100% Pushed (48/48)</span>';
+              alert('IMPS Direct Batch Disbursal successfully queued. All 48 accounts acknowledged with Core Banking UTR stamp.');
+            }, 1800);
+          }
+        });
+      }
+
+      const simBtn = document.getElementById('simBtn');
+      if (simBtn) {
+        simBtn.addEventListener('click', function() {
+          alert('Pre-simulation complete: 46 accounts clear. 2 flagged routing entries require automated IFSC updates.');
+        });
+      }
+
+      const exportChallanBtn = document.getElementById('exportChallanBtn');
+      if (exportChallanBtn) {
+        exportChallanBtn.addEventListener('click', function() {
+          alert('Generating Form 16 / TDS Challan ITNS 281 XML payload with NSDL hash verification.');
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant py-4"><div class="w-full px-grid-margin flex flex-col sm:flex-row items-center justify-between gap-2 font-mono-sm text-mono-sm text-on-surface-variant"><div>© 2024 AUTORECON AI • INSTITUTIONAL SETTLEMENT CONSOLE</div><div class="flex items-center gap-4"><span>CORE PROTOCOL: V4.12.0</span><span>ENCRYPTION: AES-256 GCM</span><span>DIRECT BANK FED: SECURE</span></div></div></footer></body></html>

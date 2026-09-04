@@ -323,8 +323,7 @@ module.exports = async (req, res) => {
             const { name, companyName, email, gstin, password } = body;
 
             if (!email || typeof email !== 'string' || !password || !name) {
-                const errMsg = 'Valid name, email, and password are required';
-                return json({ message: errMsg, error: errMsg }, 400);
+                return json({ message: 'Valid name, email, and password are required' }, 400);
             }
 
             try {
@@ -335,8 +334,7 @@ module.exports = async (req, res) => {
                     user: { id: newUser.id, name: newUser.name, companyName: newUser.companyName, email: newUser.email, gstin: newUser.gstin }
                 });
             } catch (err) {
-                const errMsg = err.message || 'Signup failed. User may already exist.';
-                return json({ message: errMsg, error: errMsg }, 400);
+                return json({ message: 'Signup failed. User may already exist.' }, 400);
             }
         }
 
@@ -345,14 +343,12 @@ module.exports = async (req, res) => {
             const { email, password } = body;
 
             if (!email || !password) {
-                const errMsg = 'Email and password are required';
-                return json({ message: errMsg, error: errMsg }, 400);
+                return json({ message: 'Email and password are required' }, 400);
             }
 
             const user = await db.authenticateUser(email, password);
             if (!user) {
-                const errMsg = 'Invalid email or password';
-                return json({ message: errMsg, error: errMsg }, 401);
+                return json({ message: 'Invalid email or password' }, 401);
             }
 
             const token = await db.createSession(user.id);
@@ -436,8 +432,7 @@ module.exports = async (req, res) => {
             const body = await readBody();
             const empId = body.empId;
             if (!empId) {
-                const errMsg = 'Employee ID is required';
-                return json({ message: errMsg, error: errMsg }, 400);
+                return json({ message: 'Employee ID is required' }, 400);
             }
             const utr = `SAL_IMPS_${Date.now().toString().slice(-6)}`;
             const emp = await db.updatePayrollStatus(userId, empId, 'DISBURSED', utr);
@@ -453,8 +448,7 @@ module.exports = async (req, res) => {
             const body = await readBody();
             const billId = body.billId;
             if (!billId) {
-                const errMsg = 'Bill ID is required';
-                return json({ message: errMsg, error: errMsg }, 400);
+                return json({ message: 'Bill ID is required' }, 400);
             }
             const utr = `VEND_UTR_${Date.now().toString().slice(-6)}`;
             const bill = await db.updateVendorBillStatus(userId, billId, 'PAID', utr);
@@ -546,8 +540,7 @@ module.exports = async (req, res) => {
             // 1. Webhook Signature Verification (HMAC-SHA256 on RAW Body Buffer)
             if (!signature) {
                 console.warn('[RAZORPAY WEBHOOK] Rejected request: Missing x-razorpay-signature header');
-                const errMsg = 'Missing Razorpay webhook signature header';
-                return json({ error: errMsg, message: errMsg }, 401);
+                return json({ error: 'Unauthorized', message: 'Missing Razorpay webhook signature header' }, 401);
             }
 
             const expectedSignature = crypto
@@ -560,8 +553,7 @@ module.exports = async (req, res) => {
 
             if (sigBuffer.length !== expBuffer.length || !crypto.timingSafeEqual(sigBuffer, expBuffer)) {
                 console.warn('[RAZORPAY WEBHOOK] Rejected request: Invalid HMAC-SHA256 signature');
-                const errMsg = 'Invalid Razorpay webhook signature';
-                return json({ error: errMsg, message: errMsg }, 401);
+                return json({ error: 'Unauthorized', message: 'Invalid Razorpay webhook signature' }, 401);
             }
 
             // 2. Parse Validated Body
@@ -569,8 +561,7 @@ module.exports = async (req, res) => {
             try {
                 payload = JSON.parse(rawBodyStr);
             } catch (e) {
-                const errMsg = 'Invalid JSON payload';
-                return json({ error: errMsg, message: errMsg }, 400);
+                return json({ error: 'Bad Request', message: 'Invalid JSON payload' }, 400);
             }
 
             const event = payload.event || 'payment.captured';
