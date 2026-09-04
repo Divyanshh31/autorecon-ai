@@ -332,37 +332,71 @@ window.skipSplashScreen = function() {
 };
 
 // =========================================================================
-// 3. TOP IOS SEGMENTED NAVIGATION TAB SWITCHER
+// 3. TOP NAVIGATION & STITCH TERMINAL SIMULATOR TAB SWITCHER
 // =========================================================================
-function setupNavigationTabs() {
-    const tabButtons = document.querySelectorAll('.nav-tab-btn');
+window.switchToTab = function(targetId) {
+    const tabButtons = document.querySelectorAll('.nav-tab-btn, header nav a');
     const views = document.querySelectorAll('.module-view');
 
+    tabButtons.forEach(b => {
+        const target = b.getAttribute('data-target');
+        const onclickAttr = b.getAttribute('onclick');
+        if (target === targetId || (onclickAttr && onclickAttr.includes(targetId))) {
+            b.classList.add('active');
+        } else {
+            b.classList.remove('active');
+        }
+    });
+
+    views.forEach(v => {
+        if (v.id === targetId) {
+            v.classList.remove('hidden');
+        } else {
+            v.classList.add('hidden');
+        }
+    });
+
+    if (targetId === 'view-recon') renderOrdersTable();
+    if (targetId === 'view-payroll') renderPayrollTable();
+    if (targetId === 'view-vendors') renderVendorsTable();
+    if (targetId === 'view-cashflow') {
+        renderCashFlowTable();
+        setTimeout(() => { if (window.renderCashFlowChart) window.renderCashFlowChart(); }, 50);
+    }
+    if (targetId === 'view-ml') fetchMlIntelligence();
+};
+
+window.switchTab = function(tabId) {
+    const panels = document.querySelectorAll('.tab-panel');
+    panels.forEach(panel => panel.classList.add('hidden'));
+
+    const tabs = ['recon', 'mdr', 'payroll', 'msme'];
+    tabs.forEach(t => {
+        const btn = document.getElementById('tab-' + t);
+        if (btn) {
+            btn.classList.remove('bg-primary', 'text-on-primary');
+            btn.classList.add('text-surface-variant');
+        }
+    });
+
+    const targetPanel = document.getElementById('panel-' + tabId);
+    if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+    }
+
+    const activeBtn = document.getElementById('tab-' + tabId);
+    if (activeBtn) {
+        activeBtn.classList.remove('text-surface-variant');
+        activeBtn.classList.add('bg-primary', 'text-on-primary');
+    }
+};
+
+function setupNavigationTabs() {
+    const tabButtons = document.querySelectorAll('.nav-tab-btn');
     tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const targetId = btn.getAttribute('data-target');
-
-            tabButtons.forEach(b => {
-                b.classList.remove('active');
-            });
-            btn.classList.add('active');
-
-            views.forEach(v => {
-                if (v.id === targetId) {
-                    v.classList.remove('hidden');
-                } else {
-                    v.classList.add('hidden');
-                }
-            });
-
-            if (targetId === 'view-recon') renderOrdersTable();
-            if (targetId === 'view-payroll') renderPayrollTable();
-            if (targetId === 'view-vendors') renderVendorsTable();
-            if (targetId === 'view-cashflow') {
-                renderCashFlowTable();
-                setTimeout(() => { if (window.renderCashFlowChart) window.renderCashFlowChart(); }, 50);
-            }
-            if (targetId === 'view-ml') fetchMlIntelligence();
+            if (targetId) window.switchToTab(targetId);
         });
     });
 }
