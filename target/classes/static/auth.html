@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoRecon AI — Sign In / Create Account</title>
+    <!-- Theme Initializer (Prevents FOUC) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('autorecon_theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+    <!-- Tailwind CSS CDN with class-based Dark Mode -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        rzp: {
+                            light: '#F8FAFC',
+                            subtle: '#F1F5F9',
+                            card: '#FFFFFF',
+                            blue: '#0066FF',
+                            azure: '#0284C7',
+                            cyan: '#06B6D4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css?v=20260828_3.1">
+    <style>
+        #liveBgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .auth-card {
+            background: var(--rzp-surface-card);
+            border: 1px solid var(--rzp-border);
+            border-radius: 28px;
+            box-shadow: var(--rzp-shadow-card);
+            transition: all 0.3s ease;
+        }
+
+        .glass-input {
+            background: var(--rzp-surface);
+            border: 1.5px solid var(--rzp-border);
+            border-radius: 14px;
+            color: var(--rzp-text-main);
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+            transition: all 0.2s ease;
+        }
+
+        .glass-input:focus {
+            background: var(--rzp-surface);
+            border-color: var(--rzp-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.18);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 selection:bg-blue-600 selection:text-white">
+
+    <!-- Top Right Theme Switcher -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="btnThemeToggle" onclick="toggleTheme()" title="Switch Light/Dark Mode" class="theme-toggle-btn active:scale-95 shadow-md">
+            <i class="ph-bold ph-moon-stars text-base" id="themeToggleIcon"></i>
+        </button>
+    </div>
+
+    <!-- LIVE CLEAN BACKGROUND -->
+    <canvas id="liveBgCanvas"></canvas>
+    <div class="ambient-glow-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- MAIN AUTH CONTAINER -->
+    <div class="w-full max-w-lg auth-card p-8 sm:p-11 relative z-10 my-8">
+        
+        <!-- Logo & Title -->
+        <div class="text-center mb-8">
+            <a href="/" class="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-tr from-blue-600 via-sky-500 to-emerald-400 p-[1.5px] shadow-xl shadow-blue-500/20 mb-4 hover:scale-105 transition active:scale-95">
+                <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[14px] flex items-center justify-center">
+                    <i class="ph-fill ph-credit-card text-blue-600 text-3xl"></i>
+                </div>
+            </a>
+            <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                AutoRecon<span class="text-blue-600">.AI</span>
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold mt-1.5" id="authSubtitle">
+                Razorpay Multi-Tasking Accounting & Autonomous Financial Controller
+            </p>
+        </div>
+
+        <!-- Mode Tabs -->
+        <div class="flex p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl mb-6 border border-slate-200 dark:border-slate-700">
+            <button id="tabBtnSignIn" onclick="switchAuthTab('signin')" class="flex-1 py-3 rounded-xl text-sm font-extrabold transition-all bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-md">
+                Sign In
+            </button>
+            <button id="tabBtnSignUp" onclick="switchAuthTab('signup')" class="flex-1 py-3 rounded-xl text-sm font-extrabold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+                Create Workspace
+            </button>
+        </div>
+
+        <!-- Alert Notification Box -->
+        <div id="authAlert" class="hidden mb-5 p-4 rounded-xl text-sm flex items-center space-x-3 transition font-medium">
+            <i id="authAlertIcon" class="ph-bold text-xl flex-shrink-0"></i>
+            <span id="authAlertText"></span>
+        </div>
+
+        <!-- SIGN IN FORM -->
+        <form id="signInForm" onsubmit="handleSignIn(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Business Email</label>
+                <div class="relative">
+                    <i class="ph-bold ph-envelope-simple absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="email" id="signInEmail" required placeholder="founder@merchant.com" class="w-full px-4 py-3.5 pl-11 glass-input">
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <label class="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200">Password</label>
+                    <a href="javascript:void(0)" onclick="handleQuickDemoLogin()" class="text-xs font-black text-blue-600 hover:underline">
+                        Fill Demo Credentials
+                    </a>
+                </div>
+                <div class="relative">
+                    <i class="ph-bold ph-lock-key absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="password" id="signInPassword" required placeholder="••••••••" class="w-full px-4 py-3.5 pl-11 glass-input">
+                </div>
+            </div>
+
+            <button type="submit" id="btnSignInSubmit" class="w-full py-3.5 rounded-xl rzp-btn-primary font-black text-sm sm:text-base flex items-center justify-center space-x-2 shadow-lg shadow-blue-500/25 active:scale-[0.99] transition mt-2">
+                <span>Sign In to Financial OS</span>
+                <i class="ph-bold ph-arrow-right text-lg"></i>
+            </button>
+        </form>
+
+        <!-- SIGN UP FORM -->
+        <form id="signUpForm" onsubmit="handleSignUp(event)" class="space-y-4 hidden">
+            <div>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Your Full Name</label>
+                <div class="relative">
+                    <i class="ph-bold ph-user absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="text" id="signUpName" required placeholder="Divyansh Thakur" class="w-full px-4 py-3.5 pl-11 glass-input">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Company / Store Name</label>
+                <div class="relative">
+                    <i class="ph-bold ph-buildings absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="text" id="signUpCompany" required placeholder="Zenith Retail India Pvt Ltd" class="w-full px-4 py-3.5 pl-11 glass-input">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Business Email</label>
+                <div class="relative">
+                    <i class="ph-bold ph-envelope-simple absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="email" id="signUpEmail" required placeholder="divyansh@zenithretail.in" class="w-full px-4 py-3.5 pl-11 glass-input">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Merchant GSTIN (Optional)</label>
+                <div class="relative">
+                    <i class="ph-bold ph-receipt absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="text" id="signUpGstin" placeholder="27AAACZ1234F1Z5" class="w-full px-4 py-3.5 pl-11 glass-input font-mono">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 mb-1.5">Create Secure Password</label>
+                <div class="relative">
+                    <i class="ph-bold ph-lock-key absolute left-4 top-3.5 text-slate-400 text-lg"></i>
+                    <input type="password" id="signUpPassword" required minlength="6" placeholder="At least 6 characters" class="w-full px-4 py-3.5 pl-11 glass-input">
+                </div>
+            </div>
+
+            <button type="submit" id="btnSignUpSubmit" class="w-full py-3.5 rounded-xl rzp-btn-primary font-black text-sm sm:text-base flex items-center justify-center space-x-2 shadow-lg shadow-blue-500/25 active:scale-[0.99] transition mt-2">
+                <span>Create Free Workspace & Private Storage</span>
+                <i class="ph-bold ph-sparkle text-lg"></i>
+            </button>
+        </form>
+
+        <!-- Quick Demo Switcher -->
+        <div class="mt-7 pt-6 border-t border-slate-200 dark:border-slate-800 text-center">
+            <p class="text-xs text-slate-600 dark:text-slate-400 font-semibold mb-2">Want instant one-click test access?</p>
+            <button onclick="handleQuickDemoLogin()" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center justify-center space-x-2 mx-auto">
+                <i class="ph-bold ph-lightning text-blue-600 text-sm"></i>
+                <span>One-Click Instant Demo Login</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('autorecon_theme', isDark ? 'dark' : 'light');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const icon = document.getElementById('themeToggleIcon');
+            if (!icon) return;
+            const isDark = document.documentElement.classList.contains('dark');
+            icon.className = isDark ? 'ph-bold ph-sun text-amber-400 text-base' : 'ph-bold ph-moon-stars text-base';
+        }
+
+        function initLiveBackground() {
+            const canvas = document.getElementById('liveBgCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            let targetMouse = { x: width / 2, y: height / 2, active: false };
+            let currentMouse = { x: width / 2, y: height / 2 };
+
+            window.addEventListener('mousemove', (e) => {
+                targetMouse.x = e.clientX;
+                targetMouse.y = e.clientY;
+                targetMouse.active = true;
+            });
+
+            window.addEventListener('mouseleave', () => { targetMouse.active = false; });
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            function render() {
+                ctx.clearRect(0, 0, width, height);
+                currentMouse.x += (targetMouse.x - currentMouse.x) * 0.05;
+                currentMouse.y += (targetMouse.y - currentMouse.y) * 0.05;
+
+                if (targetMouse.active) {
+                    const gradient = ctx.createRadialGradient(
+                        currentMouse.x, currentMouse.y, 10,
+                        currentMouse.x, currentMouse.y, 280
+                    );
+                    gradient.addColorStop(0, 'rgba(0, 102, 255, 0.04)');
+                    gradient.addColorStop(0.5, 'rgba(2, 132, 199, 0.02)');
+                    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, width, height);
+                }
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+
+        function showAlert(msg, isSuccess = false) {
+            const alertBox = document.getElementById('authAlert');
+            const alertText = document.getElementById('authAlertText');
+            const alertIcon = document.getElementById('authAlertIcon');
+            
+            alertBox.classList.remove('hidden');
+            alertText.textContent = msg;
+
+            if (isSuccess) {
+                alertBox.className = 'mb-5 p-4 rounded-xl text-sm flex items-center space-x-3 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 font-bold';
+                alertIcon.className = 'ph-bold ph-check-circle text-xl flex-shrink-0 text-emerald-700 dark:text-emerald-400';
+            } else {
+                alertBox.className = 'mb-5 p-4 rounded-xl text-sm flex items-center space-x-3 bg-red-50 dark:bg-red-950/60 text-red-900 dark:text-red-300 border border-red-300 dark:border-red-700 font-bold';
+                alertIcon.className = 'ph-bold ph-warning text-xl flex-shrink-0 text-red-700 dark:text-red-400';
+            }
+        }
+
+        function switchAuthTab(mode) {
+            const btnSignIn = document.getElementById('tabBtnSignIn');
+            const btnSignUp = document.getElementById('tabBtnSignUp');
+            const formSignIn = document.getElementById('signInForm');
+            const formSignUp = document.getElementById('signUpForm');
+            const subtitle = document.getElementById('authSubtitle');
+            const alertBox = document.getElementById('authAlert');
+            alertBox.classList.add('hidden');
+
+            if (mode === 'signin') {
+                btnSignIn.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-md';
+                btnSignUp.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
+                formSignIn.classList.remove('hidden');
+                formSignUp.classList.add('hidden');
+                subtitle.textContent = 'Razorpay Multi-Tasking Accounting & Autonomous Financial Controller';
+            } else {
+                btnSignUp.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-md';
+                btnSignIn.className = 'flex-1 py-3 rounded-xl text-sm font-extrabold transition-all text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
+                formSignIn.classList.add('hidden');
+                formSignUp.classList.remove('hidden');
+                subtitle.textContent = 'Create a secure workspace with dedicated partitioned database storage';
+            }
+        }
+
+        async function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            const btn = document.getElementById('btnSignInSubmit');
+
+            btn.disabled = true;
+            btn.innerHTML = `<span class="animate-spin mr-2">⚙️</span> Authenticating...`;
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Authentication failed');
+
+                localStorage.setItem('autorecon_auth_token', data.token);
+                localStorage.setItem('autorecon_current_user', JSON.stringify(data.user));
+                showAlert('Login successful! Initializing workspace...', true);
+                setTimeout(() => { window.location.href = '/'; }, 600);
+            } catch (err) {
+                showAlert(err.message, false);
+                btn.disabled = false;
+                btn.innerHTML = `<span>Sign In to Financial OS</span><i class="ph-bold ph-arrow-right text-lg"></i>`;
+            }
+        }
+
+        async function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signUpName').value;
+            const companyName = document.getElementById('signUpCompany').value;
+            const email = document.getElementById('signUpEmail').value;
+            const gstin = document.getElementById('signUpGstin').value;
+            const password = document.getElementById('signUpPassword').value;
+            const btn = document.getElementById('btnSignUpSubmit');
+
+            btn.disabled = true;
+            btn.innerHTML = `<span class="animate-spin mr-2">⚙️</span> Creating Workspace...`;
+
+            try {
+                const res = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, companyName, email, gstin, password })
+                });
+
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Account creation failed');
+
+                localStorage.setItem('autorecon_auth_token', data.token);
+                localStorage.setItem('autorecon_current_user', JSON.stringify(data.user));
+                showAlert('Account created! Entering private workspace...', true);
+                setTimeout(() => { window.location.href = '/'; }, 600);
+            } catch (err) {
+                showAlert(err.message, false);
+                btn.disabled = false;
+                btn.innerHTML = `<span>Create Free Workspace & Private Storage</span><i class="ph-bold ph-sparkle text-lg"></i>`;
+            }
+        }
+
+        function handleQuickDemoLogin() {
+            document.getElementById('signInEmail').value = 'demo@zenith.in';
+            document.getElementById('signInPassword').value = 'zenith123';
+            document.getElementById('btnSignInSubmit').click();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateThemeIcon();
+            initLiveBackground();
+        });
+    </script>
+</body>
+</html>

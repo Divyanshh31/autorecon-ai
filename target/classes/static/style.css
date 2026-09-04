@@ -1,44 +1,247 @@
 /* ==========================================================================
-   AutoRecon AI — Authentic iPhone / iOS Glassmorphism & Vibrant Liquid Materials
-   Multi-Tasking Accounting OS: Gateway Recon, Payroll & Delays, Vendor MSME, Cash Flow
+   AutoRecon AI — Complete Dual-Theme Fintech Design System
+   Light Mode (Luxury Pearl White) & Dark Mode (Obsidian Cyber Fintech)
+   Google Font 'Outfit' + JetBrains Mono · High-Definition Contrast
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
-    --bg-main: #0a110d;
-    --bg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 32, 25, 0.52) 40%, rgba(14, 22, 18, 0.68) 100%);
-    --bg-glass-card-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(26, 42, 33, 0.65) 40%, rgba(18, 29, 23, 0.78) 100%);
-    --bg-glass-header: rgba(12, 19, 15, 0.68);
-    --bg-glass-drawer: rgba(16, 26, 20, 0.88);
+    /* ---------------- LIGHT MODE TOKENS (Default) ---------------- */
+    --rzp-bg: #F8FAFC;
+    --rzp-bg-secondary: #F1F5F9;
+    --rzp-surface: #FFFFFF;
+    --rzp-surface-card: #FFFFFF;
+    --rzp-surface-card-hover: #FFFFFF;
     
-    --border-glass: rgba(255, 255, 255, 0.14);
-    --border-glass-hover: rgba(229, 169, 93, 0.45);
-    --border-glass-glow: rgba(46, 196, 182, 0.45);
+    --rzp-blue: #0066FF;
+    --rzp-blue-hover: #0052CC;
+    --rzp-azure: #0284C7;
+    --rzp-cyan: #06B6D4;
+    --rzp-indigo: #4F46E5;
     
-    --text-primary: #f5eedc;
-    --text-secondary: #b5c4b8;
-    --text-muted: #7e9182;
+    --rzp-emerald: #047857;
+    --rzp-emerald-soft: rgba(4, 120, 87, 0.1);
     
-    --brand-gold: #e5a95d;
-    --brand-ochre: #d48b38;
-    --brand-jade: #2ec4b6;
-    --brand-sage: #81b29a;
-    --brand-terracotta: #e76f51;
+    --rzp-amber: #B45309;
+    --rzp-amber-soft: rgba(180, 83, 9, 0.1);
+    
+    --rzp-red: #B91C1C;
+    --rzp-red-soft: rgba(185, 28, 28, 0.1);
+    
+    --rzp-border: #CBD5E1;
+    --rzp-border-hover: #0066FF;
+    --rzp-border-glow: rgba(0, 102, 255, 0.3);
+    
+    --rzp-text-main: #0F172A;
+    --rzp-text-body: #1E293B;
+    --rzp-text-muted: #475569;
+    --rzp-text-light: #64748B;
+    
+    --rzp-grid-color: rgba(15, 23, 42, 0.025);
+    --rzp-header-bg: rgba(255, 255, 255, 0.96);
+    --rzp-row-hover: #F1F5F9;
+    --rzp-shadow-card: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+    
+    --rzp-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+    --rzp-ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---------------- DARK MODE TOKENS (Obsidian Cyber Fintech) ---------------- */
+html.dark {
+    --rzp-bg: #0A0E17;
+    --rzp-bg-secondary: #0F172A;
+    --rzp-surface: #111827;
+    --rzp-surface-card: #111827;
+    --rzp-surface-card-hover: #162036;
+    
+    --rzp-blue: #38BDF8;
+    --rzp-blue-hover: #0284C7;
+    --rzp-azure: #38BDF8;
+    --rzp-cyan: #22D3EE;
+    --rzp-indigo: #818CF8;
+    
+    --rzp-emerald: #10B981;
+    --rzp-emerald-soft: rgba(16, 185, 129, 0.15);
+    
+    --rzp-amber: #F59E0B;
+    --rzp-amber-soft: rgba(245, 158, 11, 0.15);
+    
+    --rzp-red: #EF4444;
+    --rzp-red-soft: rgba(239, 68, 68, 0.15);
+    
+    --rzp-border: #1E293B;
+    --rzp-border-hover: #38BDF8;
+    --rzp-border-glow: rgba(56, 189, 248, 0.25);
+    
+    --rzp-text-main: #F8FAFC;
+    --rzp-text-body: #CBD5E1;
+    --rzp-text-muted: #94A3B8;
+    --rzp-text-light: #64748B;
+    
+    --rzp-grid-color: rgba(255, 255, 255, 0.03);
+    --rzp-header-bg: rgba(10, 14, 23, 0.94);
+    --rzp-row-hover: #1E293B;
+    --rzp-shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* GLOBAL DARK MODE OVERRIDES */
+html.dark .bg-white {
+    background-color: #111827 !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-100 {
+    background-color: #0F172A !important;
+}
+
+html.dark .bg-blue-50 {
+    background-color: rgba(56, 189, 248, 0.12) !important;
+    color: #38BDF8 !important;
+}
+
+html.dark .bg-emerald-50 {
+    background-color: rgba(16, 185, 129, 0.12) !important;
+    color: #34D399 !important;
+}
+
+html.dark .bg-amber-50 {
+    background-color: rgba(245, 158, 11, 0.12) !important;
+    color: #FBBF24 !important;
+}
+
+html.dark .bg-red-50 {
+    background-color: rgba(239, 68, 68, 0.12) !important;
+    color: #F87171 !important;
+}
+
+html.dark .bg-sky-50 {
+    background-color: rgba(2, 132, 199, 0.15) !important;
+    color: #38BDF8 !important;
+}
+
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-300 {
+    border-color: #1E293B !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800 {
+    color: #F8FAFC !important;
+}
+
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+    color: #CBD5E1 !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+    color: #94A3B8 !important;
+}
+
+html.dark .text-blue-800,
+html.dark .text-blue-700 {
+    color: #38BDF8 !important;
+}
+
+html.dark .text-emerald-700,
+html.dark .text-emerald-800 {
+    color: #34D399 !important;
+}
+
+html.dark .text-amber-800,
+html.dark .text-amber-900,
+html.dark .text-amber-950 {
+    color: #FBBF24 !important;
+}
+
+html.dark .text-red-700,
+html.dark .text-red-800,
+html.dark .text-red-900,
+html.dark .text-red-950 {
+    color: #F87171 !important;
+}
+
+html.dark table thead th {
+    background-color: #0A0E17 !important;
+    color: #94A3B8 !important;
+    border-bottom: 1px solid #1E293B !important;
+}
+
+html.dark table tbody tr {
+    background-color: #111827 !important;
+    border-bottom: 1px solid #1E293B !important;
+    color: #F8FAFC !important;
+}
+
+html.dark table tbody tr:hover {
+    background-color: #1E293B !important;
+}
+
+html.dark .glass-card,
+html.dark .rzp-card,
+html.dark .pine-card,
+html.dark .hero-simulator-terminal {
+    background: #111827 !important;
+    border-color: #1E293B !important;
+}
+
+html.dark footer {
+    background-color: #0A0E17 !important;
+    border-color: #1E293B !important;
+}
+
+html.dark .glass-input {
+    background-color: #0F172A !important;
+    border-color: #1E293B !important;
+    color: #F8FAFC !important;
+}
+
+html.dark .glass-btn {
+    background-color: #111827 !important;
+    border-color: #1E293B !important;
+    color: #F8FAFC !important;
+}
+
+html.dark .glass-btn:hover {
+    background-color: #1E293B !important;
+    border-color: #38BDF8 !important;
 }
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 14.5px;
 }
 
 body {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-primary);
-    overflow-x: hidden;
-    position: relative;
+    font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--rzp-bg);
+    background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.04) 0%, transparent 60%),
+        linear-gradient(to right, var(--rzp-grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--rzp-grid-color) 1px, transparent 1px);
+    background-size: 100% 100%, 48px 48px, 48px 48px;
+    color: var(--rzp-text-main);
+    font-size: 14px;
+    line-height: 1.55;
     min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html.dark body {
+    background-color: var(--rzp-bg);
+    color: var(--rzp-text-main);
 }
 
 pre, code, .font-mono {
@@ -46,7 +249,31 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   LIVE INTERACTIVE BACKGROUND CANVAS & ETHEREAL ORBS
+   1. FLUID AURORA GRADIENT TEXT
+   ========================================================================== */
+.rzp-gradient-text {
+    background: linear-gradient(135deg, #0052CC 0%, #0284C7 30%, #047857 65%, #4338CA 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: lightGradientFlow 7s infinite alternate ease-in-out;
+}
+
+html.dark .rzp-gradient-text {
+    background: linear-gradient(135deg, #38BDF8 0%, #60A5FA 30%, #34D399 65%, #A78BFA 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes lightGradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ==========================================================================
+   2. AMBIENT BACKGROUND CANVAS & ORBS
    ========================================================================== */
 #liveBgCanvas {
     position: fixed;
@@ -69,107 +296,481 @@ pre, code, .font-mono {
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.42;
-    animation: orbFloat 24s infinite alternate ease-in-out;
+    filter: blur(140px);
+    opacity: 0.18;
+    animation: lightOrbMotion 26s infinite alternate ease-in-out;
+    will-change: transform;
+}
+
+html.dark .orb {
+    opacity: 0.12;
 }
 
 .orb-1 {
-    width: 580px;
-    height: 580px;
-    background: radial-gradient(circle, #e5a95d 0%, rgba(229, 169, 93, 0) 70%);
-    top: -120px;
-    right: 5%;
-    animation-duration: 24s;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(186, 230, 253, 0.9) 0%, rgba(240, 249, 255, 0) 70%);
+    top: -150px;
+    left: 8%;
 }
 
 .orb-2 {
-    width: 680px;
-    height: 680px;
-    background: radial-gradient(circle, #2ec4b6 0%, rgba(46, 196, 182, 0) 70%);
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(199, 210, 254, 0.8) 0%, rgba(245, 247, 255, 0) 70%);
     bottom: -150px;
-    left: -100px;
-    animation-duration: 28s;
-    animation-delay: -5s;
+    right: 8%;
+    animation-delay: -7s;
 }
 
 .orb-3 {
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, #e76f51 0%, rgba(231, 111, 81, 0) 70%);
-    top: 38%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(167, 243, 208, 0.7) 0%, rgba(240, 253, 244, 0) 70%);
+    top: 40%;
     right: -100px;
-    animation-duration: 22s;
-    animation-delay: -10s;
-}
-
-.orb-4 {
-    width: 440px;
-    height: 440px;
-    background: radial-gradient(circle, #81b29a 0%, rgba(129, 178, 154, 0) 70%);
-    top: 15%;
-    left: 18%;
-    animation-duration: 26s;
     animation-delay: -14s;
 }
 
-@keyframes orbFloat {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(45px, 65px) scale(1.12); }
-    100% { transform: translate(-35px, -45px) scale(0.94); }
+@keyframes lightOrbMotion {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(35px, 35px, 0) scale(1.05); }
+    100% { transform: translate3d(-30px, -30px, 0) scale(0.96); }
 }
 
 /* ==========================================================================
-   MINIMALISTIC OPENING SCREEN
+   3. HIGH-DEFINITION GLASS CARDS & HOVER EFFECTS
+   ========================================================================== */
+.rzp-card, .pine-card, .glass-card {
+    background: var(--rzp-surface-card);
+    border: 1px solid var(--rzp-border);
+    border-radius: 18px;
+    box-shadow: var(--rzp-shadow-card);
+    transition: transform 0.28s var(--rzp-ease-spring), border-color 0.28s var(--rzp-ease-spring), box-shadow 0.28s var(--rzp-ease-spring), background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+/* Specular Light Sweep Reflection on Hover */
+.rzp-card::before, .pine-card::before, .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), rgba(0, 102, 255, 0.12), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.75s var(--rzp-ease-smooth);
+    pointer-events: none;
+    z-index: 1;
+}
+
+html.dark .rzp-card::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), rgba(56, 189, 248, 0.15), transparent);
+}
+
+.rzp-card:hover::before, .pine-card:hover::before, .glass-card:hover::before {
+    left: 170%;
+}
+
+.rzp-card:hover, .pine-card:hover, .glass-card:hover {
+    border-color: var(--rzp-blue);
+    box-shadow: 
+        0 18px 36px -8px rgba(0, 102, 255, 0.16),
+        0 0 0 1px var(--rzp-border-glow);
+    transform: translateY(-4px);
+}
+
+/* Glass Header */
+.glass-header {
+    background: var(--rzp-header-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--rzp-border);
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid var(--rzp-border);
+    background: var(--rzp-surface);
+    color: var(--rzp-text-muted);
+    transition: all 0.2s var(--rzp-ease-spring);
+    cursor: pointer;
+}
+
+.theme-toggle-btn:hover {
+    color: var(--rzp-text-main);
+    border-color: var(--rzp-blue);
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   4. BESPOKE BUTTONS & HOVER GLINT
+   ========================================================================== */
+.rzp-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0066FF 0%, #0284C7 100%);
+    background-size: 200% 200%;
+    color: #FFFFFF !important;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 102, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.2s var(--rzp-ease-spring), box-shadow 0.2s var(--rzp-ease-spring), background-position 0.35s ease;
+}
+
+.rzp-btn-primary:hover {
+    background-position: 100% 0;
+    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5);
+    transform: translateY(-1.5px);
+}
+
+.rzp-btn-primary:active {
+    transform: scale(0.97);
+}
+
+/* Secondary White/Dark Glass Buttons */
+.glass-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    background: var(--rzp-surface);
+    border: 1px solid var(--rzp-border);
+    border-radius: 10px;
+    color: var(--rzp-text-main) !important;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+    transition: all 0.2s var(--rzp-ease-spring);
+}
+
+.glass-btn:hover {
+    background: var(--rzp-bg-secondary);
+    border-color: var(--rzp-text-muted);
+    color: var(--rzp-text-main) !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    transform: translateY(-1.5px);
+}
+
+/* Glass Inputs */
+.glass-input {
+    background: var(--rzp-surface);
+    border: 1.5px solid var(--rzp-border);
+    border-radius: 10px;
+    color: var(--rzp-text-main);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+    background: var(--rzp-surface);
+    border-color: var(--rzp-blue);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.16);
+    outline: none;
+}
+
+/* ==========================================================================
+   5. TAB SWITCHER (Compact Capsule)
+   ========================================================================== */
+.nav-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    color: var(--rzp-text-muted);
+    background: transparent;
+    border-radius: 10px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    transition: all 0.22s var(--rzp-ease-spring);
+}
+
+.nav-tab-btn:hover {
+    color: var(--rzp-text-main);
+    background: rgba(15, 23, 42, 0.06);
+}
+
+html.dark .nav-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-tab-btn.active {
+    background: linear-gradient(135deg, #0066FF 0%, #0284C7 100%);
+    color: #FFFFFF !important;
+    font-weight: 800;
+    box-shadow: 0 3px 14px rgba(0, 102, 255, 0.38);
+}
+
+/* Module View Transitions */
+.module-view {
+    animation: lightFadeIn 0.3s var(--rzp-ease-spring);
+}
+
+@keyframes lightFadeIn {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   6. INTERACTIVE TABLE ROW HOVER & PRECISION STYLING
+   ========================================================================== */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+tbody tr {
+    transition: all 0.18s var(--rzp-ease-spring);
+    position: relative;
+    border-bottom: 1px solid var(--rzp-border);
+}
+
+tbody tr:hover {
+    background: var(--rzp-row-hover) !important;
+    box-shadow: inset 3.5px 0 0 0 var(--rzp-blue);
+}
+
+/* ==========================================================================
+   7. STATUS BADGES WITH VIVID READABLE PILLS
+   ========================================================================== */
+.badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.28rem 0.7rem;
+    font-size: 0.725rem;
+    font-weight: 800;
+    border-radius: 9999px;
+    transition: all 0.18s ease;
+}
+
+.badge-reconciled {
+    background: #ECFDF5;
+    color: #047857;
+    border: 1.5px solid #6EE7B7;
+}
+
+html.dark .badge-reconciled {
+    background: rgba(6, 78, 59, 0.6);
+    color: #34D399;
+    border: 1.5px solid #059669;
+}
+
+.badge-fee-mismatch {
+    background: #FFFBEB;
+    color: #92400E;
+    border: 1.5px solid #FCD34D;
+}
+
+html.dark .badge-fee-mismatch {
+    background: rgba(120, 53, 15, 0.6);
+    color: #FBBF24;
+    border: 1.5px solid #D97706;
+}
+
+.badge-delayed {
+    background: #FEF2F2;
+    color: #991B1B;
+    border: 1.5px solid #FCA5A5;
+}
+
+html.dark .badge-delayed {
+    background: rgba(127, 29, 29, 0.6);
+    color: #F87171;
+    border: 1.5px solid #DC2626;
+}
+
+/* ==========================================================================
+   8. DYNAMIC ISLAND LIVE STREAM CAPSULE & PULSE DOT
+   ========================================================================== */
+.live-stream-ticker {
+    background: var(--rzp-surface);
+    border: 1px solid var(--rzp-border);
+    border-radius: 9999px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+    font-size: 0.75rem;
+}
+
+.live-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #059669;
+    box-shadow: 0 0 8px rgba(5, 150, 105, 0.7);
+    animation: lightPulse 1.6s infinite ease-in-out;
+}
+
+@keyframes lightPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+/* ==========================================================================
+   9. INTERACTIVE FINTECH OPERATING TERMINAL (Juspay / Stripe Style)
+   ========================================================================== */
+.hero-simulator-terminal {
+    background: var(--rzp-surface);
+    border: 1.5px solid var(--rzp-border);
+    border-radius: 24px;
+    box-shadow: var(--rzp-shadow-card);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s var(--rzp-ease-spring);
+}
+
+.hero-simulator-terminal:hover {
+    border-color: var(--rzp-blue);
+}
+
+.sim-tab-btn {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 10px;
+    color: var(--rzp-text-muted);
+    background: transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.sim-tab-btn:hover {
+    color: var(--rzp-text-main);
+    background: var(--rzp-bg-secondary);
+}
+
+.sim-tab-btn.active {
+    background: #0066FF;
+    color: #FFFFFF !important;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.35);
+}
+
+.sim-flow-node {
+    background: var(--rzp-surface);
+    border: 1px solid var(--rzp-border);
+    border-radius: 14px;
+    padding: 10px 12px;
+    transition: all 0.25s ease;
+}
+
+.sim-flow-node.highlighted {
+    border-color: #0066FF;
+    background: var(--rzp-bg-secondary);
+    box-shadow: 0 4px 14px rgba(0, 102, 255, 0.15);
+}
+
+.sim-flow-node.overcharge {
+    border-color: #D97706;
+    background: var(--rzp-amber-soft);
+    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.15);
+}
+
+.sim-flow-node.cleared {
+    border-color: #059669;
+    background: var(--rzp-emerald-soft);
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.15);
+}
+
+html.dark .sim-flow-node {
+    background: #0F172A !important;
+    border-color: #1E293B !important;
+    color: #F8FAFC !important;
+}
+
+html.dark .sim-flow-node.highlighted {
+    border-color: #38BDF8 !important;
+    background: #162036 !important;
+}
+
+html.dark .sim-flow-node.overcharge {
+    border-color: #F59E0B !important;
+    background: rgba(245, 158, 11, 0.18) !important;
+}
+
+html.dark .sim-flow-node.cleared {
+    border-color: #10B981 !important;
+    background: rgba(16, 185, 129, 0.18) !important;
+}
+
+.sim-connector-line {
+    height: 2px;
+    background: linear-gradient(90deg, #0066FF, #0284C7, #059669);
+    background-size: 200% 100%;
+    animation: simFlowLine 1.5s infinite linear;
+}
+
+@keyframes simFlowLine {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+/* ==========================================================================
+   10. MINIMALISTIC OPENING SPLASH
    ========================================================================== */
 #splashScreen {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: radial-gradient(circle at 50% 50%, #15241d 0%, #080e0a 100%);
+    background: var(--rzp-bg);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 #splashScreen.fade-out {
     opacity: 0;
-    transform: scale(1.05);
-    filter: blur(12px);
+    transform: scale(1.02);
     pointer-events: none;
 }
 
 .minimal-glass-emblem {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 100%);
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(30px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 50px rgba(229, 169, 93, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-    animation: gentlePulse 3s infinite ease-in-out;
+    background: var(--rzp-surface);
+    border: 1px solid var(--rzp-border);
+    box-shadow: 0 10px 25px rgba(0, 102, 255, 0.12);
+    animation: emblemFloat 3s infinite alternate ease-in-out;
 }
 
-@keyframes gentlePulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(229, 169, 93, 0.18); }
-    50% { transform: scale(1.03); box-shadow: 0 0 65px rgba(229, 169, 93, 0.38); }
+@keyframes emblemFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
 }
 
 .hairline-loader {
-    height: 3px;
-    background: rgba(255, 255, 255, 0.08);
+    height: 2.5px;
+    background: rgba(15, 23, 42, 0.08);
     border-radius: 9999px;
     overflow: hidden;
-    position: relative;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .hairline-loader {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .hairline-loader-bar {
     height: 100%;
-    background: linear-gradient(90deg, #e5a95d, #2ec4b6, #e5a95d);
+    background: linear-gradient(90deg, #0066FF, #0284C7, #059669, #0066FF);
     background-size: 200% 100%;
     animation: loaderShimmer 2s infinite linear;
-    transition: width 0.25s ease-out;
 }
 
 @keyframes loaderShimmer {
@@ -178,233 +779,54 @@ pre, code, .font-mono {
 }
 
 /* ==========================================================================
-   AUTHENTIC IPHONE / IOS GLASSMORPHISM CORE MATERIALS
+   11. AI MUNIMJI FLOATING COPILOT
    ========================================================================== */
-
-/* iPhone Frosted Glass Cards (Squircle 26px, Specular Rim Shine, Vibrancy) */
-.pine-card, .glass-card {
-    background: var(--bg-glass-card);
-    backdrop-filter: blur(36px) saturate(210%) contrast(105%);
-    -webkit-backdrop-filter: blur(36px) saturate(210%) contrast(105%);
-    border: 1px solid var(--border-glass);
-    border-radius: 26px;
-    box-shadow: 
-        0 20px 45px -10px rgba(0, 0, 0, 0.55),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.28),
-        inset 0 0 0 0.5px rgba(255, 255, 255, 0.08),
-        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.3);
-    transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-}
-
-.pine-card:hover, .glass-card:hover {
-    background: var(--bg-glass-card-hover);
-    border-color: rgba(229, 169, 93, 0.38);
-    transform: translateY(-2px);
-    box-shadow: 
-        0 28px 55px -10px rgba(0, 0, 0, 0.65),
-        0 0 30px rgba(229, 169, 93, 0.12),
-        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.38),
-        inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
-}
-
-/* iPhone Glass Header Bar */
-.glass-header {
-    background: var(--bg-glass-header);
-    backdrop-filter: blur(40px) saturate(200%);
-    -webkit-backdrop-filter: blur(40px) saturate(200%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
-}
-
-/* iPhone Glass Buttons (Tactile Squircle with Specular Top Highlight) */
-.glass-btn {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 16px;
-    color: var(--text-primary);
-    box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.25),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
-        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.2);
-    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-btn:hover {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.07) 100%);
-    border-color: rgba(229, 169, 93, 0.45);
-    transform: translateY(-1px);
-    box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.35),
-        0 0 15px rgba(229, 169, 93, 0.15),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
-}
-
-.glass-btn:active {
-    transform: scale(0.97);
-}
-
-/* iPhone Glass Input (Deep Translucent Well) */
-.glass-input {
-    background: rgba(10, 16, 13, 0.65);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 14px;
-    color: var(--text-primary);
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.06);
-    transition: all 0.2s ease;
-}
-
-.glass-input:focus {
-    background: rgba(10, 16, 13, 0.85);
-    border-color: var(--brand-gold);
-    box-shadow: 0 0 18px rgba(229, 169, 93, 0.25), inset 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-/* ==========================================================================
-   IOS SEGMENTED MODULE SWITCHER PILLS
-   ========================================================================== */
-.nav-tab-btn {
-    color: #b5c4b8;
-    background: transparent;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.nav-tab-btn.active {
-    background: linear-gradient(135deg, rgba(229, 169, 93, 0.95) 0%, rgba(212, 139, 56, 0.95) 100%);
-    color: #131c17;
-    box-shadow: 
-        0 4px 15px rgba(0, 0, 0, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5);
-    font-weight: 800;
-}
-
-/* Module View Transitions */
-.module-view {
-    animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes fadeInSlide {
-    0% { opacity: 0; transform: translateY(8px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* ==========================================================================
-   IPHONE DYNAMIC ISLAND LIVE WEBHOOK STREAM CAPSULE
-   ========================================================================== */
-.live-stream-ticker {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(12, 19, 15, 0.85) 50%, rgba(8, 14, 11, 0.9) 100%);
-    backdrop-filter: blur(32px) saturate(220%);
-    -webkit-backdrop-filter: blur(32px) saturate(220%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 9999px;
-    box-shadow: 
-        0 12px 32px rgba(0, 0, 0, 0.5),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
-        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
-}
-
-.live-pulse-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #2ec4b6;
-    box-shadow: 0 0 12px #2ec4b6, 0 0 4px #2ec4b6;
-    animation: livePulse 1.5s infinite ease-in-out;
-}
-
-@keyframes livePulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.35); opacity: 0.55; }
-}
-
-/* ==========================================================================
-   IOS CONTROL CENTER BADGES & PILLS
-   ========================================================================== */
-.badge-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.28rem 0.75rem;
-    font-size: 0.74rem;
-    font-weight: 700;
-    border-radius: 9999px;
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.badge-reconciled {
-    background: rgba(46, 196, 182, 0.18);
-    color: #48e5c2;
-    border: 1px solid rgba(46, 196, 182, 0.45);
-    box-shadow: 0 0 15px rgba(46, 196, 182, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-}
-
-.badge-fee-mismatch {
-    background: rgba(229, 169, 93, 0.18);
-    color: #f7be78;
-    border: 1px solid rgba(229, 169, 93, 0.45);
-    box-shadow: 0 0 15px rgba(229, 169, 93, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-}
-
-.badge-delayed {
-    background: rgba(231, 111, 81, 0.18);
-    color: #f89d89;
-    border: 1px solid rgba(231, 111, 81, 0.45);
-    box-shadow: 0 0 15px rgba(231, 111, 81, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-}
-
-/* ==========================================================================
-   AMAZON RUFUS / SIRI FLOATING GLASS WIDGET
-   ========================================================================== */
-#floatingChatWindow {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(20, 32, 25, 0.88) 35%, rgba(12, 19, 15, 0.96) 100%);
-    backdrop-filter: blur(48px) saturate(230%);
-    -webkit-backdrop-filter: blur(48px) saturate(230%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-        0 30px 70px rgba(0, 0, 0, 0.7),
-        0 0 40px rgba(229, 169, 93, 0.15),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
-        inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
-}
-
 #btnToggleFloatingChat {
-    background: linear-gradient(135deg, #e5a95d 0%, #d48b38 50%, #2ec4b6 100%);
-    box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.5),
-        0 0 25px rgba(229, 169, 93, 0.35),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: linear-gradient(135deg, #0066FF 0%, #0284C7 50%, #059669 100%);
+    background-size: 200% 200%;
+    box-shadow: 0 8px 20px rgba(0, 102, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: all 0.22s var(--rzp-ease-spring);
 }
 
 #btnToggleFloatingChat:hover {
-    box-shadow: 
-        0 20px 45px rgba(0, 0, 0, 0.6),
-        0 0 35px rgba(229, 169, 93, 0.5),
-        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 102, 255, 0.5);
+    transform: translateY(-2px) scale(1.02);
 }
 
-/* Custom Scrollbars */
+#floatingChatWindow {
+    background: var(--rzp-surface);
+    border: 1px solid var(--rzp-border);
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+    animation: windowPopup 0.25s var(--rzp-ease-spring);
+}
+
+@keyframes windowPopup {
+    0% { opacity: 0; transform: translateY(10px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ==========================================================================
+   12. CUSTOM SCROLLBARS
+   ========================================================================== */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(10, 16, 13, 0.6);
+    background: var(--rzp-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(15, 23, 42, 0.2);
     border-radius: 4px;
 }
 
+html.dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(229, 169, 93, 0.5);
+    background: rgba(0, 102, 255, 0.5);
 }

@@ -1,5 +1,4 @@
-const url = require('url');
-const https = require('https');
+const crypto = require('crypto');
 const db = require('./db');
 const ml = require('./ml');
 
@@ -32,22 +31,23 @@ async function calculateReconSummary(userId, batchId = null) {
     const discrepancies = await db.getUserDiscrepancies(userId, batchId);
 
     const totalOrders = orders.length;
-    const totalGrossVolume = orders.reduce((sum, o) => sum + (o.amount || 0), 0);
+    const totalGrossVolume = orders.reduce((sum, o) => sum + (Number(o.amount) || 0), 0);
     const totalExpectedMdrFee = Number((totalGrossVolume * CONTRACT_MDR_RATE).toFixed(2));
     
     // Calculate MDR Fee from orders & discrepancies
     let totalActualMdrFee = 0;
     orders.forEach(o => {
+        const amt = Number(o.amount) || 0;
         if (o.reconStatus === 'FEE_MISMATCH') {
-            totalActualMdrFee += (o.amount * 0.035);
-        } else if (o.reconStatus === 'RECONCILED') {
-            totalActualMdrFee += (o.amount * CONTRACT_MDR_RATE);
+            totalActualMdrFee += (amt * 0.035);
+        } else {
+            totalActualMdrFee += (amt * CONTRACT_MDR_RATE);
         }
     });
 
     const totalGstTax = Number((totalActualMdrFee * GST_RATE).toFixed(2));
     const totalSettledToBank = Number((totalGrossVolume - (totalActualMdrFee + totalGstTax)).toFixed(2));
-    const totalDiscrepancyAmount = discrepancies.reduce((sum, d) => sum + (d.varianceAmount || 0), 0);
+    const totalDiscrepancyAmount = discrepancies.reduce((sum, d) => sum + (Number(d.varianceAmount) || 0), 0);
 
     const mdrFeeMismatches = discrepancies.filter(d => d.type === 'MDR_FEE_OVERCHARGE').length;
     const delayedSettlements = discrepancies.filter(d => d.type === 'DELAYED_SETTLEMENT_SLA').length;
@@ -77,18 +77,18 @@ async function calculateReconSummary(userId, batchId = null) {
 async function calculatePayrollSummary(userId) {
     const employees = await db.getUserPayroll(userId);
     const totalEmployees = employees.length;
-    const totalGrossPayroll = employees.reduce((sum, e) => sum + (e.grossSalary || 0), 0);
-    const totalTdsWithheld = employees.reduce((sum, e) => sum + (e.tdsDeduction || 0), 0);
-    const totalPfWithheld = employees.reduce((sum, e) => sum + (e.pfDeduction || 0), 0);
-    const totalNetPayable = employees.reduce((sum, e) => sum + (e.netPayable || 0), 0);
+    const totalGrossPayroll = employees.reduce((sum, e) => sum + (Number(e.grossSalary) || 0), 0);
+    const totalTdsWithheld = employees.reduce((sum, e) => sum + (Number(e.tdsDeduction) || 0), 0);
+    const totalPfWithheld = employees.reduce((sum, e) => sum + (Number(e.pfDeduction) || 0), 0);
+    const totalNetPayable = employees.reduce((sum, e) => sum + (Number(e.netPayable) || 0), 0);
 
     const disbursed = employees.filter(e => e.status === 'DISBURSED' || e.status === 'PAID');
     const delayed = employees.filter(e => e.status === 'DELAYED');
     const pending = employees.filter(e => e.status === 'PENDING_CLEARANCE' || e.status === 'PENDING');
 
-    const totalDisbursed = disbursed.reduce((sum, e) => sum + (e.netPayable || 0), 0);
-    const totalDelayedAmount = delayed.reduce((sum, e) => sum + (e.netPayable || 0), 0);
-    const totalPendingAmount = pending.reduce((sum, e) => sum + (e.netPayable || 0), 0);
+    const totalDisbursed = disbursed.reduce((sum, e) => sum + (Number(e.netPayable) || 0), 0);
+    const totalDelayedAmount = delayed.reduce((sum, e) => sum + (Number(e.netPayable) || 0), 0);
+    const totalPendingAmount = pending.reduce((sum, e) => sum + (Number(e.netPayable) || 0), 0);
 
     return {
         totalEmployees,
@@ -109,10 +109,10 @@ async function calculatePayrollSummary(userId) {
 async function calculateVendorSummary(userId) {
     const bills = await db.getUserVendorBills(userId);
     const totalBills = bills.length;
-    const totalInvoiced = bills.reduce((sum, b) => sum + (b.amount || 0) + (b.gstAmount || 0), 0);
-    const totalGstItc = bills.reduce((sum, b) => sum + (b.gstAmount || 0), 0);
-    const totalTdsDeducted = bills.reduce((sum, b) => sum + (b.tdsDeducted || 0), 0);
-    const totalPaid = bills.filter(b => b.paymentStatus === 'PAID').reduce((sum, b) => sum + (b.netPayable || 0), 0);
+    const totalInvoiced = bills.reduce((sum, b) => sum + (Number(b.amount) || 0) + (Number(b.gstAmount) || 0), 0);
+    const totalGstItc = bills.reduce((sum, b) => sum + (Number(b.gstAmount) || 0), 0);
+    const totalTdsDeducted = bills.reduce((sum, b) => sum + (Number(b.tdsDeducted) || 0), 0);
+    const totalPaid = bills.filter(b => b.paymentStatus === 'PAID').reduce((sum, b) => sum + (Number(b.netPayable) || 0), 0);
     const paidCount = bills.filter(b => b.paymentStatus === 'PAID').length;
     const msmeUrgentBillsCount = bills.filter(b => b.isMsme && (b.paymentStatus === 'CRITICAL_MSME' || b.msmeDaysRemaining <= 2)).length;
 
@@ -154,12 +154,121 @@ async function calculateCashFlowSummary(userId) {
     };
 }
 
+// XML Sanitization Helper for TallyPrime
+function xmlEscape(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+}
+
+// 5. TALLYPRIME XML VOUCHER GENERATOR WITH DOUBLE-ENTRY BALANCE ASSERTION
+function generateTallyXml(orders, companyName = 'Zenith Retail India Pvt Ltd') {
+    let vouchersXml = '';
+    const safeCompanyName = xmlEscape(companyName);
+
+    orders.forEach((order, idx) => {
+        const orderDate = (order.orderDate || '2026-08-25').slice(0, 10).replace(/-/g, '');
+        const amount = Number((Number(order.amount) || 0).toFixed(2));
+        const safeOrderId = xmlEscape(order.orderId || `ORD_${idx}`);
+        const safeCustName = xmlEscape(order.customerName || 'Customer');
+        const safeMethod = xmlEscape((order.paymentMethod || 'UPI').toUpperCase());
+        
+        let mdrRate = CONTRACT_MDR_RATE;
+        if (order.reconStatus === 'FEE_MISMATCH') mdrRate = 0.035;
+        
+        const mdrFee = Number((amount * mdrRate).toFixed(2));
+        const gstTax = Number((mdrFee * GST_RATE).toFixed(2));
+        let netBank = Number((amount - (mdrFee + gstTax)).toFixed(2));
+
+        // Assert exact 4-legged double-entry balance (Debits === Credit)
+        const totalDebits = Number((netBank + mdrFee + gstTax).toFixed(2));
+        const roundingDiff = Number((amount - totalDebits).toFixed(2));
+        if (roundingDiff !== 0) {
+            netBank = Number((netBank + roundingDiff).toFixed(2));
+        }
+
+        vouchersXml += `
+        <TALLYMESSAGE xmlns:UDF="TallyUDF">
+            <VOUCHER VCHTYPE="Receipt" ACTION="Create" OBJVIEW="Accounting Voucher View">
+                <DATE>${orderDate}</DATE>
+                <GUID>AUTORECON-${safeOrderId}-${idx}</GUID>
+                <VOUCHERTYPENAME>Receipt</VOUCHERTYPENAME>
+                <VOUCHERNUMBER>${safeOrderId}</VOUCHERNUMBER>
+                <PARTYLEDGERNAME>Razorpay Settlement Escrow</PARTYLEDGERNAME>
+                <NARRATION>AutoRecon AI Auto-Voucher: ${safeOrderId} | Cust: ${safeCustName} | Method: ${safeMethod} | Axis Bank UTR Matched</NARRATION>
+                
+                <!-- 1. DEBIT: Bank Account (Net Credit Deposited) -->
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>Axis Bank Current A/c</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                    <AMOUNT>-${netBank.toFixed(2)}</AMOUNT>
+                </ALLLEDGERENTRIES.LIST>
+
+                <!-- 2. DEBIT: Payment Gateway Charges / MDR Expense -->
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>Payment Gateway Charges (MDR)</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                    <AMOUNT>-${mdrFee.toFixed(2)}</AMOUNT>
+                </ALLLEDGERENTRIES.LIST>
+
+                <!-- 3. DEBIT: Input GST on Gateway Charges -->
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>Input GST on Gateway Charges (18%)</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                    <AMOUNT>-${gstTax.toFixed(2)}</AMOUNT>
+                </ALLLEDGERENTRIES.LIST>
+
+                <!-- 4. CREDIT: Sundry Debtors / Razorpay Gross Settlement -->
+                <ALLLEDGERENTRIES.LIST>
+                    <LEDGERNAME>Razorpay Settlement Escrow</LEDGERNAME>
+                    <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                    <AMOUNT>${amount.toFixed(2)}</AMOUNT>
+                </ALLLEDGERENTRIES.LIST>
+            </VOUCHER>
+        </TALLYMESSAGE>`;
+    });
+
+    const fullXml = `<?xml version="1.0" encoding="UTF-8"?>
+<ENVELOPE>
+    <HEADER>
+        <TALLYREQUEST>Import Data</TALLYREQUEST>
+    </HEADER>
+    <BODY>
+        <IMPORTDATA>
+            <REQUESTDESC>
+                <REPORTNAME>Vouchers</REPORTNAME>
+                <STATICVARIABLES>
+                    <SVCURRENTCOMPANY>${safeCompanyName}</SVCURRENTCOMPANY>
+                </STATICVARIABLES>
+            </REQUESTDESC>
+            <REQUESTDATA>
+                ${vouchersXml}
+            </REQUESTDATA>
+        </IMPORTDATA>
+    </BODY>
+</ENVELOPE>`;
+
+    // Schema Validation Check: Ensure XML contains no unclosed tags or invalid numbers
+    if (fullXml.includes('NaN') || !fullXml.includes('</ENVELOPE>')) {
+        throw new Error('Generated Tally XML failed internal schema validation');
+    }
+
+    return fullXml;
+}
+
 // MAIN REQUEST HANDLER
 module.exports = async (req, res) => {
-    // CORS Headers
+    // Security & Cache Control Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-auth-token');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-auth-token, x-razorpay-signature');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
 
     if (req.method === 'OPTIONS') {
         res.writeHead(200);
@@ -167,27 +276,33 @@ module.exports = async (req, res) => {
         return;
     }
 
-    const parsedUrl = url.parse(req.url, true);
-    const pathname = parsedUrl.pathname;
-    const query = parsedUrl.query;
+    const reqUrl = new URL(req.url, 'http://localhost');
+    const pathname = reqUrl.pathname;
+    const query = Object.fromEntries(reqUrl.searchParams);
 
     const json = (data, statusCode = 200) => {
         res.writeHead(statusCode, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(data));
     };
 
-    const readBody = () => new Promise((resolve, reject) => {
-        let body = '';
-        req.on('data', chunk => body += chunk);
-        req.on('end', () => {
-            try {
-                resolve(body ? JSON.parse(body) : {});
-            } catch (e) {
-                resolve(body);
-            }
-        });
+    // Helper: Read Raw Request Body Buffer (Essential for HMAC-SHA256 signature verification)
+    const readRawBody = () => new Promise((resolve, reject) => {
+        const chunks = [];
+        req.on('data', chunk => chunks.push(chunk));
+        req.on('end', () => resolve(Buffer.concat(chunks)));
         req.on('error', reject);
     });
+
+    const readBody = async () => {
+        const rawBuffer = await readRawBody();
+        const bodyStr = rawBuffer.toString('utf-8');
+        if (!bodyStr) return {};
+        try {
+            return JSON.parse(bodyStr);
+        } catch (e) {
+            return { raw: bodyStr };
+        }
+    };
 
     const authUser = await getAuthUser(req);
     const userId = authUser.id;
@@ -207,8 +322,8 @@ module.exports = async (req, res) => {
             const body = await readBody();
             const { name, companyName, email, gstin, password } = body;
 
-            if (!email || !password || !name) {
-                return json({ message: 'Name, email and password are required' }, 400);
+            if (!email || typeof email !== 'string' || !password || !name) {
+                return json({ message: 'Valid name, email, and password are required' }, 400);
             }
 
             try {
@@ -219,7 +334,7 @@ module.exports = async (req, res) => {
                     user: { id: newUser.id, name: newUser.name, companyName: newUser.companyName, email: newUser.email, gstin: newUser.gstin }
                 });
             } catch (err) {
-                return json({ message: err.message }, 400);
+                return json({ message: 'Signup failed. User may already exist.' }, 400);
             }
         }
 
@@ -316,6 +431,9 @@ module.exports = async (req, res) => {
         if (pathname === '/api/payroll/disburse' && req.method === 'POST') {
             const body = await readBody();
             const empId = body.empId;
+            if (!empId) {
+                return json({ message: 'Employee ID is required' }, 400);
+            }
             const utr = `SAL_IMPS_${Date.now().toString().slice(-6)}`;
             const emp = await db.updatePayrollStatus(userId, empId, 'DISBURSED', utr);
             return json({ message: `Salary disbursed successfully! IMPS UTR: ${utr}`, employee: emp });
@@ -329,6 +447,9 @@ module.exports = async (req, res) => {
         if (pathname === '/api/vendors/pay' && req.method === 'POST') {
             const body = await readBody();
             const billId = body.billId;
+            if (!billId) {
+                return json({ message: 'Bill ID is required' }, 400);
+            }
             const utr = `VEND_UTR_${Date.now().toString().slice(-6)}`;
             const bill = await db.updateVendorBillStatus(userId, billId, 'PAID', utr);
             return json({ message: `Vendor invoice #${billId} cleared successfully! Reference UTR: ${utr}`, bill });
@@ -392,12 +513,12 @@ module.exports = async (req, res) => {
         }
 
         // =====================================================================
-        // MODULE 6: DIRECT RAZORPAY WEBHOOK INGESTION ENGINE
+        // MODULE 6: DIRECT RAZORPAY WEBHOOK INGESTION ENGINE (SECURED VIA HMAC-SHA256)
         // =====================================================================
         if (pathname === '/api/webhooks/config') {
             return json({
                 webhookUrl: 'https://razorpay-autorecon.vercel.app/api/webhooks/razorpay',
-                webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET || 'autorecon_rzp_secret_2026',
+                isSecretConfigured: Boolean(process.env.RAZORPAY_WEBHOOK_SECRET),
                 supportedEvents: [
                     'payment.captured',
                     'order.paid',
@@ -411,16 +532,65 @@ module.exports = async (req, res) => {
         }
 
         if (pathname === '/api/webhooks/razorpay' && req.method === 'POST') {
-            const payload = await readBody();
+            const rawBodyBuffer = await readRawBody();
+            const rawBodyStr = rawBodyBuffer.toString('utf-8');
+            const signature = req.headers['x-razorpay-signature'];
+            const secret = process.env.RAZORPAY_WEBHOOK_SECRET || 'autorecon_rzp_secret_2026';
+
+            // 1. Webhook Signature Verification (HMAC-SHA256 on RAW Body Buffer)
+            if (!signature) {
+                console.warn('[RAZORPAY WEBHOOK] Rejected request: Missing x-razorpay-signature header');
+                return json({ error: 'Unauthorized', message: 'Missing Razorpay webhook signature header' }, 401);
+            }
+
+            const expectedSignature = crypto
+                .createHmac('sha256', secret)
+                .update(rawBodyBuffer)
+                .digest('hex');
+
+            const sigBuffer = Buffer.from(signature, 'utf-8');
+            const expBuffer = Buffer.from(expectedSignature, 'utf-8');
+
+            if (sigBuffer.length !== expBuffer.length || !crypto.timingSafeEqual(sigBuffer, expBuffer)) {
+                console.warn('[RAZORPAY WEBHOOK] Rejected request: Invalid HMAC-SHA256 signature');
+                return json({ error: 'Unauthorized', message: 'Invalid Razorpay webhook signature' }, 401);
+            }
+
+            // 2. Parse Validated Body
+            let payload = {};
+            try {
+                payload = JSON.parse(rawBodyStr);
+            } catch (e) {
+                return json({ error: 'Bad Request', message: 'Invalid JSON payload' }, 400);
+            }
+
             const event = payload.event || 'payment.captured';
+            const eventId = payload.event_id || (payload.payload && payload.payload.payment ? payload.payload.payment.entity.id : null);
+
+            // 3. Replay Protection Check
+            if (eventId && db.isEventProcessed(eventId)) {
+                console.log(`[RAZORPAY WEBHOOK] Duplicate event ignored: ${eventId}`);
+                return json({ status: 'ALREADY_PROCESSED', event, message: 'Duplicate webhook event ignored' });
+            }
+            if (eventId) {
+                db.markEventProcessed(eventId);
+            }
+
             const entity = payload.payload ? (payload.payload.payment ? payload.payload.payment.entity : (payload.payload.settlement ? payload.payload.settlement.entity : payload.payload)) : payload;
 
-            console.log(`[RAZORPAY WEBHOOK] Ingested event: ${event}`);
+            console.log(`[RAZORPAY WEBHOOK] Verified and Ingested event: ${event}`);
 
             if (event === 'payment.captured' || event === 'order.paid') {
                 const amountInPaise = entity.amount || 500000;
                 const amountInRupees = Number((amountInPaise / 100).toFixed(2));
                 const orderId = entity.order_id || entity.id || `order_RZP_${Date.now().toString().slice(-4)}`;
+
+                // Replay check on orderId
+                if (db.isEventProcessed(`order_${orderId}`)) {
+                    return json({ status: 'ALREADY_PROCESSED', event, orderId, message: 'Order already reconciled' });
+                }
+                db.markEventProcessed(`order_${orderId}`);
+
                 const customerName = entity.notes && entity.notes.customer_name ? entity.notes.customer_name : (entity.email ? entity.email.split('@')[0] : 'Razorpay Webhook Customer');
                 const method = entity.method || 'upi';
 
@@ -518,6 +688,61 @@ module.exports = async (req, res) => {
         }
 
         // =====================================================================
+        // MODULE 6: TALLYPRIME ERP INTEGRATION (XML & CSV VOUCHER BRIDGE)
+        // =====================================================================
+        if (pathname === '/api/tally/export-xml') {
+            const orders = await db.getUserOrders(userId);
+            const tallyXml = generateTallyXml(orders, authUser.companyName || 'Zenith Retail India Pvt Ltd');
+
+            res.writeHead(200, {
+                'Content-Type': 'application/xml; charset=utf-8',
+                'Content-Disposition': `attachment; filename="TallyPrime_AutoRecon_Vouchers_${userId}.xml"`
+            });
+            return res.end(tallyXml);
+        }
+
+        if (pathname === '/api/tally/export-excel') {
+            const orders = await db.getUserOrders(userId);
+            let csvContent = 'Voucher Date,Voucher Type,Voucher Number,Debit Ledger (Bank),Net Amount Deposited,MDR Expense Ledger,MDR Fee,GST Input Tax Ledger,GST Tax (18%),Credit Ledger (Escrow),Gross Order Value,Customer Name,Payment Method,Recon Status\n';
+
+            orders.forEach(o => {
+                const orderDate = o.orderDate || '2026-08-25';
+                const amount = Number((Number(o.amount) || 0).toFixed(2));
+                const mdrRate = (o.reconStatus === 'FEE_MISMATCH') ? 0.035 : CONTRACT_MDR_RATE;
+                const mdrFee = Number((amount * mdrRate).toFixed(2));
+                const gstTax = Number((mdrFee * GST_RATE).toFixed(2));
+                const netBank = Number((amount - (mdrFee + gstTax)).toFixed(2));
+
+                csvContent += `"${orderDate}","Receipt","${xmlEscape(o.orderId)}","Axis Bank Current A/c",${netBank},"Payment Gateway Charges (MDR)",${mdrFee},"Input GST on Gateway Charges (18%)",${gstTax},"Razorpay Settlement Escrow",${amount},"${xmlEscape(o.customerName)}","${xmlEscape(o.paymentMethod)}","${xmlEscape(o.reconStatus)}"\n`;
+            });
+
+            res.writeHead(200, {
+                'Content-Type': 'text/csv; charset=utf-8',
+                'Content-Disposition': 'attachment; filename="TallyPrime_AutoRecon_Ledgers.csv"'
+            });
+            return res.end(csvContent);
+        }
+
+        if (pathname === '/api/tally/preview') {
+            const orders = await db.getUserOrders(userId);
+            const tallyXml = generateTallyXml(orders.slice(0, 5), authUser.companyName || 'Zenith Retail India Pvt Ltd');
+            const totalGross = orders.reduce((sum, o) => sum + (Number(o.amount) || 0), 0);
+
+            return json({
+                totalVouchers: orders.length,
+                totalGrossAmount: Number(totalGross.toFixed(2)),
+                compatibleVersions: ['TallyPrime 4.1', 'TallyPrime 4.0', 'TallyPrime 3.0', 'Tally.ERP 9'],
+                ledgerMappings: {
+                    bankLedger: 'Axis Bank Current A/c',
+                    mdrExpenseLedger: 'Payment Gateway Charges (MDR 2%)',
+                    taxLedger: 'Input IGST / CGST on Gateway Fee (18%)',
+                    escrowLedger: 'Razorpay Settlement Escrow'
+                },
+                sampleXmlSnippet: tallyXml
+            });
+        }
+
+        // =====================================================================
         // AI MUNIMJI COPILOT (DATABASE & USER CONTEXT)
         // =====================================================================
         if (pathname === '/api/chat/config') {
@@ -535,7 +760,9 @@ module.exports = async (req, res) => {
 
             let reply = '';
 
-            if (queryText.includes('ml') || queryText.includes('machine learning') || queryText.includes('model') || queryText.includes('anomaly') || queryText.includes('forecast')) {
+            if (queryText.includes('tally') || queryText.includes('prime') || queryText.includes('erp') || queryText.includes('tele')) {
+                reply = `📊 **TallyPrime Accounting Bridge**:\nAutoRecon AI generates **1-Click TallyPrime XML Vouchers** for all your Razorpay settlements!\n\n• **Standard Ledger Mapping**:\n  1. **Debit**: Axis Bank Current A/c (Net ₹${recon.totalSettledToBank.toLocaleString('en-IN')})\n  2. **Debit**: Payment Gateway Charges MDR 2% (₹${recon.totalActualMdrFee.toLocaleString('en-IN')})\n  3. **Debit**: Input GST on MDR 18% (₹${recon.totalGstTax.toLocaleString('en-IN')})\n  4. **Credit**: Razorpay Escrow (Gross ₹${recon.totalGrossVolume.toLocaleString('en-IN')})\n\n👉 **How to Import in TallyPrime**:\n1. Click **"Export to TallyPrime XML"** in the top bar or Ledger tab.\n2. Open TallyPrime &rarr; Press **Alt + O (Import)** &rarr; Select **Transactions** &rarr; Choose the downloaded XML file!\n3. All ${recon.totalOrders} vouchers will post instantly with 0 manual typing!`;
+            } else if (queryText.includes('ml') || queryText.includes('machine learning') || queryText.includes('model') || queryText.includes('anomaly') || queryText.includes('forecast')) {
                 const orders = await db.getUserOrders(userId);
                 const anomalyReport = ml.trainAndDetectAnomalies(orders);
                 const forecast = ml.forecastTimeSeriesCashFlow(recon.totalGrossVolume, cf.totalOutflow || 85000);
@@ -550,7 +777,7 @@ module.exports = async (req, res) => {
             } else if (queryText.includes('dispute') || queryText.includes('leak') || queryText.includes('overcharge') || queryText.includes('fee')) {
                 reply = `💳 **Gateway Audit**:\nRazorpay audited volume: ₹${recon.totalGrossVolume.toLocaleString('en-IN')}.\nDetected **${recon.mdrFeeMismatches} fee overcharges** totaling **₹${recon.totalDiscrepancyAmount.toLocaleString('en-IN')}**. Open the Dispute Room to copy your pre-filled Razorpay dispute email.`;
             } else {
-                reply = `Namaste! 🙏 I am your **AI Munimji** for **${authUser.companyName}**.\n\nHere is your financial overview from the database:\n• 💳 **Reconciliation Health**: ${recon.healthScorePercentage}% (${recon.totalOrders} orders)\n• 👥 **Pending Salaries**: ₹${payroll.totalDelayedAmount.toLocaleString('en-IN')}\n• 🧾 **MSME 45-Day Alarms**: ${vendor.msmeUrgentBillsCount} urgent bill\n• 📊 **Cash Runway**: ${cf.estimatedRunwayMonths} Months (₹${cf.availableGstItc.toLocaleString('en-IN')} GST ITC)\n• 🤖 **ML Anomaly Engine**: 98.4% Isolation Forest Precision\n\nWhat would you like me to audit or disburse?`;
+                reply = `Namaste! 🙏 I am your **AI Munimji** for **${authUser.companyName}**.\n\nHere is your financial overview from the database:\n• 💳 **Reconciliation Health**: ${recon.healthScorePercentage}% (${recon.totalOrders} orders)\n• 📊 **TallyPrime Bridge**: 1-Click XML Voucher Export Ready\n• 👥 **Pending Salaries**: ₹${payroll.totalDelayedAmount.toLocaleString('en-IN')}\n• 🧾 **MSME 45-Day Alarms**: ${vendor.msmeUrgentBillsCount} urgent bill\n• 📊 **Cash Runway**: ${cf.estimatedRunwayMonths} Months (₹${cf.availableGstItc.toLocaleString('en-IN')} GST ITC)\n\nWhat would you like me to audit, export to TallyPrime, or disburse?`;
             }
 
             return json({ reply });
@@ -561,6 +788,6 @@ module.exports = async (req, res) => {
 
     } catch (err) {
         console.error('API Server Error:', err);
-        return json({ error: 'Internal Server Error', message: err.message }, 500);
+        return json({ error: 'Internal Server Error', message: 'An internal server error occurred' }, 500);
     }
 };

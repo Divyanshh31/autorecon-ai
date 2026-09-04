@@ -1,13 +1,15 @@
 // AutoRecon AI — Cloud Database Engine
 // Multi-Tenant Cloud Database Adapter (PostgreSQL / Supabase / MongoDB / Serverless Engine)
 
-const https = require('https');
 const crypto = require('crypto');
 
 // Environment Configuration for Cloud Databases
 const SUPABASE_URL = process.env.SUPABASE_URL || '';
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY || '';
 const DATABASE_PROVIDER = SUPABASE_URL && SUPABASE_ANON_KEY ? 'Supabase (PostgreSQL Cloud)' : 'AutoRecon Serverless Cloud Database Engine';
+
+// Static Demo Token for Demo Guest User
+const STATIC_DEMO_TOKEN = 'tok_demo_zenith_session_2026';
 
 // High-Performance In-Memory & Cloud Partitioned Collections
 const collections = {
@@ -23,7 +25,8 @@ const collections = {
     discrepancies: new Map(),   // id -> discrepancy record
     userDiscrepancies: new Map(),// userId -> Array of discrepancy IDs
     vendorBills: new Map(),     // billId -> vendor bill record
-    userVendorBills: new Map()  // userId -> Array of billIds
+    userVendorBills: new Map(), // userId -> Array of billIds
+    processedEvents: new Set()  // Event replay protection (eventId or rzp_orderId)
 };
 
 // Password Hashing Utility
@@ -31,70 +34,87 @@ function hashPassword(password) {
     return crypto.createHash('sha256').update(password || '').digest('hex');
 }
 
+// Input Sanitization Helper
+function sanitizeInput(str) {
+    if (typeof str !== 'string') return str;
+    return str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '').trim();
+}
+
 // -----------------------------------------------------------------------------
 // Database Operations Interface
 // -----------------------------------------------------------------------------
 const db = {
     getProviderInfo() {
-        let totalFiles = collections.files.size;
-        let totalUsers = collections.users.size;
-        let totalPayroll = collections.payroll.size;
-        let totalOrders = collections.orders.size;
-        let totalBills = collections.vendorBills.size;
-
         return {
             status: 'CONNECTED',
             provider: DATABASE_PROVIDER,
             engine: 'Multi-Tenant Relational & Document Store (PostgreSQL / Cloud Adapter)',
             uptime: process.uptime ? Math.floor(process.uptime()) : 0,
             metrics: {
-                totalUsers,
-                totalFilesAndBatches: totalFiles,
-                totalPayrollRecords: totalPayroll,
-                totalSalesOrders: totalOrders,
-                totalVendorInvoices: totalBills
+                totalUsers: collections.users.size,
+                totalFilesAndBatches: collections.files.size,
+                totalPayrollRecords: collections.payroll.size,
+                totalSalesOrders: collections.orders.size,
+                totalVendorInvoices: collections.vendorBills.size
             }
         };
     },
 
+    // EVENT REPLAY PROTECTION
+    isEventProcessed(eventId) {
+        if (!eventId) return false;
+        return collections.processedEvents.has(String(eventId));
+    },
+
+    markEventProcessed(eventId) {
+        if (eventId) {
+            collections.processedEvents.add(String(eventId));
+        }
+    },
+
     // USER AUTHENTICATION & PROFILES
     async createUser(userData) {
-        const cleanEmail = (userData.email || '').toLowerCase().trim();
+        const cleanEmail = sanitizeInput((userData.email || '').toLowerCase());
+        if (!cleanEmail) {
+            throw new Error('Valid email address is required');
+        }
         if (collections.users.has(cleanEmail)) {
             throw new Error('An account with this email already exists');
         }
 
-        const id = userData.id || ('usr_' + Date.now() + '_' + crypto.randomBytes(3).toString('hex'));
+        const id = userData.id || ('usr_' + Date.now() + '_' + crypto.randomBytes(4).toString('hex'));
         const user = {
             id,
-            name: userData.name.trim(),
-            companyName: userData.companyName ? userData.companyName.trim() : 'My Business',
+            name: sanitizeInput(userData.name || 'User'),
+            companyName: sanitizeInput(userData.companyName || 'My Business'),
             email: cleanEmail,
-            gstin: userData.gstin ? userData.gstin.trim().toUpperCase() : '',
+            gstin: sanitizeInput((userData.gstin || '').toUpperCase()),
             passwordHash: hashPassword(userData.password),
             createdAt: new Date().toISOString()
         };
 
         collections.users.set(cleanEmail, user);
         collections.usersById.set(id, user);
-        return user;
+        return { ...user };
     },
 
     async getUserByEmail(email) {
-        const cleanEmail = (email || '').toLowerCase().trim();
-        return collections.users.get(cleanEmail) || null;
+        const cleanEmail = sanitizeInput((email || '').toLowerCase());
+        const u = collections.users.get(cleanEmail);
+        return u ? { ...u } : null;
     },
 
     async getUserById(id) {
         if (!id) return null;
-        return collections.usersById.get(id) || null;
+        const u = collections.usersById.get(id);
+        return u ? { ...u } : null;
     },
 
     async authenticateUser(email, password) {
         const user = await db.getUserByEmail(email);
         if (!user) return null;
         if (user.passwordHash !== hashPassword(password)) return null;
-        return user;
+        return { ...user };
     },
 
     async createSession(userId) {
@@ -106,15 +126,15 @@ const db = {
     async getUserByToken(token) {
         if (!token) return null;
         const cleanToken = token.replace('Bearer ', '').trim();
-        const userId = collections.sessions.get(cleanToken);
-        if (!userId) {
-            // Check if token matches standard demo session
-            if (cleanToken.includes('demo') || cleanToken.includes('zenith')) {
-                return collections.usersById.get('demo_user') || null;
-            }
-            return null;
+        if (!cleanToken) return null;
+
+        let userId = collections.sessions.get(cleanToken);
+        if (!userId && (cleanToken === STATIC_DEMO_TOKEN || cleanToken === 'demo_token')) {
+            userId = 'demo_user';
         }
-        return collections.usersById.get(userId) || null;
+        if (!userId) return null;
+        const u = collections.usersById.get(userId);
+        return u ? { ...u } : null;
     },
 
     async destroySession(token) {
@@ -125,12 +145,12 @@ const db = {
 
     // FILE & BATCH STORAGE
     async saveFileBatch(userId, batchDoc) {
-        const batchId = batchDoc.batchId || ('batch_' + Date.now());
+        const batchId = sanitizeInput(batchDoc.batchId || ('batch_' + Date.now()));
         const record = {
             batchId,
             userId,
-            fileName: batchDoc.fileName || 'Uploaded CSV',
-            fileType: batchDoc.type || 'RECON',
+            fileName: sanitizeInput(batchDoc.fileName || 'Uploaded CSV'),
+            fileType: sanitizeInput(batchDoc.type || 'RECON'),
             uploadedAt: batchDoc.uploadedAt || new Date().toISOString(),
             recordCount: batchDoc.totalOrders || (batchDoc.employees || batchDoc.orders || []).length,
             rawContent: batchDoc.rawContent || null,
@@ -166,11 +186,11 @@ const db = {
             }
         }
 
-        return record;
+        return { ...record };
     },
 
     async getUserBatches(userId) {
-        const batchIds = collections.userFiles.get(userId) || collections.userFiles.get('demo_user') || [];
+        const batchIds = collections.userFiles.get(userId) || [];
         return batchIds.map(id => {
             const b = collections.files.get(id);
             if (!b) return null;
@@ -185,142 +205,134 @@ const db = {
     },
 
     async getBatchById(batchId) {
-        return collections.files.get(batchId) || null;
+        const b = collections.files.get(batchId);
+        return b ? { ...b } : null;
     },
 
     // PAYROLL & SALARIES
     async savePayrollEmployee(userId, batchId, empData) {
-        const empId = empData.id || empData.empId || ('EMP_' + Date.now() + '_' + Math.floor(Math.random() * 1000));
+        const empId = sanitizeInput(empData.id || empData.empId || ('EMP_' + Date.now() + '_' + Math.floor(Math.random() * 1000)));
         const record = {
             empId,
             userId,
             batchId,
-            name: empData.fullName || empData.name || 'Employee',
-            role: empData.role || 'Team Member',
-            department: empData.department || 'Operations',
+            name: sanitizeInput(empData.fullName || empData.name || 'Employee'),
+            role: sanitizeInput(empData.role || 'Team Member'),
+            department: sanitizeInput(empData.department || 'Operations'),
             grossSalary: Number(empData.salary || empData.grossSalary || 0),
             tdsDeduction: Number(empData.tds || empData.tdsDeduction || 0),
             pfDeduction: Number(empData.pf || empData.pfDeduction || 0),
             netPayable: Number(empData.netPayable || 0),
-            status: empData.status || 'PENDING',
-            bankUtr: empData.utr || empData.bankUtr || null,
+            status: sanitizeInput(empData.status || 'PENDING'),
+            bankUtr: empData.utr ? sanitizeInput(empData.utr) : (empData.bankUtr ? sanitizeInput(empData.bankUtr) : null),
             delayDays: empData.delayDays || (empData.status === 'DELAYED' ? 24 : 0),
             disbursedDate: empData.disbursedDate || null,
-            city: empData.city || 'India',
+            city: sanitizeInput(empData.city || 'India'),
             joined: empData.joined || '2024-01-01',
-            email: empData.email || `${empId.toLowerCase()}@company.com`
+            email: sanitizeInput(empData.email || `${empId.toLowerCase()}@company.com`)
         };
 
         collections.payroll.set(empId, record);
         if (!collections.userPayroll.has(userId)) collections.userPayroll.set(userId, []);
         const list = collections.userPayroll.get(userId);
         if (!list.includes(empId)) list.unshift(empId);
-        return record;
+        return { ...record };
     },
 
     async getUserPayroll(userId) {
-        let empIds = collections.userPayroll.get(userId);
-        if (!empIds || empIds.length === 0) {
-            empIds = collections.userPayroll.get('demo_user') || [];
-        }
-        return empIds.map(id => collections.payroll.get(id)).filter(Boolean);
+        const empIds = collections.userPayroll.get(userId) || [];
+        return empIds.map(id => collections.payroll.get(id)).filter(Boolean).map(e => ({ ...e }));
     },
 
     async updatePayrollStatus(userId, empId, status, bankUtr = null) {
         const emp = collections.payroll.get(empId);
-        if (emp) {
+        if (emp && (emp.userId === userId || userId === 'demo_user')) {
             emp.status = status;
-            if (bankUtr) emp.bankUtr = bankUtr;
+            if (bankUtr) emp.bankUtr = sanitizeInput(bankUtr);
             if (status === 'DISBURSED' || status === 'PAID') {
                 emp.delayDays = 0;
                 emp.disbursedDate = new Date().toISOString().slice(0, 10);
             }
-            return emp;
+            return { ...emp };
         }
         return null;
     },
 
     // ORDERS & GATEWAY RECONCILIATION
     async saveOrder(userId, batchId, orderData) {
-        const orderId = orderData.orderId || ('ORD_' + Date.now());
+        const orderId = sanitizeInput(orderData.orderId || ('ORD_' + Date.now()));
         const record = {
             orderId,
             userId,
             batchId,
-            customerName: orderData.customerName || 'Customer',
+            customerName: sanitizeInput(orderData.customerName || 'Customer'),
             amount: Number(orderData.amount || 0),
-            currency: orderData.currency || 'INR',
+            currency: sanitizeInput(orderData.currency || 'INR'),
             orderDate: orderData.orderDate || new Date().toISOString().slice(0, 19),
-            status: orderData.status || 'COMPLETED',
-            paymentMethod: orderData.paymentMethod || 'upi',
-            reconStatus: orderData.reconStatus || 'RECONCILED'
+            status: sanitizeInput(orderData.status || 'COMPLETED'),
+            paymentMethod: sanitizeInput(orderData.paymentMethod || 'upi'),
+            reconStatus: sanitizeInput(orderData.reconStatus || 'RECONCILED')
         };
 
         collections.orders.set(orderId, record);
         if (!collections.userOrders.has(userId)) collections.userOrders.set(userId, []);
         const list = collections.userOrders.get(userId);
         if (!list.includes(orderId)) list.unshift(orderId);
-        return record;
+        return { ...record };
     },
 
     async getUserOrders(userId, batchId = null) {
-        let orderIds = collections.userOrders.get(userId);
-        if (!orderIds || orderIds.length === 0) {
-            orderIds = collections.userOrders.get('demo_user') || [];
-        }
+        const orderIds = collections.userOrders.get(userId) || [];
         let items = orderIds.map(id => collections.orders.get(id)).filter(Boolean);
         if (batchId) items = items.filter(o => o.batchId === batchId);
-        return items;
+        return items.map(o => ({ ...o }));
     },
 
     async saveDiscrepancy(userId, batchId, discData) {
-        const id = discData.id || collections.discrepancies.size + 1;
+        const id = discData.id || (collections.discrepancies.size + 1);
         const record = {
             id,
             userId,
             batchId,
-            orderId: discData.orderId,
-            paymentId: discData.paymentId || `pay_${discData.orderId}`,
-            settlementId: discData.settlementId || null,
-            bankUtr: discData.bankUtr || null,
-            type: discData.type || 'MDR_FEE_OVERCHARGE',
-            severity: discData.severity || 'MEDIUM',
+            orderId: sanitizeInput(discData.orderId || ''),
+            paymentId: sanitizeInput(discData.paymentId || `pay_${discData.orderId}`),
+            settlementId: discData.settlementId ? sanitizeInput(discData.settlementId) : null,
+            bankUtr: discData.bankUtr ? sanitizeInput(discData.bankUtr) : null,
+            type: sanitizeInput(discData.type || 'MDR_FEE_OVERCHARGE'),
+            severity: sanitizeInput(discData.severity || 'MEDIUM'),
             expectedAmount: Number(discData.expectedAmount || 0),
             actualAmount: Number(discData.actualAmount || 0),
             varianceAmount: Number(discData.varianceAmount || 0),
-            rootCause: discData.rootCause || 'Fee variance detected.',
-            suggestedAction: discData.suggestedAction || 'File dispute ticket.',
+            rootCause: sanitizeInput(discData.rootCause || 'Fee variance detected.'),
+            suggestedAction: sanitizeInput(discData.suggestedAction || 'File dispute ticket.'),
             detectedAt: discData.detectedAt || new Date().toISOString(),
-            resolved: discData.resolved || false
+            resolved: Boolean(discData.resolved)
         };
 
         collections.discrepancies.set(id, record);
         if (!collections.userDiscrepancies.has(userId)) collections.userDiscrepancies.set(userId, []);
         const list = collections.userDiscrepancies.get(userId);
         if (!list.includes(id)) list.unshift(id);
-        return record;
+        return { ...record };
     },
 
     async getUserDiscrepancies(userId, batchId = null) {
-        let ids = collections.userDiscrepancies.get(userId);
-        if (!ids || ids.length === 0) {
-            ids = collections.userDiscrepancies.get('demo_user') || [];
-        }
+        const ids = collections.userDiscrepancies.get(userId) || [];
         let items = ids.map(id => collections.discrepancies.get(id)).filter(Boolean);
         if (batchId) items = items.filter(d => d.batchId === batchId);
-        return items;
+        return items.map(d => ({ ...d }));
     },
 
     // VENDOR BILLS
     async saveVendorBill(userId, billData) {
-        const billId = billData.billId || ('BILL_' + Date.now());
+        const billId = sanitizeInput(billData.billId || ('BILL_' + Date.now()));
         const record = {
             billId,
             userId,
-            vendorName: billData.vendorName || 'Vendor Partner',
-            category: billData.category || 'Supplies',
-            invoiceNo: billData.invoiceNo || `INV-${Date.now().toString().slice(-4)}`,
-            gstin: billData.gstin || '27AABCB0000A1Z0',
+            vendorName: sanitizeInput(billData.vendorName || 'Vendor Partner'),
+            category: sanitizeInput(billData.category || 'Supplies'),
+            invoiceNo: sanitizeInput(billData.invoiceNo || `INV-${Date.now().toString().slice(-4)}`),
+            gstin: sanitizeInput((billData.gstin || '27AABCB0000A1Z0').toUpperCase()),
             amount: Number(billData.amount || 0),
             gstAmount: Number(billData.gstAmount || (billData.amount * 0.18)),
             tdsRate: Number(billData.tdsRate || 0.02),
@@ -329,8 +341,8 @@ const db = {
             isMsme: Boolean(billData.isMsme),
             invoiceDate: billData.invoiceDate || new Date().toISOString().slice(0, 10),
             dueDate: billData.dueDate || new Date(Date.now() + 15 * 86400000).toISOString().slice(0, 10),
-            paymentStatus: billData.paymentStatus || 'UNPAID',
-            bankUtr: billData.bankUtr || null,
+            paymentStatus: sanitizeInput(billData.paymentStatus || 'UNPAID'),
+            bankUtr: billData.bankUtr ? sanitizeInput(billData.bankUtr) : null,
             msmeDaysRemaining: billData.msmeDaysRemaining !== undefined ? billData.msmeDaysRemaining : (billData.isMsme ? 12 : null)
         };
 
@@ -338,23 +350,20 @@ const db = {
         if (!collections.userVendorBills.has(userId)) collections.userVendorBills.set(userId, []);
         const list = collections.userVendorBills.get(userId);
         if (!list.includes(billId)) list.unshift(billId);
-        return record;
+        return { ...record };
     },
 
     async getUserVendorBills(userId) {
-        let billIds = collections.userVendorBills.get(userId);
-        if (!billIds || billIds.length === 0) {
-            billIds = collections.userVendorBills.get('demo_user') || [];
-        }
-        return billIds.map(id => collections.vendorBills.get(id)).filter(Boolean);
+        const billIds = collections.userVendorBills.get(userId) || [];
+        return billIds.map(id => collections.vendorBills.get(id)).filter(Boolean).map(b => ({ ...b }));
     },
 
     async updateVendorBillStatus(userId, billId, status, bankUtr = null) {
         const bill = collections.vendorBills.get(billId);
-        if (bill) {
+        if (bill && (bill.userId === userId || userId === 'demo_user')) {
             bill.paymentStatus = status;
-            if (bankUtr) bill.bankUtr = bankUtr;
-            return bill;
+            if (bankUtr) bill.bankUtr = sanitizeInput(bankUtr);
+            return { ...bill };
         }
         return null;
     }
@@ -375,9 +384,8 @@ const db = {
         const user = await db.createUser(demoUser);
         const userId = 'demo_user';
 
-        // Also map to alias ID
         collections.usersById.set('demo_user', user);
-        collections.usersById.set('usr_demo_zenith_101', user);
+        collections.sessions.set(STATIC_DEMO_TOKEN, 'demo_user');
 
         // Seed 35 Orders
         const customerNames = [
