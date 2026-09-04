@@ -985,5 +985,74 @@ html.dark ::-webkit-scrollbar-thumb {
     scrollbar-width: none !important;
 }
 
+/* ==========================================================================
+   ADVANCED AI/ML & GOOGLE STITCH ANIMATION EXTENSIONS
+   ========================================================================== */
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px 6px rgba(0, 102, 255, 0.25);
+    }
+}
+
+@keyframes radarSweep {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes shimmerSlide {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.animate-pulse-glow {
+    animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+.animate-radar-sweep {
+    animation: radarSweep 3s linear infinite;
+}
+
+.animate-shimmer-slide {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,102,255,0.15) 50%, rgba(255,255,255,0) 100%);
+    background-size: 200% 100%;
+    animation: shimmerSlide 1.8s infinite;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Enhanced Hover Lift Cards */
+.stitch-hover-card {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+.stitch-hover-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -6px rgba(0, 102, 255, 0.12);
+    border-color: var(--rzp-blue);
+}
+
 
 

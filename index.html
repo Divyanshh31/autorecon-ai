@@ -917,24 +917,29 @@
                     <!-- SECTION 1: Three Explainability Pillars -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <!-- Pillar 1 -->
-                        <div class="relative bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between overflow-hidden hover-lift">
+                        <div class="relative bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between overflow-hidden stitch-hover-card">
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center justify-between">
                                     <span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 01 // AUDIT DEFENSE</span>
-                                    <span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-mono-sm text-mono-sm">REAL-TIME TELEMETRY</span>
+                                    <span class="px-1.5 py-0.5 rounded bg-primary-container text-on-primary-container font-mono-sm text-mono-sm font-bold flex items-center gap-1">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-primary animate-ping"></span> REAL-TIME TELEMETRY
+                                    </span>
                                 </div>
                                 <h2 class="font-headline-md text-headline-md text-on-surface">Multi-Variate Anomaly Detection Engine</h2>
                                 <p class="font-body-md text-body-md text-on-surface-variant">
                                     Continuously monitors high-throughput gateway interchange tiers, contract MDR schedules, settlement latency drifts, and nocturnal batch spikes across Razorpay.
                                 </p>
                             </div>
-                            <div class="mt-4 pt-3 flex flex-col gap-2">
-                                <div class="flex justify-between items-end font-mono-sm text-mono-sm">
-                                    <span class="text-on-surface-variant">INTERCHANGE CEILING DRIFT (RuPay/UPI):</span>
-                                    <span class="text-error font-bold">+184 bps DEV</span>
+                            <div class="mt-4 pt-3 flex flex-col gap-3.5 border-t border-outline-variant">
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between items-center font-mono-sm text-mono-sm">
+                                        <span class="text-on-surface-variant">Isolation Forest Contamination:</span>
+                                        <span id="mlSensitivityLabel" class="text-primary font-bold">5% Sensitivity</span>
+                                    </div>
+                                    <input type="range" id="mlContaminationSlider" min="0.01" max="0.15" step="0.01" value="0.05" oninput="updateMlSensitivity(this.value)" class="w-full h-1.5 bg-surface-container-low rounded-lg appearance-none cursor-pointer accent-primary">
                                 </div>
                                 <!-- Inline Sparkline Metric Visualization -->
-                                <div class="h-8 w-full bg-surface-container-low rounded flex items-end px-1 gap-1 py-1">
+                                <div class="h-8 w-full bg-surface-container-low rounded flex items-end px-1 gap-1 py-1 relative overflow-hidden" id="sparklineContainer">
                                     <div class="bg-primary h-2 flex-1 rounded animate-bar-grow" style="animation-delay: 0.1s"></div>
                                     <div class="bg-primary h-3 flex-1 rounded animate-bar-grow" style="animation-delay: 0.15s"></div>
                                     <div class="bg-primary h-2 flex-1 rounded animate-bar-grow" style="animation-delay: 0.2s"></div>
@@ -946,69 +951,76 @@
                                     <div class="bg-primary h-6 flex-1 rounded animate-bar-grow" style="animation-delay: 0.5s"></div>
                                     <div class="bg-error h-8 flex-1 rounded animate-pulse"></div>
                                 </div>
-                                <div class="flex items-center justify-between font-mono-sm text-mono-sm text-on-surface-variant mt-1">
-                                    <span>Scan Coverage: 148,209 txns/min</span>
-                                    <span class="text-primary font-bold">100% Deterministic</span>
-                                </div>
+                                <button onclick="runLiveMlScan()" id="btnRunMlScan" class="w-full py-2 px-3 bg-primary text-on-primary rounded-lg font-body-md text-body-md font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95">
+                                    <span class="material-symbols-outlined text-[18px]">radar</span>
+                                    <span>Run Instant ML Audit Scan</span>
+                                </button>
                             </div>
                         </div>
 
                         <!-- Pillar 2 -->
-                        <div class="relative bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between overflow-hidden hover-lift">
+                        <div class="relative bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between overflow-hidden stitch-hover-card">
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center justify-between">
                                     <span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 02 // LIQUIDITY FORESIGHT</span>
-                                    <span class="px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container font-mono-sm text-mono-sm">ENSEMBLE ARIMA + PROPHET</span>
+                                    <span class="px-1.5 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-mono-sm text-mono-sm font-bold">ENSEMBLE ARIMA + PROPHET</span>
                                 </div>
                                 <h2 class="font-headline-md text-headline-md text-on-surface">Cash Flow Predictive Modeling</h2>
                                 <p class="font-body-md text-body-md text-on-surface-variant">
                                     Forecasts settlement escrow liquidity by blending cart drop-off velocity, e-commerce return (RTO) chargebacks, and bank clearing holidays.
                                 </p>
                             </div>
-                            <div class="mt-4 pt-3 flex flex-col gap-2">
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div class="p-2 rounded bg-surface-container-low">
-                                        <span class="font-mono-sm text-mono-sm text-on-surface-variant block">PROJECTED ESCROW:</span>
-                                        <span class="font-mono-kpi text-headline-sm text-on-surface" data-counter="true" data-target="48290140">₹4,82,90,140</span>
+                            <div class="mt-4 pt-3 flex flex-col gap-3 border-t border-outline-variant">
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between items-center font-mono-sm text-mono-sm">
+                                        <span class="text-on-surface-variant">RTO Chargeback Rate Sim:</span>
+                                        <span id="rtoRateValue" class="text-tertiary font-bold">3.4% RTO Rate</span>
                                     </div>
-                                    <div class="p-2 rounded bg-surface-container-low">
-                                        <span class="font-mono-sm text-mono-sm text-on-surface-variant block">RTO DRIFT VOLATILITY:</span>
-                                        <span class="font-mono-kpi text-headline-sm text-tertiary">3.41% σ</span>
+                                    <input type="range" id="rtoRateSlider" min="1" max="15" step="0.5" value="3.4" oninput="updateCashFlowScenario()" class="w-full h-1.5 bg-surface-container-low rounded-lg appearance-none cursor-pointer accent-tertiary">
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="p-2 rounded bg-surface-container-low border border-outline-variant">
+                                        <span class="font-mono-sm text-mono-sm text-on-surface-variant block">PROJECTED ESCROW:</span>
+                                        <span class="font-mono-kpi text-headline-sm text-on-surface" id="mlProjectedEscrow" data-counter="true" data-target="48290140">₹4,82,90,140</span>
+                                    </div>
+                                    <div class="p-2 rounded bg-surface-container-low border border-outline-variant">
+                                        <span class="font-mono-sm text-mono-sm text-on-surface-variant block">RTO VOLATILITY:</span>
+                                        <span class="font-mono-kpi text-headline-sm text-tertiary" id="mlRtoVolatility">3.41% σ</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Pillar 3 -->
-                        <div class="relative bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between overflow-hidden hover-lift">
+                        <div class="relative bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant flex flex-col justify-between overflow-hidden stitch-hover-card">
                             <div class="flex flex-col gap-2">
                                 <div class="flex items-center justify-between">
                                     <span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 03 // CAUSAL ATTRIBUTION</span>
-                                    <span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-mono-sm text-mono-sm">TREE-SHAP EXPLAINABILITY</span>
+                                    <span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-mono-sm text-mono-sm font-bold">TREE-SHAP EXPLAINABILITY</span>
                                 </div>
                                 <h2 class="font-headline-md text-headline-md text-on-surface">Feature Attribution &amp; Causal Graph</h2>
                                 <p class="font-body-md text-body-md text-on-surface-variant">
                                     Deconstructs complex fee overcharges down to mathematical feature attributions so controllers can contest vendor settlements.
                                 </p>
                             </div>
-                            <div class="mt-4 pt-3 flex flex-col gap-2">
-                                <div class="space-y-1.5">
+                            <div class="mt-4 pt-3 flex flex-col gap-2 border-t border-outline-variant">
+                                <div class="space-y-1.5" id="shapWeightsContainer">
                                     <div>
                                         <div class="flex justify-between font-mono-sm text-mono-sm mb-0.5">
                                             <span class="text-on-surface-variant">BIN Routing Category Error</span>
-                                            <span class="text-error font-bold">φ = +0.584</span>
+                                            <span class="text-error font-bold" id="shapWeight1">φ = +0.584</span>
                                         </div>
                                         <div class="w-full bg-surface-container-low h-1.5 rounded overflow-hidden">
-                                            <div class="bg-error h-full rounded animate-bar-grow" style="width: 58.4%"></div>
+                                            <div class="bg-error h-full rounded animate-bar-grow" id="shapBar1" style="width: 58.4%"></div>
                                         </div>
                                     </div>
                                     <div>
                                         <div class="flex justify-between font-mono-sm text-mono-sm mb-0.5">
                                             <span class="text-on-surface-variant">Unwarranted GST Surcharge (18%)</span>
-                                            <span class="text-error font-bold">φ = +0.261</span>
+                                            <span class="text-error font-bold" id="shapWeight2">φ = +0.261</span>
                                         </div>
                                         <div class="w-full bg-surface-container-low h-1.5 rounded overflow-hidden">
-                                            <div class="bg-tertiary h-full rounded animate-bar-grow" style="width: 26.1%"></div>
+                                            <div class="bg-tertiary h-full rounded animate-bar-grow" id="shapBar2" style="width: 26.1%"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -1409,6 +1421,87 @@ Zenith Retail India Pvt Ltd
                     <span>Copy Notice</span>
                 </button>
                 <button onclick="document.getElementById('salaryNoticeModal').classList.add('hidden')" class="px-4 py-2 bg-surface-container text-on-surface rounded font-body-md text-body-md hover:bg-surface-variant font-medium">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating AI Munimji Trigger Widget -->
+    <button onclick="openCopilotDrawer()" id="btnFloatingCopilot" class="fixed bottom-6 right-6 z-40 bg-primary text-on-primary rounded-full px-4 py-3 shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2.5 border border-white/20 animate-pulse-glow cursor-pointer">
+        <div class="relative flex items-center justify-center">
+            <span class="material-symbols-outlined text-2xl">smart_toy</span>
+            <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-tertiary"></span>
+            </span>
+        </div>
+        <span class="font-headline-md text-headline-md text-on-primary hidden sm:inline font-bold">Ask AI Munimji</span>
+    </button>
+
+    <!-- Slide-out AI Copilot Chat Drawer -->
+    <div id="copilotDrawer" class="fixed inset-0 z-50 overflow-hidden bg-on-surface/60 backdrop-blur-xs hidden">
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-lg bg-surface-container-lowest border-l border-outline-variant shadow-2xl p-6 flex flex-col justify-between overflow-hidden">
+                <div class="flex flex-col h-full space-y-4">
+                    <!-- Drawer Header -->
+                    <div class="flex items-center justify-between pb-3 border-b border-outline-variant shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shadow-md">
+                                <span class="material-symbols-outlined text-2xl">auto_awesome</span>
+                            </div>
+                            <div>
+                                <h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                                    <span>AI Munimji Copilot</span>
+                                    <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-mono-sm text-mono-sm font-bold">ONLINE</span>
+                                </h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">Autonomous Financial Assistant &amp; Anomaly Resolver</p>
+                            </div>
+                        </div>
+                        <button onclick="closeCopilotDrawer()" class="text-on-surface-variant hover:text-on-surface p-1 cursor-pointer">
+                            <span class="material-symbols-outlined text-[20px]">close</span>
+                        </button>
+                    </div>
+
+                    <!-- Quick Prompt Chips -->
+                    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 shrink-0">
+                        <button onclick="sendCopilotPrompt('Where is my biggest settlement fee leakage?')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-full font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                            🔍 Fee Leakage
+                        </button>
+                        <button onclick="sendCopilotPrompt('Simulate MSME 45-day tax penalty disallowance')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-full font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                            ⚠️ MSME Tax Risk
+                        </button>
+                        <button onclick="sendCopilotPrompt('Explain Isolation Forest Anomaly #ORD-91283')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-full font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                            🧠 Explain Anomaly
+                        </button>
+                        <button onclick="sendCopilotPrompt('Predict 30-day cash balance under 5% RTO spike')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-full font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                            📈 RTO Cash Forecast
+                        </button>
+                    </div>
+
+                    <!-- Conversation History Stream Area -->
+                    <div id="copilotChatStream" class="flex-1 overflow-y-auto space-y-3 p-3 bg-surface-container-low rounded-xl border border-outline-variant font-body-md text-body-md">
+                        <div class="flex gap-2.5 items-start">
+                            <div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 text-xs font-bold">
+                                AI
+                            </div>
+                            <div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-xl text-on-surface space-y-2 shadow-xs">
+                                <p class="leading-relaxed">
+                                    Namaste! I am your <b>AI Munimji Copilot</b>. I continuously audit your Razorpay settlements, Axis Bank credit feeds, and TallyPrime vouchers.
+                                </p>
+                                <p class="text-xs text-on-surface-variant font-mono-data">
+                                    Current Status: <b>35 Orders Scanned</b> • <b>₹1,487.10 Fee Overcharge Isolated</b> • <b>Zero MSME Tax Risk</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Form -->
+                    <form id="copilotForm" onsubmit="handleCopilotSubmit(event)" class="pt-2 shrink-0 flex items-center gap-2">
+                        <input type="text" id="copilotInput" placeholder="Ask Munimji anything about settlements, tax or orders..." class="flex-1 px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant outline-none focus:border-primary">
+                        <button type="submit" class="px-4 py-2 bg-primary text-on-primary rounded-lg font-body-md text-body-md font-bold hover:bg-primary-container transition-colors flex items-center gap-1 cursor-pointer">
+                            <span class="material-symbols-outlined text-[18px]">send</span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

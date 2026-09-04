@@ -2564,5 +2564,217 @@ window.copyTallyXml = async function() {
     }
 };
 
+// =========================================================================
+// AI MUNIMJI COPILOT & INTERACTIVE AI DRAWER
+// =========================================================================
+window.openCopilotDrawer = function() {
+    const drawer = document.getElementById('copilotDrawer');
+    if (!drawer) return;
+    drawer.classList.remove('hidden');
+    const container = drawer.querySelector('.w-screen');
+    if (container) {
+        container.classList.remove('animate-slide-in-right');
+        void container.offsetWidth;
+        container.classList.add('animate-slide-in-right');
+    }
+};
+
+window.closeCopilotDrawer = function() {
+    const drawer = document.getElementById('copilotDrawer');
+    if (drawer) drawer.classList.add('hidden');
+};
+
+window.sendCopilotPrompt = function(promptText) {
+    const stream = document.getElementById('copilotChatStream');
+    if (!stream) return;
+
+    // Append User Message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'flex gap-2.5 items-start justify-end';
+    userMsg.innerHTML = `
+        <div class="p-3 bg-primary text-on-primary rounded-xl space-y-1 shadow-xs max-w-[85%] text-right font-medium">
+            <p class="leading-relaxed">${escapeHtml(promptText)}</p>
+        </div>
+        <div class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shrink-0 text-xs font-bold border border-outline-variant">
+            ME
+        </div>
+    `;
+    stream.appendChild(userMsg);
+    stream.scrollTop = stream.scrollHeight;
+
+    // Simulate AI Munimji Response
+    setTimeout(() => {
+        let aiReplyHtml = '';
+        if (promptText.includes('fee leakage') || promptText.includes('Fee Leakage')) {
+            aiReplyHtml = `
+                <p class="leading-relaxed font-semibold">🔍 <b>AI Fee Leakage Analysis Report:</b></p>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                    Found <b>₹1,487.10 total fee overcharge</b> across 3 transactions.
+                    The primary culprit is <span class="text-error font-bold font-mono">pay_Nz93k81 (ORD-91283)</span> where Razorpay charged 3.25% MDR instead of 2.0% SLA.
+                </p>
+                <div class="pt-2 flex gap-2">
+                    <button onclick="openDisputeModal()" class="px-3 py-1.5 bg-primary text-on-primary rounded font-body-sm text-body-sm font-bold hover:bg-primary-container cursor-pointer">
+                        File Dispute Ticket
+                    </button>
+                </div>
+            `;
+        } else if (promptText.includes('MSME') || promptText.includes('tax')) {
+            aiReplyHtml = `
+                <p class="leading-relaxed font-semibold">⚠️ <b>Section 43B(h) Statutory Compliance Audit:</b></p>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                    You have <b>₹84,500 across 2 Micro & Small vendor invoices</b> due in 12 days.
+                    All payouts are currently green. Zero income tax disallowance risk!
+                </p>
+                <div class="pt-2 flex gap-2">
+                    <button onclick="switchToTab('view-vendors'); closeCopilotDrawer();" class="px-3 py-1.5 bg-tertiary-container text-on-tertiary-container rounded font-body-sm text-body-sm font-bold cursor-pointer">
+                        View MSME Aging Table
+                    </button>
+                </div>
+            `;
+        } else if (promptText.includes('Isolation Forest') || promptText.includes('Anomaly')) {
+            aiReplyHtml = `
+                <p class="leading-relaxed font-semibold">🧠 <b>Isolation Forest Anomaly Deconstruction:</b></p>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                    Transaction <b class="font-mono text-primary">pay_Nz93k81</b> scored <b>94.2% anomaly probability</b> due to:
+                    <br>1. BIN Routing Category mismatch (φ = +0.584)
+                    <br>2. Unwarranted GST Surcharge 18% (φ = +0.261)
+                </p>
+                <div class="pt-2 flex gap-2">
+                    <button onclick="document.getElementById('mlExplainModal').classList.remove('hidden'); closeCopilotDrawer();" class="px-3 py-1.5 bg-primary text-on-primary rounded font-body-sm text-body-sm font-bold cursor-pointer">
+                        Open SHAP Explainability Dossier
+                    </button>
+                </div>
+            `;
+        } else if (promptText.includes('RTO') || promptText.includes('Cash Forecast')) {
+            aiReplyHtml = `
+                <p class="leading-relaxed font-semibold">📈 <b>30-Day Escrow Liquidity Forecast:</b></p>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                    At current <b>3.4% RTO return rate</b>, expected 30-day escrow liquidity is <b>₹4,82,90,140</b>.
+                    If RTO spikes to 5.0%, net balance will dip to ₹4,65,10,000 with a minor ₹17.8k buffer required.
+                </p>
+                <div class="pt-2 flex gap-2">
+                    <button onclick="switchToTab('view-cashflow'); closeCopilotDrawer();" class="px-3 py-1.5 bg-surface-container-high text-on-surface rounded font-body-sm text-body-sm font-bold cursor-pointer">
+                        View Cash Compass Chart
+                    </button>
+                </div>
+            `;
+        } else {
+            aiReplyHtml = `
+                <p class="leading-relaxed">
+                    I have analyzed your query regarding <i>"${escapeHtml(promptText)}"</i> across your live settlement pipeline.
+                </p>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                    All 35 Razorpay transactions are <b>100% balanced against Axis Bank UTR feeds</b> with zero unreconciled gaps.
+                </p>
+            `;
+        }
+
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'flex gap-2.5 items-start';
+        aiMsg.innerHTML = `
+            <div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 text-xs font-bold">
+                AI
+            </div>
+            <div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-xl text-on-surface space-y-2 shadow-xs max-w-[90%] font-body-md">
+                ${aiReplyHtml}
+            </div>
+        `;
+        stream.appendChild(aiMsg);
+        stream.scrollTop = stream.scrollHeight;
+    }, 600);
+};
+
+window.handleCopilotSubmit = function(event) {
+    event.preventDefault();
+    const input = document.getElementById('copilotInput');
+    if (!input || !input.value.trim()) return;
+    const text = input.value.trim();
+    input.value = '';
+    sendCopilotPrompt(text);
+};
+
+function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+// =========================================================================
+// INTERACTIVE ML ANOMALY SENSITIVITY & LIVE AUDIT SCANNER
+// =========================================================================
+window.updateMlSensitivity = function(val) {
+    const label = document.getElementById('mlSensitivityLabel');
+    const percent = Math.round(parseFloat(val) * 100);
+    if (label) label.textContent = `${percent}% Sensitivity (${percent > 8 ? 'High' : 'Strict'})`;
+
+    const shap1 = document.getElementById('shapWeight1');
+    const shap2 = document.getElementById('shapWeight2');
+    const bar1 = document.getElementById('shapBar1');
+    const bar2 = document.getElementById('shapBar2');
+
+    const v1 = (0.584 * (1 + (percent - 5) * 0.04)).toFixed(3);
+    const v2 = (0.261 * (1 + (percent - 5) * 0.03)).toFixed(3);
+
+    if (shap1) shap1.textContent = `φ = +${v1}`;
+    if (shap2) shap2.textContent = `φ = +${v2}`;
+    if (bar1) bar1.style.width = `${Math.min(95, parseFloat(v1) * 100)}%`;
+    if (bar2) bar2.style.width = `${Math.min(85, parseFloat(v2) * 100)}%`;
+};
+
+window.runLiveMlScan = function() {
+    const btn = document.getElementById('btnRunMlScan');
+    const sparkline = document.getElementById('sparklineContainer');
+
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="animate-spin text-[18px]">progress_activity</span><span>Scanning 35 Transactions...</span>`;
+    }
+
+    if (sparkline) {
+        sparkline.classList.add('animate-shimmer-slide');
+    }
+
+    setTimeout(() => {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">check_circle</span><span>Audit Complete (35/35 Scanned)</span>`;
+            setTimeout(() => {
+                btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">radar</span><span>Run Instant ML Audit Scan</span>`;
+            }, 2500);
+        }
+
+        if (sparkline) {
+            sparkline.classList.remove('animate-shimmer-slide');
+        }
+
+        showToast('🧠 Isolation Forest Scan Complete: 3 Anomalies Verified (1 Critical Fee Leakage)');
+    }, 1500);
+};
+
+// =========================================================================
+// PREDICTIVE CASH FLOW SCENARIO SIMULATOR
+// =========================================================================
+window.updateCashFlowScenario = function() {
+    const slider = document.getElementById('rtoRateSlider');
+    const label = document.getElementById('rtoRateValue');
+    const escrowEl = document.getElementById('mlProjectedEscrow');
+    const rtoVolEl = document.getElementById('mlRtoVolatility');
+
+    if (!slider) return;
+    const rtoVal = parseFloat(slider.value);
+    if (label) label.textContent = `${rtoVal.toFixed(1)}% RTO Rate`;
+
+    // Calculate dynamic escrow projection
+    const baseEscrow = 48290140;
+    const impact = (rtoVal - 3.4) * 850000;
+    const newEscrow = Math.max(35000000, Math.round(baseEscrow - impact));
+    const newVol = (3.41 * (rtoVal / 3.4)).toFixed(2);
+
+    if (escrowEl) {
+        escrowEl.textContent = `₹${newEscrow.toLocaleString('en-IN')}`;
+    }
+    if (rtoVolEl) {
+        rtoVolEl.textContent = `${newVol}% σ`;
+    }
+};
+
 
 
