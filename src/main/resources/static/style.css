@@ -847,3 +847,129 @@ html.dark ::-webkit-scrollbar-thumb {
     animation-play-state: paused;
 }
 
+/* ==========================================================================
+   14. SECOND-PASS STITCH FIDELITY: CHART & TRANSITION ANIMATIONS
+   ========================================================================== */
+@keyframes strokeDraw {
+    from {
+        stroke-dashoffset: 1000;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes barGrow {
+    from {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+@keyframes donutRotate {
+    from {
+        stroke-dashoffset: 100;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes modalBackdropFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.animate-fade-in-slide {
+    animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-stroke-draw {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: strokeDraw 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.animate-bar-grow {
+    transform-origin: bottom;
+    animation: barGrow 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-donut-circle {
+    transition: stroke-dasharray 1s ease-in-out, stroke-dashoffset 1s ease-in-out;
+}
+
+.animate-modal-backdrop {
+    animation: modalBackdropFade 0.25s ease-out forwards;
+}
+
+.animate-modal-container {
+    animation: modalScaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Micro-interaction Hover Utilities */
+.hover-lift {
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px -5px rgba(0, 80, 203, 0.15);
+}
+
+.interactive-chart-bar {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.interactive-chart-bar:hover {
+    opacity: 0.85;
+    transform: scaleY(1.04);
+}
+
+/* Accessibility: Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .animate-fade-in-slide,
+    .animate-stroke-draw,
+    .animate-bar-grow,
+    .animate-modal-backdrop,
+    .animate-modal-container,
+    .orb {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+

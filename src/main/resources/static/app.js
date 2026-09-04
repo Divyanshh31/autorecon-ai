@@ -332,8 +332,50 @@ window.skipSplashScreen = function() {
 };
 
 // =========================================================================
-// 3. TOP NAVIGATION & STITCH TERMINAL SIMULATOR TAB SWITCHER
+// 3. TOP NAVIGATION, ANIMATED COUNTERS & STITCH TERMINAL SIMULATOR TAB SWITCHER
 // =========================================================================
+window.animateCounter = function(elementOrId, targetValue, isCurrency = true, duration = 900) {
+    const el = typeof elementOrId === 'string' ? document.getElementById(elementOrId) : elementOrId;
+    if (!el) return;
+
+    let target = parseFloat(targetValue);
+    if (isNaN(target)) return;
+
+    let start = 0;
+    let startTime = null;
+
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        let progress = Math.min((timestamp - startTime) / duration, 1);
+        let easeProgress = 1 - Math.pow(1 - progress, 3);
+        let current = start + (target - start) * easeProgress;
+
+        if (isCurrency) {
+            if (target >= 10000000) {
+                el.textContent = `INR ${(current / 10000000).toFixed(2)} Cr`;
+            } else if (target >= 100000) {
+                el.textContent = `INR ${(current / 100000).toFixed(2)} L`;
+            } else {
+                el.textContent = `INR ${current.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            }
+        } else {
+            el.textContent = Math.round(current).toLocaleString('en-IN');
+        }
+
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        } else {
+            if (isCurrency) {
+                el.textContent = `INR ${target.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            } else {
+                el.textContent = target.toLocaleString('en-IN');
+            }
+        }
+    }
+
+    requestAnimationFrame(step);
+};
+
 window.switchToTab = function(targetId) {
     const tabButtons = document.querySelectorAll('.nav-tab-btn, header nav a');
     const views = document.querySelectorAll('.module-view');
@@ -351,6 +393,32 @@ window.switchToTab = function(targetId) {
     views.forEach(v => {
         if (v.id === targetId) {
             v.classList.remove('hidden');
+            v.classList.remove('animate-fade-in-slide');
+            void v.offsetWidth; // Trigger reflow for animation restart
+            v.classList.add('animate-fade-in-slide');
+
+            // Trigger KPI counter animations inside activated view
+            v.querySelectorAll('[data-counter="true"]').forEach(counterEl => {
+                const targetVal = counterEl.getAttribute('data-target');
+                const isCurrency = counterEl.getAttribute('data-currency') !== 'false';
+                if (targetVal) {
+                    window.animateCounter(counterEl, targetVal, isCurrency);
+                }
+            });
+
+            // Re-trigger SVG stroke draw animations
+            v.querySelectorAll('.animate-stroke-draw').forEach(svgPath => {
+                svgPath.classList.remove('animate-stroke-draw');
+                void svgPath.offsetWidth;
+                svgPath.classList.add('animate-stroke-draw');
+            });
+
+            // Re-trigger bar growth animations
+            v.querySelectorAll('.animate-bar-grow').forEach(bar => {
+                bar.classList.remove('animate-bar-grow');
+                void bar.offsetWidth;
+                bar.classList.add('animate-bar-grow');
+            });
         } else {
             v.classList.add('hidden');
         }
@@ -382,6 +450,9 @@ window.switchTab = function(tabId) {
     const targetPanel = document.getElementById('panel-' + tabId);
     if (targetPanel) {
         targetPanel.classList.remove('hidden');
+        targetPanel.classList.remove('animate-fade-in-slide');
+        void targetPanel.offsetWidth;
+        targetPanel.classList.add('animate-fade-in-slide');
     }
 
     const activeBtn = document.getElementById('tab-' + tabId);
@@ -2430,6 +2501,40 @@ window.openTallyModal = async function() {
     }
 
     modal.classList.remove('hidden');
+    const container = modal.querySelector('div');
+    if (container) {
+        container.classList.remove('animate-modal-container');
+        void container.offsetWidth;
+        container.classList.add('animate-modal-container');
+    }
+};
+
+window.closeTallyModal = function() {
+    const modal = document.getElementById('tallyModal');
+    if (modal) modal.classList.add('hidden');
+};
+
+window.downloadTallyXml = function() {
+    window.open('/api/tally/export-xml', '_blank');
+    showToast('⚡ TallyPrime XML Voucher Batch file downloaded successfully!');
+    window.closeTallyModal();
+};
+
+window.openWebhookModal = function() {
+    const modal = document.getElementById('webhookModal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    const container = modal.querySelector('div');
+    if (container) {
+        container.classList.remove('animate-modal-container');
+        void container.offsetWidth;
+        container.classList.add('animate-modal-container');
+    }
+};
+
+window.closeWebhookModal = function() {
+    const modal = document.getElementById('webhookModal');
+    if (modal) modal.classList.add('hidden');
 };
 
 window.copyTallyXml = async function() {
@@ -2450,5 +2555,6 @@ window.copyTallyXml = async function() {
         }, 2000);
     }
 };
+
 
 
