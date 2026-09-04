@@ -377,16 +377,24 @@ window.animateCounter = function(elementOrId, targetValue, isCurrency = true, du
 };
 
 window.switchToTab = function(targetId) {
-    const tabButtons = document.querySelectorAll('.nav-tab-btn, header nav a');
+    const tabButtons = document.querySelectorAll('.nav-tab-btn, header nav a, .mobile-nav-link');
     const views = document.querySelectorAll('.module-view');
 
     tabButtons.forEach(b => {
         const target = b.getAttribute('data-target');
         const onclickAttr = b.getAttribute('onclick');
         if (target === targetId || (onclickAttr && onclickAttr.includes(targetId))) {
-            b.classList.add('active');
+            b.classList.add('active', 'text-primary');
+            if (b.tagName === 'A') {
+                b.classList.add('border-b-2', 'border-primary', 'font-body-lg');
+                b.classList.remove('text-on-surface-variant', 'hover:text-on-surface');
+            }
         } else {
-            b.classList.remove('active');
+            b.classList.remove('active', 'text-primary');
+            if (b.tagName === 'A') {
+                b.classList.remove('border-b-2', 'border-primary', 'font-body-lg');
+                b.classList.add('text-on-surface-variant', 'hover:text-on-surface');
+            }
         }
     });
 
