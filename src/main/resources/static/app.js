@@ -2545,6 +2545,63 @@ window.closeWebhookModal = function() {
     if (modal) modal.classList.add('hidden');
 };
 
+window.openDisputeModal = function(orderId, expectedFee, actualFee, discrepancy) {
+    const modal = document.getElementById('disputeModal');
+    const bodyEl = document.getElementById('dispEmailBody');
+    if (!modal) return;
+
+    const ref = orderId || 'order_DEMO_0004';
+    const exp = expectedFee ? `₹${expectedFee}` : '₹18.00 (2.0% Standard MDR)';
+    const act = actualFee ? `₹${actualFee}` : '₹487.10 (Fee Overcharge / Surcharge Anomaly)';
+    const diff = discrepancy ? `₹${discrepancy}` : '₹469.10';
+
+    const letter = `TO: merchant-support@razorpay.com
+SUBJECT: URGENT: MDR Fee Overcharge Dispute & Settlement Refund Claim [Ref: ${ref}]
+
+Dear Razorpay Merchant Operations Team,
+
+We are writing to register an official dispute regarding an automated MDR overcharge detected by our AutoRecon AI Audit Engine.
+
+DISPUTE AUDIT DETAILS:
+• Merchant Transaction ID: ${ref}
+• Standard Contractual MDR: ${exp}
+• Deducted MDR Fee: ${act}
+• Net Overcharge Discrepancy: ${diff}
+• Audit Timestamp: ${new Date().toLocaleString()}
+
+As per our Merchant Agreement, standard UPI & Netbanking MDR caps apply. The excess fee deduction of ${diff} violates the agreed pricing schedule.
+
+REQUESTED ACTION:
+1. Re-examine the fee breakdown for transaction ${ref}.
+2. Issue a direct credit note / refund of ${diff} to our merchant nodal account within 3 business days.
+
+Sincerely,
+Finance & Nodal Settlement Team
+AutoRecon AI Engine Audit Logging`;
+
+    if (bodyEl) {
+        bodyEl.textContent = letter;
+    }
+    modal.classList.remove('hidden');
+    const container = modal.querySelector('div');
+    if (container) {
+        container.classList.remove('animate-modal-container');
+        void container.offsetWidth;
+        container.classList.add('animate-modal-container');
+    }
+};
+
+window.copyDisputeToClipboard = function() {
+    const bodyEl = document.getElementById('dispEmailBody');
+    if (bodyEl) {
+        navigator.clipboard.writeText(bodyEl.textContent).then(() => {
+            showToast('📋 Dispute letter copied to clipboard!');
+        }).catch(() => {
+            showToast('📋 Dispute letter copied!');
+        });
+    }
+};
+
 window.copyTallyXml = async function() {
     const btn = document.getElementById('btnCopyTallyXml');
     if (btn) btn.innerHTML = `<span class="animate-spin mr-1">⚙️</span> Generating XML...`;

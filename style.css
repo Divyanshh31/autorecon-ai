@@ -85,7 +85,67 @@ html.dark {
     --rzp-shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-/* GLOBAL DARK MODE OVERRIDES */
+/* GLOBAL DARK MODE OVERRIDES & GOOGLE STITCH TOKENS */
+html.dark .bg-surface-container-lowest {
+    background-color: #0B0F19 !important;
+}
+
+html.dark .bg-surface-container-low {
+    background-color: #111827 !important;
+}
+
+html.dark .bg-surface-container {
+    background-color: #162036 !important;
+}
+
+html.dark .bg-surface-container-high {
+    background-color: #1E293B !important;
+}
+
+html.dark .bg-surface-container-highest {
+    background-color: #28354A !important;
+}
+
+html.dark .bg-surface {
+    background-color: #0A0E17 !important;
+}
+
+html.dark .bg-surface-dim {
+    background-color: #0F172A !important;
+}
+
+html.dark .bg-surface-bright {
+    background-color: #1E293B !important;
+}
+
+html.dark .bg-surface-variant {
+    background-color: #1E293B !important;
+}
+
+html.dark .bg-background {
+    background-color: #0A0E17 !important;
+}
+
+html.dark .text-on-surface {
+    color: #F8FAFC !important;
+}
+
+html.dark .text-on-surface-variant {
+    color: #94A3B8 !important;
+}
+
+html.dark .text-on-background {
+    color: #F8FAFC !important;
+}
+
+html.dark .border-outline-variant {
+    border-color: #1E293B !important;
+}
+
+html.dark .border-outline {
+    border-color: #334155 !important;
+}
+
 html.dark .bg-white {
     background-color: #111827 !important;
 }
