@@ -201,19 +201,26 @@
                 <a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap cursor-pointer shrink-0 text-xs xl:text-sm font-medium" onclick="switchToTab('view-ml')">ML Intelligence Lab</a>
             </nav>
 
-            <!-- Right Controls, Tally Export & Profile (Always pinned shrink-0) -->
+            <!-- Right Controls, Tally Export, Upload, Disputes & Profile (Always pinned shrink-0) -->
             <div class="flex items-center gap-1.5 xl:gap-2.5 shrink-0">
-                <div class="hidden 2xl:flex items-center bg-surface border border-outline-variant rounded-DEFAULT px-2 py-1 gap-1.5 w-44">
+                <div class="hidden 2xl:flex items-center bg-surface border border-outline-variant rounded-DEFAULT px-2 py-1 gap-1.5 w-40">
                     <span class="material-symbols-outlined text-[16px] text-on-surface-variant">search</span>
                     <input type="text" id="globalSearchInput" class="bg-transparent border-none outline-none font-mono-data text-mono-data text-on-surface placeholder:text-on-surface-variant w-full" placeholder="Search..." />
-                    <kbd class="bg-surface-container px-1 py-0.5 rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant border border-outline-variant">⌘K</kbd>
                 </div>
+                <button id="btnOpenUploadModal" onclick="document.getElementById('uploadModal').classList.remove('hidden')" class="hidden sm:flex items-center gap-1 px-2.5 py-1.5 bg-surface-container-low border border-outline-variant text-on-surface rounded-DEFAULT font-body-md text-body-md hover:bg-surface-container transition-colors shadow-none text-xs xl:text-sm whitespace-nowrap">
+                    <span class="material-symbols-outlined text-[16px] text-primary">upload_file</span>
+                    <span>Upload CSV</span>
+                </button>
+                <button id="btnOpenDisputeModal" onclick="openDisputeModal()" class="hidden md:flex items-center gap-1 px-2.5 py-1.5 bg-tertiary-fixed border border-outline-variant text-on-tertiary-fixed-variant rounded-DEFAULT font-body-md text-body-md hover:bg-tertiary-fixed-dim transition-colors shadow-none text-xs xl:text-sm whitespace-nowrap font-semibold">
+                    <span class="material-symbols-outlined text-[16px] text-tertiary">gavel</span>
+                    <span>Dispute Room</span>
+                </button>
                 <button id="btnOpenTallyModal" onclick="openTallyModal()" class="flex items-center gap-1 px-2.5 py-1.5 bg-primary text-on-primary rounded-DEFAULT font-body-md text-body-md hover:bg-primary-container transition-colors shadow-none text-xs xl:text-sm whitespace-nowrap">
                     <span class="material-symbols-outlined text-[16px]">description</span>
                     <span class="hidden sm:inline">Export Tally XML</span>
                     <span class="inline sm:hidden">Tally</span>
                 </button>
-                <button id="btnOpenWebhookModal" onclick="openWebhookModal()" class="hidden min-[1600px]:flex items-center gap-1 px-2 py-1 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface whitespace-nowrap">
+                <button id="btnOpenWebhookModal" onclick="openWebhookModal()" class="hidden min-[1650px]:flex items-center gap-1 px-2 py-1 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface whitespace-nowrap">
                     <span class="material-symbols-outlined text-[14px] text-primary">check_circle</span><span>Webhook: 200 OK</span>
                 </button>
                 <button id="btnThemeToggle" onclick="toggleTheme()" aria-label="Toggle Theme" class="h-8 w-8 flex items-center justify-center rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface shrink-0">
@@ -223,7 +230,7 @@
                     <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 text-on-primary font-bold text-xs" id="headerUserAvatar">
                         Z
                     </div>
-                    <div class="hidden min-[1700px]:flex flex-col text-left">
+                    <div class="hidden min-[1750px]:flex flex-col text-left">
                         <span class="font-body-md text-body-md text-on-surface leading-none font-semibold" id="headerUserName">D2C Merchant FinOps</span>
                         <span class="font-mono-sm text-mono-sm text-on-surface-variant leading-none mt-0.5" id="headerGstin">GSTIN: 27AAACR1234F1Z5</span>
                     </div>
@@ -1123,6 +1130,285 @@
             </div>
             <div class="flex justify-end gap-2 pt-2">
                 <button onclick="closeWebhookModal()" class="px-4 py-2 bg-primary text-on-primary rounded font-body-md text-body-md hover:bg-primary-container font-bold">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Smart CSV Ingestion Engine Modal -->
+    <div id="uploadModal" class="fixed inset-0 z-50 bg-on-surface/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-surface-container-lowest rounded-xl max-w-md w-full p-6 shadow-2xl border border-outline-variant relative space-y-4">
+            <button onclick="document.getElementById('uploadModal').classList.add('hidden')" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-3xl">upload_file</span>
+                <div>
+                    <h3 class="font-headline-md text-headline-md text-on-surface">Smart CSV Ingestion Engine</h3>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Upload custom order / settlement CSV dataset</p>
+                </div>
+            </div>
+            <form id="uploadCsvForm" class="space-y-4">
+                <div class="border-2 border-dashed border-outline-variant hover:border-primary rounded-xl p-6 text-center transition-colors bg-surface-container-low cursor-pointer relative" onclick="document.getElementById('csvFileInput').click()">
+                    <input type="file" id="csvFileInput" accept=".csv" class="hidden">
+                    <span class="material-symbols-outlined text-primary text-4xl mb-2">cloud_upload</span>
+                    <p class="font-body-md text-body-md text-on-surface font-semibold">Click to browse or drop CSV file here</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Accepts order_id, amount, customer_name</p>
+                    <div id="selectedFileName" class="font-mono-data text-mono-data text-primary font-bold mt-2 truncate"></div>
+                </div>
+
+                <div class="flex items-center justify-between bg-surface-container-low border border-outline-variant rounded-lg p-3">
+                    <div class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface">
+                        <span class="material-symbols-outlined text-primary text-[18px]">table_chart</span>
+                        <span>Need sample CSV?</span>
+                    </div>
+                    <a href="/api/ingest/sample-csv" download="autorecon_sample_orders.csv" class="px-3 py-1.5 bg-primary text-on-primary rounded font-body-sm text-body-sm hover:bg-primary-container font-semibold flex items-center gap-1 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">download</span>
+                        <span>Download</span>
+                    </a>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="document.getElementById('uploadModal').classList.add('hidden')" class="px-4 py-2 bg-surface-container text-on-surface rounded font-body-md text-body-md hover:bg-surface-variant">Cancel</button>
+                    <button type="submit" id="btnSubmitUpload" class="px-4 py-2 bg-primary text-on-primary rounded font-body-md text-body-md hover:bg-primary-container font-bold">Upload & Audit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. AI Plain-English Decision Explainability Modal -->
+    <div id="mlExplainModal" class="fixed inset-0 z-50 bg-on-surface/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-surface-container-lowest rounded-xl max-w-xl w-full p-6 shadow-2xl border border-outline-variant relative space-y-4 max-h-[90vh] overflow-y-auto">
+            <button onclick="document.getElementById('mlExplainModal').classList.add('hidden')" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-tertiary-container text-on-tertiary-container flex items-center justify-center">
+                    <span class="material-symbols-outlined text-2xl">psychology</span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h3 class="font-headline-md text-headline-md text-on-surface">AI Decision Explainability</h3>
+                        <span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-mono-sm text-mono-sm font-bold uppercase" id="mlModalRiskBadge">CRITICAL</span>
+                    </div>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Plain-English breakdown of why machine learning isolated this transaction</p>
+                </div>
+            </div>
+
+            <!-- Plain-English Verdict Box -->
+            <div class="p-4 bg-tertiary-container/30 rounded-lg border border-tertiary-container space-y-1">
+                <div class="font-mono-sm text-mono-sm font-bold uppercase text-tertiary">WHAT DID THE AI DETECT?</div>
+                <p class="font-body-md text-body-md text-on-surface leading-relaxed font-semibold" id="mlModalExplanation">
+                    Razorpay silently deducted 3.5% MDR + GST (₹295.00) instead of your agreed 2.0% rate (₹168.00). The AI isolated a hidden fee overcharge of ₹127.00.
+                </p>
+            </div>
+
+            <!-- Financial Impact Breakdown -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant">
+                    <span class="font-mono-sm text-mono-sm text-on-surface-variant uppercase font-bold">TRANSACTION VALUE</span>
+                    <div class="font-mono-kpi text-mono-kpi text-on-surface mt-0.5" id="mlModalAmount">₹7,500.00</div>
+                    <div class="font-body-sm text-body-sm text-on-surface-variant truncate" id="mlModalCustomer">Customer: Aarav Sharma</div>
+                </div>
+                <div class="p-3 rounded-lg bg-error-container/30 border border-error-container">
+                    <span class="font-mono-sm text-mono-sm text-error uppercase font-bold">MONEY AT RISK</span>
+                    <div class="font-mono-kpi text-mono-kpi text-error mt-0.5" id="mlModalImpact">₹139.50 Overcharge</div>
+                    <div class="font-body-sm text-body-sm text-error" id="mlModalScore">Anomaly Score: 94.2%</div>
+                </div>
+            </div>
+
+            <!-- Recommended Next Step -->
+            <div class="p-3.5 rounded-lg bg-surface-container-high border border-outline-variant space-y-1 font-body-sm text-body-sm">
+                <div class="font-bold text-primary flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">lightbulb</span>
+                    <span>Recommended 1-Click Action:</span>
+                </div>
+                <p class="text-on-surface text-xs leading-relaxed" id="mlModalAction">
+                    Click "Claim Refund" to generate a formal dispute claim for Razorpay Merchant Support.
+                </p>
+            </div>
+
+            <!-- Feature Isolation Weights -->
+            <div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant space-y-1.5">
+                <div class="font-mono-sm text-mono-sm uppercase font-bold text-on-surface-variant">MATHEMATICAL FEATURE ATTRIBUTION (ISOLATION FOREST WEIGHTS)</div>
+                <div class="grid grid-cols-3 gap-2 text-center font-mono-data text-mono-data">
+                    <div class="p-2 bg-surface-container-lowest rounded border border-outline-variant">
+                        <div class="text-[10px] text-on-surface-variant">MDR Variance</div>
+                        <div class="font-bold text-primary" id="mlModalWeightMdr">75.0%</div>
+                    </div>
+                    <div class="p-2 bg-surface-container-lowest rounded border border-outline-variant">
+                        <div class="text-[10px] text-on-surface-variant">Bank Latency</div>
+                        <div class="font-bold text-tertiary" id="mlModalWeightLatency">85.0%</div>
+                    </div>
+                    <div class="p-2 bg-surface-container-lowest rounded border border-outline-variant">
+                        <div class="text-[10px] text-on-surface-variant">Amount Dev</div>
+                        <div class="font-bold text-secondary" id="mlModalWeightSize">12.5%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="document.getElementById('mlExplainModal').classList.add('hidden')" class="px-4 py-2 bg-surface-container text-on-surface rounded font-body-md text-body-md hover:bg-surface-variant">Close</button>
+                <button onclick="openDisputeModal(); document.getElementById('mlExplainModal').classList.add('hidden')" class="px-4 py-2 bg-primary text-on-primary rounded font-body-md text-body-md hover:bg-primary-container font-bold flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[18px]">gavel</span>
+                    <span>Open Dispute Claim</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. 3-Way Reconciliation Inspection Panel Side Drawer -->
+    <div id="diffDrawer" class="fixed inset-0 z-50 overflow-hidden bg-on-surface/60 backdrop-blur-xs hidden">
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-surface-container-lowest border-l border-outline-variant shadow-2xl p-6 flex flex-col justify-between overflow-y-auto">
+                <div class="space-y-5">
+                    <div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center">
+                                <span class="material-symbols-outlined text-[20px]">difference</span>
+                            </div>
+                            <div>
+                                <h3 class="font-headline-md text-headline-md text-on-surface" id="drawerOrderId">Order Audit</h3>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant" id="drawerCustomer">Customer Details</p>
+                            </div>
+                        </div>
+                        <button onclick="closeDiffDrawer()" class="text-on-surface-variant hover:text-on-surface">
+                            <span class="material-symbols-outlined text-[20px]">close</span>
+                        </button>
+                    </div>
+
+                    <!-- 3-Way Flow Comparison Cards -->
+                    <div class="space-y-3 font-body-sm text-body-sm">
+                        <!-- Node 1: Store -->
+                        <div class="p-3.5 rounded-lg bg-surface-container-low border border-outline-variant space-y-1">
+                            <div class="flex justify-between items-center font-mono-sm text-mono-sm text-on-surface-variant font-bold uppercase">
+                                <span>1. MERCHANT STORE ORDER</span>
+                                <span class="text-primary font-mono-data font-bold">CAPTURED</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-0.5">
+                                <span class="text-on-surface">Order Gross:</span>
+                                <span class="font-mono-kpi text-mono-kpi text-on-surface" id="drawerStoreAmount">₹0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Node 2: Razorpay Gateway -->
+                        <div class="p-3.5 rounded-lg bg-surface-container-low border border-outline-variant space-y-1">
+                            <div class="flex justify-between items-center font-mono-sm text-mono-sm text-on-surface-variant font-bold uppercase">
+                                <span>2. RAZORPAY DEDUCTIONS</span>
+                                <span class="font-mono-data text-on-surface font-bold" id="drawerPaymentId">pay_RZP</span>
+                            </div>
+                            <div class="flex justify-between text-xs pt-0.5">
+                                <span class="text-on-surface-variant">MDR Fee (2% SLA):</span>
+                                <span class="font-mono-data font-bold text-on-surface" id="drawerRzpFee">₹0.00</span>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-on-surface-variant">GST on MDR (18%):</span>
+                                <span class="font-mono-data font-bold text-on-surface" id="drawerRzpTax">₹0.00</span>
+                            </div>
+                            <div class="flex justify-between text-xs font-bold pt-1 border-t border-outline-variant">
+                                <span class="text-on-surface">Expected Net:</span>
+                                <span class="font-mono-data text-primary font-bold" id="drawerRzpNet">₹0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Node 3: Bank Account -->
+                        <div class="p-3.5 rounded-lg bg-surface-container-high border border-outline-variant space-y-1">
+                            <div class="flex justify-between items-center font-mono-sm text-mono-sm text-tertiary font-bold uppercase">
+                                <span>3. BANK CREDIT (AXIS BANK)</span>
+                                <span class="font-mono-data text-tertiary font-bold" id="drawerBankUtr">UTR_AXIS</span>
+                            </div>
+                            <div class="flex justify-between text-xs font-bold pt-0.5">
+                                <span class="text-on-surface">Actual Bank Credit:</span>
+                                <span class="font-mono-kpi text-mono-kpi text-tertiary" id="drawerBankCredit">₹0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- AI Root Cause & Remediation -->
+                        <div class="p-3.5 rounded-lg bg-tertiary-container/20 border border-tertiary-container space-y-1.5">
+                            <div class="font-mono-sm text-mono-sm font-bold text-tertiary uppercase flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+                                <span>AI Munimji Root Cause & Action</span>
+                            </div>
+                            <p class="font-body-sm text-body-sm text-on-surface leading-relaxed font-medium" id="drawerRootCause">Analysis...</p>
+                            <div class="pt-1 border-t border-tertiary-container font-body-sm text-body-sm font-bold text-tertiary" id="drawerSuggestedAction">Suggested action...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-outline-variant flex gap-2">
+                    <button onclick="askCopilotForDrawerOrder()" class="flex-1 py-2.5 px-3 rounded bg-primary text-on-primary font-body-md text-body-md font-bold hover:bg-primary-container transition-colors flex items-center justify-center gap-1.5">
+                        <span class="material-symbols-outlined text-[18px]">smart_toy</span>
+                        <span>Ask Munimji Copilot</span>
+                    </button>
+                    <button onclick="closeDiffDrawer()" class="px-4 py-2.5 bg-surface-container text-on-surface rounded font-body-md text-body-md hover:bg-surface-variant font-medium">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Razorpay MDR Fee Dispute Room Modal -->
+    <div id="disputeModal" class="fixed inset-0 z-50 bg-on-surface/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-surface-container-lowest rounded-xl max-w-xl w-full p-6 shadow-2xl border border-outline-variant relative space-y-4">
+            <button onclick="document.getElementById('disputeModal').classList.add('hidden')" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-tertiary text-3xl">gavel</span>
+                <div>
+                    <h3 class="font-headline-md text-headline-md text-on-surface">Razorpay MDR Fee Dispute Room</h3>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Formal contractual dispute communication for Razorpay merchant support</p>
+                </div>
+            </div>
+            <div class="space-y-2 font-body-sm text-body-sm">
+                <div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant font-mono-data text-mono-data text-on-surface max-h-60 overflow-y-auto whitespace-pre-wrap font-medium leading-relaxed" id="dispEmailBody"></div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="copyDisputeToClipboard()" class="px-4 py-2 bg-primary text-on-primary rounded font-body-md text-body-md hover:bg-primary-container font-bold flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[18px]">content_copy</span>
+                    <span>Copy Letter</span>
+                </button>
+                <button onclick="document.getElementById('disputeModal').classList.add('hidden')" class="px-4 py-2 bg-surface-container text-on-surface rounded font-body-md text-body-md hover:bg-surface-variant font-medium">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. AI Salary Delay Notification Modal -->
+    <div id="salaryNoticeModal" class="fixed inset-0 z-50 bg-on-surface/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-surface-container-lowest rounded-xl max-w-lg w-full p-6 shadow-2xl border border-outline-variant relative space-y-4">
+            <button onclick="document.getElementById('salaryNoticeModal').classList.add('hidden')" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-error text-3xl">mail</span>
+                <div>
+                    <h3 class="font-headline-md text-headline-md text-on-surface">AI Salary Delay Notification</h3>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Formal employee notification citing bank nodal clearing</p>
+                </div>
+            </div>
+            <div class="space-y-2 font-body-sm text-body-sm">
+                <div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant font-mono-data text-mono-data text-on-surface max-h-52 overflow-y-auto leading-relaxed font-medium whitespace-pre-wrap">
+Subject: Update: August 2026 Salary Disbursement Schedule
+
+Dear Team Members,
+
+Your August 2026 salary disbursement is undergoing final bank nodal batch clearance and will be credited to your registered bank account by tomorrow 3:00 PM with direct IMPS UTR confirmation.
+
+Summary of Disbursal:
+• Delayed Payouts: Rahul Deshmukh (₹58,700) & Karan Malhotra (₹1,09,300)
+• Status: Nodal Clearing Initiated
+
+Warm regards,
+Payroll & Finance Operations
+Zenith Retail India Pvt Ltd
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="copySalaryNotice()" class="px-4 py-2 bg-primary text-on-primary rounded font-body-md text-body-md hover:bg-primary-container font-bold flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[18px]">content_copy</span>
+                    <span>Copy Notice</span>
+                </button>
+                <button onclick="document.getElementById('salaryNoticeModal').classList.add('hidden')" class="px-4 py-2 bg-surface-container text-on-surface rounded font-body-md text-body-md hover:bg-surface-variant font-medium">Close</button>
             </div>
         </div>
     </div>
