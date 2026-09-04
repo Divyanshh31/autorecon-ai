@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=inter:wght@100..900&family=outfit:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"tertiary-container":"#cc4204","secondary-container":"#dae2fd","surface-bright":"#f8f9ff","on-background":"#0b1c30","surface-variant":"#d3e4fe","on-error":"#ffffff","on-tertiary":"#ffffff","tertiary":"#a33200","on-primary":"#ffffff","surface-container":"#e5eeff","on-tertiary-fixed":"#390c00","tertiary-fixed-dim":"#ffb59d","primary-container":"#0066ff","inverse-on-surface":"#eaf1ff","primary":"#0050cb","surface-dim":"#cbdbf5","secondary":"#565e74","outline-variant":"#c2c6d8","on-secondary-container":"#5c647a","secondary-fixed":"#dae2fd","surface":"#f8f9ff","error-container":"#ffdad6","surface-container-low":"#eff4ff","on-surface-variant":"#424656","on-secondary":"#ffffff","on-tertiary-container":"#fff6f4","secondary-fixed-dim":"#bec6e0","on-secondary-fixed":"#131b2e","primary-fixed":"#dae1ff","error":"#ba1a1a","surface-container-lowest":"#ffffff","surface-container-high":"#dce9ff","tertiary-fixed":"#ffdbd0","on-tertiary-fixed-variant":"#832600","on-primary-fixed-variant":"#003fa4","inverse-primary":"#b3c5ff","surface-container-highest":"#d3e4fe","primary-fixed-dim":"#b3c5ff","outline":"#727687","on-error-container":"#93000a","background":"#f8f9ff","on-primary-fixed":"#001849","on-secondary-fixed-variant":"#3f465c","inverse-surface":"#213145","on-primary-container":"#f8f7ff","on-surface":"#0b1c30","surface-tint":"#0054d6"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"grid-margin":"1.5rem","grid-gutter":"1rem","table-cell-y":"0.5rem","section-gap":"1.5rem","panel-padding":"1rem","compact-row":"0.375rem","table-cell-x":"0.75rem"},"fontFamily":{"mono-kpi":["jetbrainsMono"],"headline-xl":["outfit"],"headline-sm":["outfit"],"headline-md":["outfit"],"mono-sm":["jetbrainsMono"],"body-lg":["inter"],"mono-data":["jetbrainsMono"],"body-sm":["inter"],"body-md":["inter"],"headline-lg":["outfit"]},"fontSize":{"mono-kpi":["22px",{"lineHeight":"26px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-xl":["32px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-sm":["15px",{"lineHeight":"20px","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"700"}],"mono-sm":["10px",{"lineHeight":"13px","fontWeight":"400"}],"body-lg":["14px",{"lineHeight":"20px","fontWeight":"500"}],"mono-data":["12px",{"lineHeight":"16px","fontWeight":"500"}],"body-sm":["11px",{"lineHeight":"15px","fontWeight":"400"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-14 w-full px-grid-margin flex items-center justify-between gap-grid-gutter"><div class="flex items-center gap-3 shrink-0"><img alt="AutoRecon AI Brand Mark" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wo0YO1-_SRDWIjvp4DhyPKV_q6Q3k_HSGCyTYeZnRI00m7e7mv-e2_o055l9CnZyh3pV3_pHru4at_xhWguLARIpqydJ2lhppDDo23j5MPBaz9Jzdz7kzNl8BqMzdS6YjOEtE5gIclEmNJGwQx9nPBYXRYI6T4bMuvSC4Eo3jrjLDGO5IScn7AKUImBmVgN312BxI7SY7lEZOMv5lk1BACWNCzZ2OjBymPK9Cn6ujeFPilPVhqTRH2QAQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight uppercase">AutoRecon AI</span><div class="flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span>LIVE RECON FEED • SYNCED 4s AGO</span></div></div><nav class="hidden xl:flex items-center h-full gap-4" data-active-classes="text-primary border-b-2 border-primary font-body-lg"><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="operating-console" href="#">Operating Console</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="gateway-recon" href="#">Gateway Recon (3-Way Check)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="payroll-and-salaries" href="#">Payroll & Salaries (IMPS / TDS 192)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="msme-43b-h" href="#">MSME 43B(h) (45-Day Aging)</a><a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap" data-path="cash-compass" href="#">Cash Compass (30-Day Forecast)</a><a aria-current="page" class="h-full flex items-center px-1 transition-colors whitespace-nowrap text-primary border-b-2 border-primary font-body-lg" data-path="ml-intelligence-lab" href="#">ML Intelligence Lab</a></nav><div class="flex items-center gap-3 shrink-0"><div class="hidden md:flex items-center bg-surface border border-outline-variant rounded-DEFAULT px-2 py-1 gap-2 w-56"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">search</span><span class="font-mono-data text-mono-data text-on-surface-variant flex-1 select-none">Search UTR, Order, GSTIN...</span><kbd class="bg-surface-container px-1.5 py-0.5 rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant border border-outline-variant">⌘K</kbd></div><button class="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary rounded-DEFAULT font-body-md text-body-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-none"><span class="material-symbols-outlined text-[16px]">description</span><span>Export Tally XML</span></button><div class="hidden lg:flex items-center gap-1 px-2 py-1 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface"><span class="material-symbols-outlined text-[14px] text-primary">check_circle</span><span>Webhook: 200 OK</span></div><button aria-label="Toggle Theme" class="h-8 w-8 flex items-center justify-center rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">light_mode</span></button><div class="flex items-center gap-2 pl-2 border-l border-outline-variant"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden 2xl:flex flex-col text-left"><span class="font-body-md text-body-md text-on-surface leading-none font-semibold">D2C Merchant FinOps</span><span class="font-mono-sm text-mono-sm text-on-surface-variant leading-none mt-0.5">GSTIN: 27AAACR1234F1Z5</span></div></div></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Sub-Header Status Ribbon -->
+<div class="w-full bg-surface-container-low px-grid-margin py-3 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="h-7 w-7 rounded-DEFAULT bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">ML Intelligence Lab & Audit Explainability</span>
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-surface-container-high text-primary font-mono-sm text-mono-sm">MODEL: XG-FINRECON-V4.3</span>
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-mono-sm text-mono-sm">RBI CIRCULAR CIR/DP/08/2020 COMPLIANT</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Deterministic Bayesian inference & Shapley feature attribution for zero-tolerance fee validation across gateway rails.</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-DEFAULT bg-surface-container-lowest shadow-sm">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">INFERENCE LATENCY:</span>
+<span class="font-mono-data text-mono-data text-primary font-bold">14.2ms</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-DEFAULT bg-surface-container-lowest shadow-sm">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">ANOMALIES (LAST 24H):</span>
+<span class="font-mono-data text-mono-data text-error font-bold">42 DETECTED</span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-DEFAULT bg-primary text-on-primary font-body-sm text-body-sm hover:bg-primary-container hover:text-on-primary-container transition-all">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span>Re-Index Active Batches</span>
+</button>
+</div>
+</div>
+<div class="w-full px-grid-margin py-section-gap flex flex-col gap-section-gap">
+<!-- SECTION 1: Three Explainability Pillars -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-grid-gutter">
+<!-- Pillar 1 -->
+<div class="relative bg-surface-container-lowest p-panel-padding rounded-DEFAULT shadow-sm flex flex-col justify-between overflow-hidden">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 01 // AUDIT DEFENSE</span>
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-surface-container text-primary font-mono-sm text-mono-sm">REAL-TIME TELEMETRY</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Multi-Variate Anomaly Detection Engine</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Continuously monitors high-throughput gateway interchange tiers, contract MDR schedules, settlement latency drifts, and nocturnal batch spikes across Razorpay, Cashfree, and Juspay.
+          </p>
+</div>
+<div class="mt-4 pt-3 flex flex-col gap-2">
+<div class="flex justify-between items-end font-mono-sm text-mono-sm">
+<span class="text-on-surface-variant">INTERCHANGE CEILING DRIFT (RuPay/UPI):</span>
+<span class="text-error font-bold">+184 bps DEV</span>
+</div>
+<!-- Inline Sparkline Metric Visualization -->
+<div class="h-8 w-full bg-surface-container-low rounded-DEFAULT flex items-end px-1 gap-1 py-1">
+<div class="bg-primary h-2 flex-1 rounded-DEFAULT"></div>
+<div class="bg-primary h-3 flex-1 rounded-DEFAULT"></div>
+<div class="bg-primary h-2 flex-1 rounded-DEFAULT"></div>
+<div class="bg-primary h-4 flex-1 rounded-DEFAULT"></div>
+<div class="bg-primary h-3 flex-1 rounded-DEFAULT"></div>
+<div class="bg-primary h-5 flex-1 rounded-DEFAULT"></div>
+<div class="bg-primary h-4 flex-1 rounded-DEFAULT"></div>
+<div class="bg-primary h-3 flex-1 rounded-DEFAULT"></div>
+<div class="bg-primary h-6 flex-1 rounded-DEFAULT"></div>
+<div class="bg-error h-8 flex-1 rounded-DEFAULT animate-pulse"></div>
+</div>
+<div class="flex items-center justify-between font-mono-sm text-mono-sm text-on-surface-variant mt-1">
+<span>Scan Coverage: 148,209 txns/min</span>
+<span class="text-primary font-bold">100% Deterministic</span>
+</div>
+</div>
+</div>
+<!-- Pillar 2 -->
+<div class="relative bg-surface-container-lowest p-panel-padding rounded-DEFAULT shadow-sm flex flex-col justify-between overflow-hidden">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 02 // LIQUIDITY FORESIGHT</span>
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-mono-sm text-mono-sm">ENSEMBLE ARIMA + PROPHET</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Cash Flow Predictive Modeling</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Forecasts settlement escrow liquidity by blending cart drop-off velocity, e-commerce return (RTO) chargebacks, bank clearing holidays (RTGS/NEFT halts), and D+1 gateway settlement drag.
+          </p>
+</div>
+<div class="mt-4 pt-3 flex flex-col gap-2">
+<div class="grid grid-cols-2 gap-2">
+<div class="p-2 rounded-DEFAULT bg-surface-container-low">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant block">PROJECTED ESCROW (D+2):</span>
+<span class="font-mono-kpi text-headline-sm text-on-surface">₹4,82,90,140</span>
+</div>
+<div class="p-2 rounded-DEFAULT bg-surface-container-low">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant block">RTO DRIFT VOLATILITY:</span>
+<span class="font-mono-kpi text-headline-sm text-tertiary">3.41% σ</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 font-mono-sm text-mono-sm text-secondary">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>Bank Holiday Window: Next 72h SBI/HDFC settlement buffers applied</span>
+</div>
+</div>
+</div>
+<!-- Pillar 3 -->
+<div class="relative bg-surface-container-lowest p-panel-padding rounded-DEFAULT shadow-sm flex flex-col justify-between overflow-hidden">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 03 // CAUSAL ATTRIBUTION</span>
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-surface-container text-primary font-mono-sm text-mono-sm">TREE-SHAP EXPLAINABILITY</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Feature Attribution & Causal Graph</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Deconstructs complex fee overcharges down to mathematical feature attributions. Disproves black-box opacity so controllers can contest vendor settlements with statutory authority.
+          </p>
+</div>
+<div class="mt-4 pt-3 flex flex-col gap-2">
+<div class="space-y-1.5">
+<div>
+<div class="flex justify-between font-mono-sm text-mono-sm mb-0.5">
+<span class="text-on-surface-variant">BIN Routing Category Error</span>
+<span class="text-error font-bold">φ = +0.584</span>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-DEFAULT overflow-hidden">
+<div class="bg-error h-full rounded-DEFAULT" style="width: 58.4%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-mono-sm text-mono-sm mb-0.5">
+<span class="text-on-surface-variant">Unwarranted GST Surcharge (18%)</span>
+<span class="text-error font-bold">φ = +0.261</span>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-DEFAULT overflow-hidden">
+<div class="bg-tertiary h-full rounded-DEFAULT" style="width: 26.1%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between font-mono-sm text-mono-sm text-on-surface-variant mt-1">
+<span>Model Confidence Threshold: >95.0%</span>
+<span class="text-primary font-bold">No Black Box</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: Active Inspection Dossier (High-Contrast Audit Card) -->
+<div class="bg-surface-container-lowest p-grid-margin rounded-DEFAULT shadow-md flex flex-col gap-4" id="explainability-dossier">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 bg-surface-container-low p-panel-padding rounded-DEFAULT">
+<div class="flex items-center gap-3">
+<div class="h-9 w-9 rounded-DEFAULT bg-error text-on-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-mono-data text-mono-data uppercase text-error font-bold">DISCREPANCY DOSSIER DOS-2024-9182</span>
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-error-container text-on-error-container font-mono-sm text-mono-sm font-bold">SEVERITY: CRITICAL (94/100)</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Audit Explainability Dossier: ORD-91283 / pay_Nz93k81</h3>
+</div>
+</div>
+<div class="flex items-center gap-2 font-mono-sm text-mono-sm">
+<span class="text-on-surface-variant">GATEWAY RAIL:</span>
+<span class="px-2 py-1 bg-surface-container-lowest rounded-DEFAULT text-on-surface font-semibold">RAZORPAY DIRECT (T+1)</span>
+<span class="text-on-surface-variant ml-2">BATCH ID:</span>
+<span class="px-2 py-1 bg-surface-container-lowest rounded-DEFAULT text-on-surface font-semibold">SETTL-BATCH-9941</span>
+</div>
+</div>
+<!-- Plain English Diagnosis & Monetary Leakage -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-grid-gutter items-start">
+<!-- Diagnosis Narrative -->
+<div class="lg:col-span-8 flex flex-col gap-3">
+<div class="p-panel-padding bg-surface-container-low rounded-DEFAULT flex flex-col gap-2">
+<span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PLAIN-ENGLISH REGULATORY DIAGNOSIS</span>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+              Razorpay incorrectly applied <span class="font-semibold text-error">"International Corporate Card" interchange tier (3.25% + INR 3)</span> to an Indian domestic RuPay Platinum debit transaction whose legal ceiling is capped at <span class="font-semibold text-primary">0.00% by RBI mandate (Circular DPSS.CO.PD No.1164/02.14.003/2019-20)</span>.
+            </p>
+</div>
+<!-- Feature Attribution Breakdown -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+<div class="p-panel-padding bg-surface-container-low rounded-DEFAULT">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant block uppercase">IDENTIFIED CARD BIN</span>
+<span class="font-mono-data text-mono-data text-on-surface font-bold">508500</span>
+<span class="font-body-sm text-body-sm text-secondary block mt-0.5">RuPay Classic / Platinum Debit</span>
+</div>
+<div class="p-panel-padding bg-surface-container-low rounded-DEFAULT">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant block uppercase">MCC CODE</span>
+<span class="font-mono-data text-mono-data text-on-surface font-bold">5411</span>
+<span class="font-body-sm text-body-sm text-secondary block mt-0.5">Grocery & Supermarkets</span>
+</div>
+<div class="p-panel-padding bg-surface-container-low rounded-DEFAULT">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant block uppercase">CONTRACTED MDR CEILING</span>
+<span class="font-mono-data text-mono-data text-primary font-bold">0.00% (ZERO FEE)</span>
+<span class="font-body-sm text-body-sm text-secondary block mt-0.5">Statutory Surcharge Capped</span>
+</div>
+</div>
+</div>
+<!-- Calculated Monetary Impact Box -->
+<div class="lg:col-span-4 p-panel-padding bg-surface-container-high rounded-DEFAULT flex flex-col justify-between h-full gap-4">
+<div class="flex flex-col gap-2">
+<span class="font-mono-sm text-mono-sm text-tertiary uppercase font-bold tracking-wider">CALCULATED AUDIT IMPACT</span>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center text-body-md text-on-surface-variant">
+<span>Gross Txn Amount:</span>
+<span class="font-mono-data text-mono-data text-on-surface">₹12,700.00</span>
+</div>
+<div class="flex justify-between items-center text-body-md text-on-surface-variant">
+<span>Contracted Fee:</span>
+<span class="font-mono-data text-mono-data text-on-surface">₹0.00</span>
+</div>
+<div class="flex justify-between items-center text-body-md text-error">
+<span>Excess MDR Deduction:</span>
+<span class="font-mono-data text-mono-data font-bold">+ ₹412.80</span>
+</div>
+<div class="flex justify-between items-center text-body-md text-error">
+<span>Unwarranted 18% GST:</span>
+<span class="font-mono-data text-mono-data font-bold">+ ₹74.30</span>
+</div>
+</div>
+<div class="pt-2 mt-2 bg-surface-container-lowest p-2 rounded-DEFAULT flex justify-between items-center">
+<span class="font-body-sm text-body-sm uppercase font-bold text-on-surface">Total Leakage:</span>
+<span class="font-mono-kpi text-mono-kpi text-error">₹487.10</span>
+</div>
+</div>
+<!-- Recommended Corrective Action Button -->
+<div class="flex flex-col gap-2">
+<button class="w-full py-2.5 px-3 rounded-DEFAULT bg-primary text-on-primary font-body-lg text-body-lg font-semibold hover:bg-primary-container hover:text-on-primary-container transition-all flex items-center justify-center gap-2 shadow-sm" onclick="triggerDisputeSuccess(this)">
+<span class="material-symbols-outlined text-[18px]">send_and_archive</span>
+<span>Auto-File Razorpay Dispute Ticket #DISP-9482 & Hold Tally Posting</span>
+</button>
+<div class="flex items-center justify-between px-1">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">ERP LOCK: VOUCHER-TL-99182</span>
+<a class="font-mono-sm text-mono-sm text-primary hover:underline" href="#">Download JSON Proof Payload</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: Filterable Anomaly Matrix Ledger -->
+<div class="bg-surface-container-lowest rounded-DEFAULT shadow-sm flex flex-col">
+<!-- Matrix Header & Filtering Controls -->
+<div class="p-panel-padding bg-surface-container-low flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<h3 class="font-headline-md text-headline-md text-on-surface">Anomaly Matrix Ledger</h3>
+<span class="px-2 py-0.5 rounded-DEFAULT bg-surface-container text-on-surface-variant font-mono-sm text-mono-sm">ACTIVE FEED // 5 UNRESOLVED CRITICAL</span>
+</div>
+<!-- Ledger Filter Bar -->
+<div class="flex flex-wrap items-center gap-2">
+<div class="relative">
+<select class="h-8 pl-2 pr-8 rounded-DEFAULT bg-surface-container-lowest text-body-sm text-on-surface font-mono-data appearance-none cursor-pointer focus:outline-none focus:bg-surface-container-high">
+<option value="all">All Anomaly Categories</option>
+<option selected="" value="mdr">MDR Rate Creep (Tier Hijack)</option>
+<option value="dup">Duplicate Capture</option>
+<option value="escrow">Delayed Escrow Hold</option>
+<option value="ghost">Ghost Settlement</option>
+</select>
+<span class="material-symbols-outlined text-[16px] absolute right-2 top-2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+<div class="relative">
+<select class="h-8 pl-2 pr-8 rounded-DEFAULT bg-surface-container-lowest text-body-sm text-on-surface font-mono-data appearance-none cursor-pointer focus:outline-none focus:bg-surface-container-high">
+<option value="all">Min Risk Score: Any</option>
+<option selected="" value="90">Critical (>= 90)</option>
+<option value="75">Elevated (>= 75)</option>
+<option value="50">Moderate (>= 50)</option>
+</select>
+<span class="material-symbols-outlined text-[16px] absolute right-2 top-2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+<div class="flex items-center bg-surface-container-lowest rounded-DEFAULT px-2 h-8 gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">filter_list</span>
+<input class="bg-transparent font-mono-data text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none w-36 lg:w-48" placeholder="Filter Ref / UTR / Order..." type="text"/>
+</div>
+<button class="h-8 px-2.5 rounded-DEFAULT bg-surface-container text-on-surface font-body-sm text-body-sm hover:bg-surface-container-high flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">file_download</span>
+<span>CSV Audit Pack</span>
+</button>
+</div>
+</div>
+<!-- High-Density Data Grid Table -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-mono-sm text-mono-sm text-on-surface-variant uppercase tracking-wider">
+<th class="px-table-cell-x py-table-cell-y whitespace-nowrap">Anomaly ID</th>
+<th class="px-table-cell-x py-table-cell-y whitespace-nowrap">Timestamp</th>
+<th class="px-table-cell-x py-table-cell-y whitespace-nowrap">Entity / Txn Ref</th>
+<th class="px-table-cell-x py-table-cell-y whitespace-nowrap">Risk Score</th>
+<th class="px-table-cell-x py-table-cell-y whitespace-nowrap">Category</th>
+<th class="px-table-cell-x py-table-cell-y whitespace-nowrap text-right">Impact (INR)</th>
+<th class="px-table-cell-x py-table-cell-y whitespace-nowrap">Model Confidence</th>
+<th class="px-table-cell-x py-table-cell-y whitespace-nowrap text-right">Audit Action</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 font-body-md text-body-md text-on-surface">
+<!-- Row 1: Active In Inspection Dossier -->
+<tr class="bg-surface-container-high transition-colors">
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-primary font-bold">
+                ANOM-90218
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-on-surface-variant">
+                Today, 14:18:02
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">ORD-91283</span>
+<span class="text-on-surface-variant font-mono-sm text-mono-sm">pay_Nz93k81 • RuPay 5085</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-DEFAULT bg-error-container text-on-error-container font-mono-sm text-mono-sm font-bold">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+<span>94/100 CRITICAL</span>
+</span>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-error"></span>
+<span class="font-semibold text-on-surface">MDR Rate Creep</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right font-mono-data text-mono-data text-error font-bold">
+                + ₹487.10
+              </td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-2">
+<span class="font-mono-data text-mono-data font-bold text-primary">98.4%</span>
+<div class="w-12 bg-surface-container-lowest h-1.5 rounded-DEFAULT overflow-hidden">
+<div class="bg-primary h-full rounded-DEFAULT" style="width: 98.4%"></div>
+</div>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right">
+<button class="px-2.5 py-1 rounded-DEFAULT bg-primary text-on-primary font-mono-sm text-mono-sm hover:bg-primary-container hover:text-on-primary-container transition-all">
+                  Active Inspecting
+                </button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-on-surface-variant">
+                ANOM-90217
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-on-surface-variant">
+                Today, 13:52:19
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">ORD-91244</span>
+<span class="text-on-surface-variant font-mono-sm text-mono-sm">pay_Ny82a01 • Juspay Switch</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-DEFAULT bg-error-container text-on-error-container font-mono-sm text-mono-sm font-bold">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+<span>91/100 CRITICAL</span>
+</span>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-error"></span>
+<span class="font-semibold text-on-surface">Duplicate Capture</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right font-mono-data text-mono-data text-error font-bold">
+                + ₹4,299.00
+              </td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-2">
+<span class="font-mono-data text-mono-data font-bold text-primary">99.1%</span>
+<div class="w-12 bg-surface-container-low h-1.5 rounded-DEFAULT overflow-hidden">
+<div class="bg-primary h-full rounded-DEFAULT" style="width: 99.1%"></div>
+</div>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right">
+<button class="px-2.5 py-1 rounded-DEFAULT bg-surface-container-high text-on-surface font-mono-sm text-mono-sm hover:bg-primary hover:text-on-primary transition-all" onclick="loadSampleDossier('ANOM-90217', 'ORD-91244 / pay_Ny82a01', 'Duplicate Authorization token double-settled to merchant node across parallel webhook retries without ledger void.', '4299.00', '91/100')">
+                  Inspect
+                </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-on-surface-variant">
+                ANOM-90215
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-on-surface-variant">
+                Today, 11:29:40
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">ESC-74910</span>
+<span class="text-on-surface-variant font-mono-sm text-mono-sm">UTR: HDFCR520240918001</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-mono-sm text-mono-sm font-bold">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+<span>78/100 ELEVATED</span>
+</span>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-secondary"></span>
+<span class="font-semibold text-on-surface">Delayed Escrow Hold</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right font-mono-data text-mono-data text-tertiary font-bold">
+                ₹89,200.00
+              </td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-2">
+<span class="font-mono-data text-mono-data font-bold text-primary">95.3%</span>
+<div class="w-12 bg-surface-container-low h-1.5 rounded-DEFAULT overflow-hidden">
+<div class="bg-primary h-full rounded-DEFAULT" style="width: 95.3%"></div>
+</div>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right">
+<button class="px-2.5 py-1 rounded-DEFAULT bg-surface-container-high text-on-surface font-mono-sm text-mono-sm hover:bg-primary hover:text-on-primary transition-all" onclick="loadSampleDossier('ANOM-90215', 'ESC-74910 / HDFCR520240918001', 'Bank nodal gateway withheld payout beyond contractual D+1 window citing non-existent clearing maintenance.', '89200.00', '78/100')">
+                  Inspect
+                </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-on-surface-variant">
+                ANOM-90212
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-on-surface-variant">
+                Yesterday, 22:45:11
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">ORD-90811</span>
+<span class="text-on-surface-variant font-mono-sm text-mono-sm">pay_Nx71v12 • Cashfree</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-DEFAULT bg-error-container text-on-error-container font-mono-sm text-mono-sm font-bold">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+<span>96/100 CRITICAL</span>
+</span>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-error"></span>
+<span class="font-semibold text-on-surface">Ghost Settlement</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right font-mono-data text-mono-data text-error font-bold">
+                ₹18,450.00
+              </td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-2">
+<span class="font-mono-data text-mono-data font-bold text-primary">99.8%</span>
+<div class="w-12 bg-surface-container-low h-1.5 rounded-DEFAULT overflow-hidden">
+<div class="bg-primary h-full rounded-DEFAULT" style="width: 99.8%"></div>
+</div>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right">
+<button class="px-2.5 py-1 rounded-DEFAULT bg-surface-container-high text-on-surface font-mono-sm text-mono-sm hover:bg-primary hover:text-on-primary transition-all" onclick="loadSampleDossier('ANOM-90212', 'ORD-90811 / pay_Nx71v12', 'Gateway reports successful settlement payout reference number with null counterpart in HDFC current ledger statement.', '18450.00', '96/100')">
+                  Inspect
+                </button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-on-surface-variant">
+                ANOM-90209
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data text-on-surface-variant">
+                Yesterday, 19:12:08
+              </td>
+<td class="px-table-cell-x py-table-cell-y font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="font-bold text-on-surface">ORD-90740</span>
+<span class="text-on-surface-variant font-mono-sm text-mono-sm">pay_Nw66k90 • ICICI UPI</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-DEFAULT bg-surface-container text-on-surface font-mono-sm text-mono-sm font-bold">
+<span>62/100 MODERATE</span>
+</span>
+</td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-primary"></span>
+<span class="font-semibold text-on-surface">MDR Rate Creep</span>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right font-mono-data text-mono-data text-error font-bold">
+                + ₹128.50
+              </td>
+<td class="px-table-cell-x py-table-cell-y">
+<div class="flex items-center gap-2">
+<span class="font-mono-data text-mono-data font-bold text-primary">94.2%</span>
+<div class="w-12 bg-surface-container-low h-1.5 rounded-DEFAULT overflow-hidden">
+<div class="bg-primary h-full rounded-DEFAULT" style="width: 94.2%"></div>
+</div>
+</div>
+</td>
+<td class="px-table-cell-x py-table-cell-y text-right">
+<button class="px-2.5 py-1 rounded-DEFAULT bg-surface-container-high text-on-surface font-mono-sm text-mono-sm hover:bg-primary hover:text-on-primary transition-all" onclick="loadSampleDossier('ANOM-90209', 'ORD-90740 / pay_Nw66k90', 'UPI P2M txn billed with 0.85% MDR surcharge violating zero-MDR mandate under Section 10A of the PSS Act.', '128.50', '62/100')">
+                  Inspect
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination Metadata -->
+<div class="p-panel-padding bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-2 font-mono-sm text-mono-sm text-on-surface-variant">
+<div class="flex items-center gap-3">
+<span>Showing 5 of 42 Detected Anomalies</span>
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-surface-container-lowest text-primary font-bold">Auto-Triage Active</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2 py-1 rounded-DEFAULT bg-surface-container text-on-surface-variant hover:bg-surface-container-high disabled:opacity-50" disabled="">Previous</button>
+<span class="px-2 py-1 rounded-DEFAULT bg-primary text-on-primary font-bold">1</span>
+<button class="px-2 py-1 rounded-DEFAULT bg-surface-container text-on-surface hover:bg-surface-container-high">2</button>
+<button class="px-2 py-1 rounded-DEFAULT bg-surface-container text-on-surface hover:bg-surface-container-high">3</button>
+<button class="px-2 py-1 rounded-DEFAULT bg-surface-container text-on-surface hover:bg-surface-container-high">Next</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Client-side micro scripts -->
+<script>
+    function triggerDisputeSuccess(buttonElement) {
+      const originalText = buttonElement.innerHTML;
+      buttonElement.disabled = true;
+      buttonElement.classList.remove('bg-primary');
+      buttonElement.classList.add('bg-primary-container', 'text-on-primary-container');
+      buttonElement.innerHTML = `
+        <span class="material-symbols-outlined text-[18px] animate-spin">refresh</span>
+        <span>Transmitting API Dispute Payload & Generating Hold Voucher...</span>
+      `;
+      
+      setTimeout(() => {
+        buttonElement.innerHTML = `
+          <span class="material-symbols-outlined text-[18px]">verified</span>
+          <span>Dispute Filed #DISP-9482 • Tally Voucher Held</span>
+        `;
+        buttonElement.classList.remove('bg-primary-container');
+        buttonElement.classList.add('bg-surface-container-highest', 'text-on-surface');
+      }, 1200);
+    }
+
+    function loadSampleDossier(anomId, ref, diagnosis, leakage, risk) {
+      const dossierContainer = document.getElementById('explainability-dossier');
+      dossierContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      dossierContainer.classList.add('ring-2', 'ring-primary', 'transition-all');
+      setTimeout(() => {
+        dossierContainer.classList.remove('ring-2', 'ring-primary');
+      }, 1500);
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant py-4"><div class="w-full px-grid-margin flex flex-col sm:flex-row items-center justify-between gap-2 font-mono-sm text-mono-sm text-on-surface-variant"><div>© 2024 AUTORECON AI • INSTITUTIONAL SETTLEMENT CONSOLE</div><div class="flex items-center gap-4"><span>CORE PROTOCOL: V4.12.0</span><span>ENCRYPTION: AES-256 GCM</span><span>DIRECT BANK FED: SECURE</span></div></div></footer></body></html>
