@@ -4,7 +4,7 @@
    Google Font 'Outfit' + JetBrains Mono · High-Definition Contrast
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
     /* ---------------- LIGHT MODE TOKENS (Default) ---------------- */
@@ -830,68 +830,3 @@ html.dark ::-webkit-scrollbar-thumb {
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 102, 255, 0.5);
 }
-
-/* ==========================================================================
-   13. LIVE TELEMETRY MARQUEE & TERMINAL SIMULATOR ENHANCEMENTS
-   ========================================================================== */
-@keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-    display: inline-flex;
-    animation: marquee 30s linear infinite;
-}
-
-.animate-marquee:hover {
-    animation-play-state: paused;
-}
-
-.sim-tab-btn {
-    padding: 0.25rem 0.625rem;
-    border-radius: 0.375rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #94A3B8;
-    background: transparent;
-    transition: all 0.15s ease-in-out;
-}
-
-.sim-tab-btn:hover {
-    color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.sim-tab-btn.active {
-    color: #FFFFFF;
-    background: #0066FF;
-    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.4);
-}
-
-.sim-flow-node {
-    padding: 0.75rem;
-    background: rgba(15, 23, 42, 0.03);
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    border-radius: 0.5rem;
-    transition: all 0.2s ease;
-}
-
-html.dark .sim-flow-node {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.08);
-}
-
-.sim-flow-node:hover {
-    border-color: #0066FF;
-    transform: translateX(2px);
-}
-
-.sim-connector-line {
-    height: 12px;
-    width: 2px;
-    background: linear-gradient(180deg, #0066FF 0%, #059669 100%);
-    margin-left: 1rem;
-}
-
