@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service : AutoRecon AI Institutional Console</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0050cb",
+                        "primary-container": "#0066ff",
+                        "on-primary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container": "#e5eeff",
+                        "on-surface": "#0b1c30",
+                        "on-surface-variant": "#424656",
+                        "outline-variant": "#c2c6d8"
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col font-sans">
+    <header class="w-full bg-surface-container-lowest border-b border-outline-variant py-3 px-6 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 decoration-none">
+                <img src="/assets/brand-mark.svg" alt="AutoRecon AI" class="h-8 w-auto object-contain"/>
+            </a>
+            <div class="flex items-center gap-4 text-xs font-semibold">
+                <a href="/" class="text-on-surface-variant hover:text-primary transition-colors">Console</a>
+                <a href="/terms.html" class="text-primary font-bold">Terms of Service</a>
+                <a href="/privacy.html" class="text-on-surface-variant hover:text-primary transition-colors">Privacy Policy</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl w-full mx-auto px-6 py-12 space-y-8">
+        <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-primary font-bold">Legal &amp; Governance</span>
+            <h1 class="text-3xl font-extrabold text-on-surface mt-1">Terms of Service</h1>
+            <p class="text-sm text-on-surface-variant mt-2">Effective Date: September 16, 2026 : Version 2.4</p>
+        </div>
+
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-8 space-y-6 text-sm text-on-surface leading-relaxed shadow-xs">
+            <section class="space-y-2">
+                <h2 class="text-lg font-bold text-on-surface">1. Agreement &amp; Acceptance of Terms</h2>
+                <p>By registering, accessing, or utilizing the AutoRecon AI platform, software interfaces, API endpoints, or automated reconciliation tools, enterprise users agree to be bound by these Terms of Service. If you are entering into this agreement on behalf of a corporation or registered merchant entity, you represent that you possess full legal authority to bind that entity.</p>
+            </section>
+
+            <section class="space-y-2">
+                <h2 class="text-lg font-bold text-on-surface">2. Service Scope &amp; Functional Description</h2>
+                <p>AutoRecon AI provides an institutional software engine designed to perform:</p>
+                <ul class="list-disc pl-5 space-y-1 text-on-surface-variant">
+                    <li><strong>3-Way Gateway Reconciliation</strong>: Matching store sales orders against payment gateway API webhooks and bank settlement credits.</li>
+                    <li><strong>MDR Overcharge Auditing</strong>: Verifying actual fee deductions against contractual merchant discount rates and generating audit dispute documentation.</li>
+                    <li><strong>TallyPrime ERP Bridge</strong>: Converting processed settlement data into double-entry TallyPrime XML vouchers for accounting ingestion.</li>
+                    <li><strong>Compliance &amp; Cash Intelligence</strong>: Monitoring Section 43B(h) MSME accounts payable deadlines, Section 192 payroll TDS schedules, and 30-day cash flow runway projections.</li>
+                </ul>
+            </section>
+
+            <section class="space-y-2">
+                <h2 class="text-lg font-bold text-on-surface">3. Merchant Responsibilities &amp; Gateway Credentials</h2>
+                <p>Enterprise users are responsible for maintaining the confidentiality of their workspace access tokens, webhook secrets, and API credentials. Users must provide accurate merchant parameters, contractual MDR fee rates, and dataset inputs for calculation outputs.</p>
+            </section>
+
+            <section class="space-y-2">
+                <h2 class="text-lg font-bold text-on-surface">4. Intellectual Property &amp; ERP Compatibility</h2>
+                <p>All core algorithms, Isolation Forest anomaly models, TallyPrime XML structure definitions, visual UI components, and software code remain the exclusive intellectual property of AutoRecon AI. TallyPrime is a registered trademark of Tally Solutions Pvt. Ltd. AutoRecon AI operates as an independent, compatible integration bridge.</p>
+            </section>
+
+            <section class="space-y-2">
+                <h2 class="text-lg font-bold text-on-surface">5. Service Level Agreement &amp; Availability</h2>
+                <p>AutoRecon AI maintains a 99.9% uptime target for API processing and webhook ingestion. Scheduled system maintenance or emergency updates will be communicated via console status advisories.</p>
+            </section>
+
+            <section class="space-y-2">
+                <h2 class="text-lg font-bold text-on-surface">6. Limitation of Liability &amp; Governing Law</h2>
+                <p>AutoRecon AI provides automated auditing data and ERP vouchers based on user-supplied parameters and gateway telemetry. Users remain responsible for final statutory tax filings and bank transfers. These Terms shall be governed by and construed in accordance with the laws of India, with exclusive jurisdiction in Chennai, Tamil Nadu.</p>
+            </section>
+
+            <section class="space-y-2">
+                <h2 class="text-lg font-bold text-on-surface">7. Contact &amp; Legal Notices</h2>
+                <p>For official legal notices or contractual inquiries, contact our Legal Desk at <code>legal@autorecon.ai</code>.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer class="w-full bg-surface-container-lowest border-t border-outline-variant py-6 px-6 text-xs text-on-surface-variant mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+                <span class="font-bold text-on-surface">AutoRecon AI</span> : Institutional Settlement &amp; Financial Operations OS
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="/" class="text-on-surface-variant hover:text-primary transition-colors">Console</a>
+                <a href="/terms.html" class="text-primary font-semibold">Terms of Service</a>
+                <a href="/privacy.html" class="text-on-surface-variant hover:text-primary transition-colors">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,4 +1,4 @@
-// AutoRecon AI — All-in-One Autonomous Accounting & Financial Operations OS
+// AutoRecon AI : All-in-One Autonomous Accounting & Financial Operations OS
 // Multi-Tasking Client Controller: Gateway Recon, Payroll & Salary Delays, Vendor AP & MSME 43B(h), Cash Flow & AI Munimji
 
 // Automatic Cache Purging for Stale Mobile/Desktop Browsers
@@ -30,7 +30,7 @@ window.toggleTheme = function() {
     localStorage.setItem('autorecon_theme', isDark ? 'dark' : 'light');
     updateThemeIcon();
     updateChartsTheme();
-    showToast(isDark ? '🌙 Switched to Dark Obsidian Mode' : '☀️ Switched to Light Pearl Mode');
+    showToast(isDark ? ' Switched to Dark Obsidian Mode' : ' Switched to Light Pearl Mode');
 };
 
 function updateThemeIcon() {
@@ -1773,7 +1773,7 @@ async function handleCsvUpload(e) {
 
             const reportUrl = `/salary-report.html?batchId=${batchId}`;
             window.open(reportUrl, '_blank');
-            showToast(`✅ Detected Salary CSV (${employees.length} employees)! Opening Salary Hub...`, reportUrl, 'Open Salary Hub ➔');
+            showToast(` Detected Salary CSV (${employees.length} employees)! Opening Salary Hub...`, reportUrl, 'Open Salary Hub ➔');
 
             // Background server sync
             fetch('/api/ingest/upload-salary', {
@@ -1888,7 +1888,7 @@ async function handleCsvUpload(e) {
 
         const reportUrl = `/report.html?batchId=${batchId}`;
         window.open(reportUrl, '_blank');
-        showToast(`✅ Successfully parsed & reconciled ${orders.length} orders from ${fileName}!`, reportUrl, 'Open Report ➔');
+        showToast(` Successfully parsed & reconciled ${orders.length} orders from ${fileName}!`, reportUrl, 'Open Report ➔');
 
         fetch('/api/ingest/upload-orders', {
             method: 'POST',
@@ -2118,11 +2118,11 @@ function renderMlAnomalyTable(scoredOrders) {
         if (o.riskLevel === 'CRITICAL') {
             badgeColor = 'bg-red-50 text-red-800 border border-red-300 dark:bg-red-950/40 dark:text-red-300 dark:border-red-800';
             barColor = 'bg-red-600';
-            statusIcon = '⚠️';
+            statusIcon = '';
         } else if (o.riskLevel === 'MODERATE') {
             badgeColor = 'bg-amber-50 text-amber-900 border border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800';
             barColor = 'bg-amber-600';
-            statusIcon = '⏱️';
+            statusIcon = '';
         }
 
         return `
@@ -2207,7 +2207,7 @@ window.copyWebhookUrl = function() {
     const el = document.getElementById('webhookUrlDisplay');
     if (el) {
         navigator.clipboard.writeText(el.value);
-        showToast('✅ Webhook URL copied! Enter this in Razorpay Dashboard.');
+        showToast(' Webhook URL copied! Enter this in Razorpay Dashboard.');
     }
 };
 
@@ -2215,7 +2215,7 @@ window.copyWebhookSecret = function() {
     const el = document.getElementById('webhookSecretDisplay');
     if (el) {
         navigator.clipboard.writeText(el.value);
-        showToast('✅ Webhook Secret copied to clipboard!');
+        showToast(' Webhook Secret copied to clipboard!');
     }
 };
 
@@ -2227,7 +2227,7 @@ window.dispatchLiveWebhookTest = async function() {
 
     if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `<span class="animate-spin mr-1">⚙️</span> Dispatching...`;
+        btn.innerHTML = `<span class="animate-spin mr-1"></span> Dispatching...`;
     }
 
     let payload = {};
@@ -2306,7 +2306,7 @@ window.dispatchLiveWebhookTest = async function() {
         fetchMlIntelligence();
 
         document.getElementById('webhookModal').classList.add('hidden');
-        showToast(`⚡ Razorpay Webhook [${payload.event}] received and audited in real-time!`);
+        showToast(` Razorpay Webhook [${payload.event}] received and audited in real-time!`);
     } catch (err) {
         console.error('Webhook error:', err);
         alert('Failed to dispatch webhook event: ' + err.message);
@@ -2375,7 +2375,7 @@ window.runCleanReconSim = function() {
     if (nodeGateway) nodeGateway.classList.add('cleared');
     if (nodeBank) nodeBank.classList.add('cleared');
 
-    showToast(`⚡ 3-Way Match Verified! 0% Fee Leak on ₹${currentSimAmountVal.toLocaleString('en-IN')}`);
+    showToast(` 3-Way Match Verified! 0% Fee Leak on ₹${currentSimAmountVal.toLocaleString('en-IN')}`);
 };
 
 window.runOverchargeSim = function() {
@@ -2398,14 +2398,14 @@ window.runOverchargeSim = function() {
     if (bankEl) bankEl.textContent = `₹${netBank.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
     if (rateEl) rateEl.textContent = `3.5% Overcharge (MDR + GST)`;
     if (feeBadge) {
-        feeBadge.textContent = `⚠️ ₹${leakAmount.toFixed(2)} Fee Leak Detected!`;
+        feeBadge.textContent = ` ₹${leakAmount.toFixed(2)} Fee Leak Detected!`;
         feeBadge.className = 'badge-pill bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-black animate-pulse';
     }
     if (nodeGateway) {
         nodeGateway.className = 'sim-flow-node overcharge flex items-center justify-between';
     }
 
-    showToast(`⚠️ MDR Overcharge Detected: ₹${leakAmount.toFixed(2)} excess fee flagged!`);
+    showToast(` MDR Overcharge Detected: ₹${leakAmount.toFixed(2)} excess fee flagged!`);
 };
 
 window.calculateMdrLeak = function(volume) {
@@ -2433,7 +2433,7 @@ window.disburseInstantPayrollSim = function() {
 
     if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `<span class="animate-spin mr-1">⚙️</span> Processing Instant IMPS Batch...`;
+        btn.innerHTML = `<span class="animate-spin mr-1"></span> Processing Instant IMPS Batch...`;
     }
 
     setTimeout(() => {
@@ -2452,7 +2452,7 @@ window.disburseInstantPayrollSim = function() {
             btn.innerHTML = `✓ Salary Disbursed (IMPS Cleared)`;
             btn.className = 'px-4 py-2 bg-emerald-600 text-white rounded-lg text-xs font-black w-full';
         }
-        showToast('⚡ Instant IMPS Salary Payout Cleared with Bank UTR!');
+        showToast(' Instant IMPS Salary Payout Cleared with Bank UTR!');
     }, 600);
 };
 
@@ -2462,7 +2462,7 @@ window.clearMsmeInvoiceSim = function() {
 
     if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `<span class="animate-spin mr-1">⚙️</span> Authorizing MSME Payment...`;
+        btn.innerHTML = `<span class="animate-spin mr-1"></span> Authorizing MSME Payment...`;
     }
 
     setTimeout(() => {
@@ -2524,7 +2524,7 @@ window.closeTallyModal = function() {
 
 window.downloadTallyXml = function() {
     window.open('/api/tally/export-xml', '_blank');
-    showToast('⚡ TallyPrime XML Voucher Batch file downloaded successfully!');
+    showToast(' TallyPrime XML Voucher Batch file downloaded successfully!');
     window.closeTallyModal();
 };
 
@@ -2595,16 +2595,16 @@ window.copyDisputeToClipboard = function() {
     const bodyEl = document.getElementById('dispEmailBody');
     if (bodyEl) {
         navigator.clipboard.writeText(bodyEl.textContent).then(() => {
-            showToast('📋 Dispute letter copied to clipboard!');
+            showToast(' Dispute letter copied to clipboard!');
         }).catch(() => {
-            showToast('📋 Dispute letter copied!');
+            showToast(' Dispute letter copied!');
         });
     }
 };
 
 window.copyTallyXml = async function() {
     const btn = document.getElementById('btnCopyTallyXml');
-    if (btn) btn.innerHTML = `<span class="animate-spin mr-1">⚙️</span> Generating XML...`;
+    if (btn) btn.innerHTML = `<span class="animate-spin mr-1"></span> Generating XML...`;
 
     try {
         const res = await fetch('/api/tally/export-xml', { headers: getAuthHeaders() });
@@ -2677,7 +2677,7 @@ window.sendCopilotPrompt = function(promptText) {
             `;
         } else if (promptText.includes('MSME') || promptText.includes('tax')) {
             aiReplyHtml = `
-                <p class="leading-relaxed font-semibold">⚠️ <b>Section 43B(h) Statutory Compliance Audit:</b></p>
+                <p class="leading-relaxed font-semibold"> <b>Section 43B(h) Statutory Compliance Audit:</b></p>
                 <p class="text-xs text-on-surface-variant leading-relaxed">
                     You have <b>₹84,500 across 2 Micro & Small vendor invoices</b> due in 12 days.
                     All payouts are currently green. Zero income tax disallowance risk!

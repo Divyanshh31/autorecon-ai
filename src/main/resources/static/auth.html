@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoRecon AI — Sign In / Create Account</title>
+    <title>AutoRecon AI : Sign In / Create Account</title>
     <!-- Theme Initializer (Prevents FOUC) -->
     <script>
         (function() {
@@ -323,7 +324,7 @@
             const btn = document.getElementById('btnSignInSubmit');
 
             btn.disabled = true;
-            btn.innerHTML = `<span class="animate-spin mr-2">⚙️</span> Authenticating...`;
+            btn.innerHTML = `<span class="animate-spin mr-2"></span> Authenticating...`;
 
             try {
                 const res = await fetch('/api/auth/login', {
@@ -356,7 +357,7 @@
             const btn = document.getElementById('btnSignUpSubmit');
 
             btn.disabled = true;
-            btn.innerHTML = `<span class="animate-spin mr-2">⚙️</span> Creating Workspace...`;
+            btn.innerHTML = `<span class="animate-spin mr-2"></span> Creating Workspace...`;
 
             try {
                 const res = await fetch('/api/auth/signup', {

@@ -53,3 +53,26 @@ Render will automatically build and deploy your app. In 2–3 minutes, you'll ge
 ## 🔒 Why This Setup is Secure & Seamless:
 - **Zero Configuration for Visitors**: Anyone visiting your public URL can chat with the AI and test 3-way reconciliation immediately.
 - **Key Safety**: Your `GEMINI_API_KEY` is stored strictly inside the backend cloud environment. It is **never exposed or visible to frontend users/inspect element**.
+
+---
+
+## 🌐 Custom Domain Setup & DNS Configuration
+
+To configure a custom domain (e.g. `console.autorecon.ai` or `autorecon.yourdomain.com`):
+
+1. **Vercel Project Settings**:
+   - Navigate to **Vercel Dashboard -> Project Settings -> Domains**.
+   - Enter your domain name (e.g. `console.yourdomain.com`) and click **Add**.
+
+2. **DNS Records (Cloudflare / GoDaddy / Namecheap)**:
+   - For a Subdomain (`console.yourdomain.com`):
+     - **Type**: `CNAME`
+     - **Name**: `console`
+     - **Value**: `cname.vercel-dns.com`
+   - For Apex Domain (`yourdomain.com`):
+     - **Type**: `A`
+     - **Name**: `@`
+     - **Value**: `76.76.21.21`
+
+3. **Automatic SSL/TLS Verification**:
+   - Vercel automatically issues an SSL/TLS certificate via Let's Encrypt within 60 seconds of DNS propagation.

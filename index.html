@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoRecon AI — Institutional Settlement Console</title>
+    <title>AutoRecon AI : Institutional Settlement Console</title>
     <!-- Auth Gate & Instant Theme Initializer (Prevents FOUC) -->
     <script>
         (function() {
@@ -176,8 +177,8 @@
                 </a>
                 <div class="hidden sm:flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant whitespace-nowrap shrink-0">
                     <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-md bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-md h-2 w-2 bg-primary"></span>
                     </span>
                     <span class="hidden lg:inline">LIVE RECON FEED • SYNCED 4s AGO</span>
                     <span class="inline lg:hidden">LIVE</span>
@@ -227,7 +228,7 @@
                     <span class="material-symbols-outlined text-[18px]" id="themeToggleIcon">light_mode</span>
                 </button>
                 <div id="headerUserProfile" class="flex items-center gap-1.5 xl:gap-2 pl-2 border-l border-outline-variant shrink-0">
-                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 text-on-primary font-bold text-xs" id="headerUserAvatar">
+                    <div class="w-8 h-8 rounded-md bg-primary flex items-center justify-center shrink-0 text-on-primary font-bold text-xs" id="headerUserAvatar">
                         Z
                     </div>
                     <div class="hidden min-[1750px]:flex flex-col text-left">
@@ -252,38 +253,38 @@
             <div class="w-full bg-surface-container-high py-2.5 overflow-hidden shadow-inner select-none">
                 <div class="inline-flex whitespace-nowrap gap-8 animate-marquee font-mono-data text-mono-data text-on-surface">
                     <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-full bg-primary"></span>
+                        <span class="h-2 w-2 rounded-md bg-primary"></span>
                         <strong class="text-primary font-bold">SETTLED:</strong> INR 48,250.00 <span class="text-on-surface-variant">• UTR: CMS293847291 • ICICI CORP • 12s ago</span>
                     </span>
                     <span class="text-outline-variant">•</span>
                     <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-full bg-primary"></span>
+                        <span class="h-2 w-2 rounded-md bg-primary"></span>
                         <strong class="text-on-surface font-bold">MATCHED:</strong> ORD_92834 <span class="text-on-surface-variant">• RAZORPAY ID: pay_Nq83k48 • NET: INR 12,490.00</span>
                     </span>
                     <span class="text-outline-variant">•</span>
                     <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-full bg-error"></span>
+                        <span class="h-2 w-2 rounded-md bg-error"></span>
                         <strong class="text-error font-bold">DISCREPANCY DETECTED:</strong> ORD_88201 <span class="text-on-surface-variant">• MDR Overcharge +0.45% (INR 142.20) • FLAGGED FOR RECLAIM</span>
                     </span>
                     <span class="text-outline-variant">•</span>
                     <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-full bg-tertiary"></span>
+                        <span class="h-2 w-2 rounded-md bg-tertiary"></span>
                         <strong class="text-tertiary font-bold">MSME ALERT:</strong> Inv #INV-2024-889 <span class="text-on-surface-variant">• Vendor: PrintPack Solutions • 4 days to 43B(h) deadline</span>
                     </span>
                     <span class="text-outline-variant">•</span>
                     <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-full bg-primary"></span>
+                        <span class="h-2 w-2 rounded-md bg-primary"></span>
                         <strong class="text-primary font-bold">SETTLED:</strong> INR 1,14,090.00 <span class="text-on-surface-variant">• UTR: HDFC88301938 • HDFC VIRTUAL • 1m ago</span>
                     </span>
                     <!-- Duplicate for seamless scroll -->
                     <span class="text-outline-variant">•</span>
                     <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-full bg-primary"></span>
+                        <span class="h-2 w-2 rounded-md bg-primary"></span>
                         <strong class="text-primary font-bold">SETTLED:</strong> INR 48,250.00 <span class="text-on-surface-variant">• UTR: CMS293847291 • ICICI CORP • 12s ago</span>
                     </span>
                     <span class="text-outline-variant">•</span>
                     <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-full bg-primary"></span>
+                        <span class="h-2 w-2 rounded-md bg-primary"></span>
                         <strong class="text-on-surface font-bold">MATCHED:</strong> ORD_92834 <span class="text-on-surface-variant">• RAZORPAY ID: pay_Nq83k48 • NET: INR 12,490.00</span>
                     </span>
                 </div>
@@ -297,9 +298,9 @@
                 <section class="w-full px-grid-margin py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                     <!-- Left Hero: Enterprise Audit Messaging -->
                     <div class="lg:col-span-6 flex flex-col justify-between p-8 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xs relative overflow-hidden">
-                        <div class="absolute -right-16 -top-16 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="absolute -right-16 -top-16 w-64 h-64 bg-primary/5 rounded-md blur-3xl pointer-events-none"></div>
                         <div>
-                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-container text-on-primary-container font-mono-sm text-mono-sm font-bold mb-4">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-primary-container text-on-primary-container font-mono-sm text-mono-sm font-bold mb-4">
                                 <span class="material-symbols-outlined text-[14px]">verified_user</span>
                                 <span>AUTONOMOUS FINOPS &amp; RECON ENGINE</span>
                             </div>
@@ -327,9 +328,9 @@
                         <div>
                             <div class="flex flex-wrap items-center justify-between gap-3 pb-3">
                                 <div class="flex items-center gap-2">
-                                    <span class="h-2.5 w-2.5 rounded-full bg-error"></span>
-                                    <span class="h-2.5 w-2.5 rounded-full bg-tertiary"></span>
-                                    <span class="h-2.5 w-2.5 rounded-full bg-primary-container"></span>
+                                    <span class="h-2.5 w-2.5 rounded-md bg-error"></span>
+                                    <span class="h-2.5 w-2.5 rounded-md bg-tertiary"></span>
+                                    <span class="h-2.5 w-2.5 rounded-md bg-primary-container"></span>
                                     <span class="font-mono-sm text-mono-sm text-surface-variant ml-2">SIMULATOR://NODE_INSPECTOR</span>
                                 </div>
                                 <div class="flex items-center gap-1 bg-on-background p-1 rounded-lg">
@@ -436,7 +437,7 @@
                         </div>
                         <div class="pt-3 border-t border-surface-variant/20 flex items-center justify-between font-mono-sm text-mono-sm text-surface-variant">
                             <span class="flex items-center gap-1.5 text-surface-bright">
-                                <span class="h-1.5 w-1.5 rounded-full bg-primary animate-ping"></span>
+                                <span class="h-1.5 w-1.5 rounded-md bg-primary animate-ping"></span>
                                 REAL-TIME SIMULATION ACTIVE
                             </span>
                             <button onclick="switchToTab('view-recon')" class="text-primary-fixed hover:underline flex items-center gap-1">
@@ -686,7 +687,7 @@
                     <div class="flex flex-col gap-1">
                         <div class="flex items-center gap-2">
                             <span class="px-2 py-0.5 bg-primary-container text-on-primary-container font-mono-sm text-mono-sm rounded uppercase tracking-wider font-semibold">Treasury Ops Engine</span>
-                            <span class="font-headline-sm text-headline-sm text-on-surface">Cash Compass — 30-Day Predictive Runway &amp; Flow</span>
+                            <span class="font-headline-sm text-headline-sm text-on-surface">Cash Compass : 30-Day Predictive Runway &amp; Flow</span>
                         </div>
                         <p class="font-body-sm text-body-sm text-on-surface-variant">
                             Autonomous treasury reconciliation matching gateway T+1/T+2 sweeps, COD remittance cycles, and Section 43B(h) statutory vendor deadlines.
@@ -729,8 +730,8 @@
                         </div>
                         <div class="mt-2">
                             <div class="font-mono-kpi text-mono-kpi text-on-surface font-bold">44.5 <span class="font-body-md text-body-md font-normal text-on-surface-variant">Days</span></div>
-                            <div class="w-full bg-surface-container h-1.5 rounded-full mt-2 overflow-hidden">
-                                <div class="bg-primary h-full rounded-full" style="width: 74%;"></div>
+                            <div class="w-full bg-surface-container h-1.5 rounded-md mt-2 overflow-hidden">
+                                <div class="bg-primary h-full rounded-md" style="width: 74%;"></div>
                             </div>
                         </div>
                     </div>
@@ -802,7 +803,7 @@
                                 <circle cx="960" cy="91" fill="#0050cb" r="5"></circle>
                             </svg>
                             <div class="absolute top-6 left-[28%] bg-surface-container-lowest px-2 py-1 rounded shadow-sm flex items-center gap-1 border border-outline-variant">
-                                <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                <span class="w-1.5 h-1.5 rounded-md bg-tertiary"></span>
                                 <span class="font-mono-sm text-mono-sm text-on-surface font-semibold">10-Apr: Advance TDS ₹12.5L</span>
                             </div>
                             <div class="absolute bottom-12 left-[50%] bg-error-container text-on-error-container px-2.5 py-1 rounded shadow-sm flex items-center gap-1.5 font-mono-sm text-mono-sm font-bold">
@@ -865,7 +866,7 @@
                                 <div class="flex items-center justify-between">
                                     <span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 01 // AUDIT DEFENSE</span>
                                     <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-mono-sm text-mono-sm font-bold flex items-center gap-1">
-                                        <span class="h-1.5 w-1.5 rounded-full bg-primary animate-ping"></span> LIVE SCAN
+                                        <span class="h-1.5 w-1.5 rounded-md bg-primary animate-ping"></span> LIVE SCAN
                                     </span>
                                 </div>
                                 <h2 class="font-headline-md text-headline-md text-on-surface mt-1">Multi-Variate Anomaly Detection</h2>
@@ -952,8 +953,8 @@
                                             <span class="text-on-surface-variant">BIN Routing Category Error</span>
                                             <span class="text-error font-bold" id="shapWeight1">φ = +0.584</span>
                                         </div>
-                                        <div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
-                                            <div class="bg-error h-full rounded-full animate-bar-grow" id="shapBar1" style="width: 58.4%"></div>
+                                        <div class="w-full bg-surface-container-low h-1.5 rounded-md overflow-hidden">
+                                            <div class="bg-error h-full rounded-md animate-bar-grow" id="shapBar1" style="width: 58.4%"></div>
                                         </div>
                                     </div>
                                     <div>
@@ -961,8 +962,8 @@
                                             <span class="text-on-surface-variant">Unwarranted GST Surcharge (18%)</span>
                                             <span class="text-error font-bold" id="shapWeight2">φ = +0.261</span>
                                         </div>
-                                        <div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
-                                            <div class="bg-tertiary h-full rounded-full animate-bar-grow" id="shapBar2" style="width: 26.1%"></div>
+                                        <div class="w-full bg-surface-container-low h-1.5 rounded-md overflow-hidden">
+                                            <div class="bg-tertiary h-full rounded-md animate-bar-grow" id="shapBar2" style="width: 26.1%"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -1023,7 +1024,8 @@
                 <span>DIRECT BANK FED: SECURE</span>
             </div>
         </div>
-    </footer>
+    <div class="flex items-center gap-4 text-xs font-semibold text-on-surface-variant border-t border-outline-variant/30 pt-4 mt-4"><a href="/privacy.html" class="hover:text-primary">Privacy Policy</a><a href="/terms.html" class="hover:text-primary">Terms of Service</a></div>
+</footer>
 
     <!-- =========================================================================
          STITCH MODALS
@@ -1363,12 +1365,12 @@ Zenith Retail India Pvt Ltd
     </div>
 
     <!-- Floating AI Munimji Trigger Widget -->
-    <button onclick="openCopilotDrawer()" id="btnFloatingCopilot" class="fixed bottom-6 right-6 z-40 bg-primary text-on-primary rounded-full px-4 py-3 shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2.5 border border-white/20 animate-pulse-glow cursor-pointer">
+    <button onclick="openCopilotDrawer()" id="btnFloatingCopilot" class="fixed bottom-6 right-6 z-40 bg-primary text-on-primary rounded-md px-4 py-3 shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2.5 border border-white/20 animate-pulse-glow cursor-pointer">
         <div class="relative flex items-center justify-center">
             <span class="material-symbols-outlined text-2xl">smart_toy</span>
             <span class="absolute -top-1 -right-1 flex h-3 w-3">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-tertiary"></span>
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-md bg-tertiary opacity-75"></span>
+                <span class="relative inline-flex rounded-md h-3 w-3 bg-tertiary"></span>
             </span>
         </div>
         <span class="font-headline-md text-headline-md text-on-primary hidden sm:inline font-bold">Ask AI Munimji</span>
@@ -1400,16 +1402,16 @@ Zenith Retail India Pvt Ltd
 
                     <!-- Quick Prompt Chips -->
                     <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 shrink-0">
-                        <button onclick="sendCopilotPrompt('Where is my biggest settlement fee leakage?')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-full font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                        <button onclick="sendCopilotPrompt('Where is my biggest settlement fee leakage?')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
                             🔍 Fee Leakage
                         </button>
-                        <button onclick="sendCopilotPrompt('Simulate MSME 45-day tax penalty disallowance')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-full font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
-                            ⚠️ MSME Tax Risk
+                        <button onclick="sendCopilotPrompt('Simulate MSME 45-day tax penalty disallowance')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                             MSME Tax Risk
                         </button>
-                        <button onclick="sendCopilotPrompt('Explain Isolation Forest Anomaly #ORD-91283')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-full font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                        <button onclick="sendCopilotPrompt('Explain Isolation Forest Anomaly #ORD-91283')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
                             🧠 Explain Anomaly
                         </button>
-                        <button onclick="sendCopilotPrompt('Predict 30-day cash balance under 5% RTO spike')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-full font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                        <button onclick="sendCopilotPrompt('Predict 30-day cash balance under 5% RTO spike')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
                             📈 RTO Cash Forecast
                         </button>
                     </div>
@@ -1417,7 +1419,7 @@ Zenith Retail India Pvt Ltd
                     <!-- Conversation History Stream Area -->
                     <div id="copilotChatStream" class="flex-1 overflow-y-auto space-y-3 p-3 bg-surface-container-low rounded-xl border border-outline-variant font-body-md text-body-md">
                         <div class="flex gap-2.5 items-start">
-                            <div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 text-xs font-bold">
+                            <div class="w-7 h-7 rounded-md bg-primary text-on-primary flex items-center justify-center shrink-0 text-xs font-bold">
                                 AI
                             </div>
                             <div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-xl text-on-surface space-y-2 shadow-xs">

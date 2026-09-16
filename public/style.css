@@ -59,7 +59,7 @@ html.dark {
     --rzp-blue-hover: #0284C7;
     --rzp-azure: #38BDF8;
     --rzp-cyan: #22D3EE;
-    --rzp-indigo: #818CF8;
+    --rzp-indigo: #0284C7;
     
     --rzp-emerald: #10B981;
     --rzp-emerald-soft: rgba(16, 185, 129, 0.15);
@@ -312,7 +312,7 @@ pre, code, .font-mono {
    1. FLUID AURORA GRADIENT TEXT
    ========================================================================== */
 .rzp-gradient-text {
-    background: linear-gradient(135deg, #0052CC 0%, #0284C7 30%, #047857 65%, #4338CA 100%);
+    background: linear-gradient(135deg, #0052CC 0%, #0284C7 30%, #047857 65%, #0369A1 100%);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -320,7 +320,7 @@ pre, code, .font-mono {
 }
 
 html.dark .rzp-gradient-text {
-    background: linear-gradient(135deg, #38BDF8 0%, #60A5FA 30%, #34D399 65%, #A78BFA 100%);
+    background: linear-gradient(135deg, #38BDF8 0%, #60A5FA 30%, #34D399 65%, #38BDF8 100%);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -345,7 +345,7 @@ html.dark .rzp-gradient-text {
     pointer-events: none;
 }
 
-.ambient-glow-orbs {
+.ambient-glow-orbs { display: none !important;
     position: fixed;
     inset: 0;
     z-index: -1;
@@ -353,7 +353,7 @@ html.dark .rzp-gradient-text {
     pointer-events: none;
 }
 
-.orb {
+.orb { display: none !important;
     position: absolute;
     border-radius: 50%;
     filter: blur(140px);
@@ -362,7 +362,7 @@ html.dark .rzp-gradient-text {
     will-change: transform;
 }
 
-html.dark .orb {
+html.dark .orb { display: none !important;
     opacity: 0.12;
 }
 
@@ -618,7 +618,7 @@ tbody tr:hover {
     padding: 0.28rem 0.7rem;
     font-size: 0.725rem;
     font-weight: 800;
-    border-radius: 9999px;
+    border-radius: 4px !important;
     transition: all 0.18s ease;
 }
 
@@ -664,7 +664,7 @@ html.dark .badge-delayed {
 .live-stream-ticker {
     background: var(--rzp-surface);
     border: 1px solid var(--rzp-border);
-    border-radius: 9999px;
+    border-radius: 4px !important;
     box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
     font-size: 0.75rem;
 }
@@ -818,7 +818,7 @@ html.dark .sim-flow-node.cleared {
 .hairline-loader {
     height: 2.5px;
     background: rgba(15, 23, 42, 0.08);
-    border-radius: 9999px;
+    border-radius: 4px !important;
     overflow: hidden;
 }
 
@@ -1025,7 +1025,7 @@ html.dark ::-webkit-scrollbar-thumb {
     .animate-bar-grow,
     .animate-modal-backdrop,
     .animate-modal-container,
-    .orb {
+    .orb { display: none !important;
         animation: none !important;
         transition: none !important;
         transform: none !important;
