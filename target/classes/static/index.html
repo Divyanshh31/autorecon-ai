@@ -71,10 +71,10 @@
 <body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary selection:text-on-primary min-h-screen flex flex-col">
 
     <!-- Ambient Live Canvas & Background -->
-    <canvas id="liveBgCanvas"></canvas>
+    <canvas id="liveBgCanvas" class="fixed inset-0 -z-10 pointer-events-none"></canvas>
 
     <!-- Fast Splash Screen -->
-    <div id="splashScreen">
+    <div id="splashScreen" class="fixed inset-0 z-[9999] bg-background flex items-center justify-center">
         <div class="max-w-sm w-full px-6 flex flex-col items-center text-center space-y-5">
             <div class="h-16 w-16 rounded-2xl minimal-glass-emblem flex items-center justify-center shadow-lg bg-white border border-slate-200">
                 <span class="material-symbols-outlined text-primary text-3xl">bolt</span>
