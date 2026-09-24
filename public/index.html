@@ -105,104 +105,139 @@
     <!-- =========================================================================
          TOP LUXURY STITCH NAVIGATION BAR (RESPONSIVE & NON-CLIPPING)
          ========================================================================= -->
-    <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 dark:bg-[#0B0B0F]/80 border-b border-black/[0.08] dark:border-white/[0.08] select-none transition-colors">
-        <div class="max-w-7xl mx-auto h-14 px-4 flex items-center justify-between gap-4">
-            
-            <!-- Left Brand & Live Indicator -->
-            <div class="flex items-center gap-3 shrink-0">
-                <a href="#" onclick="switchToTab('view-home')" class="flex items-center gap-2 shrink-0" title="AutoRecon AI Home">
-                    <img alt="AutoRecon AI" class="h-8 w-auto object-contain shrink-0" src="assets/brand-mark.svg" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/aida/AEtjO1Wo0YO1-_SRDWIjvp4DhyPKV_q6Q3k_HSGCyTYeZnRI00m7e7mv-e2_o055l9CnZyh3pV3_pHru4at_xhWguLARIpqydJ2lhppDDo23j5MPBaz9Jzdz7kzNl8BqMzdS6YjOEtE5gIclEmNJGwQx9nPBYXRYI6T4bMuvSC4Eo3jrjLDGO5IScn7AKUImBmVgN312BxI7SY7lEZOMv5lk1BACWNCzZ2OjBymPK9Cn6ujeFPilPVhqTRH2QAQ';"/>
-                </a>
-                <div title="Live Recon Feed: Synced 4s ago" class="hidden sm:flex items-center gap-1.5 cursor-help px-2 py-1 rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">Live</span>
+    <!-- =========================================================================
+     REACTBITS-INSPIRED LEFT SIDEBAR NAVIGATION (DESKTOP >= 1024px)
+     ========================================================================= -->
+<aside id="leftSidebar" class="hidden lg:flex fixed top-0 bottom-0 left-0 w-64 bg-white/95 dark:bg-[#131318]/95 backdrop-blur-md border-r border-black/[0.08] dark:border-white/[0.08] flex-col justify-between z-40 select-none transition-colors">
+    <div class="p-4 space-y-6 overflow-y-auto flex-1">
+        <!-- Brand Logo & Live Recon Dot -->
+        <div class="flex items-center justify-between gap-2 pb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
+            <a href="#" onclick="switchToTab('view-home')" class="flex items-center gap-2" title="AutoRecon AI Home">
+                <img alt="AutoRecon AI" class="h-8 w-auto object-contain" src="assets/brand-mark.svg" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/aida/AEtjO1Wo0YO1-_SRDWIjvp4DhyPKV_q6Q3k_HSGCyTYeZnRI00m7e7mv-e2_o055l9CnZyh3pV3_pHru4at_xhWguLARIpqydJ2lhppDDo23j5MPBaz9Jzdz7kzNl8BqMzdS6YjOEtE5gIclEmNJGwQx9nPBYXRYI6T4bMuvSC4Eo3jrjLDGO5IScn7AKUImBmVgN312BxI7SY7lEZOMv5lk1BACWNCzZ2OjBymPK9Cn6ujeFPilPVhqTRH2QAQ';"/>
+            </a>
+            <div title="Live Recon Feed: Synced 4s ago" class="flex items-center gap-1.5 cursor-help px-2 py-1 rounded-md bg-black/[0.03] dark:bg-white/[0.04]">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-[11px] font-mono text-zinc-500 dark:text-zinc-400">Live</span>
+            </div>
+        </div>
+
+        <!-- Global Search Input -->
+        <div class="flex items-center bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] rounded-[8px] px-2.5 py-1.5 gap-2 w-full focus-within:border-[#0066FF] transition-all">
+            <span class="material-symbols-outlined text-[16px] text-zinc-400">search</span>
+            <input type="text" id="globalSearchInput" class="bg-transparent border-none outline-none font-mono text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 w-full" placeholder="Search..." />
+        </div>
+
+        <!-- Vertical Navigation Stack -->
+        <div class="space-y-1">
+            <div class="px-2 text-[10px] font-mono text-zinc-400 uppercase tracking-wider mb-2">Navigation</div>
+            <a class="nav-tab-btn flex items-center gap-2.5 px-3 py-2 text-xs font-medium rounded-[8px] text-zinc-900 dark:text-zinc-100 bg-black/[0.04] dark:bg-white/[0.06] cursor-pointer transition-colors active" onclick="switchToTab('view-home')">
+                <span class="material-symbols-outlined text-[18px]">dashboard</span>
+                <span>Console</span>
+            </a>
+            <a class="nav-tab-btn flex items-center gap-2.5 px-3 py-2 text-xs font-medium rounded-[8px] text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer transition-colors" onclick="switchToTab('view-recon')">
+                <span class="material-symbols-outlined text-[18px]">sync_alt</span>
+                <span>Gateway Recon</span>
+            </a>
+            <a class="nav-tab-btn flex items-center gap-2.5 px-3 py-2 text-xs font-medium rounded-[8px] text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer transition-colors" onclick="switchToTab('view-payroll')">
+                <span class="material-symbols-outlined text-[18px]">payments</span>
+                <span>Payroll</span>
+            </a>
+            <a class="nav-tab-btn flex items-center gap-2.5 px-3 py-2 text-xs font-medium rounded-[8px] text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer transition-colors" onclick="switchToTab('view-vendors')">
+                <span class="material-symbols-outlined text-[18px]">storefront</span>
+                <span>Vendors MSME</span>
+            </a>
+            <a class="nav-tab-btn flex items-center gap-2.5 px-3 py-2 text-xs font-medium rounded-[8px] text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer transition-colors" onclick="switchToTab('view-cashflow')">
+                <span class="material-symbols-outlined text-[18px]">explore</span>
+                <span>Cash Compass</span>
+            </a>
+            <a class="nav-tab-btn flex items-center gap-2.5 px-3 py-2 text-xs font-medium rounded-[8px] text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer transition-colors" onclick="switchToTab('view-ml')">
+                <span class="material-symbols-outlined text-[18px]">psychology</span>
+                <span>ML Lab</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Bottom Actions & Controls Footer -->
+    <div class="p-4 border-t border-black/[0.08] dark:border-white/[0.08] space-y-3">
+        <!-- Export Tally XML -->
+        <button id="btnOpenTallyModal" onclick="openTallyModal()" class="btn btn-primary w-full text-xs">
+            <span class="material-symbols-outlined text-[16px]">description</span>
+            <span>Export Tally XML</span>
+        </button>
+
+        <!-- Actions Overflow Menu -->
+        <div class="relative w-full">
+            <button id="headerActionsMenuBtn" onclick="toggleHeaderActionsMenu()" class="btn btn-secondary w-full text-xs flex items-center justify-between">
+                <span class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[18px]">tune</span>
+                    <span>Actions</span>
+                </span>
+                <span class="material-symbols-outlined text-[16px]">expand_more</span>
+            </button>
+            <div id="headerActionsDropdown" class="hidden absolute bottom-12 left-0 right-0 bg-white dark:bg-[#131318] border border-black/[0.08] dark:border-white/[0.08] rounded-[12px] shadow-lg py-1.5 z-50 space-y-0.5">
+                <button id="btnOpenUploadModal" onclick="document.getElementById('uploadModal').classList.remove('hidden'); toggleHeaderActionsMenu(false);" class="w-full text-left px-3 py-2 text-xs hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
+                    <span class="material-symbols-outlined text-[16px] text-blue-600 dark:text-blue-400">upload_file</span>
+                    <span>Upload CSV</span>
+                </button>
+                <button id="btnOpenDisputeModal" onclick="openDisputeModal(); toggleHeaderActionsMenu(false);" class="w-full text-left px-3 py-2 text-xs hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
+                    <span class="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-400">gavel</span>
+                    <span>Dispute Room</span>
+                </button>
+                <button id="btnOpenWebhookModal" onclick="openWebhookModal(); toggleHeaderActionsMenu(false);" class="w-full text-left px-3 py-2 text-xs hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
+                    <span class="material-symbols-outlined text-[16px] text-emerald-600 dark:text-emerald-400">check_circle</span>
+                    <span>Webhook Status</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- User Profile & Theme Toggle Footer -->
+        <div id="headerUserProfile" class="flex items-center justify-between pt-2 border-t border-black/[0.08] dark:border-white/[0.08]">
+            <div class="flex items-center gap-2 truncate">
+                <div class="w-7 h-7 rounded-full bg-[#0066FF] dark:bg-[#3B82F6] flex items-center justify-center shrink-0 text-white font-bold text-xs" id="headerUserAvatar">
+                    Z
+                </div>
+                <div class="flex flex-col text-left truncate">
+                    <span class="text-xs font-medium text-zinc-900 dark:text-zinc-100 leading-none truncate" id="headerUserName">D2C Merchant</span>
+                    <span class="text-[10px] font-mono text-zinc-400 leading-none mt-0.5 truncate" id="headerGstin">27AAACR1234F1Z5</span>
                 </div>
             </div>
-
-            <!-- Desktop Navigation Links (5-6 items, clean) -->
-            <nav class="hidden md:flex items-center h-full gap-1 overflow-x-auto no-scrollbar">
-                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-900 dark:text-zinc-100 border-b-2 border-[#0066FF] dark:border-[#3B82F6] cursor-pointer shrink-0 transition-colors nav-tab-btn active" onclick="switchToTab('view-home')">Console</a>
-                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-recon')">Gateway Recon</a>
-                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-payroll')">Payroll</a>
-                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-vendors')">Vendors MSME</a>
-                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-cashflow')">Cash Compass</a>
-                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-ml')">ML Lab</a>
-            </nav>
-
-            <!-- Right Controls & Actions -->
-            <div class="flex items-center gap-2 shrink-0">
-                <!-- Search / Command Button -->
-                <div class="hidden lg:flex items-center bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] rounded-[8px] px-2.5 py-1 gap-2 w-36 lg:w-44 focus-within:border-[#0066FF] transition-all">
-                    <span class="material-symbols-outlined text-[16px] text-zinc-400">search</span>
-                    <input type="text" id="globalSearchInput" class="bg-transparent border-none outline-none font-mono text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 w-full" placeholder="Search..." />
-                </div>
-
-                <!-- Single Primary Action: Export Tally XML -->
-                <button id="btnOpenTallyModal" onclick="openTallyModal()" class="btn btn-primary text-xs">
-                    <span class="material-symbols-outlined text-[16px]">description</span>
-                    <span>Export Tally XML</span>
-                </button>
-
-                <!-- Actions Overflow Menu -->
-                <div class="relative inline-block text-left">
-                    <button id="headerActionsMenuBtn" onclick="toggleHeaderActionsMenu()" class="btn btn-secondary text-xs px-2" aria-label="More Actions" title="Actions Menu">
-                        <span class="material-symbols-outlined text-[18px]">more_vert</span>
-                    </button>
-                    <div id="headerActionsDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-[#131318] border border-black/[0.08] dark:border-white/[0.08] rounded-[12px] shadow-lg py-1.5 z-50 space-y-0.5">
-                        <button id="btnOpenUploadModal" onclick="document.getElementById('uploadModal').classList.remove('hidden'); toggleHeaderActionsMenu(false);" class="w-full text-left px-3 py-2 text-xs hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
-                            <span class="material-symbols-outlined text-[16px] text-blue-600 dark:text-blue-400">upload_file</span>
-                            <span>Upload CSV</span>
-                        </button>
-                        <button id="btnOpenDisputeModal" onclick="openDisputeModal(); toggleHeaderActionsMenu(false);" class="w-full text-left px-3 py-2 text-xs hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
-                            <span class="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-400">gavel</span>
-                            <span>Dispute Room</span>
-                        </button>
-                        <button id="btnOpenWebhookModal" onclick="openWebhookModal(); toggleHeaderActionsMenu(false);" class="w-full text-left px-3 py-2 text-xs hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
-                            <span class="material-symbols-outlined text-[16px] text-emerald-600 dark:text-emerald-400">check_circle</span>
-                            <span>Webhook Status</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Theme Toggle -->
-                <button id="btnThemeToggle" onclick="toggleTheme()" aria-label="Toggle Theme" class="btn btn-ghost px-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+            <div class="flex items-center gap-1">
+                <button id="btnThemeToggle" onclick="toggleTheme()" aria-label="Toggle Theme" class="btn btn-ghost px-1.5 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
                     <span class="material-symbols-outlined text-[18px]" id="themeToggleIcon">light_mode</span>
                 </button>
-
-                <!-- User Profile -->
-                <div id="headerUserProfile" class="flex items-center gap-2 pl-2 border-l border-black/[0.08] dark:border-white/[0.08] shrink-0">
-                    <div class="w-7 h-7 rounded-full bg-[#0066FF] dark:bg-[#3B82F6] flex items-center justify-center shrink-0 text-white font-bold text-xs" id="headerUserAvatar">
-                        Z
-                    </div>
-                    <div class="hidden xl:flex flex-col text-left">
-                        <span class="text-xs font-medium text-zinc-900 dark:text-zinc-100 leading-none" id="headerUserName">D2C Merchant FinOps</span>
-                        <span class="text-[10px] font-mono text-zinc-400 leading-none mt-0.5" id="headerGstin">27AAACR1234F1Z5</span>
-                    </div>
-                    <button onclick="handleLogout()" title="Log Out" class="p-1 rounded text-zinc-400 hover:text-red-500 transition shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">logout</span>
-                    </button>
-                </div>
-
-                <!-- Mobile Menu Toggle Button -->
-                <button id="mobileMenuToggleBtn" onclick="toggleMobileNav()" class="md:hidden btn btn-ghost px-2" aria-label="Toggle Navigation">
-                    <span class="material-symbols-outlined text-[20px]">menu</span>
+                <button onclick="handleLogout()" title="Log Out" class="p-1 rounded text-zinc-400 hover:text-red-500 transition shrink-0">
+                    <span class="material-symbols-outlined text-[18px]">logout</span>
                 </button>
             </div>
         </div>
+    </div>
+</aside>
 
-        <!-- Clean Mobile Navigation Drawer -->
-        <div id="mobileNavDrawer" class="hidden md:hidden border-t border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#131318] px-4 py-3 space-y-1">
-            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-home'); toggleMobileNav();">Console</a>
-            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-recon'); toggleMobileNav();">Gateway Recon</a>
-            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-payroll'); toggleMobileNav();">Payroll</a>
-            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-vendors'); toggleMobileNav();">Vendors MSME</a>
-            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-cashflow'); toggleMobileNav();">Cash Compass</a>
-            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-ml'); toggleMobileNav();">ML Lab</a>
+<!-- MOBILE TOP HEADER (< 1024px) -->
+<header class="lg:hidden sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 dark:bg-[#0B0B0F]/80 border-b border-black/[0.08] dark:border-white/[0.08] select-none transition-colors">
+    <div class="h-14 px-4 flex items-center justify-between">
+        <a href="#" onclick="switchToTab('view-home')" class="flex items-center gap-2" title="AutoRecon AI Home">
+            <img alt="AutoRecon AI" class="h-8 w-auto object-contain" src="assets/brand-mark.svg"/>
+        </a>
+        <div class="flex items-center gap-2">
+            <button id="mobileMenuToggleBtn" onclick="toggleMobileNav()" class="btn btn-ghost px-2" aria-label="Toggle Navigation">
+                <span class="material-symbols-outlined text-[20px]">menu</span>
+            </button>
         </div>
-    </header>
+    </div>
+    <!-- Mobile Drawer -->
+    <div id="mobileNavDrawer" class="hidden border-t border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#131318] px-4 py-3 space-y-1">
+        <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-home'); toggleMobileNav();">Console</a>
+        <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-recon'); toggleMobileNav();">Gateway Recon</a>
+        <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-payroll'); toggleMobileNav();">Payroll</a>
+        <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-vendors'); toggleMobileNav();">Vendors MSME</a>
+        <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-cashflow'); toggleMobileNav();">Cash Compass</a>
+        <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-ml'); toggleMobileNav();">ML Lab</a>
+    </div>
+</header>
     <script>
         function toggleHeaderActionsMenu(force) {
             const menu = document.getElementById('headerActionsDropdown');
@@ -229,7 +264,7 @@
     <!-- =========================================================================
          MAIN APPLICATION SHELL & MODULE VIEWS
          ========================================================================= -->
-    <main class="w-full pt-14 bg-background min-h-screen flex flex-col">
+    <main class="w-full lg:pl-64 bg-background min-h-screen flex flex-col">
         <div class="flex flex-col w-full flex-1">
 
             <!-- Live Marquee Ticker Feed -->
