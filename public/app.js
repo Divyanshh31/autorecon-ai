@@ -37,7 +37,7 @@ function updateThemeIcon() {
     const icon = document.getElementById('themeToggleIcon');
     if (!icon) return;
     const isDark = document.documentElement.classList.contains('dark');
-    icon.className = isDark ? 'ph-bold ph-sun text-amber-400 text-base' : 'ph-bold ph-moon-stars text-base';
+    icon.className = isDark ? 'material-symbols-outlined text-amber-400 text-base' : 'material-symbols-outlined text-base'; icon.textContent = isDark ? 'light_mode' : 'dark_mode';
 }
 
 function initTheme() {
@@ -644,18 +644,22 @@ window.toggleFloatingChat = function() {
 // 6. CHART INITIALIZATIONS
 // =========================================================================
 function initCharts() {
+    const isDark = document.documentElement.classList.contains('dark');
+    const labelColor = isDark ? '#A1A1AA' : '#71717A';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
+
     const elRecon = document.getElementById('reconDonutChart');
     if (elRecon) {
         const ctxRecon = elRecon.getContext('2d');
         reconChart = new Chart(ctxRecon, {
             type: 'doughnut',
             data: {
-                labels: ['Credited in Bank (Safe)', 'MDR Overcharged by Razorpay', 'Delayed Payout (>2 Days)', 'Missing Bank Credit'],
+                labels: ['Credited in Bank', 'MDR Overcharge', 'Delayed Payout', 'Missing Bank Credit'],
                 datasets: [{
                     data: [32, 1, 1, 1],
-                    backgroundColor: ['#10B981', '#3395FF', '#F59E0B', '#EF4444'],
+                    backgroundColor: ['#10B981', '#0066FF', '#F59E0B', '#EF4444'],
                     borderWidth: 0,
-                    hoverOffset: 6
+                    hoverOffset: 4
                 }]
             },
             options: {
@@ -664,10 +668,10 @@ function initCharts() {
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#334155', font: { size: 11, family: 'Outfit', weight: '600' }, padding: 14 }
+                        labels: { color: labelColor, font: { size: 11, family: 'Inter', weight: '500' }, padding: 12 }
                     }
                 },
-                cutout: '70%'
+                cutout: '75%'
             }
         });
     }
@@ -682,8 +686,8 @@ function initCharts() {
                 datasets: [{
                     label: 'INR',
                     data: [3392.00, 3531.50, 635.67, 139.50],
-                    backgroundColor: ['#0066FF', '#0284C7', '#059669', '#D97706'],
-                    borderRadius: 8
+                    backgroundColor: ['#0066FF', '#3B82F6', '#10B981', '#F59E0B'],
+                    borderRadius: 6
                 }]
             },
             options: {
@@ -691,8 +695,8 @@ function initCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { ticks: { color: '#475569', font: { size: 10, family: 'Outfit', weight: '600' } }, grid: { display: false } },
-                    y: { ticks: { color: '#475569', font: { size: 10, family: 'JetBrains Mono', weight: '600' } }, grid: { color: 'rgba(226, 232, 240, 0.8)' } }
+                    x: { ticks: { color: labelColor, font: { size: 11, family: 'Inter', weight: '500' } }, grid: { display: false } },
+                    y: { ticks: { color: labelColor, font: { size: 11, family: 'JetBrains Mono', weight: '500' } }, grid: { color: gridColor } }
                 }
             }
         });
@@ -879,176 +883,49 @@ function renderOrdersTable(searchQuery = '') {
     }
 
     if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-slate-400">No transaction records found matching filter.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-zinc-400">No transaction records found matching filter.</td></tr>`;
         return;
     }
 
     tbody.innerHTML = filtered.map(order => {
         let statusBadge = '';
-        let rowClass = 'hover:bg-slate-50 transition cursor-pointer border-b border-slate-100';
-
         if (order.reconStatus === 'RECONCILED') {
-            statusBadge = '<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check"></i> Safe</span>';
+            statusBadge = '<span class="chip chip-success"><span class="material-symbols-outlined text-[14px]">check</span> Safe</span>';
         } else if (order.reconStatus === 'FEE_MISMATCH') {
-            statusBadge = '<span class="badge-pill badge-fee-mismatch"><i class="ph-bold ph-warning"></i> Fee Leak</span>';
-            rowClass += ' bg-amber-50/50';
+            statusBadge = '<span class="chip chip-warning"><span class="material-symbols-outlined text-[14px]">warning</span> Fee Leak</span>';
         } else if (order.reconStatus === 'DELAYED_SLA') {
-            statusBadge = '<span class="badge-pill badge-delayed"><i class="ph-bold ph-clock"></i> SLA Breach</span>';
-            rowClass += ' bg-red-50/50';
+            statusBadge = '<span class="chip chip-danger"><span class="material-symbols-outlined text-[14px]">schedule</span> SLA Breach</span>';
         } else if (order.reconStatus === 'MISSING_BANK_CREDIT') {
-            statusBadge = '<span class="badge-pill badge-delayed"><i class="ph-bold ph-x"></i> Missing UTR</span>';
-            rowClass += ' bg-red-50/70';
+            statusBadge = '<span class="chip chip-danger"><span class="material-symbols-outlined text-[14px]">close</span> Missing UTR</span>';
         } else {
-            statusBadge = `<span class="badge-pill badge-delayed">${order.reconStatus}</span>`;
+            statusBadge = `<span class="chip chip-neutral">${order.reconStatus}</span>`;
         }
 
         const expectedMdr = Number(order.amount * 0.02);
         const actualMdr = (order.reconStatus === 'FEE_MISMATCH') ? Number(order.amount * 0.035) : expectedMdr;
         const totalFeeTax = (actualMdr * 1.18).toFixed(2);
-        const utr = (order.reconStatus === 'DELAYED_SLA') ? '<span class="text-red-600 font-mono">Pending SLA</span>' : `<span class="text-emerald-700 font-mono">UTR_AXIS_${order.orderId.slice(-4)}</span>`;
+        const utr = (order.reconStatus === 'DELAYED_SLA') ? '<span class="text-red-500 font-mono">Pending SLA</span>' : `<span class="text-emerald-600 dark:text-emerald-400 font-mono">UTR_AXIS_${order.orderId.slice(-4)}</span>`;
 
         return `
-            <tr class="${rowClass}" onclick="openDiffDrawer('${order.orderId}')">
-                <td class="px-6 py-4.5">
-                    <div class="font-black text-slate-900 text-sm sm:text-base">${order.orderId}</div>
-                    <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">${order.customerName} &middot; <span class="capitalize text-blue-700 font-bold">${order.paymentMethod || 'UPI'}</span></div>
+            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors cursor-pointer" onclick="openDiffDrawer('${order.orderId}')">
+                <td class="py-3.5 px-4">
+                    <div class="font-medium text-zinc-900 dark:text-zinc-100">${order.orderId}</div>
+                    <div class="text-xs text-zinc-500 mt-0.5">${order.customerName} &middot; <span class="capitalize text-blue-600 dark:text-blue-400 font-mono">${order.paymentMethod || 'UPI'}</span></div>
                 </td>
-                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="px-5 py-4.5 font-mono text-slate-700 text-xs sm:text-sm font-semibold">pay_RZP_${order.orderId.slice(-4)}</td>
-                <td class="px-5 py-4.5 font-mono text-blue-700 font-black text-sm sm:text-base">₹${totalFeeTax}</td>
-                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm font-bold">${utr}</td>
-                <td class="px-5 py-4.5">${statusBadge}</td>
-                <td class="px-6 py-4.5 text-right">
-                    <button class="text-blue-700 hover:text-blue-900 font-extrabold text-xs sm:text-sm flex items-center space-x-1 ml-auto">
-                        <span>Inspect</span> <i class="ph-bold ph-caret-right"></i>
+                <td class="py-3.5 px-4 font-mono text-xs text-zinc-600 dark:text-zinc-400">pay_RZP_${order.orderId.slice(-4)}</td>
+                <td class="py-3.5 px-4 font-mono font-medium text-zinc-900 dark:text-zinc-100 text-right">₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-blue-600 dark:text-blue-400 font-medium text-right">₹${totalFeeTax}</td>
+                <td class="py-3.5 px-4 font-mono text-xs">${utr}</td>
+                <td class="py-3.5 px-4">${statusBadge}</td>
+                <td class="py-3.5 px-4 text-right">
+                    <button class="btn btn-ghost text-xs px-2 text-blue-600 dark:text-blue-400">
+                        <span>Inspect</span>
+                        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
                     </button>
                 </td>
             </tr>
         `;
     }).join('');
-}
-
-// =========================================================================
-// 8. MODULE 2: PAYROLL & EMPLOYEE SALARY DELAYS
-// =========================================================================
-async function fetchPayroll() {
-    try {
-        const [sumRes, empRes] = await Promise.all([
-            fetch('/api/payroll/summary', { headers: getAuthHeaders() }),
-            fetch('/api/payroll/employees', { headers: getAuthHeaders() })
-        ]);
-
-        if (sumRes && sumRes.ok) {
-            const sumData = await sumRes.json();
-            updatePayrollDashboard(sumData);
-        }
-
-        if (empRes && empRes.ok) {
-            const empData = await empRes.json();
-            if (Array.isArray(empData) && empData.length > 0) {
-                currentPayroll = empData;
-            }
-        }
-    } catch (e) {
-        console.error('Error fetching payroll:', e);
-    }
-    if (!currentPayroll || currentPayroll.length === 0) {
-        currentPayroll = defaultPayrollDataset;
-    }
-    renderPayrollTable();
-    renderCashFlowTable();
-}
-
-function updatePayrollDashboard(summary) {
-    if (!summary) return;
-    const setTxt = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = val;
-    };
-
-    setTxt('statGrossPayroll', `₹${(summary.totalGrossPayroll || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
-    setTxt('statTdsWithheld', `₹${(summary.totalTdsWithheld || 0).toLocaleString('en-IN')}`);
-    setTxt('statPfWithheld', `₹${(summary.totalPfWithheld || 0).toLocaleString('en-IN')}`);
-    setTxt('statTotalDisbursed', `₹${(summary.totalDisbursed || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
-    setTxt('statDisbursedEmpCount', `${summary.disbursedCount} of ${summary.totalEmployees} Transferred`);
-    setTxt('statDelayedSalaryAmount', `₹${(summary.totalDelayedAmount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`);
-    setTxt('statDelayedEmpCount', `${summary.delayedCount} employees overdue`);
-    setTxt('statPendingSalaryAmount', `₹${(summary.totalPendingAmount || 0).toLocaleString('en-IN')}`);
-    setTxt('statEmpCount', `${summary.totalEmployees} Employees Listed`);
-}
-
-function renderPayrollTable() {
-    const tbody = document.getElementById('payrollTableBody');
-    if (!tbody) return;
-
-    if (currentPayroll.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-slate-400">No payroll records found.</td></tr>`;
-        return;
-    }
-
-    tbody.innerHTML = currentPayroll.map(emp => {
-        let statusBadge = '';
-        let actionBtn = '';
-
-        if (emp.status === 'DISBURSED') {
-            statusBadge = `<span class="badge-pill badge-reconciled font-bold"><i class="ph-bold ph-check-circle"></i> Transferred (1st Aug)</span>`;
-            actionBtn = `<span class="text-emerald-800 font-mono text-xs sm:text-sm font-extrabold">${emp.bankUtr}</span>`;
-        } else if (emp.status === 'DELAYED') {
-            statusBadge = `<span class="badge-pill badge-delayed font-bold"><i class="ph-bold ph-warning"></i> Delayed (${emp.delayDays}d Breach)</span>`;
-            actionBtn = `
-                <div class="flex items-center justify-end space-x-2">
-                    <button onclick="disburseSalary('${emp.empId}')" class="rzp-btn-primary px-3.5 py-1.5 text-xs sm:text-sm font-extrabold shadow-sm">
-                        Disburse
-                    </button>
-                    <button onclick="openSalaryNoticeModal()" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-800 border border-red-300 rounded-xl font-bold text-xs sm:text-sm">
-                        Notice
-                    </button>
-                </div>
-            `;
-        } else {
-            statusBadge = `<span class="badge-pill badge-fee-mismatch font-bold"><i class="ph-bold ph-hourglass"></i> Pending Clearance</span>`;
-            actionBtn = `
-                <button onclick="disburseSalary('${emp.empId}')" class="px-3.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-300 rounded-xl font-extrabold text-xs sm:text-sm">
-                    Verify & Pay
-                </button>
-            `;
-        }
-
-        return `
-            <tr class="hover:bg-slate-50 transition border-b border-slate-200 ${emp.status === 'DELAYED' ? 'bg-red-50/50' : ''}">
-                <td class="px-6 py-4.5">
-                    <div class="font-black text-slate-900 text-sm sm:text-base">${emp.name}</div>
-                    <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">${emp.role} &middot; <span class="font-mono text-blue-700 font-bold">${emp.empId}</span></div>
-                </td>
-                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${Number(emp.grossSalary).toLocaleString('en-IN')}</td>
-                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm text-blue-800 font-bold">
-                    TDS: ₹${Number(emp.tdsDeduction).toLocaleString('en-IN')} | PF: ₹${Number(emp.pfDeduction).toLocaleString('en-IN')}
-                </td>
-                <td class="px-5 py-4.5 font-mono font-black text-emerald-800 text-sm sm:text-base">₹${Number(emp.netPayable).toLocaleString('en-IN')}</td>
-                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm font-semibold">${actionBtn.includes('UTR') ? actionBtn : `<span class="text-slate-500 font-mono">Pending</span>`}</td>
-                <td class="px-5 py-4.5">${statusBadge}</td>
-                <td class="px-6 py-4.5 text-right">${actionBtn.includes('UTR') ? '<span class="text-emerald-700 font-extrabold text-xs sm:text-sm">● Settled</span>' : actionBtn}</td>
-            </tr>
-        `;
-    }).join('');
-}
-
-window.disburseSalary = async function(empId) {
-    try {
-        const res = await fetch('/api/payroll/disburse', {
-            method: 'POST',
-            headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
-            body: JSON.stringify({ empId })
-        });
-        if (res.ok) {
-            const data = await res.json();
-            alert(data.message);
-            fetchPayroll();
-            fetchCashFlow();
-        }
-    } catch (e) {
-        console.error('Error disbursing salary:', e);
-    }
 };
 
 window.openDisburseAllModal = async function() {
@@ -1140,17 +1017,17 @@ function renderVendorsTable() {
         let actionBtn = '';
 
         if (v.paymentStatus === 'PAID') {
-            agingBadge = `<span class="badge-pill badge-reconciled"><i class="ph-bold ph-check"></i> Paid (UTR Matched)</span>`;
+            agingBadge = `<span class="badge-pill badge-reconciled"><span class="material-symbols-outlined text-[14px]">check</span> Paid (UTR Matched)</span>`;
             actionBtn = `<span class="text-emerald-700 font-mono text-[11px] font-bold">${v.bankUtr}</span>`;
         } else if (v.paymentStatus === 'CRITICAL_MSME' || v.msmeDaysRemaining <= 2) {
-            agingBadge = `<span class="badge-pill bg-red-50 text-red-700 border border-red-200"><i class="ph-bold ph-warning"></i> 2 Days Left (Sec 43B-h)</span>`;
+            agingBadge = `<span class="badge-pill bg-red-50 text-red-700 border border-red-200"><span class="material-symbols-outlined text-[14px]">warning</span> 2 Days Left (Sec 43B-h)</span>`;
             actionBtn = `
                 <button onclick="payVendorBill('${v.billId}')" class="rzp-btn-primary px-3 py-1 text-[11px] font-bold shadow-sm">
                     Clear Bill ➔
                 </button>
             `;
         } else if (v.msmeDaysRemaining <= 10) {
-            agingBadge = `<span class="badge-pill bg-amber-50 text-amber-800 border border-amber-200"><i class="ph-bold ph-clock"></i> ${v.msmeDaysRemaining} Days (MSME)</span>`;
+            agingBadge = `<span class="badge-pill bg-amber-50 text-amber-800 border border-amber-200"><span class="material-symbols-outlined text-[14px]">schedule</span> ${v.msmeDaysRemaining} Days (MSME)</span>`;
             actionBtn = `
                 <button onclick="payVendorBill('${v.billId}')" class="rzp-btn-primary px-3 py-1 text-[11px] font-bold shadow-sm">
                     Pay Now
@@ -1685,7 +1562,7 @@ async function handleCsvUpload(e) {
     const originalBtnHtml = submitBtn ? submitBtn.innerHTML : 'Upload';
     if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i> Analyzing Columns & Auditing...`;
+        submitBtn.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">progress_activity</span> Analyzing Columns & Auditing...`;
     }
 
     const reader = new FileReader();
@@ -2149,7 +2026,7 @@ function renderMlAnomalyTable(scoredOrders) {
                 </td>
                 <td class="px-5 py-3.5 text-right">
                     <button onclick="openMlExplainModal('${o.orderId}')" class="px-3 py-1.5 rounded-lg ${o.isAnomaly ? 'bg-purple-600 hover:bg-purple-700 text-white font-extrabold' : 'glass-btn text-slate-700 dark:text-slate-300 font-bold'} text-xs inline-flex items-center space-x-1 shadow-xs transition active:scale-95">
-                        <i class="ph-bold ph-brain"></i>
+                        <span class="material-symbols-outlined text-[16px]">psychology</span>
                         <span>Explain in Plain English</span>
                     </button>
                 </td>
@@ -2313,7 +2190,7 @@ window.dispatchLiveWebhookTest = async function() {
     } finally {
         if (btn) {
             btn.disabled = false;
-            btn.innerHTML = `<i class="ph-bold ph-paper-plane-tilt"></i><span>Dispatch Live Webhook Event</span>`;
+            btn.innerHTML = `<span class="material-symbols-outlined text-[16px]">send</span><span>Dispatch Live Webhook Event</span>`;
         }
     }
 };
@@ -2614,9 +2491,9 @@ window.copyTallyXml = async function() {
     } catch(e) {
         alert('Failed to copy XML: ' + e.message);
     } finally {
-        if (btn) btn.innerHTML = `<i class="ph-bold ph-check text-emerald-500"></i><span>XML Copied!</span>`;
+        if (btn) btn.innerHTML = `<span class="material-symbols-outlined text-[16px] text-emerald-500">check</span><span>XML Copied!</span>`;
         setTimeout(() => {
-            if (btn) btn.innerHTML = `<i class="ph-bold ph-copy"></i><span>Copy XML Code</span>`;
+            if (btn) btn.innerHTML = `<span class="material-symbols-outlined text-[16px]">content_copy</span><span>Copy XML Code</span>`;
         }, 2000);
     }
 };

@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoRecon AI : Institutional Settlement Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..400,0..1,-50..200" />
     <!-- Auth Gate & Instant Theme Initializer (Prevents FOUC) -->
     <script>
         (function() {
@@ -22,9 +26,6 @@
         })();
     </script>
     <!-- Google Material Symbols Outlined & Stitch Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
     <!-- Tailwind CSS CDN with class-based Dark Mode & Stitch Design Tokens -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script id="tailwind-config">
@@ -33,92 +34,30 @@
             theme: {
                 extend: {
                     colors: {
-                        "tertiary-container": "#cc4204",
-                        "secondary-container": "#dae2fd",
-                        "surface-bright": "#f8f9ff",
-                        "on-background": "#0b1c30",
-                        "surface-variant": "#d3e4fe",
-                        "on-error": "#ffffff",
-                        "on-tertiary": "#ffffff",
-                        "tertiary": "#a33200",
-                        "on-primary": "#ffffff",
-                        "surface-container": "#e5eeff",
-                        "on-tertiary-fixed": "#390c00",
-                        "tertiary-fixed-dim": "#ffb59d",
-                        "primary-container": "#0066ff",
-                        "inverse-on-surface": "#eaf1ff",
-                        "primary": "#0050cb",
-                        "surface-dim": "#cbdbf5",
-                        "secondary": "#565e74",
-                        "outline-variant": "#c2c6d8",
-                        "on-secondary-container": "#5c647a",
-                        "secondary-fixed": "#dae2fd",
-                        "surface": "#f8f9ff",
-                        "error-container": "#ffdad6",
-                        "surface-container-low": "#eff4ff",
-                        "on-surface-variant": "#424656",
-                        "on-secondary": "#ffffff",
-                        "on-tertiary-container": "#fff6f4",
-                        "secondary-fixed-dim": "#bec6e0",
-                        "on-secondary-fixed": "#131b2e",
-                        "primary-fixed": "#dae1ff",
-                        "error": "#ba1a1a",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-container-high": "#dce9ff",
-                        "tertiary-fixed": "#ffdbd0",
-                        "on-tertiary-fixed-variant": "#832600",
-                        "on-primary-fixed-variant": "#003fa4",
-                        "inverse-primary": "#b3c5ff",
-                        "surface-container-highest": "#d3e4fe",
-                        "primary-fixed-dim": "#b3c5ff",
-                        "outline": "#727687",
-                        "on-error-container": "#93000a",
-                        "background": "#f8f9ff",
-                        "on-primary-fixed": "#001849",
-                        "on-secondary-fixed-variant": "#3f465c",
-                        "inverse-surface": "#213145",
-                        "on-primary-container": "#f8f7ff",
-                        "on-surface": "#0b1c30",
-                        "surface-tint": "#0054d6"
+                        background: "var(--rzp-bg)",
+                        surface: "var(--rzp-surface-card)",
+                        "surface-subtle": "var(--rzp-bg-secondary)",
+                        "surface-container-lowest": "var(--rzp-surface-card)",
+                        "surface-container-low": "var(--rzp-bg-secondary)",
+                        "surface-container": "var(--rzp-bg-secondary)",
+                        "surface-container-high": "var(--rzp-row-hover)",
+                        "on-surface": "var(--rzp-text-main)",
+                        "on-surface-variant": "var(--rzp-text-muted)",
+                        primary: "var(--rzp-blue)",
+                        "primary-hover": "var(--rzp-blue-hover)",
+                        "primary-container": "var(--rzp-blue-soft)",
+                        "on-primary": "#FFFFFF",
+                        "outline-variant": "var(--rzp-border)",
+                        outline: "var(--rzp-border-hover)",
                     },
                     borderRadius: {
-                        DEFAULT: "0.125rem",
-                        lg: "0.25rem",
-                        xl: "0.5rem",
-                        full: "0.75rem"
-                    },
-                    spacing: {
-                        "grid-margin": "1.5rem",
-                        "grid-gutter": "1rem",
-                        "table-cell-y": "0.5rem",
-                        "section-gap": "1.5rem",
-                        "panel-padding": "1rem",
-                        "compact-row": "0.375rem",
-                        "table-cell-x": "0.75rem"
+                        card: "12px",
+                        btn: "8px",
+                        pill: "9999px"
                     },
                     fontFamily: {
-                        "mono-kpi": ["JetBrains Mono", "monospace"],
-                        "headline-xl": ["Outfit", "sans-serif"],
-                        "headline-sm": ["Outfit", "sans-serif"],
-                        "headline-md": ["Outfit", "sans-serif"],
-                        "mono-sm": ["JetBrains Mono", "monospace"],
-                        "body-lg": ["Inter", "sans-serif"],
-                        "mono-data": ["JetBrains Mono", "monospace"],
-                        "body-sm": ["Inter", "sans-serif"],
-                        "body-md": ["Inter", "sans-serif"],
-                        "headline-lg": ["Outfit", "sans-serif"]
-                    },
-                    fontSize: {
-                        "mono-kpi": ["22px", { lineHeight: "26px", letterSpacing: "-0.02em", fontWeight: "700" }],
-                        "headline-xl": ["32px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "800" }],
-                        "headline-sm": ["15px", { lineHeight: "20px", fontWeight: "600" }],
-                        "headline-md": ["18px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "700" }],
-                        "mono-sm": ["10px", { lineHeight: "13px", fontWeight: "400" }],
-                        "body-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
-                        "mono-data": ["12px", { lineHeight: "16px", fontWeight: "500" }],
-                        "body-sm": ["11px", { lineHeight: "15px", fontWeight: "400" }],
-                        "body-md": ["13px", { lineHeight: "18px", fontWeight: "400" }],
-                        "headline-lg": ["24px", { lineHeight: "30px", letterSpacing: "-0.015em", fontWeight: "700" }]
+                        sans: ["Inter", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
                     }
                 }
             }
@@ -127,8 +66,7 @@
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="stylesheet" href="style.css?v=20260904_4.0">
+    <link rel="stylesheet" href="style.css?v=20260924_5.0">
 </head>
 <body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary selection:text-on-primary min-h-screen flex flex-col">
 
@@ -167,81 +105,126 @@
     <!-- =========================================================================
          TOP LUXURY STITCH NAVIGATION BAR (RESPONSIVE & NON-CLIPPING)
          ========================================================================= -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant max-w-full overflow-hidden select-none">
-        <div class="h-14 w-full px-2 sm:px-4 xl:px-grid-margin flex items-center justify-between gap-2 xl:gap-grid-gutter max-w-full">
+    <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 dark:bg-[#0B0B0F]/80 border-b border-black/[0.08] dark:border-white/[0.08] select-none transition-colors">
+        <div class="max-w-7xl mx-auto h-14 px-4 flex items-center justify-between gap-4">
             
-            <!-- 1. Left Brand Logo & 2. Live Recon Status Badge -->
-            <div class="flex items-center gap-2 xl:gap-3 shrink-0">
+            <!-- Left Brand & Live Indicator -->
+            <div class="flex items-center gap-3 shrink-0">
                 <a href="#" onclick="switchToTab('view-home')" class="flex items-center gap-2 shrink-0" title="AutoRecon AI Home">
-                    <img alt="AutoRecon AI" class="h-8 xl:h-9 w-auto object-contain shrink-0" src="assets/brand-mark.svg" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/aida/AEtjO1Wo0YO1-_SRDWIjvp4DhyPKV_q6Q3k_HSGCyTYeZnRI00m7e7mv-e2_o055l9CnZyh3pV3_pHru4at_xhWguLARIpqydJ2lhppDDo23j5MPBaz9Jzdz7kzNl8BqMzdS6YjOEtE5gIclEmNJGwQx9nPBYXRYI6T4bMuvSC4Eo3jrjLDGO5IScn7AKUImBmVgN312BxI7SY7lEZOMv5lk1BACWNCzZ2OjBymPK9Cn6ujeFPilPVhqTRH2QAQ';"/>
+                    <img alt="AutoRecon AI" class="h-8 w-auto object-contain shrink-0" src="assets/brand-mark.svg" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/aida/AEtjO1Wo0YO1-_SRDWIjvp4DhyPKV_q6Q3k_HSGCyTYeZnRI00m7e7mv-e2_o055l9CnZyh3pV3_pHru4at_xhWguLARIpqydJ2lhppDDo23j5MPBaz9Jzdz7kzNl8BqMzdS6YjOEtE5gIclEmNJGwQx9nPBYXRYI6T4bMuvSC4Eo3jrjLDGO5IScn7AKUImBmVgN312BxI7SY7lEZOMv5lk1BACWNCzZ2OjBymPK9Cn6ujeFPilPVhqTRH2QAQ';"/>
                 </a>
-                <div class="hidden sm:flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface-variant whitespace-nowrap shrink-0">
+                <div title="Live Recon Feed: Synced 4s ago" class="hidden sm:flex items-center gap-1.5 cursor-help px-2 py-1 rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors">
                     <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-md bg-primary opacity-75"></span>
-                        <span class="relative inline-flex rounded-md h-2 w-2 bg-primary"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
-                    <span class="hidden lg:inline">LIVE RECON FEED • SYNCED 4s AGO</span>
-                    <span class="inline lg:hidden">LIVE</span>
+                    <span class="text-xs font-mono text-zinc-500 dark:text-zinc-400">Live</span>
                 </div>
             </div>
-            
-            <!-- Center Responsive Navigation Links (Scrollable if viewport is compact, no line wraps) -->
-            <nav class="hidden md:flex items-center h-full gap-2 xl:gap-3.5 2xl:gap-5 overflow-x-auto no-scrollbar scrollbar-none flex-1 min-w-0 px-1 xl:px-2">
-                <!-- 3. Operating Console -->
-                <a class="h-full flex items-center px-1 transition-colors whitespace-nowrap text-primary border-b-2 border-primary font-body-lg cursor-pointer shrink-0 text-xs xl:text-sm active font-semibold" onclick="switchToTab('view-home')">Operating Console</a>
-                <!-- 4. Gateway Recon -->
-                <a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap cursor-pointer shrink-0 text-xs xl:text-sm font-medium" onclick="switchToTab('view-recon')">Gateway Recon (3-Way Check)</a>
-                <!-- 5. Payroll & Salaries -->
-                <a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap cursor-pointer shrink-0 text-xs xl:text-sm font-medium" onclick="switchToTab('view-payroll')">Payroll &amp; Salaries (IMPS / TDS 192)</a>
-                <!-- 6. MSME 43B(h) -->
-                <a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap cursor-pointer shrink-0 text-xs xl:text-sm font-medium" onclick="switchToTab('view-vendors')">MSME 43B(h) (45-Day Aging)</a>
-                <!-- 7. Cash Compass -->
-                <a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap cursor-pointer shrink-0 text-xs xl:text-sm font-medium" onclick="switchToTab('view-cashflow')">Cash Compass (30-Day Forecast)</a>
-                <!-- 8. ML Intelligence Lab (RESTORED & VISIBLE) -->
-                <a class="h-full flex items-center px-1 font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap cursor-pointer shrink-0 text-xs xl:text-sm font-medium" onclick="switchToTab('view-ml')">ML Intelligence Lab</a>
+
+            <!-- Desktop Navigation Links (5-6 items, clean) -->
+            <nav class="hidden md:flex items-center h-full gap-1 overflow-x-auto no-scrollbar">
+                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-900 dark:text-zinc-100 border-b-2 border-[#0066FF] dark:border-[#3B82F6] cursor-pointer shrink-0 transition-colors nav-tab-btn active" onclick="switchToTab('view-home')">Console</a>
+                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-recon')">Gateway Recon</a>
+                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-payroll')">Payroll</a>
+                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-vendors')">Vendors MSME</a>
+                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-cashflow')">Cash Compass</a>
+                <a class="h-full flex items-center px-3 text-xs xl:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 cursor-pointer shrink-0 transition-colors nav-tab-btn" onclick="switchToTab('view-ml')">ML Lab</a>
             </nav>
 
-            <!-- Right Controls, Tally Export, Upload, Disputes & Profile (Always pinned shrink-0) -->
-            <div class="flex items-center gap-1.5 xl:gap-2.5 shrink-0">
-                <div class="hidden 2xl:flex items-center bg-surface border border-outline-variant rounded-DEFAULT px-2 py-1 gap-1.5 w-40">
-                    <span class="material-symbols-outlined text-[16px] text-on-surface-variant">search</span>
-                    <input type="text" id="globalSearchInput" class="bg-transparent border-none outline-none font-mono-data text-mono-data text-on-surface placeholder:text-on-surface-variant w-full" placeholder="Search..." />
+            <!-- Right Controls & Actions -->
+            <div class="flex items-center gap-2 shrink-0">
+                <!-- Search / Command Button -->
+                <div class="hidden lg:flex items-center bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] rounded-[8px] px-2.5 py-1 gap-2 w-36 lg:w-44 focus-within:border-[#0066FF] transition-all">
+                    <span class="material-symbols-outlined text-[16px] text-zinc-400">search</span>
+                    <input type="text" id="globalSearchInput" class="bg-transparent border-none outline-none font-mono text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 w-full" placeholder="Search..." />
                 </div>
-                <button id="btnOpenUploadModal" onclick="document.getElementById('uploadModal').classList.remove('hidden')" class="hidden sm:flex items-center gap-1 px-2.5 py-1.5 bg-surface-container-low border border-outline-variant text-on-surface rounded-DEFAULT font-body-md text-body-md hover:bg-surface-container transition-colors shadow-none text-xs xl:text-sm whitespace-nowrap">
-                    <span class="material-symbols-outlined text-[16px] text-primary">upload_file</span>
-                    <span>Upload CSV</span>
-                </button>
-                <button id="btnOpenDisputeModal" onclick="openDisputeModal()" class="hidden md:flex items-center gap-1 px-2.5 py-1.5 bg-tertiary-fixed border border-outline-variant text-on-tertiary-fixed-variant rounded-DEFAULT font-body-md text-body-md hover:bg-tertiary-fixed-dim transition-colors shadow-none text-xs xl:text-sm whitespace-nowrap font-semibold">
-                    <span class="material-symbols-outlined text-[16px] text-tertiary">gavel</span>
-                    <span>Dispute Room</span>
-                </button>
-                <button id="btnOpenTallyModal" onclick="openTallyModal()" class="flex items-center gap-1 px-2.5 py-1.5 bg-primary text-on-primary rounded-DEFAULT font-body-md text-body-md hover:bg-primary-container transition-colors shadow-none text-xs xl:text-sm whitespace-nowrap">
+
+                <!-- Single Primary Action: Export Tally XML -->
+                <button id="btnOpenTallyModal" onclick="openTallyModal()" class="btn btn-primary text-xs">
                     <span class="material-symbols-outlined text-[16px]">description</span>
-                    <span class="hidden sm:inline">Export Tally XML</span>
-                    <span class="inline sm:hidden">Tally</span>
+                    <span>Export Tally XML</span>
                 </button>
-                <button id="btnOpenWebhookModal" onclick="openWebhookModal()" class="hidden sm:flex items-center gap-1 px-2.5 py-1.5 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-mono-sm text-mono-sm text-on-surface whitespace-nowrap hover:bg-surface-container transition-colors text-xs xl:text-sm">
-                    <span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
-                    <span>Webhook 200 OK</span>
-                </button>
-                <button id="btnThemeToggle" onclick="toggleTheme()" aria-label="Toggle Theme" class="h-8 w-8 flex items-center justify-center rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface shrink-0">
+
+                <!-- Actions Overflow Menu -->
+                <div class="relative inline-block text-left">
+                    <button id="headerActionsMenuBtn" onclick="toggleHeaderActionsMenu()" class="btn btn-secondary text-xs px-2" aria-label="More Actions" title="Actions Menu">
+                        <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                    </button>
+                    <div id="headerActionsDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-[#131318] border border-black/[0.08] dark:border-white/[0.08] rounded-[12px] shadow-lg py-1.5 z-50 space-y-0.5">
+                        <button id="btnOpenUploadModal" onclick="document.getElementById('uploadModal').classList.remove('hidden'); toggleHeaderActionsMenu(false);" class="w-full text-left px-3 py-2 text-xs hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
+                            <span class="material-symbols-outlined text-[16px] text-blue-600 dark:text-blue-400">upload_file</span>
+                            <span>Upload CSV</span>
+                        </button>
+                        <button id="btnOpenDisputeModal" onclick="openDisputeModal(); toggleHeaderActionsMenu(false);" class="w-full text-left px-3 py-2 text-xs hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
+                            <span class="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-400">gavel</span>
+                            <span>Dispute Room</span>
+                        </button>
+                        <button id="btnOpenWebhookModal" onclick="openWebhookModal(); toggleHeaderActionsMenu(false);" class="w-full text-left px-3 py-2 text-xs hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
+                            <span class="material-symbols-outlined text-[16px] text-emerald-600 dark:text-emerald-400">check_circle</span>
+                            <span>Webhook Status</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button id="btnThemeToggle" onclick="toggleTheme()" aria-label="Toggle Theme" class="btn btn-ghost px-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
                     <span class="material-symbols-outlined text-[18px]" id="themeToggleIcon">light_mode</span>
                 </button>
-                <div id="headerUserProfile" class="flex items-center gap-1.5 xl:gap-2 pl-2 border-l border-outline-variant shrink-0">
-                    <div class="w-8 h-8 rounded-md bg-primary flex items-center justify-center shrink-0 text-on-primary font-bold text-xs" id="headerUserAvatar">
+
+                <!-- User Profile -->
+                <div id="headerUserProfile" class="flex items-center gap-2 pl-2 border-l border-black/[0.08] dark:border-white/[0.08] shrink-0">
+                    <div class="w-7 h-7 rounded-full bg-[#0066FF] dark:bg-[#3B82F6] flex items-center justify-center shrink-0 text-white font-bold text-xs" id="headerUserAvatar">
                         Z
                     </div>
-                    <div class="hidden min-[1750px]:flex flex-col text-left">
-                        <span class="font-body-md text-body-md text-on-surface leading-none font-semibold" id="headerUserName">D2C Merchant FinOps</span>
-                        <span class="font-mono-sm text-mono-sm text-on-surface-variant leading-none mt-0.5" id="headerGstin">GSTIN: 27AAACR1234F1Z5</span>
+                    <div class="hidden xl:flex flex-col text-left">
+                        <span class="text-xs font-medium text-zinc-900 dark:text-zinc-100 leading-none" id="headerUserName">D2C Merchant FinOps</span>
+                        <span class="text-[10px] font-mono text-zinc-400 leading-none mt-0.5" id="headerGstin">27AAACR1234F1Z5</span>
                     </div>
-                    <button onclick="handleLogout()" title="Log Out" class="p-1 rounded text-on-surface-variant hover:text-error transition text-xs shrink-0">
+                    <button onclick="handleLogout()" title="Log Out" class="p-1 rounded text-zinc-400 hover:text-red-500 transition shrink-0">
                         <span class="material-symbols-outlined text-[18px]">logout</span>
                     </button>
                 </div>
+
+                <!-- Mobile Menu Toggle Button -->
+                <button id="mobileMenuToggleBtn" onclick="toggleMobileNav()" class="md:hidden btn btn-ghost px-2" aria-label="Toggle Navigation">
+                    <span class="material-symbols-outlined text-[20px]">menu</span>
+                </button>
             </div>
         </div>
+
+        <!-- Clean Mobile Navigation Drawer -->
+        <div id="mobileNavDrawer" class="hidden md:hidden border-t border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#131318] px-4 py-3 space-y-1">
+            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-home'); toggleMobileNav();">Console</a>
+            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-recon'); toggleMobileNav();">Gateway Recon</a>
+            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-payroll'); toggleMobileNav();">Payroll</a>
+            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-vendors'); toggleMobileNav();">Vendors MSME</a>
+            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-cashflow'); toggleMobileNav();">Cash Compass</a>
+            <a class="block px-3 py-2 text-xs font-medium rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer" onclick="switchToTab('view-ml'); toggleMobileNav();">ML Lab</a>
+        </div>
     </header>
+    <script>
+        function toggleHeaderActionsMenu(force) {
+            const menu = document.getElementById('headerActionsDropdown');
+            if (!menu) return;
+            if (typeof force === 'boolean') {
+                menu.classList.toggle('hidden', !force);
+            } else {
+                menu.classList.toggle('hidden');
+            }
+        }
+        function toggleMobileNav() {
+            const drawer = document.getElementById('mobileNavDrawer');
+            if (drawer) drawer.classList.toggle('hidden');
+        }
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('headerActionsDropdown');
+            const menuBtn = document.getElementById('headerActionsMenuBtn');
+            if (menu && menuBtn && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
 
     <!-- =========================================================================
          MAIN APPLICATION SHELL & MODULE VIEWS
@@ -250,439 +233,395 @@
         <div class="flex flex-col w-full flex-1">
 
             <!-- Live Marquee Ticker Feed -->
-            <div class="w-full bg-surface-container-high py-2.5 overflow-hidden shadow-inner select-none">
-                <div class="inline-flex whitespace-nowrap gap-8 animate-marquee font-mono-data text-mono-data text-on-surface">
-                    <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-md bg-primary"></span>
-                        <strong class="text-primary font-bold">SETTLED:</strong> INR 48,250.00 <span class="text-on-surface-variant">• UTR: CMS293847291 • ICICI CORP • 12s ago</span>
-                    </span>
-                    <span class="text-outline-variant">•</span>
-                    <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-md bg-primary"></span>
-                        <strong class="text-on-surface font-bold">MATCHED:</strong> ORD_92834 <span class="text-on-surface-variant">• RAZORPAY ID: pay_Nq83k48 • NET: INR 12,490.00</span>
-                    </span>
-                    <span class="text-outline-variant">•</span>
-                    <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-md bg-error"></span>
-                        <strong class="text-error font-bold">DISCREPANCY DETECTED:</strong> ORD_88201 <span class="text-on-surface-variant">• MDR Overcharge +0.45% (INR 142.20) • FLAGGED FOR RECLAIM</span>
-                    </span>
-                    <span class="text-outline-variant">•</span>
-                    <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-md bg-tertiary"></span>
-                        <strong class="text-tertiary font-bold">MSME ALERT:</strong> Inv #INV-2024-889 <span class="text-on-surface-variant">• Vendor: PrintPack Solutions • 4 days to 43B(h) deadline</span>
-                    </span>
-                    <span class="text-outline-variant">•</span>
-                    <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-md bg-primary"></span>
-                        <strong class="text-primary font-bold">SETTLED:</strong> INR 1,14,090.00 <span class="text-on-surface-variant">• UTR: HDFC88301938 • HDFC VIRTUAL • 1m ago</span>
-                    </span>
-                    <!-- Duplicate for seamless scroll -->
-                    <span class="text-outline-variant">•</span>
-                    <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-md bg-primary"></span>
-                        <strong class="text-primary font-bold">SETTLED:</strong> INR 48,250.00 <span class="text-on-surface-variant">• UTR: CMS293847291 • ICICI CORP • 12s ago</span>
-                    </span>
-                    <span class="text-outline-variant">•</span>
-                    <span class="inline-flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-md bg-primary"></span>
-                        <strong class="text-on-surface font-bold">MATCHED:</strong> ORD_92834 <span class="text-on-surface-variant">• RAZORPAY ID: pay_Nq83k48 • NET: INR 12,490.00</span>
-                    </span>
-                </div>
+            <div class="w-full border-b border-black/[0.08] dark:border-white/[0.08] bg-white/60 dark:bg-[#131318]/60 py-2.5 px-4 select-none">
+        <div class="max-w-7xl mx-auto flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400 font-mono">
+            <div class="flex items-center gap-3 overflow-x-auto no-scrollbar">
+                <span class="inline-flex items-center gap-1.5 font-medium text-zinc-900 dark:text-zinc-100 shrink-0">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                    <span>Recent activity</span>
+                </span>
+                <span class="text-zinc-300 dark:text-zinc-700">•</span>
+                <span class="shrink-0">Settled: INR 48,250.00 (UTR: CMS293847291)</span>
+                <span class="text-zinc-300 dark:text-zinc-700">•</span>
+                <span class="shrink-0">Matched: ORD_92834</span>
+                <span class="text-zinc-300 dark:text-zinc-700">•</span>
+                <span class="shrink-0 text-amber-600 dark:text-amber-400">Discrepancy: ORD_88201 (+0.45% MDR)</span>
             </div>
+            <span class="hidden sm:inline-block text-[11px] text-zinc-400 shrink-0">Synced 4s ago</span>
+        </div>
+    </div>
 
             <!-- =========================================================================
                  MODULE VIEW 1: HOME / OPERATING CONSOLE (Default View)
                  ========================================================================= -->
             <div id="view-home" class="module-view flex-1">
-                <!-- 50/50 Split Hero Section -->
-                <section class="w-full px-grid-margin py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-                    <!-- Left Hero: Enterprise Audit Messaging -->
-                    <div class="lg:col-span-6 flex flex-col justify-between p-8 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xs relative overflow-hidden">
-                        <div class="absolute -right-16 -top-16 w-64 h-64 bg-primary/5 rounded-md blur-3xl pointer-events-none"></div>
-                        <div>
-                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-primary-container text-on-primary-container font-mono-sm text-mono-sm font-bold mb-4">
-                                <span class="material-symbols-outlined text-[14px]">verified_user</span>
-                                <span>AUTONOMOUS FINOPS &amp; RECON ENGINE</span>
+                <!-- Max-Width Centered Container -->
+                <div class="max-w-7xl mx-auto w-full px-4 py-6 space-y-6">
+
+                    <!-- Clean 50/50 Split Hero Section -->
+                    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                        <!-- Left Hero Messaging -->
+                        <div class="lg:col-span-6 card p-6 flex flex-col justify-between relative overflow-hidden">
+                            <div>
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 text-xs font-medium border border-blue-200 dark:border-blue-900/40 mb-3">
+                                    <span class="material-symbols-outlined text-[14px]">verified_user</span>
+                                    <span>Autonomous finops engine</span>
+                                </div>
+                                <h1 class="text-2xl sm:text-3xl font-semibold text-zinc-900 dark:text-zinc-100 tracking-tight leading-tight">
+                                    Autonomous financial operations for Razorpay merchants
+                                </h1>
+                                <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                    Deterministic 3-way reconciliation bridging Razorpay capture payloads, raw bank UTR feeds, and TallyPrime XML ledgers.
+                                </p>
                             </div>
-                            <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight leading-tight">
-                                Autonomous Financial Operations for <span class="text-primary font-bold">Razorpay</span> Merchants
-                            </h1>
-                            <p class="mt-3 font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-                                Deterministic 3-way reconciliation bridging Razorpay capture payloads, raw bank UTR feeds, and TallyPrime XML ledgers.
-                            </p>
                             <div class="flex items-center gap-3 mt-6">
-                                <a onclick="switchToTab('view-recon')" class="flex items-center gap-2 px-4 py-2.5 bg-primary text-on-primary rounded-lg font-body-md text-body-md font-bold hover:bg-primary-container transition-all shadow-xs cursor-pointer">
+                                <a onclick="switchToTab('view-recon')" class="btn btn-primary text-xs">
                                     <span class="material-symbols-outlined text-[18px]">bolt</span>
-                                    <span>Explore Live Console</span>
+                                    <span>Explore Console</span>
                                 </a>
-                                <button onclick="openWebhookModal()" class="flex items-center gap-2 px-4 py-2.5 bg-surface-container-low border border-outline-variant text-on-surface rounded-lg font-body-md text-body-md hover:bg-surface-container transition-all cursor-pointer">
-                                    <span class="material-symbols-outlined text-primary text-[18px]">cell_tower</span>
+                                <button onclick="openWebhookModal()" class="btn btn-secondary text-xs">
+                                    <span class="material-symbols-outlined text-[18px]">cell_tower</span>
                                     <span>Webhook Setup</span>
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Right Hero: Interactive Terminal Simulator -->
-                    <div class="lg:col-span-6 bg-inverse-surface text-inverse-on-surface rounded-xl p-5 shadow-lg flex flex-col justify-between">
-                        <div>
-                            <div class="flex flex-wrap items-center justify-between gap-3 pb-3">
-                                <div class="flex items-center gap-2">
-                                    <span class="h-2.5 w-2.5 rounded-md bg-error"></span>
-                                    <span class="h-2.5 w-2.5 rounded-md bg-tertiary"></span>
-                                    <span class="h-2.5 w-2.5 rounded-md bg-primary-container"></span>
-                                    <span class="font-mono-sm text-mono-sm text-surface-variant ml-2">SIMULATOR://NODE_INSPECTOR</span>
-                                </div>
-                                <div class="flex items-center gap-1 bg-on-background p-1 rounded-lg">
-                                    <button class="px-2.5 py-1 rounded font-mono-sm text-mono-sm bg-primary text-on-primary transition-all" id="tab-recon" onclick="switchTab('recon')">3-Way Recon</button>
-                                    <button class="px-2.5 py-1 rounded font-mono-sm text-mono-sm text-surface-variant hover:text-white transition-all" id="tab-mdr" onclick="switchTab('mdr')">MDR Leakage</button>
-                                    <button class="px-2.5 py-1 rounded font-mono-sm text-mono-sm text-surface-variant hover:text-white transition-all" id="tab-payroll" onclick="switchTab('payroll')">IMPS Payroll</button>
-                                    <button class="px-2.5 py-1 rounded font-mono-sm text-mono-sm text-surface-variant hover:text-white transition-all" id="tab-msme" onclick="switchTab('msme')">MSME 43B(h)</button>
-                                </div>
-                            </div>
-                            
-                            <!-- Tab 1: 3-Way Recon -->
-                            <div class="tab-panel py-3 space-y-3" id="panel-recon">
-                                <div class="p-3 bg-on-background/60 rounded-lg">
-                                    <div class="flex justify-between items-center text-surface-variant font-mono-sm text-mono-sm mb-1">
-                                        <span>CHECKPOINT 1 • D2C STORE ORDER</span>
-                                        <span class="text-primary-fixed">HTTP 200 OK</span>
+                        
+                        <!-- Right Hero: Simulator Panel (Light & Quiet Card) -->
+                        <div class="lg:col-span-6 card p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
+                                    <div class="flex items-center gap-2">
+                                        <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                                        <span class="font-mono text-xs text-zinc-500 dark:text-zinc-400">Node Inspector</span>
                                     </div>
-                                    <div class="font-mono-data text-mono-data text-white flex justify-between">
-                                        <span id="simStoreOrderId">ORD_88493019 • Cart Value</span>
-                                        <span id="simStoreVal">INR 18,450.00</span>
+                                    <div class="flex items-center gap-1 bg-black/[0.04] dark:bg-white/[0.06] p-1 rounded-[8px]">
+                                        <button class="px-2.5 py-1 rounded-[6px] font-mono text-xs bg-[#0066FF] dark:bg-[#3B82F6] text-white transition-all font-medium" id="tab-recon" onclick="switchTab('recon')">3-Way Recon</button>
+                                        <button class="px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all font-medium" id="tab-mdr" onclick="switchTab('mdr')">MDR Leakage</button>
+                                        <button class="px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all font-medium" id="tab-payroll" onclick="switchTab('payroll')">IMPS Payroll</button>
+                                        <button class="px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all font-medium" id="tab-msme" onclick="switchTab('msme')">MSME 43B(h)</button>
                                     </div>
                                 </div>
-                                <div class="flex justify-center -my-1">
-                                    <span class="material-symbols-outlined text-primary-fixed text-[18px] animate-bounce">arrow_downward</span>
-                                </div>
-                                <div class="p-3 bg-on-background/60 rounded-lg">
-                                    <div class="flex justify-between items-center text-surface-variant font-mono-sm text-mono-sm mb-1">
-                                        <span>CHECKPOINT 2 • RAZORPAY CAPTURED PAYLOAD</span>
-                                        <span class="text-primary-fixed">CAPTURE HASH #7F93A</span>
-                                    </div>
-                                    <div class="font-mono-data text-mono-data text-white flex justify-between">
-                                        <span id="simGatewayRate">pay_Oe28df01k8 • Gross Capture</span>
-                                        <span id="simGatewayFee">INR 18,450.00</span>
-                                    </div>
-                                    <div class="font-mono-sm text-mono-sm text-surface-variant mt-1">Deducted MDR (1.80% + 18% GST): <span class="text-tertiary-fixed font-semibold" id="simFeeBadge">INR 392.24</span></div>
-                                </div>
-                                <div class="flex justify-center -my-1">
-                                    <span class="material-symbols-outlined text-primary-fixed text-[18px] animate-bounce">arrow_downward</span>
-                                </div>
-                                <div class="p-3 bg-on-background/60 rounded-lg">
-                                    <div class="flex justify-between items-center text-surface-variant font-mono-sm text-mono-sm mb-1">
-                                        <span>CHECKPOINT 3 • ICICI CORP STATEMENT SETTLEMENT</span>
-                                        <span class="text-secondary-fixed">MATCH CONFIRMED</span>
-                                    </div>
-                                    <div class="font-mono-data text-mono-data text-white flex justify-between">
-                                        <span id="simBankUtr">UTR: CMS9382019481 • Net Settlement Credit</span>
-                                        <span class="text-primary-fixed" id="simBankVal">INR 18,057.76</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Tab 2: MDR Leakage -->
-                            <div class="tab-panel py-3 space-y-3 hidden" id="panel-mdr">
-                                <div class="p-3 bg-on-background/60 rounded-lg">
-                                    <div class="font-mono-sm text-mono-sm text-surface-variant mb-2">COMMERCIAL CONTRACT TERMS VS BILLED</div>
-                                    <div class="grid grid-cols-2 gap-2 text-surface-bright">
-                                        <div class="bg-inverse-surface p-2 rounded">
-                                            <span class="font-body-sm text-body-sm text-surface-variant block">Agreed UPI &amp; Debit MDR</span>
-                                            <span class="font-mono-kpi text-headline-sm text-white">0.00% - 0.90%</span>
+                                
+                                <!-- Tab 1: 3-Way Recon -->
+                                <div class="tab-panel py-3 space-y-2.5" id="panel-recon">
+                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
+                                        <div class="flex justify-between items-center text-xs font-mono text-zinc-500 mb-1">
+                                            <span>Checkpoint 1 • D2C Store Order</span>
+                                            <span class="text-emerald-600 dark:text-emerald-400 font-medium">HTTP 200 OK</span>
                                         </div>
-                                        <div class="bg-inverse-surface p-2 rounded">
-                                            <span class="font-body-sm text-body-sm text-surface-variant block">Invoiced Billed Rate</span>
-                                            <span class="font-mono-kpi text-headline-sm text-tertiary-fixed">2.45% avg</span>
+                                        <div class="font-mono text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex justify-between">
+                                            <span id="simStoreOrderId">ORD_88493019 • Cart Value</span>
+                                            <span id="simStoreVal">INR 18,450.00</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-center -my-1">
+                                        <span class="material-symbols-outlined text-zinc-400 text-[16px]">arrow_downward</span>
+                                    </div>
+                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
+                                        <div class="flex justify-between items-center text-xs font-mono text-zinc-500 mb-1">
+                                            <span>Checkpoint 2 • Razorpay Capture Payload</span>
+                                            <span class="text-blue-600 dark:text-blue-400 font-medium">Capture #7F93A</span>
+                                        </div>
+                                        <div class="font-mono text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex justify-between">
+                                            <span id="simGatewayRate">pay_Oe28df01k8 • Gross Capture</span>
+                                            <span id="simGatewayFee">INR 18,450.00</span>
+                                        </div>
+                                        <div class="font-mono text-[11px] text-zinc-500 mt-1">Deducted MDR (1.80% + 18% GST): <span class="text-amber-600 dark:text-amber-400 font-semibold" id="simFeeBadge">INR 392.24</span></div>
+                                    </div>
+                                    <div class="flex justify-center -my-1">
+                                        <span class="material-symbols-outlined text-zinc-400 text-[16px]">arrow_downward</span>
+                                    </div>
+                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
+                                        <div class="flex justify-between items-center text-xs font-mono text-zinc-500 mb-1">
+                                            <span>Checkpoint 3 • ICICI Bank Settlement</span>
+                                            <span class="text-emerald-600 dark:text-emerald-400 font-medium">Match Confirmed</span>
+                                        </div>
+                                        <div class="font-mono text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex justify-between">
+                                            <span id="simBankUtr">UTR: CMS9382019481 • Net Credit</span>
+                                            <span class="text-emerald-600 dark:text-emerald-400" id="simBankVal">INR 18,057.76</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-on-background/60 rounded-lg space-y-1 font-mono-data text-mono-data">
-                                    <div class="flex justify-between text-surface-variant">
-                                        <span>Flagged Over-invoiced GST on Interchange:</span>
-                                        <span class="text-tertiary-fixed" id="mdrContractedVal">INR 38,420.00</span>
+
+                                <!-- Tab 2: MDR Leakage -->
+                                <div class="tab-panel py-3 space-y-2.5 hidden" id="panel-mdr">
+                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
+                                        <div class="font-mono text-xs text-zinc-500 mb-2">Commercial Contract vs Billed</div>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <div class="bg-white dark:bg-[#131318] p-2 rounded border border-black/[0.08] dark:border-white/[0.08]">
+                                                <span class="text-xs text-zinc-500 block">Agreed UPI &amp; Debit MDR</span>
+                                                <span class="font-mono text-sm font-semibold text-zinc-900 dark:text-zinc-100">0.00% - 0.90%</span>
+                                            </div>
+                                            <div class="bg-white dark:bg-[#131318] p-2 rounded border border-black/[0.08] dark:border-white/[0.08]">
+                                                <span class="text-xs text-zinc-500 block">Invoiced Billed Rate</span>
+                                                <span class="font-mono text-sm font-semibold text-amber-600 dark:text-amber-400">2.45% avg</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="flex justify-between text-surface-variant">
-                                        <span>Unsupported International Surcharge Spikes:</span>
-                                        <span class="text-tertiary-fixed" id="mdrOverchargeVal">INR 1,45,900.00</span>
+                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06] space-y-1 font-mono text-xs">
+                                        <div class="flex justify-between text-zinc-600 dark:text-zinc-400">
+                                            <span>Over-invoiced GST on Interchange:</span>
+                                            <span class="text-amber-600 dark:text-amber-400" id="mdrContractedVal">INR 38,420.00</span>
+                                        </div>
+                                        <div class="flex justify-between text-zinc-600 dark:text-zinc-400">
+                                            <span>Unsupported Surcharge Spikes:</span>
+                                            <span class="text-amber-600 dark:text-amber-400" id="mdrOverchargeVal">INR 1,45,900.00</span>
+                                        </div>
+                                        <div class="flex justify-between text-zinc-900 dark:text-zinc-100 font-bold pt-1 border-t border-black/[0.06] dark:border-white/[0.06]">
+                                            <span>Net Recoverable Discrepancy:</span>
+                                            <span class="text-blue-600 dark:text-blue-400" id="mdrAnnualLeakVal">INR 1,84,320.00</span>
+                                        </div>
                                     </div>
-                                    <div class="flex justify-between text-white font-bold pt-1">
-                                        <span>Net Recoverable Discrepancy Amount:</span>
-                                        <span class="text-primary-fixed" id="mdrAnnualLeakVal">INR 1,84,320.00</span>
+                                </div>
+
+                                <!-- Tab 3: Payroll -->
+                                <div class="tab-panel py-3 space-y-2.5 hidden" id="panel-payroll">
+                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06] flex justify-between items-center">
+                                        <div>
+                                            <div class="font-mono text-xs text-zinc-500">Batch Disbursal BATCH_2024_04</div>
+                                            <div class="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mt-0.5">42 Employees • Net Pay ₹38,40,000</div>
+                                        </div>
+                                        <span class="chip chip-success">TDS 192 Verified</span>
+                                    </div>
+                                </div>
+
+                                <!-- Tab 4: MSME -->
+                                <div class="tab-panel py-3 space-y-2.5 hidden" id="panel-msme">
+                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-mono text-xs text-zinc-500">Section 43B(h) Clock</span>
+                                            <span class="chip chip-danger">4 Days to Penalty</span>
+                                        </div>
+                                        <p class="text-xs text-zinc-600 dark:text-zinc-400">Micro &amp; Small vendor payments must settle within 45 days of delivery to prevent tax deduction disallowance.</p>
                                     </div>
                                 </div>
                             </div>
+                            <div class="pt-3 border-t border-black/[0.08] dark:border-white/[0.08] flex items-center justify-between text-xs font-mono text-zinc-500">
+                                <span class="flex items-center gap-1.5">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                    <span>Real-time simulation active</span>
+                                </span>
+                                <button onclick="switchToTab('view-recon')" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-0.5">
+                                    <span>Inspect raw logs</span>
+                                    <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
 
-                            <!-- Tab 3: Payroll -->
-                            <div class="tab-panel py-3 space-y-3 hidden" id="panel-payroll">
-                                <div class="p-3 bg-on-background/60 rounded-lg flex justify-between items-center">
+                    <!-- Top Executive KPI Cards Grid (4 Cards, Clean Styling) -->
+                    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="kpi spotlight-card">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Gross captures (MTD)</span>
+                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[20px]">payments</span>
+                            </div>
+                            <div class="mt-3 font-mono text-2xl font-semibold text-zinc-900 dark:text-zinc-100" id="statGrossVolume" data-counter="true" data-target="48249120">INR 4,82,49,120.00</div>
+                            <div class="mt-3 flex items-center justify-between text-xs">
+                                <span class="chip chip-success">
+                                    <span class="material-symbols-outlined text-[12px]">arrow_upward</span>14.2%
+                                </span>
+                                <span class="font-mono text-zinc-400" id="chartOrderCount">35 orders audited</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi spotlight-card">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Net bank credited</span>
+                                <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-[20px]">account_balance</span>
+                            </div>
+                            <div class="mt-3 font-mono text-2xl font-semibold text-zinc-900 dark:text-zinc-100" id="statSettledBank" data-counter="true" data-target="47188430.40">INR 4,71,88,430.40</div>
+                            <div class="mt-3 flex items-center justify-between text-xs">
+                                <span class="font-mono text-zinc-500" id="statReconciledCount">32 orders settled</span>
+                                <span class="chip chip-success">Confirmed</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi spotlight-card">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">MDR fee leakage</span>
+                                <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-[20px]">warning</span>
+                            </div>
+                            <div class="mt-3 font-mono text-2xl font-semibold text-red-600 dark:text-red-400" id="statFeeLeakVal" data-counter="true" data-target="184320">INR 1,84,320.00</div>
+                            <div class="mt-3 flex items-center justify-between text-xs">
+                                <span class="text-zinc-500">GST &amp; interchange delta</span>
+                                <span class="chip chip-danger">Claimable</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi spotlight-card">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Unmatched transactions</span>
+                                <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-[20px]">sync_problem</span>
+                            </div>
+                            <div class="mt-3 font-mono text-2xl font-semibold text-zinc-900 dark:text-zinc-100" id="statDiscrepancyAmount">3 Discrepancies</div>
+                            <div class="mt-3 flex items-center justify-between text-xs">
+                                <span class="font-mono text-zinc-500" id="statAnomalyCount">At risk: ₹8,76,370.00</span>
+                                <span class="chip chip-warning">Action req</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Analytical Charts (2 Clean Cards) -->
+                    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div class="lg:col-span-5 card p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
                                     <div>
-                                        <div class="font-mono-sm text-mono-sm text-surface-variant">BATCH DISBURSAL BATCH_2024_04</div>
-                                        <div class="font-headline-sm text-headline-sm text-white">42 Employees • Net Pay ₹38,40,000</div>
+                                        <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">3-Way reconciliation breakdown</h2>
+                                        <p class="text-xs text-zinc-500">Store Order ⟷ Razorpay API ⟷ Bank UTR Credit</p>
                                     </div>
-                                    <span class="px-2 py-1 rounded bg-surface-container text-primary font-mono-sm text-mono-sm">TDS 192 VERIFIED</span>
+                                    <span class="px-2 py-0.5 rounded font-mono text-[11px] bg-black/[0.04] dark:bg-white/[0.06] text-zinc-600 dark:text-zinc-400">FY24-25 Q1</span>
                                 </div>
-                            </div>
-
-                            <!-- Tab 4: MSME -->
-                            <div class="tab-panel py-3 space-y-3 hidden" id="panel-msme">
-                                <div class="p-3 bg-on-background/60 rounded-lg">
-                                    <div class="flex justify-between items-center mb-1">
-                                        <span class="font-mono-sm text-mono-sm text-surface-variant uppercase">Income Tax Act Section 43B(h) Clock</span>
-                                        <span class="font-mono-sm text-mono-sm px-2 py-0.5 rounded bg-error-container text-on-error-container font-bold">4 DAYS TO PENALTY</span>
-                                    </div>
-                                    <p class="font-body-sm text-body-sm text-surface-variant">Payments to Micro &amp; Small vendors must settle within 45 days of delivery to prevent tax deduction disallowance.</p>
+                                <div class="h-60 relative flex items-center justify-center">
+                                    <canvas id="reconDonutChart"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="pt-3 border-t border-surface-variant/20 flex items-center justify-between font-mono-sm text-mono-sm text-surface-variant">
-                            <span class="flex items-center gap-1.5 text-surface-bright">
-                                <span class="h-1.5 w-1.5 rounded-md bg-primary animate-ping"></span>
-                                REAL-TIME SIMULATION ACTIVE
-                            </span>
-                            <button onclick="switchToTab('view-recon')" class="text-primary-fixed hover:underline flex items-center gap-1">
-                                <span>Inspect Raw Logs</span>
-                                <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+                        <div class="lg:col-span-7 card p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                                    <div>
+                                        <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">MDR fee variance &amp; leakage tracking</h2>
+                                        <p class="text-xs text-zinc-500">Contractual baseline (2.00%) vs actual billed interchange rates</p>
+                                    </div>
+                                    <button onclick="openDisputeModal()" class="btn btn-secondary text-xs">
+                                        Dispute Letter
+                                    </button>
+                                </div>
+                                <div class="h-60 relative flex items-center justify-center">
+                                    <canvas id="feeBarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div><div id="view-recon" class="module-view flex-1 hidden">
+                <div class="max-w-7xl mx-auto w-full px-4 py-6 space-y-6">
+                    <!-- Module Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
+                        <div>
+                            <h1 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Gateway Recon (3-Way Check)</h1>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Automated matching matrix across Razorpay settlements, core banking feeds, and storefront ledgers.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openTallyModal()" class="btn btn-primary text-xs">
+                                <span class="material-symbols-outlined text-[16px]">sync</span>
+                                <span>Export Tally XML</span>
                             </button>
                         </div>
                     </div>
-                </section>
 
-                <!-- Top Executive KPI Cards Grid -->
-                <section class="w-full px-grid-margin py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="p-6 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xs stitch-hover-card flex flex-col justify-between">
-                        <div class="flex justify-between items-center">
-                            <span class="font-body-sm text-body-sm text-on-surface-variant uppercase tracking-wider font-semibold">Gross Captures (MTD)</span>
-                            <span class="material-symbols-outlined text-primary text-[22px]">payments</span>
+                    <!-- Filter Bar & Table Card -->
+                    <div class="card overflow-hidden">
+                        <div class="p-4 border-b border-black/[0.08] dark:border-white/[0.08] flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex items-center bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] rounded-[8px] px-2.5 py-1 gap-2 w-full sm:w-72">
+                                <span class="material-symbols-outlined text-[16px] text-zinc-400">search</span>
+                                <input id="tableSearchInput" class="bg-transparent border-none outline-none font-mono text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 w-full" placeholder="Search UTR, Order, or Pay ID..." type="text"/>
+                            </div>
+                            <div class="flex items-center gap-1 bg-black/[0.04] dark:bg-white/[0.06] p-1 rounded-[8px]">
+                                <button class="table-filter-btn px-2.5 py-1 rounded-[6px] font-mono text-xs bg-[#0066FF] dark:bg-[#3B82F6] text-white font-medium cursor-pointer" data-filter="ALL">ALL</button>
+                                <button class="table-filter-btn px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 cursor-pointer" data-filter="RECONCILED">MATCHED</button>
+                                <button class="table-filter-btn px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 cursor-pointer" data-filter="FEE_MISMATCH">FEE OVERCHARGE</button>
+                                <button class="table-filter-btn px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 cursor-pointer" data-filter="DELAYED_SLA">PENDING BANK</button>
+                            </div>
                         </div>
-                        <div class="mt-3 font-mono-kpi text-headline-md text-on-surface font-bold" id="statGrossVolume" data-counter="true" data-target="48249120">INR 4,82,49,120.00</div>
-                        <div class="mt-3 flex items-center justify-between font-mono-sm text-mono-sm text-on-surface-variant">
-                            <span class="text-primary font-bold flex items-center gap-0.5">
-                                <span class="material-symbols-outlined text-[14px]">arrow_upward</span>14.2%
-                            </span>
-                            <span id="chartOrderCount">35 Orders Audited</span>
+                        <div class="w-full overflow-x-auto">
+                            <table class="table">
+                                <thead class="sticky top-0 bg-white dark:bg-[#131318] z-10">
+                                    <tr>
+                                        <th class="py-3 px-4">Order ID &amp; Customer</th>
+                                        <th class="py-3 px-4">Razorpay Pay ID</th>
+                                        <th class="py-3 px-4 text-right">Captured Gross</th>
+                                        <th class="py-3 px-4 text-right">Charged MDR</th>
+                                        <th class="py-3 px-4">Bank Settlement UTR</th>
+                                        <th class="py-3 px-4">3-Way State</th>
+                                        <th class="py-3 px-4 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTableBody">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
-                    <div class="p-6 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xs stitch-hover-card flex flex-col justify-between">
-                        <div class="flex justify-between items-center">
-                            <span class="font-body-sm text-body-sm text-on-surface-variant uppercase tracking-wider font-semibold">Net Bank Credited</span>
-                            <span class="material-symbols-outlined text-primary text-[22px]">account_balance</span>
-                        </div>
-                        <div class="mt-3 font-mono-kpi text-headline-md text-on-surface font-bold" id="statSettledBank" data-counter="true" data-target="47188430.40">INR 4,71,88,430.40</div>
-                        <div class="mt-3 flex items-center justify-between font-mono-sm text-mono-sm">
-                            <span class="text-on-surface-variant" id="statReconciledCount">32 Orders Settled</span>
-                            <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-bold">CONFIRMED</span>
-                        </div>
-                    </div>
-
-                    <div class="p-6 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xs stitch-hover-card flex flex-col justify-between">
-                        <div class="flex justify-between items-center">
-                            <span class="font-body-sm text-body-sm text-error uppercase tracking-wider font-semibold">MDR Fee Leakage</span>
-                            <span class="material-symbols-outlined text-error text-[22px]">warning</span>
-                        </div>
-                        <div class="mt-3 font-mono-kpi text-headline-md text-error font-bold" id="statFeeLeakVal" data-counter="true" data-target="184320">INR 1,84,320.00</div>
-                        <div class="mt-3 flex items-center justify-between font-mono-sm text-mono-sm">
-                            <span class="text-on-surface-variant">GST &amp; Interchange Delta</span>
-                            <span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-bold">CLAIMABLE</span>
-                        </div>
-                    </div>
-
-                    <div class="p-6 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xs stitch-hover-card flex flex-col justify-between">
-                        <div class="flex justify-between items-center">
-                            <span class="font-body-sm text-body-sm text-tertiary uppercase tracking-wider font-semibold">Unmatched Transactions</span>
-                            <span class="material-symbols-outlined text-tertiary text-[22px]">sync_problem</span>
-                        </div>
-                        <div class="mt-3 font-mono-kpi text-headline-md text-on-surface font-bold" id="statDiscrepancyAmount">3 Discrepancies</div>
-                        <div class="mt-3 flex items-center justify-between font-mono-sm text-mono-sm">
-                            <span class="text-on-surface-variant" id="statAnomalyCount">At risk: ₹8,76,370.00</span>
-                            <span class="px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-bold">ACTION REQ</span>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Analytical Charts -->
-                <section class="w-full px-grid-margin py-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div class="lg:col-span-5 bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between">
+                </div>
+            </div><div id="view-payroll" class="module-view flex-1 hidden">
+                <div class="max-w-7xl mx-auto w-full px-4 py-6 space-y-6">
+                    <!-- Module Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
                         <div>
-                            <div class="flex items-center justify-between mb-4">
-                                <div>
-                                    <h2 class="font-headline-sm text-headline-sm text-on-surface">3-Way Reconciliation Breakdown</h2>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Store Order ⟷ Razorpay API ⟷ Bank UTR Credit</p>
-                                </div>
-                                <span class="font-mono-sm text-mono-sm px-2 py-1 rounded bg-surface-container text-on-surface">FY24-25 Q1</span>
+                            <div class="flex items-center gap-2">
+                                <span class="chip chip-success">TDS 192 Ready</span>
+                                <h1 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Payroll &amp; Salaries (IMPS / TDS 192)</h1>
                             </div>
-                            <div class="h-60 relative flex items-center justify-center">
-                                <canvas id="reconDonutChart"></canvas>
-                            </div>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Prevent employee payment delays with direct IMPS banking clearing and statutory tax withholding.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <a href="/salary-report.html" target="_blank" class="btn btn-secondary text-xs">
+                                <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+                                <span>Salary Register PDF</span>
+                            </a>
                         </div>
                     </div>
-                    <div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between">
+
+                    <!-- Payroll Table Card -->
+                    <div class="card overflow-hidden">
+                        <div class="w-full overflow-x-auto">
+                            <table class="table">
+                                <thead class="sticky top-0 bg-white dark:bg-[#131318] z-10">
+                                    <tr>
+                                        <th class="py-3 px-4">Employee ID &amp; Name</th>
+                                        <th class="py-3 px-4">Role &amp; Department</th>
+                                        <th class="py-3 px-4 text-right">Gross Pay</th>
+                                        <th class="py-3 px-4 text-right">TDS (Sec 192) &amp; PF</th>
+                                        <th class="py-3 px-4 text-right">Net Payable</th>
+                                        <th class="py-3 px-4">Disbursal State</th>
+                                        <th class="py-3 px-4 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="payrollTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><div id="view-vendors" class="module-view flex-1 hidden">
+                <div class="max-w-7xl mx-auto w-full px-4 py-6 space-y-6">
+                    <!-- Module Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
                         <div>
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                                <div>
-                                    <h2 class="font-headline-sm text-headline-sm text-on-surface">MDR Fee Variance &amp; Leakage Tracking</h2>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Contractual Baseline (2.00%) vs Actual Billed Interchange Rates</p>
-                                </div>
-                                <button onclick="openDisputeModal()" class="px-3 py-1 bg-amber-50 text-amber-800 border border-amber-300 rounded font-body-sm text-body-sm hover:bg-amber-100 transition">
-                                    Dispute Letter
-                                </button>
+                            <div class="flex items-center gap-2">
+                                <span class="chip chip-warning">Sec 43B(h)</span>
+                                <h1 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Vendors MSME 43B(h) (45-Day Aging)</h1>
                             </div>
-                            <div class="h-60 relative flex items-center justify-center">
-                                <canvas id="feeBarChart"></canvas>
-                            </div>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Live statutory payment clock for Micro &amp; Small vendor invoices to prevent tax disallowance penalties.</p>
                         </div>
                     </div>
-                </section>
-            </div>
 
-            <!-- =========================================================================
-                 MODULE VIEW 2: GATEWAY RECONCILIATION VIEW (3-WAY GATEWAY RECON)
-                 ========================================================================= -->
-            <div id="view-recon" class="module-view flex-1 hidden">
-                <div class="w-full bg-surface-container-lowest px-grid-margin py-6 border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="font-headline-lg text-headline-lg text-on-surface">3-Way Gateway Reconciliation Ledger</h2>
-                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                            Automated matching matrix across Razorpay Settlements, Core Banking feeds (HDFC/ICICI), and Storefront Ledgers.
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <button onclick="openTallyModal()" class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary hover:bg-primary-container transition-all rounded-lg font-body-md text-body-md font-bold shadow-xs cursor-pointer">
-                            <span class="material-symbols-outlined text-[18px]">sync</span>
-                            <span>Batch Tally XML</span>
-                        </button>
-                    </div>
-                </div>
-
-                <section class="w-full px-grid-margin py-6">
-                    <div class="spotlight-card rounded-2xl shadow-xs overflow-hidden">
-                        <div class="p-4 bg-surface-container-low/40 border-b border-outline-variant/30 flex flex-wrap items-center justify-between gap-4">
-                            <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
-                                <div class="flex items-center bg-surface-container-lowest rounded-lg px-3 py-2 gap-2 w-full sm:w-72 border border-outline-variant/30">
-                                    <span class="material-symbols-outlined text-[18px] text-on-surface-variant">search</span>
-                                    <input id="tableSearchInput" class="bg-transparent border-none outline-none font-mono-data text-mono-data text-on-surface placeholder:text-on-surface-variant w-full" placeholder="Search UTR, Order, or Pay ID..." type="text"/>
-                                </div>
-                                <div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
-                                    <button class="table-filter-btn px-3 py-1.5 rounded-md font-mono-sm text-mono-sm bg-primary text-on-primary font-bold cursor-pointer" data-filter="ALL">ALL</button>
-                                    <button class="table-filter-btn px-3 py-1.5 rounded-md font-mono-sm text-mono-sm text-on-surface-variant hover:text-on-surface cursor-pointer" data-filter="RECONCILED">MATCHED</button>
-                                    <button class="table-filter-btn px-3 py-1.5 rounded-md font-mono-sm text-mono-sm text-on-surface-variant hover:text-on-surface cursor-pointer" data-filter="FEE_MISMATCH">FEE OVERCHARGE</button>
-                                    <button class="table-filter-btn px-3 py-1.5 rounded-md font-mono-sm text-mono-sm text-on-surface-variant hover:text-on-surface cursor-pointer" data-filter="DELAYED_SLA">PENDING BANK</button>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Vendors Table Card -->
+                    <div class="card overflow-hidden">
                         <div class="w-full overflow-x-auto">
-                            <table class="w-full text-left font-body-md text-body-md whitespace-nowrap">
-                                <thead class="bg-surface-container-low/60 text-on-surface-variant font-mono-sm text-mono-sm uppercase tracking-wider border-b border-outline-variant/30">
+                            <table class="table">
+                                <thead class="sticky top-0 bg-white dark:bg-[#131318] z-10">
                                     <tr>
-                                        <th class="py-4 px-6">Timestamp</th>
-                                        <th class="py-4 px-6">Store Order ID</th>
-                                        <th class="py-4 px-6">Razorpay Pay ID</th>
-                                        <th class="py-4 px-6 text-right">Captured Gross</th>
-                                        <th class="py-4 px-6 text-right">Charged MDR</th>
-                                        <th class="py-4 px-6">Bank Settlement UTR</th>
-                                        <th class="py-4 px-6">3-Way Check</th>
-                                        <th class="py-4 px-6 text-center">ERP Voucher</th>
+                                        <th class="py-3 px-4">Vendor Name &amp; Category</th>
+                                        <th class="py-3 px-4">Invoice No &amp; GSTIN</th>
+                                        <th class="py-3 px-4 text-right">Invoice Amount</th>
+                                        <th class="py-3 px-4 text-right">TDS Withheld</th>
+                                        <th class="py-3 px-4 text-right">Net Payable</th>
+                                        <th class="py-3 px-4">Udyam Class</th>
+                                        <th class="py-3 px-4">43B(h) Aging Clock</th>
+                                        <th class="py-3 px-4 text-right">Payment Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="ordersTableBody" class="divide-y divide-outline-variant/20 bg-surface-container-lowest text-on-surface">
+                                <tbody id="vendorsTableBody">
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </section>
-            </div>
-
-            <!-- =========================================================================
-                 MODULE VIEW 3: PAYROLL & SALARIES VIEW (IMPS / TDS 192)
-                 ========================================================================= -->
-            <div id="view-payroll" class="module-view flex-1 hidden">
-                <div class="w-full bg-surface-container-lowest px-6 py-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="flex flex-col gap-1">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2 py-0.5 bg-primary-container text-on-primary-container font-mono-sm text-mono-sm rounded uppercase tracking-wider font-semibold">TDS 192 Ready</span>
-                            <span class="font-headline-sm text-headline-sm text-on-surface">IMPS Payroll &amp; Salary Disbursal SLA Guard</span>
-                        </div>
-                        <p class="font-body-sm text-body-sm text-on-surface-variant">
-                            Prevent employee payment delays with direct IMPS banking clearing and statutory tax withholding.
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <a href="/salary-report.html" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container text-on-surface hover:bg-surface-variant transition-colors rounded font-body-md text-body-md">
-                            <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
-                            <span>Download Salary Register PDF</span>
-                        </a>
-                    </div>
                 </div>
-
-                <section class="w-full px-grid-margin py-4">
-                    <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
-                        <div class="w-full overflow-x-auto">
-                            <table class="w-full text-left font-body-md text-body-md whitespace-nowrap">
-                                <thead class="bg-surface-container-high text-on-surface font-mono-sm text-mono-sm uppercase tracking-wider">
-                                    <tr>
-                                        <th class="py-table-cell-y px-table-cell-x">Emp ID &amp; Name</th>
-                                        <th class="py-table-cell-y px-table-cell-x">Role &amp; Dept</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">Gross Pay</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">TDS (Sec 192)</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">Net Payable</th>
-                                        <th class="py-table-cell-y px-table-cell-x">Disbursal State</th>
-                                        <th class="py-table-cell-y px-table-cell-x">Bank UTR</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-center">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="payrollTableBody" class="divide-y divide-surface-container-low bg-surface-container-lowest text-on-surface">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- =========================================================================
-                 MODULE VIEW 4: MSME 43B(h) AP VIEW (45-DAY AGING)
-                 ========================================================================= -->
-            <div id="view-vendors" class="module-view flex-1 hidden">
-                <div class="w-full bg-surface-container-lowest px-6 py-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="flex flex-col gap-1">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed-variant font-mono-sm text-mono-sm rounded uppercase tracking-wider font-semibold">Income Tax Sec 43B(h)</span>
-                            <span class="font-headline-sm text-headline-sm text-on-surface">MSME Accounts Payable 45-Day Aging Registry</span>
-                        </div>
-                        <p class="font-body-sm text-body-sm text-on-surface-variant">
-                            Live statutory payment clock for Micro &amp; Small vendor invoices to prevent 30% tax penalty disallowances.
-                        </p>
-                    </div>
-                </div>
-
-                <section class="w-full px-grid-margin py-4">
-                    <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
-                        <div class="w-full overflow-x-auto">
-                            <table class="w-full text-left font-body-md text-body-md whitespace-nowrap">
-                                <thead class="bg-surface-container-high text-on-surface font-mono-sm text-mono-sm uppercase tracking-wider">
-                                    <tr>
-                                        <th class="py-table-cell-y px-table-cell-x">Vendor Name &amp; Category</th>
-                                        <th class="py-table-cell-y px-table-cell-x">Invoice No &amp; GSTIN</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">Invoice Amount</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">TDS Withheld</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">Net Payable</th>
-                                        <th class="py-table-cell-y px-table-cell-x">Udyam Class</th>
-                                        <th class="py-table-cell-y px-table-cell-x">43B(h) Aging Clock</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-center">Payment Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="vendorsTableBody" class="divide-y divide-surface-container-low bg-surface-container-lowest text-on-surface">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- =========================================================================
-                 MODULE VIEW 5: CASH COMPASS VIEW (30-DAY FORECAST)
-                 ========================================================================= -->
-            <div id="view-cashflow" class="module-view flex-1 hidden">
+            </div><div id="view-cashflow" class="module-view flex-1 hidden">
                 <div class="w-full bg-surface-container-lowest px-6 py-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div class="flex flex-col gap-1">
                         <div class="flex items-center gap-2">
@@ -1448,6 +1387,6 @@ Zenith Retail India Pvt Ltd
     <!-- Toast Notifications Container -->
     <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <script src="app.js?v=20260904_4.0"></script>
+    <script src="app.js?v=20260924_5.0"></script>
 </body>
 </html>
