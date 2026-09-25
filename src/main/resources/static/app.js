@@ -1028,16 +1028,16 @@ function renderOrdersTable(searchQuery = '') {
 
         return `
             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors cursor-pointer" onclick="openDiffDrawer('${order.orderId}')">
-                <td class="py-3.5 px-4">
+                <td class="text-left">
                     <div class="font-medium text-zinc-900 dark:text-zinc-100">${order.orderId}</div>
                     <div class="text-xs text-zinc-500 mt-0.5">${order.customerName} &middot; <span class="capitalize text-blue-600 dark:text-blue-400 font-mono">${order.paymentMethod || 'UPI'}</span></div>
                 </td>
-                <td class="py-3.5 px-4 font-mono text-xs text-zinc-600 dark:text-zinc-400">pay_RZP_${order.orderId.slice(-4)}</td>
-                <td class="py-3.5 px-4 font-mono font-medium text-zinc-900 dark:text-zinc-100 text-right">₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="py-3.5 px-4 font-mono text-xs text-blue-600 dark:text-blue-400 font-medium text-right">₹${totalFeeTax}</td>
-                <td class="py-3.5 px-4 font-mono text-xs">${utr}</td>
-                <td class="py-3.5 px-4">${statusBadge}</td>
-                <td class="py-3.5 px-4 text-right">
+                <td class="text-left font-mono text-xs text-zinc-600 dark:text-zinc-400">pay_RZP_${order.orderId.slice(-4)}</td>
+                <td class="text-right font-mono font-medium text-zinc-900 dark:text-zinc-100">₹${Number(order.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="text-right font-mono text-xs text-blue-600 dark:text-blue-400 font-medium">₹${totalFeeTax}</td>
+                <td class="text-left font-mono text-xs">${utr}</td>
+                <td class="text-left">${statusBadge}</td>
+                <td class="text-right">
                     <button class="btn btn-ghost text-xs px-2 text-blue-600 dark:text-blue-400">
                         <span>Inspect</span>
                         <span class="material-symbols-outlined text-[14px]">chevron_right</span>
@@ -1108,19 +1108,19 @@ function renderPayrollTable(searchQuery = '') {
 
         return `
             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors border-b border-black/[0.06] dark:border-white/[0.06]">
-                <td class="py-3.5 px-4">
+                <td class="text-left">
                     <div class="font-medium text-zinc-900 dark:text-zinc-100">${emp.name}</div>
                     <div class="text-xs font-mono text-zinc-500 mt-0.5">${emp.empId}</div>
                 </td>
-                <td class="py-3.5 px-4">
+                <td class="text-left">
                     <div class="text-xs font-medium text-zinc-800 dark:text-zinc-200">${emp.role}</div>
                     <div class="text-[11px] text-zinc-500">${emp.department}</div>
                 </td>
-                <td class="py-3.5 px-4 font-mono font-medium text-zinc-900 dark:text-zinc-100 text-right">₹${Number(emp.grossSalary).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="py-3.5 px-4 font-mono text-xs text-amber-600 dark:text-amber-400 text-right">₹${Number(totalTaxPf).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="py-3.5 px-4 font-mono font-semibold text-emerald-600 dark:text-emerald-400 text-right">₹${Number(emp.netPayable).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                <td class="py-3.5 px-4">${statusBadge}</td>
-                <td class="py-3.5 px-4 text-right">${actionBtn}</td>
+                <td class="text-right font-mono font-medium text-zinc-900 dark:text-zinc-100">₹${Number(emp.grossSalary).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="text-right font-mono text-xs text-amber-600 dark:text-amber-400">₹${Number(totalTaxPf).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="text-right font-mono font-semibold text-emerald-600 dark:text-emerald-400">₹${Number(emp.netPayable).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="text-left">${statusBadge}</td>
+                <td class="text-right">${actionBtn}</td>
             </tr>
         `;
     }).join('');
@@ -1282,19 +1282,19 @@ function renderVendorsTable(searchQuery = '') {
 
         return `
             <tr class="hover:bg-slate-50 transition border-b border-slate-200 ${v.paymentStatus === 'CRITICAL_MSME' ? 'bg-red-50/50' : ''}">
-                <td class="px-6 py-4.5">
+                <td class="text-left">
                     <div class="font-black text-slate-900 text-sm sm:text-base">${v.vendorName} ${v.isMsme ? '<span class="px-2 py-0.5 bg-blue-100 text-blue-800 border border-blue-300 rounded text-[10px] font-black uppercase font-mono">MSME</span>' : ''}</div>
                     <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">${v.category} &middot; <span class="font-mono text-slate-700 font-bold">${v.gstin}</span></div>
                 </td>
-                <td class="px-5 py-4.5">
+                <td class="text-left">
                     <div class="font-mono text-slate-900 font-black text-sm sm:text-base">${v.invoiceNo}</div>
                     <div class="text-xs sm:text-[13px] text-slate-600 font-semibold mt-0.5">Due: ${v.dueDate}</div>
                 </td>
-                <td class="px-5 py-4.5 font-mono font-black text-slate-900 text-sm sm:text-base">₹${Number(v.amount).toLocaleString('en-IN')}</td>
-                <td class="px-5 py-4.5 font-mono text-xs sm:text-sm text-emerald-800 font-black">₹${Number(v.gstAmount).toFixed(2)}</td>
-                <td class="px-5 py-4.5 font-mono font-black text-blue-700 text-sm sm:text-base">₹${Number(v.netPayable).toLocaleString('en-IN')}</td>
-                <td class="px-5 py-4.5">${agingBadge}</td>
-                <td class="px-6 py-4.5 text-right">${actionBtn}</td>
+                <td class="text-right font-mono font-black text-slate-900 text-sm sm:text-base">₹${Number(v.amount).toLocaleString('en-IN')}</td>
+                <td class="text-right font-mono text-xs sm:text-sm text-emerald-800 font-black">₹${Number(v.gstAmount).toFixed(2)}</td>
+                <td class="text-right font-mono font-black text-blue-700 text-sm sm:text-base">₹${Number(v.netPayable).toLocaleString('en-IN')}</td>
+                <td class="text-left">${agingBadge}</td>
+                <td class="text-right">${actionBtn}</td>
             </tr>
         `;
     }).join('');
@@ -1543,17 +1543,17 @@ function renderCashFlowTable() {
 
         return `
             <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition border-b border-slate-100 dark:border-slate-800">
-                <td class="px-5 py-3.5 font-mono text-xs text-slate-600 dark:text-slate-400 font-semibold">${t.date}</td>
-                <td class="px-4 py-3.5">
+                <td class="text-left font-mono text-xs text-slate-600 dark:text-slate-400 font-semibold">${t.date}</td>
+                <td class="text-left">
                     <div class="font-black text-slate-900 dark:text-white text-xs sm:text-sm">${t.entity}</div>
                     <div class="text-[11px] text-slate-400 font-mono mt-0.5">${t.utr}</div>
                 </td>
-                <td class="px-4 py-3.5 text-xs font-semibold text-slate-600 dark:text-slate-400">${t.category}</td>
-                <td class="px-4 py-3.5">${typeBadge}</td>
-                <td class="px-4 py-3.5 font-mono font-black text-xs sm:text-sm text-slate-900 dark:text-white">
+                <td class="text-left text-xs font-semibold text-slate-600 dark:text-slate-400">${t.category}</td>
+                <td class="text-right">${typeBadge}</td>
+                <td class="text-right font-mono font-black text-xs sm:text-sm text-slate-900 dark:text-white">
                     ₹${runningBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </td>
-                <td class="px-5 py-3.5 text-right">${statusBadge}</td>
+                <td class="text-right">${statusBadge}</td>
             </tr>
         `;
     }).join('');

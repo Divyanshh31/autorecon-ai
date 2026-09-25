@@ -475,3 +475,72 @@ aside.sidebar-collapsed .sidebar-center-on-collapse {
 aside.sidebar-collapsed + main {
     padding-left: 5rem !important;
 }
+
+/* ==========================================================================
+   ENTERPRISE FINTECH TABLE LAYOUT SYSTEM
+   ========================================================================== */
+.rzp-table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    border: 1px solid var(--rzp-border);
+    background-color: var(--rzp-surface-card);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+.rzp-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.25rem;
+}
+
+.rzp-table th {
+    background-color: var(--rzp-bg-secondary);
+    color: var(--rzp-text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.6875rem; /* 11px */
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--rzp-border);
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+html.dark .rzp-table th {
+    background-color: #111827 !important;
+    color: #94a3b8 !important;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.rzp-table td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--rzp-border);
+    color: var(--rzp-text-main);
+    vertical-align: middle;
+    box-sizing: border-box;
+    word-break: break-word;
+}
+
+html.dark .rzp-table td {
+    border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+    color: #f4f4f5 !important;
+}
+
+.rzp-table tr:last-child td {
+    border-bottom: none;
+}
+
+.rzp-table tr:hover td {
+    background-color: var(--rzp-row-hover);
+}
+
+.rzp-table .text-left { text-align: left !important; }
+.rzp-table .text-right { text-align: right !important; }
+.rzp-table .text-center { text-align: center !important; }
+

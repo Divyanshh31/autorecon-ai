@@ -630,17 +630,26 @@
                                 <button class="table-filter-btn px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 cursor-pointer" data-filter="DELAYED_SLA">PENDING BANK</button>
                             </div>
                         </div>
-                        <div class="w-full overflow-x-auto">
-                            <table class="table">
-                                <thead class="sticky top-0 bg-white dark:bg-[#131318] z-10">
+                        <div class="rzp-table-container">
+                            <table class="rzp-table" style="min-width: 920px;">
+                                <colgroup>
+                                    <col style="width: 22%;">
+                                    <col style="width: 15%;">
+                                    <col style="width: 14%;">
+                                    <col style="width: 14%;">
+                                    <col style="width: 15%;">
+                                    <col style="width: 12%;">
+                                    <col style="width: 8%;">
+                                </colgroup>
+                                <thead>
                                     <tr>
-                                        <th class="py-3 px-4">Order ID &amp; Customer</th>
-                                        <th class="py-3 px-4">Razorpay Pay ID</th>
-                                        <th class="py-3 px-4 text-right">Captured Gross</th>
-                                        <th class="py-3 px-4 text-right">Charged MDR</th>
-                                        <th class="py-3 px-4">Bank Settlement UTR</th>
-                                        <th class="py-3 px-4">3-Way State</th>
-                                        <th class="py-3 px-4 text-right">Actions</th>
+                                        <th class="text-left">Order ID &amp; Customer</th>
+                                        <th class="text-left">Razorpay Pay ID</th>
+                                        <th class="text-right">Captured Gross</th>
+                                        <th class="text-right">Charged MDR &amp; GST</th>
+                                        <th class="text-left">Bank Settlement UTR</th>
+                                        <th class="text-left">3-Way State</th>
+                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="ordersTableBody">
@@ -721,17 +730,26 @@
 
                     <!-- Payroll Table Card -->
                     <div class="card overflow-hidden">
-                        <div class="w-full overflow-x-auto">
-                            <table class="table">
-                                <thead class="sticky top-0 bg-white dark:bg-[#131318] z-10">
+                        <div class="rzp-table-container">
+                            <table class="rzp-table" style="min-width: 950px;">
+                                <colgroup>
+                                    <col style="width: 20%;">
+                                    <col style="width: 18%;">
+                                    <col style="width: 14%;">
+                                    <col style="width: 14%;">
+                                    <col style="width: 14%;">
+                                    <col style="width: 12%;">
+                                    <col style="width: 8%;">
+                                </colgroup>
+                                <thead>
                                     <tr>
-                                        <th class="py-3 px-4">Employee ID &amp; Name</th>
-                                        <th class="py-3 px-4">Role &amp; Department</th>
-                                        <th class="py-3 px-4 text-right">Gross Pay</th>
-                                        <th class="py-3 px-4 text-right">TDS (Sec 192) &amp; PF</th>
-                                        <th class="py-3 px-4 text-right">Net Payable</th>
-                                        <th class="py-3 px-4">Disbursal State</th>
-                                        <th class="py-3 px-4 text-right">Actions</th>
+                                        <th class="text-left">Employee Name &amp; ID</th>
+                                        <th class="text-left">Role &amp; Department</th>
+                                        <th class="text-right">Gross Salary</th>
+                                        <th class="text-right">TDS (Sec 192) &amp; PF</th>
+                                        <th class="text-right">Net Payable</th>
+                                        <th class="text-left">Disbursal State</th>
+                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="payrollTableBody">
@@ -806,18 +824,26 @@
 
                     <!-- Vendors Table Card -->
                     <div class="card overflow-hidden">
-                        <div class="w-full overflow-x-auto">
-                            <table class="table">
-                                <thead class="sticky top-0 bg-white dark:bg-[#131318] z-10">
+                        <div class="rzp-table-container">
+                            <table class="rzp-table" style="min-width: 1000px;">
+                                <colgroup>
+                                    <col style="width: 24%;">
+                                    <col style="width: 18%;">
+                                    <col style="width: 13%;">
+                                    <col style="width: 11%;">
+                                    <col style="width: 12%;">
+                                    <col style="width: 13%;">
+                                    <col style="width: 9%;">
+                                </colgroup>
+                                <thead>
                                     <tr>
-                                        <th class="py-3 px-4">Vendor Name &amp; Category</th>
-                                        <th class="py-3 px-4">Invoice No &amp; GSTIN</th>
-                                        <th class="py-3 px-4 text-right">Invoice Amount</th>
-                                        <th class="py-3 px-4 text-right">TDS Withheld</th>
-                                        <th class="py-3 px-4 text-right">Net Payable</th>
-                                        <th class="py-3 px-4">Udyam Class</th>
-                                        <th class="py-3 px-4">43B(h) Aging Clock</th>
-                                        <th class="py-3 px-4 text-right">Payment Status</th>
+                                        <th class="text-left">Vendor Name &amp; Category</th>
+                                        <th class="text-left">Invoice No &amp; GSTIN</th>
+                                        <th class="text-right">Invoice Amount</th>
+                                        <th class="text-right">GST / TDS</th>
+                                        <th class="text-right">Net Payable</th>
+                                        <th class="text-left">43B(h) Aging &amp; MSME</th>
+                                        <th class="text-right">Actions &amp; Status</th>
                                     </tr>
                                 </thead>
                                 <tbody id="vendorsTableBody">
@@ -968,19 +994,27 @@
                         <div class="p-4 bg-surface-container-low">
                             <h3 class="font-headline-sm text-headline-sm text-on-surface">30-Day Treasury Flow Table</h3>
                         </div>
-                        <div class="w-full overflow-x-auto">
-                            <table class="w-full text-left font-body-md text-body-md whitespace-nowrap">
-                                <thead class="bg-surface-container-high text-on-surface font-mono-sm text-mono-sm uppercase tracking-wider">
+                        <div class="rzp-table-container">
+                            <table class="rzp-table" style="min-width: 980px;">
+                                <colgroup>
+                                    <col style="width: 13%;">
+                                    <col style="width: 29%;">
+                                    <col style="width: 18%;">
+                                    <col style="width: 14%;">
+                                    <col style="width: 15%;">
+                                    <col style="width: 11%;">
+                                </colgroup>
+                                <thead>
                                     <tr>
-                                        <th class="py-table-cell-y px-table-cell-x">Forecast Date</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">Opening Balance</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">Projected Inflow</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">Payroll Outflow</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">Vendor Outflow</th>
-                                        <th class="py-table-cell-y px-table-cell-x text-right">Projected Closing Balance</th>
+                                        <th class="text-left">Transaction Date</th>
+                                        <th class="text-left">Entity Description &amp; Reference UTR</th>
+                                        <th class="text-left">Category</th>
+                                        <th class="text-right">Movement Amount</th>
+                                        <th class="text-right">Treasury Reserve Balance</th>
+                                        <th class="text-right">Clearing Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="cashFlowTableBody" class="divide-y divide-surface-container-low bg-surface-container-lowest text-on-surface">
+                                <tbody id="cashFlowTableBody">
                                 </tbody>
                             </table>
                         </div>
@@ -1513,7 +1547,7 @@ Zenith Retail India Pvt Ltd
     </div>
 
     <!-- Floating AI Munimji Trigger Widget -->
-    <button onclick="openCopilotDrawer()" id="btnFloatingCopilot" class="fixed bottom-6 right-6 z-40 bg-primary text-on-primary rounded-md px-4 py-3 shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2.5 border border-white/20 animate-pulse-glow cursor-pointer">
+    <button onclick="openCopilotDrawer()" id="btnFloatingCopilot" class="fixed bottom-5 right-5 z-30 bg-primary text-on-primary rounded-xl px-3.5 py-2.5 shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2 border border-white/20 animate-pulse-glow cursor-pointer">
         <div class="relative flex items-center justify-center">
             <span class="material-symbols-outlined text-2xl">smart_toy</span>
             <span class="absolute -top-1 -right-1 flex h-3 w-3">
@@ -1596,6 +1630,6 @@ Zenith Retail India Pvt Ltd
     <!-- Toast Notifications Container -->
     <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <script src="app.js?v=20260925_6.0"></script>
+    <script src="app.js?v=20260925_7.0"></script>
 </body>
 </html>
