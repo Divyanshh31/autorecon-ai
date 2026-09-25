@@ -12,10 +12,19 @@
     <!-- Auth Gate & Instant Theme Initializer (Prevents FOUC) -->
     <script>
         (function() {
-            const token = localStorage.getItem('autorecon_auth_token');
-            const user = localStorage.getItem('autorecon_current_user');
-            if (!token && !user) {
-                window.location.replace('/auth.html');
+            let token = localStorage.getItem('autorecon_auth_token');
+            let user = localStorage.getItem('autorecon_current_user');
+            if (!token || !user) {
+                token = 'demo_token_guest';
+                user = JSON.stringify({
+                    id: 'demo_user',
+                    name: 'Zenith Retail Demo',
+                    companyName: 'Zenith Retail India Pvt Ltd',
+                    email: 'demo@zenith.in',
+                    gstin: '27AAACZ8892Z1Z4'
+                });
+                localStorage.setItem('autorecon_auth_token', token);
+                localStorage.setItem('autorecon_current_user', user);
             }
             const savedTheme = localStorage.getItem('autorecon_theme') || 'light';
             if (savedTheme === 'dark') {

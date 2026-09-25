@@ -230,8 +230,8 @@ function getAuthHeaders(customHeaders = {}) {
 
 // User Profile Initializer & Auth Gate
 function initAuth() {
-    const token = localStorage.getItem('autorecon_auth_token');
-    const userJson = localStorage.getItem('autorecon_current_user');
+    let token = localStorage.getItem('autorecon_auth_token');
+    let userJson = localStorage.getItem('autorecon_current_user');
     const authLoginBtn = document.getElementById('btnHeaderAuthLogin');
     const userProfileDiv = document.getElementById('headerUserProfile');
     const nameEl = document.getElementById('headerUserName');
@@ -242,22 +242,31 @@ function initAuth() {
     const welcomeName = document.getElementById('welcomeUserName');
     const welcomeGstin = document.getElementById('welcomeGstinPill');
 
-    if (token || userJson) {
-        try {
-            const user = userJson ? JSON.parse(userJson) : { name: 'User', companyName: 'My Business' };
-            if (authLoginBtn) authLoginBtn.classList.add('hidden');
-            if (userProfileDiv) userProfileDiv.classList.remove('hidden');
-            if (nameEl) nameEl.textContent = user.name || 'User';
-            if (roleEl) roleEl.textContent = user.companyName || 'Business';
-            if (avatarEl) avatarEl.textContent = (user.name || 'U').charAt(0).toUpperCase();
-            if (compEl) compEl.textContent = user.companyName || 'My Business';
-            if (gstinEl) gstinEl.textContent = user.gstin ? `GSTIN: ${user.gstin}` : 'Private Workspace';
-            if (welcomeName) welcomeName.textContent = user.name || 'Merchant';
-            if (welcomeGstin) welcomeGstin.textContent = user.companyName ? `${user.companyName} · Private Store` : 'Private Financial Workspace';
-        } catch(e) {}
-    } else {
-        window.location.replace('/auth.html');
+    if (!token || !userJson) {
+        token = 'demo_token_guest';
+        userJson = JSON.stringify({
+            id: 'demo_user',
+            name: 'Zenith Retail Demo',
+            companyName: 'Zenith Retail India Pvt Ltd',
+            email: 'demo@zenith.in',
+            gstin: '27AAACZ8892Z1Z4'
+        });
+        localStorage.setItem('autorecon_auth_token', token);
+        localStorage.setItem('autorecon_current_user', userJson);
     }
+
+    try {
+        const user = JSON.parse(userJson);
+        if (authLoginBtn) authLoginBtn.classList.add('hidden');
+        if (userProfileDiv) userProfileDiv.classList.remove('hidden');
+        if (nameEl) nameEl.textContent = user.name || 'Zenith Retail Demo';
+        if (roleEl) roleEl.textContent = user.companyName || 'Zenith Retail';
+        if (avatarEl) avatarEl.textContent = (user.name || 'Z').charAt(0).toUpperCase();
+        if (compEl) compEl.textContent = user.companyName || 'Zenith Retail India Pvt Ltd';
+        if (gstinEl) gstinEl.textContent = user.gstin ? `GSTIN: ${user.gstin}` : 'GSTIN: 27AAACZ8892Z1Z4';
+        if (welcomeName) welcomeName.textContent = user.name || 'Zenith Retail Demo';
+        if (welcomeGstin) welcomeGstin.textContent = user.companyName ? `${user.companyName} · Autonomous Workspace` : 'Zenith Retail India Pvt Ltd · Autonomous Workspace';
+    } catch(e) {}
 }
 
 window.handleLogout = async function() {
@@ -277,15 +286,15 @@ window.handleLogout = async function() {
 
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    initSidebarState();
-    initTheme();
-    initAuth();
-    initLiveBackground();
-    initMinimalSplash();
-    initCharts();
-    setupNavigationTabs();
-    setupEventListeners();
-    initLiveTicker();
+    try { initSidebarState(); } catch(e) { console.error('initSidebarState error:', e); }
+    try { initTheme(); } catch(e) { console.error('initTheme error:', e); }
+    try { initAuth(); } catch(e) { console.error('initAuth error:', e); }
+    try { initLiveBackground(); } catch(e) { console.error('initLiveBackground error:', e); }
+    try { initMinimalSplash(); } catch(e) { console.error('initMinimalSplash error:', e); }
+    try { initCharts(); } catch(e) { console.error('initCharts error:', e); }
+    try { setupNavigationTabs(); } catch(e) { console.error('setupNavigationTabs error:', e); }
+    try { setupEventListeners(); } catch(e) { console.error('setupEventListeners error:', e); }
+    try { initLiveTicker(); } catch(e) { console.error('initLiveTicker error:', e); }
 
     // Fetch all 5 autonomous modules, ML lab & database health
     fetchDbStatus();
@@ -751,6 +760,10 @@ window.toggleFloatingChat = function() {
 // 6. CHART INITIALIZATIONS
 // =========================================================================
 function initCharts() {
+    if (typeof Chart === 'undefined' || !window.Chart) {
+        console.warn('Chart.js not loaded yet; deferring chart rendering.');
+        return;
+    }
     const isDark = document.documentElement.classList.contains('dark');
     const labelColor = isDark ? '#A1A1AA' : '#71717A';
     const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
