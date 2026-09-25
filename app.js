@@ -377,6 +377,7 @@ window.animateCounter = function(elementOrId, targetValue, isCurrency = true, du
 };
 
 window.switchToTab = function(targetId) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     const tabButtons = document.querySelectorAll('.nav-tab-btn, header nav a, aside nav a, .mobile-nav-link');
     const views = document.querySelectorAll('.module-view');
 

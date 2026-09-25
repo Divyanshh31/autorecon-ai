@@ -289,247 +289,272 @@
             <!-- =========================================================================
                  MODULE VIEW 1: HOME / OPERATING CONSOLE (Default View)
                  ========================================================================= -->
+                        <!-- =========================================================================
+                 MODULE VIEW 1: HOME / OPERATING CONSOLE (Introductory & Merchant Profile)
+                 ========================================================================= -->
             <div id="view-home" class="module-view flex-1">
-                <!-- Max-Width Centered Container -->
-                <div class="max-w-7xl mx-auto w-full px-4 py-6 space-y-6">
+                <div class="max-w-7xl mx-auto w-full px-4 py-6 space-y-8">
 
-                    <!-- Clean 50/50 Split Hero Section -->
-                    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-                        <!-- Left Hero Messaging -->
-                        <div class="lg:col-span-6 spotlight-card p-6 flex flex-col justify-between relative overflow-hidden">
-                            <div>
-                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 text-xs font-medium border border-blue-200 dark:border-blue-900/40 mb-3">
-                                    <span class="material-symbols-outlined text-[14px]">verified_user</span>
-                                    <span>Autonomous finops engine</span>
-                                </div>
-                                <h1 class="text-2xl sm:text-3xl font-semibold text-zinc-900 dark:text-zinc-100 tracking-tight leading-tight">
-                                    Autonomous financial operations for Razorpay merchants
-                                </h1>
-                                <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                                    Deterministic 3-way reconciliation bridging Razorpay capture payloads, raw bank UTR feeds, and TallyPrime XML ledgers.
-                                </p>
+                    <!-- SECTION 1: PLATFORM INTRODUCTION HERO BANNER -->
+                    <section class="spotlight-card p-6 sm:p-8 relative overflow-hidden">
+                        <div class="max-w-3xl space-y-4">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 text-xs font-medium border border-blue-200 dark:border-blue-900/50">
+                                <span class="material-symbols-outlined text-[15px]">verified_user</span>
+                                <span>Autonomous FinOps Platform</span>
                             </div>
-                            <div class="flex items-center gap-3 mt-6">
-                                <a onclick="switchToTab('view-recon')" class="btn btn-primary text-xs">
+                            <h1 class="text-2xl sm:text-4xl font-semibold text-zinc-900 dark:text-zinc-100 tracking-tight leading-tight">
+                                Autonomous Financial Operations for Razorpay Merchants
+                            </h1>
+                            <p class="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                AutoRecon AI is a deterministic financial reconciliation system designed for modern D2C merchants. It eliminates manual accounting errors by matching Razorpay capture payloads, raw bank UTR credits, TallyPrime XML ledgers, IMPS salary disbursals, and MSME 43B(h) statutory deadlines in real time.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-3 pt-2">
+                                <button onclick="switchToTab('view-recon')" class="btn btn-primary text-xs sm:text-sm">
                                     <span class="material-symbols-outlined text-[18px]">bolt</span>
-                                    <span>Explore Console</span>
+                                    <span>Open Gateway Recon</span>
+                                </button>
+                                <a href="#merchant-profile-card" class="btn btn-secondary text-xs sm:text-sm">
+                                    <span class="material-symbols-outlined text-[18px]">account_circle</span>
+                                    <span>Merchant User Profile</span>
                                 </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 2: SINGLE-FEATURE DIRECTORY GRID (1 Page = 1 Feature) -->
+                    <section class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h2 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Platform Feature Directory</h2>
+                                <p class="text-xs text-zinc-500 dark:text-zinc-400">Each module operates as an isolated single-function workspace.</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-black/[0.04] dark:bg-white/[0.06] text-zinc-600 dark:text-zinc-400 font-medium">5 Dedicated Pages</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            
+                            <!-- Feature 1: Gateway Recon -->
+                            <div class="spotlight-card p-5 flex flex-col justify-between space-y-4 hover:border-blue-500/50 transition-all group cursor-pointer" onclick="switchToTab('view-recon')">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center border border-blue-200 dark:border-blue-900/50">
+                                            <span class="material-symbols-outlined text-[20px]">sync_alt</span>
+                                        </div>
+                                        <span class="chip chip-success">3-Way Check</span>
+                                    </div>
+                                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Gateway Recon</h3>
+                                    <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                        Deterministic 3-way reconciliation bridging Razorpay capture payloads, raw ICICI bank UTR feeds, and TallyPrime ledgers.
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-t border-black/[0.08] dark:border-white/[0.08] flex items-center justify-between text-xs text-blue-600 dark:text-blue-400 font-medium">
+                                    <span>Access Reconciliation Table</span>
+                                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </div>
+                            </div>
+
+                            <!-- Feature 2: Payroll & Salaries -->
+                            <div class="spotlight-card p-5 flex flex-col justify-between space-y-4 hover:border-emerald-500/50 transition-all group cursor-pointer" onclick="switchToTab('view-payroll')">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-9 h-9 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-200 dark:border-emerald-900/50">
+                                            <span class="material-symbols-outlined text-[20px]">payments</span>
+                                        </div>
+                                        <span class="chip chip-success">TDS 192 Ready</span>
+                                    </div>
+                                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Payroll &amp; Salaries</h3>
+                                    <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                        Direct IMPS salary clearance engine with automated Section 192 tax withholding and statutory salary register export.
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-t border-black/[0.08] dark:border-white/[0.08] flex items-center justify-between text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                                    <span>Open Payroll Manager</span>
+                                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </div>
+                            </div>
+
+                            <!-- Feature 3: Vendors MSME 43B(h) -->
+                            <div class="spotlight-card p-5 flex flex-col justify-between space-y-4 hover:border-amber-500/50 transition-all group cursor-pointer" onclick="switchToTab('view-vendors')">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-9 h-9 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-200 dark:border-amber-900/50">
+                                            <span class="material-symbols-outlined text-[20px]">storefront</span>
+                                        </div>
+                                        <span class="chip chip-warning">45-Day Clock</span>
+                                    </div>
+                                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Vendors MSME 43B(h)</h3>
+                                    <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                        Live statutory aging clock for Micro &amp; Small vendor invoices to prevent tax disallowance penalties under Income Tax Sec 43B(h).
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-t border-black/[0.08] dark:border-white/[0.08] flex items-center justify-between text-xs text-amber-600 dark:text-amber-400 font-medium">
+                                    <span>Track MSME Invoices</span>
+                                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </div>
+                            </div>
+
+                            <!-- Feature 4: Cash Compass -->
+                            <div class="spotlight-card p-5 flex flex-col justify-between space-y-4 hover:border-indigo-500/50 transition-all group cursor-pointer" onclick="switchToTab('view-cashflow')">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-9 h-9 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-indigo-200 dark:border-indigo-900/50">
+                                            <span class="material-symbols-outlined text-[20px]">explore</span>
+                                        </div>
+                                        <span class="chip chip-success">Liquidity Corridor</span>
+                                    </div>
+                                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Cash Compass</h3>
+                                    <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                        30-Day predictive liquidity corridor forecasting gateway T+1 sweeps, COD remittances, and corporate cash trough safety margins.
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-t border-black/[0.08] dark:border-white/[0.08] flex items-center justify-between text-xs text-indigo-600 dark:text-indigo-400 font-medium">
+                                    <span>View Treasury Forecast</span>
+                                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </div>
+                            </div>
+
+                            <!-- Feature 5: ML Lab -->
+                            <div class="spotlight-card p-5 flex flex-col justify-between space-y-4 hover:border-purple-500/50 transition-all group cursor-pointer" onclick="switchToTab('view-ml')">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <div class="w-9 h-9 rounded-lg bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center border border-purple-200 dark:border-purple-900/50">
+                                            <span class="material-symbols-outlined text-[20px]">psychology</span>
+                                        </div>
+                                        <span class="chip chip-warning">Leakage Radar</span>
+                                    </div>
+                                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">ML Lab &amp; Anomaly Intelligence</h3>
+                                    <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                                        Machine learning anomaly radar detecting MDR fee overcharges, GST interchange deltas, and automated dispute resolution triggers.
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-t border-black/[0.08] dark:border-white/[0.08] flex items-center justify-between text-xs text-purple-600 dark:text-purple-400 font-medium">
+                                    <span>Run ML Diagnostics</span>
+                                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3: MERCHANT USER PROFILE & SECURITY CARD -->
+                    <section id="merchant-profile-card" class="spotlight-card p-6 space-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-[#0066FF] dark:bg-[#3B82F6] text-white flex items-center justify-center font-bold text-lg shadow-sm" id="profileAvatarBig">
+                                    D
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <h2 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100" id="welcomeUserName">Divyansh Thakur</h2>
+                                        <span class="chip chip-success">Verified Merchant</span>
+                                    </div>
+                                    <p class="text-xs font-mono text-zinc-500 dark:text-zinc-400 mt-0.5" id="welcomeGstinPill">D2C Store • GSTIN: 27AAACR1234F1Z5</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="handleLogout()" class="btn btn-secondary text-xs">
+                                    <span class="material-symbols-outlined text-[16px]">logout</span>
+                                    <span>Sign Out</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Merchant Details Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+                            <!-- Column 1: Identity & Entity -->
+                            <div class="space-y-3 p-4 bg-black/[0.02] dark:bg-white/[0.04] rounded-[10px] border border-black/[0.06] dark:border-white/[0.06]">
+                                <h3 class="font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-semibold text-[11px]">Merchant Details</h3>
+                                <div class="space-y-2 font-mono">
+                                    <div class="flex justify-between">
+                                        <span class="text-zinc-500">Business Entity:</span>
+                                        <span class="text-zinc-900 dark:text-zinc-100 font-medium">Razorpay Merchant Ops</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-zinc-500">Registered GSTIN:</span>
+                                        <span class="text-zinc-900 dark:text-zinc-100 font-medium">27AAACR1234F1Z5</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-zinc-500">Contact Email:</span>
+                                        <span class="text-zinc-900 dark:text-zinc-100 font-medium">divyansh@autorecon.ai</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Column 2: Connected Gateway & Nodes -->
+                            <div class="space-y-3 p-4 bg-black/[0.02] dark:bg-white/[0.04] rounded-[10px] border border-black/[0.06] dark:border-white/[0.06]">
+                                <h3 class="font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-semibold text-[11px]">Connected Nodes</h3>
+                                <div class="space-y-2 font-mono">
+                                    <div class="flex justify-between">
+                                        <span class="text-zinc-500">Razorpay Gateway:</span>
+                                        <span class="text-emerald-600 dark:text-emerald-400 font-medium">MID_RZP_8839201</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-zinc-500">Bank UTR Feed:</span>
+                                        <span class="text-emerald-600 dark:text-emerald-400 font-medium">ICICI Corporate API</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-zinc-500">Accounting ERP:</span>
+                                        <span class="text-blue-600 dark:text-blue-400 font-medium">TallyPrime XML Node</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Column 3: Security & Guardrails -->
+                            <div class="space-y-3 p-4 bg-black/[0.02] dark:bg-white/[0.04] rounded-[10px] border border-black/[0.06] dark:border-white/[0.06]">
+                                <h3 class="font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-semibold text-[11px]">Security Protocol</h3>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                                        <span class="material-symbols-outlined text-[16px] text-emerald-500">lock</span>
+                                        <span>256-Bit SSL / RBI Data Localised</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                                        <span class="material-symbols-outlined text-[16px] text-emerald-500">gavel</span>
+                                        <span>Sec 43B(h) Statutory Guardrail Active</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                                        <span class="material-symbols-outlined text-[16px] text-blue-500">verified</span>
+                                        <span>Automated Audit Trail Enabled</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Administrative Actions -->
+                        <div class="pt-4 border-t border-black/[0.08] dark:border-white/[0.08]">
+                            <h3 class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-3">Quick Administrative Actions</h3>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <button onclick="document.getElementById('uploadModal').classList.remove('hidden');" class="btn btn-secondary text-xs">
+                                    <span class="material-symbols-outlined text-[16px] text-blue-600 dark:text-blue-400">upload_file</span>
+                                    <span>Upload CSV Ledger</span>
+                                </button>
+                                <button onclick="openDisputeModal()" class="btn btn-secondary text-xs">
+                                    <span class="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-400">gavel</span>
+                                    <span>Dispute Room</span>
+                                </button>
                                 <button onclick="openWebhookModal()" class="btn btn-secondary text-xs">
-                                    <span class="material-symbols-outlined text-[18px]">cell_tower</span>
+                                    <span class="material-symbols-outlined text-[16px] text-emerald-600 dark:text-emerald-400">check_circle</span>
                                     <span>Webhook Setup</span>
                                 </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Right Hero: Simulator Panel (Light & Quiet Card) -->
-                        <div class="lg:col-span-6 spotlight-card p-5 flex flex-col justify-between">
-                            <div>
-                                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-black/[0.08] dark:border-white/[0.08]">
-                                    <div class="flex items-center gap-2">
-                                        <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                                        <span class="font-mono text-xs text-zinc-500 dark:text-zinc-400">Node Inspector</span>
-                                    </div>
-                                    <div class="flex items-center gap-1 bg-black/[0.04] dark:bg-white/[0.06] p-1 rounded-[8px]">
-                                        <button class="px-2.5 py-1 rounded-[6px] font-mono text-xs bg-[#0066FF] dark:bg-[#3B82F6] text-white transition-all font-medium" id="tab-recon" onclick="switchTab('recon')">3-Way Recon</button>
-                                        <button class="px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all font-medium" id="tab-mdr" onclick="switchTab('mdr')">MDR Leakage</button>
-                                        <button class="px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all font-medium" id="tab-payroll" onclick="switchTab('payroll')">IMPS Payroll</button>
-                                        <button class="px-2.5 py-1 rounded-[6px] font-mono text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all font-medium" id="tab-msme" onclick="switchTab('msme')">MSME 43B(h)</button>
-                                    </div>
-                                </div>
-                                
-                                <!-- Tab 1: 3-Way Recon -->
-                                <div class="tab-panel py-3 space-y-2.5" id="panel-recon">
-                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
-                                        <div class="flex justify-between items-center text-xs font-mono text-zinc-500 mb-1">
-                                            <span>Checkpoint 1 • D2C Store Order</span>
-                                            <span class="text-emerald-600 dark:text-emerald-400 font-medium">HTTP 200 OK</span>
-                                        </div>
-                                        <div class="font-mono text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex justify-between">
-                                            <span id="simStoreOrderId">ORD_88493019 • Cart Value</span>
-                                            <span id="simStoreVal">INR 18,450.00</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-center -my-1">
-                                        <span class="material-symbols-outlined text-zinc-400 text-[16px]">arrow_downward</span>
-                                    </div>
-                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
-                                        <div class="flex justify-between items-center text-xs font-mono text-zinc-500 mb-1">
-                                            <span>Checkpoint 2 • Razorpay Capture Payload</span>
-                                            <span class="text-blue-600 dark:text-blue-400 font-medium">Capture #7F93A</span>
-                                        </div>
-                                        <div class="font-mono text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex justify-between">
-                                            <span id="simGatewayRate">pay_Oe28df01k8 • Gross Capture</span>
-                                            <span id="simGatewayFee">INR 18,450.00</span>
-                                        </div>
-                                        <div class="font-mono text-[11px] text-zinc-500 mt-1">Deducted MDR (1.80% + 18% GST): <span class="text-amber-600 dark:text-amber-400 font-semibold" id="simFeeBadge">INR 392.24</span></div>
-                                    </div>
-                                    <div class="flex justify-center -my-1">
-                                        <span class="material-symbols-outlined text-zinc-400 text-[16px]">arrow_downward</span>
-                                    </div>
-                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
-                                        <div class="flex justify-between items-center text-xs font-mono text-zinc-500 mb-1">
-                                            <span>Checkpoint 3 • ICICI Bank Settlement</span>
-                                            <span class="text-emerald-600 dark:text-emerald-400 font-medium">Match Confirmed</span>
-                                        </div>
-                                        <div class="font-mono text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex justify-between">
-                                            <span id="simBankUtr">UTR: CMS9382019481 • Net Credit</span>
-                                            <span class="text-emerald-600 dark:text-emerald-400" id="simBankVal">INR 18,057.76</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Tab 2: MDR Leakage -->
-                                <div class="tab-panel py-3 space-y-2.5 hidden" id="panel-mdr">
-                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
-                                        <div class="font-mono text-xs text-zinc-500 mb-2">Commercial Contract vs Billed</div>
-                                        <div class="grid grid-cols-2 gap-2">
-                                            <div class="bg-white dark:bg-[#131318] p-2 rounded border border-black/[0.08] dark:border-white/[0.08]">
-                                                <span class="text-xs text-zinc-500 block">Agreed UPI &amp; Debit MDR</span>
-                                                <span class="font-mono text-sm font-semibold text-zinc-900 dark:text-zinc-100">0.00% - 0.90%</span>
-                                            </div>
-                                            <div class="bg-white dark:bg-[#131318] p-2 rounded border border-black/[0.08] dark:border-white/[0.08]">
-                                                <span class="text-xs text-zinc-500 block">Invoiced Billed Rate</span>
-                                                <span class="font-mono text-sm font-semibold text-amber-600 dark:text-amber-400">2.45% avg</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06] space-y-1 font-mono text-xs">
-                                        <div class="flex justify-between text-zinc-600 dark:text-zinc-400">
-                                            <span>Over-invoiced GST on Interchange:</span>
-                                            <span class="text-amber-600 dark:text-amber-400" id="mdrContractedVal">INR 38,420.00</span>
-                                        </div>
-                                        <div class="flex justify-between text-zinc-600 dark:text-zinc-400">
-                                            <span>Unsupported Surcharge Spikes:</span>
-                                            <span class="text-amber-600 dark:text-amber-400" id="mdrOverchargeVal">INR 1,45,900.00</span>
-                                        </div>
-                                        <div class="flex justify-between text-zinc-900 dark:text-zinc-100 font-bold pt-1 border-t border-black/[0.06] dark:border-white/[0.06]">
-                                            <span>Net Recoverable Discrepancy:</span>
-                                            <span class="text-blue-600 dark:text-blue-400" id="mdrAnnualLeakVal">INR 1,84,320.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Tab 3: Payroll -->
-                                <div class="tab-panel py-3 space-y-2.5 hidden" id="panel-payroll">
-                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06] flex justify-between items-center">
-                                        <div>
-                                            <div class="font-mono text-xs text-zinc-500">Batch Disbursal BATCH_2024_04</div>
-                                            <div class="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mt-0.5">42 Employees • Net Pay ₹38,40,000</div>
-                                        </div>
-                                        <span class="chip chip-success">TDS 192 Verified</span>
-                                    </div>
-                                </div>
-
-                                <!-- Tab 4: MSME -->
-                                <div class="tab-panel py-3 space-y-2.5 hidden" id="panel-msme">
-                                    <div class="p-3 bg-black/[0.02] dark:bg-white/[0.04] rounded-[8px] border border-black/[0.06] dark:border-white/[0.06]">
-                                        <div class="flex justify-between items-center mb-1">
-                                            <span class="font-mono text-xs text-zinc-500">Section 43B(h) Clock</span>
-                                            <span class="chip chip-danger">4 Days to Penalty</span>
-                                        </div>
-                                        <p class="text-xs text-zinc-600 dark:text-zinc-400">Micro &amp; Small vendor payments must settle within 45 days of delivery to prevent tax deduction disallowance.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pt-3 border-t border-black/[0.08] dark:border-white/[0.08] flex items-center justify-between text-xs font-mono text-zinc-500">
-                                <span class="flex items-center gap-1.5">
-                                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                                    <span>Real-time simulation active</span>
-                                </span>
-                                <button onclick="switchToTab('view-recon')" class="text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-0.5">
-                                    <span>Inspect raw logs</span>
-                                    <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+                                <button onclick="openTallyModal()" class="btn btn-primary text-xs">
+                                    <span class="material-symbols-outlined text-[16px]">description</span>
+                                    <span>Export Tally XML</span>
                                 </button>
                             </div>
                         </div>
                     </section>
 
-                    <!-- Top Executive KPI Cards Grid (4 Cards, Clean Styling) -->
-                    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="kpi spotlight-card">
-                            <div class="flex justify-between items-center">
-                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Gross captures (MTD)</span>
-                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[20px]">payments</span>
-                            </div>
-                            <div class="mt-3 font-mono text-2xl font-semibold reactbits-shimmer-text" id="statGrossVolume" data-counter="true" data-target="48249120">INR 4,82,49,120.00</div>
-                            <div class="mt-3 flex items-center justify-between text-xs">
-                                <span class="chip chip-success">
-                                    <span class="material-symbols-outlined text-[12px]">arrow_upward</span>14.2%
-                                </span>
-                                <span class="font-mono text-zinc-400" id="chartOrderCount">35 orders audited</span>
-                            </div>
-                        </div>
-
-                        <div class="kpi spotlight-card">
-                            <div class="flex justify-between items-center">
-                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Net bank credited</span>
-                                <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-[20px]">account_balance</span>
-                            </div>
-                            <div class="mt-3 font-mono text-2xl font-semibold text-zinc-900 dark:text-zinc-100" id="statSettledBank" data-counter="true" data-target="47188430.40">INR 4,71,88,430.40</div>
-                            <div class="mt-3 flex items-center justify-between text-xs">
-                                <span class="font-mono text-zinc-500" id="statReconciledCount">32 orders settled</span>
-                                <span class="chip chip-success">Confirmed</span>
-                            </div>
-                        </div>
-
-                        <div class="kpi spotlight-card">
-                            <div class="flex justify-between items-center">
-                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">MDR fee leakage</span>
-                                <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-[20px]">warning</span>
-                            </div>
-                            <div class="mt-3 font-mono text-2xl font-semibold text-red-600 dark:text-red-400" id="statFeeLeakVal" data-counter="true" data-target="184320">INR 1,84,320.00</div>
-                            <div class="mt-3 flex items-center justify-between text-xs">
-                                <span class="text-zinc-500">GST &amp; interchange delta</span>
-                                <span class="chip chip-danger">Claimable</span>
-                            </div>
-                        </div>
-
-                        <div class="kpi spotlight-card">
-                            <div class="flex justify-between items-center">
-                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Unmatched transactions</span>
-                                <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-[20px]">sync_problem</span>
-                            </div>
-                            <div class="mt-3 font-mono text-2xl font-semibold text-zinc-900 dark:text-zinc-100" id="statDiscrepancyAmount">3 Discrepancies</div>
-                            <div class="mt-3 flex items-center justify-between text-xs">
-                                <span class="font-mono text-zinc-500" id="statAnomalyCount">At risk: ₹8,76,370.00</span>
-                                <span class="chip chip-warning">Action req</span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Analytical Charts (2 Clean Cards) -->
-                    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <div class="lg:col-span-5 card p-5 flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center justify-between mb-4">
-                                    <div>
-                                        <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">3-Way reconciliation breakdown</h2>
-                                        <p class="text-xs text-zinc-500">Store Order ⟷ Razorpay API ⟷ Bank UTR Credit</p>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded font-mono text-[11px] bg-black/[0.04] dark:bg-white/[0.06] text-zinc-600 dark:text-zinc-400">FY24-25 Q1</span>
-                                </div>
-                                <div class="h-60 relative flex items-center justify-center">
-                                    <canvas id="reconDonutChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="lg:col-span-7 card p-5 flex flex-col justify-between">
-                            <div>
-                                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                                    <div>
-                                        <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">MDR fee variance &amp; leakage tracking</h2>
-                                        <p class="text-xs text-zinc-500">Contractual baseline (2.00%) vs actual billed interchange rates</p>
-                                    </div>
-                                    <button onclick="openDisputeModal()" class="btn btn-secondary text-xs">
-                                        Dispute Letter
-                                    </button>
-                                </div>
-                                <div class="h-60 relative flex items-center justify-center">
-                                    <canvas id="feeBarChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <!-- Hidden Preserved Elements for app.js lookups to prevent errors -->
+                    <div class="hidden" aria-hidden="true">
+                        <span id="statGrossVolume">INR 4,82,49,120.00</span>
+                        <span id="statSettledBank">INR 4,71,88,430.40</span>
+                        <span id="statFeeLeakVal">INR 1,84,320.00</span>
+                        <span id="statDiscrepancyAmount">3 Discrepancies</span>
+                        <span id="chartOrderCount">35 orders audited</span>
+                        <span id="statReconciledCount">32 orders settled</span>
+                        <span id="statAnomalyCount">At risk: ₹8,76,370.00</span>
+                        <canvas id="reconDonutChart"></canvas>
+                        <canvas id="feeBarChart"></canvas>
+                    </div>
 
                 </div>
             </div><div id="view-recon" class="module-view flex-1 hidden">
