@@ -595,8 +595,6 @@
                         <span id="chartOrderCount">35 orders audited</span>
                         <span id="statReconciledCount">32 orders settled</span>
                         <span id="statAnomalyCount">At risk: ₹8,76,370.00</span>
-                        <canvas id="reconDonutChart"></canvas>
-                        <canvas id="feeBarChart"></canvas>
                     </div>
 
                 </div>
@@ -613,6 +611,35 @@
                                 <span class="material-symbols-outlined text-[16px]">sync</span>
                                 <span>Export Tally XML</span>
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- Analytics & Visual Inspection Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="spotlight-card p-5 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Settlement &amp; Reconciliation Distribution</h3>
+                                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Order matching breakdown across bank deposits &amp; variances</p>
+                                </div>
+                                <span class="chip chip-success">Real-time</span>
+                            </div>
+                            <div class="h-64 relative flex items-center justify-center">
+                                <canvas id="reconDonutChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="spotlight-card p-5 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">MDR Fee Breakdown &amp; Overcharge Variance</h3>
+                                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Contracted vs actual charged MDR and 18% GST input tax</p>
+                                </div>
+                                <span class="chip chip-warning">Audited</span>
+                            </div>
+                            <div class="h-64 relative flex items-center justify-center">
+                                <canvas id="feeBarChart"></canvas>
+                            </div>
                         </div>
                     </div>
 
@@ -982,9 +1009,15 @@
                             </div>
                         </div>
 
-                        <!-- Fallback Canvas Chart Container -->
-                        <div class="h-48 relative flex items-center justify-center mt-4">
-                            <canvas id="cashFlowChart"></canvas>
+                        <!-- Interactive Chart.js Treasury Flow Visualization -->
+                        <div class="mt-6 pt-4 border-t border-outline-variant/60">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs font-semibold font-mono text-on-surface-variant uppercase tracking-wider">Interactive Treasury Reserve &amp; Liquidity Velocity</span>
+                                <span class="chip chip-success font-mono text-[11px]">Chart.js Engine</span>
+                            </div>
+                            <div class="h-72 sm:h-80 w-full relative">
+                                <canvas id="cashFlowChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1153,6 +1186,35 @@
                             </div>
                         </div>
 
+                    </div>
+
+                    <!-- ML Analytics & Causal Visualizations -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="spotlight-card p-5 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">30-Day Escrow Liquidity Forecast (Prophet Model)</h3>
+                                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Central trajectory with 95% Bayesian confidence bands</p>
+                                </div>
+                                <span class="chip chip-success">±8.5% StDev</span>
+                            </div>
+                            <div class="h-64 relative">
+                                <canvas id="mlForecastChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="spotlight-card p-5 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Shapley Feature Attribution (Tree-SHAP)</h3>
+                                    <p class="text-xs text-zinc-500 dark:text-zinc-400">Feature contribution weight (φ) towards MDR overcharges</p>
+                                </div>
+                                <span class="chip chip-neutral font-mono">Tree-SHAP</span>
+                            </div>
+                            <div class="h-64 relative">
+                                <canvas id="mlFeatureImportanceChart"></canvas>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Active Inspection Dossier Card -->
@@ -1630,6 +1692,6 @@ Zenith Retail India Pvt Ltd
     <!-- Toast Notifications Container -->
     <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <script src="app.js?v=20260925_7.0"></script>
+    <script src="app.js?v=20260925_8.0"></script>
 </body>
 </html>

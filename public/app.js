@@ -98,6 +98,8 @@ if ('caches' in window) {
 let reconChart = null;
 let feeChart = null;
 let cashFlowChartInstance = null;
+let mlForecastChartInstance = null;
+let mlFeatureChartInstance = null;
 let currentFilter = 'ALL';
 let isLiveStreamActive = true;
 let currentBatchId = null;
@@ -765,33 +767,59 @@ function initCharts() {
         return;
     }
     const isDark = document.documentElement.classList.contains('dark');
-    const labelColor = isDark ? '#A1A1AA' : '#71717A';
+    const labelColor = isDark ? '#A1A1AA' : '#64748B';
     const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
 
     const elRecon = document.getElementById('reconDonutChart');
     if (elRecon) {
         const ctxRecon = elRecon.getContext('2d');
+        if (reconChart) reconChart.destroy();
         reconChart = new Chart(ctxRecon, {
             type: 'doughnut',
             data: {
-                labels: ['Credited in Bank', 'MDR Overcharge', 'Delayed Payout', 'Missing Bank Credit'],
+                labels: ['Matched Bank Deposit', 'MDR Fee Overcharge', 'Delayed SLA', 'Missing UTR'],
                 datasets: [{
                     data: [32, 1, 1, 1],
-                    backgroundColor: ['#10B981', '#0066FF', '#F59E0B', '#EF4444'],
+                    backgroundColor: ['#10B981', '#2563EB', '#F59E0B', '#EF4444'],
+                    hoverBackgroundColor: ['#059669', '#1D4ED8', '#D97706', '#DC2626'],
                     borderWidth: 0,
-                    hoverOffset: 4
+                    spacing: 3,
+                    borderRadius: 4
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                cutout: '78%',
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: labelColor, font: { size: 11, family: 'Inter', weight: '500' }, padding: 12 }
+                        labels: {
+                            color: labelColor,
+                            font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' },
+                            padding: 14,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: isDark ? '#1E293B' : '#0F172A',
+                        titleColor: '#F8FAFC',
+                        bodyColor: '#F8FAFC',
+                        borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                        borderWidth: 1,
+                        padding: 10,
+                        displayColors: true,
+                        callbacks: {
+                            label: function(ctx) {
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const val = ctx.raw;
+                                const pct = ((val / total) * 100).toFixed(1);
+                                return ` ${ctx.label}: ${val} Orders (${pct}%)`;
+                            }
+                        }
                     }
-                },
-                cutout: '75%'
+                }
             }
         });
     }
@@ -799,24 +827,52 @@ function initCharts() {
     const elFee = document.getElementById('feeBarChart');
     if (elFee) {
         const ctxFee = elFee.getContext('2d');
+        if (feeChart) feeChart.destroy();
         feeChart = new Chart(ctxFee, {
             type: 'bar',
             data: {
-                labels: ['Contracted 2% MDR', 'Actual MDR Deducted', 'GST on Fee (18%)', 'Extra Overcharge'],
+                labels: ['Contracted MDR (2.0%)', 'Actual Charged MDR', 'GST Input Tax (18%)', 'Overcharge Variance'],
                 datasets: [{
-                    label: 'INR',
+                    label: 'Amount (₹)',
                     data: [3392.00, 3531.50, 635.67, 139.50],
-                    backgroundColor: ['#0066FF', '#3B82F6', '#10B981', '#F59E0B'],
-                    borderRadius: 6
+                    backgroundColor: ['#2563EB', '#3B82F6', '#10B981', '#EF4444'],
+                    borderRadius: 8,
+                    borderSkipped: false,
+                    barThickness: 28
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: isDark ? '#1E293B' : '#0F172A',
+                        titleColor: '#F8FAFC',
+                        bodyColor: '#F8FAFC',
+                        borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                        borderWidth: 1,
+                        padding: 10,
+                        callbacks: {
+                            label: function(ctx) {
+                                return ` ${ctx.label}: ₹${ctx.raw.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+                            }
+                        }
+                    }
+                },
                 scales: {
-                    x: { ticks: { color: labelColor, font: { size: 11, family: 'Inter', weight: '500' } }, grid: { display: false } },
-                    y: { ticks: { color: labelColor, font: { size: 11, family: 'JetBrains Mono', weight: '500' } }, grid: { color: gridColor } }
+                    x: {
+                        ticks: { color: labelColor, font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' } },
+                        grid: { display: false }
+                    },
+                    y: {
+                        ticks: {
+                            color: labelColor,
+                            font: { size: 11, family: 'JetBrains Mono', weight: '500' },
+                            callback: v => '₹' + v.toLocaleString('en-IN')
+                        },
+                        grid: { color: gridColor }
+                    }
                 }
             }
         });
@@ -825,7 +881,159 @@ function initCharts() {
     if (window.renderCashFlowChart) {
         window.renderCashFlowChart();
     }
+
+    renderMlCharts();
 }
+
+function renderMlCharts() {
+    if (typeof Chart === 'undefined' || !window.Chart) return;
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const labelColor = isDark ? '#A1A1AA' : '#64748B';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
+
+    const elForecast = document.getElementById('mlForecastChart');
+    if (elForecast) {
+        const days = ['Day 1', 'Day 5', 'Day 10', 'Day 15', 'Day 20', 'Day 25', 'Day 30'];
+        const forecastVal = [1.42, 1.55, 1.68, 1.82, 1.74, 1.91, 2.05];
+        const upperBand = [1.48, 1.63, 1.77, 1.93, 1.86, 2.04, 2.19];
+        const lowerBand = [1.36, 1.47, 1.59, 1.71, 1.62, 1.78, 1.91];
+
+        const ctx = elForecast.getContext('2d');
+        if (mlForecastChartInstance) mlForecastChartInstance.destroy();
+        mlForecastChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: days,
+                datasets: [
+                    {
+                        label: '95% Upper Band',
+                        data: upperBand,
+                        borderColor: 'transparent',
+                        backgroundColor: isDark ? 'rgba(37, 99, 235, 0.12)' : 'rgba(37, 99, 235, 0.08)',
+                        fill: '+1',
+                        pointRadius: 0,
+                        tension: 0.35
+                    },
+                    {
+                        label: '95% Lower Band',
+                        data: lowerBand,
+                        borderColor: 'transparent',
+                        backgroundColor: 'transparent',
+                        pointRadius: 0,
+                        tension: 0.35
+                    },
+                    {
+                        label: 'Prophet Liquidity Forecast (₹ Cr)',
+                        data: forecastVal,
+                        borderColor: '#2563EB',
+                        borderWidth: 2.5,
+                        backgroundColor: 'transparent',
+                        tension: 0.35,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: '#2563EB'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: labelColor,
+                            font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' },
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            filter: item => item.text.includes('Prophet')
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: isDark ? '#1E293B' : '#0F172A',
+                        titleColor: '#F8FAFC',
+                        bodyColor: '#F8FAFC',
+                        borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                        borderWidth: 1,
+                        padding: 10,
+                        callbacks: {
+                            label: function(ctx) {
+                                return ` ${ctx.dataset.label}: ₹${ctx.raw} Cr`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: labelColor, font: { size: 11, family: 'Plus Jakarta Sans', weight: '500' } },
+                        grid: { display: false }
+                    },
+                    y: {
+                        ticks: {
+                            color: labelColor,
+                            font: { size: 11, family: 'JetBrains Mono', weight: '500' },
+                            callback: v => '₹' + v + ' Cr'
+                        },
+                        grid: { color: gridColor }
+                    }
+                }
+            }
+        });
+    }
+
+    const elFeature = document.getElementById('mlFeatureImportanceChart');
+    if (elFeature) {
+        const ctx = elFeature.getContext('2d');
+        if (mlFeatureChartInstance) mlFeatureChartInstance.destroy();
+        mlFeatureChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['BIN Routing Drift', 'GST Rate Surcharge', 'Storefront Lag', 'Corporate MDR Drift', 'Interchange Discrepancy'],
+                datasets: [{
+                    label: 'Tree-SHAP Attribution Weight (φ)',
+                    data: [0.584, 0.261, 0.185, 0.124, 0.072],
+                    backgroundColor: ['#EF4444', '#F59E0B', '#3B82F6', '#10B981', '#6366F1'],
+                    borderRadius: 6,
+                    borderSkipped: false,
+                    barThickness: 18
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: isDark ? '#1E293B' : '#0F172A',
+                        titleColor: '#F8FAFC',
+                        bodyColor: '#F8FAFC',
+                        borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                        borderWidth: 1,
+                        padding: 10,
+                        callbacks: {
+                            label: function(ctx) {
+                                return ` SHAP Weight φ: +${ctx.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: labelColor, font: { size: 11, family: 'JetBrains Mono', weight: '500' } },
+                        grid: { color: gridColor }
+                    },
+                    y: {
+                        ticks: { color: labelColor, font: { size: 11, family: 'Plus Jakarta Sans', weight: '500' } },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+}
+window.renderMlCharts = renderMlCharts;
 
 // Database Health Check
 async function fetchDbStatus() {
@@ -1362,8 +1570,8 @@ window.renderCashFlowChart = function() {
     }
 
     const isDark = document.documentElement.classList.contains('dark');
-    const textColor = isDark ? '#94A3B8' : '#475569';
-    const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(226, 232, 240, 0.8)';
+    const labelColor = isDark ? '#94A3B8' : '#64748B';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
 
     const days = [
         'Aug 01', 'Aug 03', 'Aug 05', 'Aug 07', 'Aug 09', 'Aug 11',
@@ -1390,6 +1598,12 @@ window.renderCashFlowChart = function() {
     ];
 
     const ctx = el.getContext('2d');
+    
+    // Gradient fill for Net Treasury Reserve
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, isDark ? 'rgba(16, 185, 129, 0.25)' : 'rgba(16, 185, 129, 0.12)');
+    gradient.addColorStop(1, isDark ? 'rgba(16, 185, 129, 0.0)' : 'rgba(16, 185, 129, 0.0)');
+
     window.cashFlowChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
@@ -1399,21 +1613,21 @@ window.renderCashFlowChart = function() {
                     label: 'Net Treasury Reserve (₹)',
                     data: projectedBalances,
                     borderColor: '#10B981',
-                    backgroundColor: isDark ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.08)',
+                    backgroundColor: gradient,
                     fill: true,
-                    tension: 0.35,
+                    tension: 0.38,
                     borderWidth: 2.5,
                     pointRadius: 3,
-                    pointBackgroundColor: '#10B981',
-                    pointHoverRadius: 6
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#10B981'
                 },
                 {
                     label: 'Razorpay Gateway Inflows (₹)',
                     data: inflows,
-                    borderColor: '#0066FF',
+                    borderColor: '#2563EB',
                     backgroundColor: 'transparent',
                     borderWidth: 2,
-                    tension: 0.3,
+                    tension: 0.35,
                     pointRadius: 0
                 },
                 {
@@ -1422,7 +1636,7 @@ window.renderCashFlowChart = function() {
                     borderColor: '#EF4444',
                     backgroundColor: 'transparent',
                     borderWidth: 1.8,
-                    borderDash: [4, 4],
+                    borderDash: [5, 5],
                     tension: 0.2,
                     pointRadius: 0
                 }
@@ -1439,29 +1653,37 @@ window.renderCashFlowChart = function() {
                 legend: {
                     position: 'top',
                     labels: {
-                        color: textColor,
-                        font: { size: 11, family: 'Outfit', weight: '600' },
-                        boxWidth: 12,
-                        padding: 12
+                        color: labelColor,
+                        font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' },
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        boxWidth: 8,
+                        padding: 16
                     }
                 },
                 tooltip: {
+                    backgroundColor: isDark ? '#1E293B' : '#0F172A',
+                    titleColor: '#F8FAFC',
+                    bodyColor: '#F8FAFC',
+                    borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                    borderWidth: 1,
+                    padding: 12,
                     callbacks: {
                         label: function(context) {
-                            return ` ${context.dataset.label}: ₹${context.raw.toLocaleString('en-IN')}`;
+                            return ` ${context.dataset.label}: ₹${context.raw.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
                         }
                     }
                 }
             },
             scales: {
                 x: {
-                    ticks: { color: textColor, font: { size: 10, family: 'Outfit', weight: '600' } },
+                    ticks: { color: labelColor, font: { size: 11, family: 'Plus Jakarta Sans', weight: '500' } },
                     grid: { display: false }
                 },
                 y: {
                     ticks: {
-                        color: textColor,
-                        font: { size: 10, family: 'JetBrains Mono', weight: '600' },
+                        color: labelColor,
+                        font: { size: 11, family: 'JetBrains Mono', weight: '500' },
                         callback: (v) => '₹' + (v / 1000).toFixed(0) + 'k'
                     },
                     grid: { color: gridColor }
