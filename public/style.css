@@ -544,3 +544,157 @@ html.dark .rzp-table td {
 .rzp-table .text-right { text-align: right !important; }
 .rzp-table .text-center { text-align: center !important; }
 
+/* ==========================================================================
+   REACTBITS.DEV ANIMATIONS, GRADIENTS & INTERACTIVE TRANSITIONS
+   ========================================================================== */
+
+/* 1. Ambient Mesh Gradient Backgrounds */
+.reactbits-mesh-bg {
+    background: radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(15, 157, 138, 0.10) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+    background-size: 140% 140%;
+    animation: meshGradientAnimate 12s ease-in-out infinite alternate;
+}
+
+html.dark .reactbits-mesh-bg {
+    background: radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.18) 0%, transparent 50%),
+                radial-gradient(circle at 85% 85%, rgba(52, 211, 153, 0.14) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(129, 140, 248, 0.12) 0%, transparent 65%);
+    background-size: 140% 140%;
+    animation: meshGradientAnimate 12s ease-in-out infinite alternate;
+}
+
+@keyframes meshGradientAnimate {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+/* 2. Gradient Border Glow Cards */
+.reactbits-gradient-card {
+    position: relative;
+    background: var(--rzp-surface-card);
+    border-radius: var(--radius-card);
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+}
+
+.reactbits-gradient-card::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: calc(var(--radius-card) + 1.5px);
+    padding: 1.5px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.4), rgba(15, 157, 138, 0.3), rgba(99, 102, 241, 0.4));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+    transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+html.dark .reactbits-gradient-card::before {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(52, 211, 153, 0.5), rgba(129, 140, 248, 0.6));
+}
+
+.reactbits-gradient-card:hover::before {
+    opacity: 1;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.8), rgba(16, 185, 129, 0.8), rgba(99, 102, 241, 0.8));
+}
+
+.reactbits-gradient-card:hover {
+    transform: translateY(-3px) scale(1.005);
+    box-shadow: 0 12px 24px -6px rgba(37, 99, 235, 0.12);
+}
+
+html.dark .reactbits-gradient-card:hover {
+    box-shadow: 0 12px 28px -6px rgba(59, 130, 246, 0.25);
+}
+
+/* 3. ReactBits Shimmer Beam Button */
+.reactbits-btn-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.reactbits-btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        60deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.25) 50%,
+        transparent 70%
+    );
+    transform: rotate(30deg);
+    animation: btnShimmerSweep 4s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes btnShimmerSweep {
+    0% { transform: translate(-100%, -100%) rotate(30deg); }
+    30%, 100% { transform: translate(100%, 100%) rotate(30deg); }
+}
+
+/* 4. Multi-Ring Radar Pulse Dot */
+.reactbits-pulse-dot {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reactbits-pulse-dot::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: currentColor;
+    opacity: 0.75;
+    animation: pulseRing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pulseRing {
+    75%, 100% {
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+/* 5. Smooth Tab Transition Keyframes */
+@keyframes reactbitsTabEnter {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.module-view:not(.hidden) {
+    animation: reactbitsTabEnter 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 6. ReactBits Glassmorphism Overlay Cards */
+.reactbits-glass {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+html.dark .reactbits-glass {
+    background: rgba(19, 19, 24, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
