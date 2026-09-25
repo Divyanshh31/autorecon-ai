@@ -1,3 +1,83 @@
+
+// Global Toast Notification System
+window.showToast = function(message, type = 'info') {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'pointer-events-auto px-4 py-2.5 rounded-lg bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 text-xs font-medium shadow-xl border border-white/10 flex items-center gap-2 transform translate-y-2 opacity-0 transition-all duration-300';
+    
+    let iconName = 'info';
+    if (type === 'success') iconName = 'check_circle';
+    if (type === 'warning') iconName = 'warning';
+    if (type === 'error') iconName = 'error';
+
+    toast.innerHTML = `<span class="material-symbols-outlined text-[16px]">${iconName}</span><span>${message}</span>`;
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+    });
+
+    setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => {
+            if (toast.parentNode) toast.parentNode.removeChild(toast);
+        }, 300);
+    }, 3500);
+};
+
+// Sidebar Collapse Toggle
+window.toggleSidebarCollapse = function() {
+    const sidebar = document.getElementById('leftSidebar');
+    if (!sidebar) return;
+    const isCollapsed = sidebar.classList.toggle('sidebar-collapsed');
+    localStorage.setItem('autorecon_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+};
+
+// Init Sidebar State
+function initSidebarState() {
+    const saved = localStorage.getItem('autorecon_sidebar_collapsed');
+    const sidebar = document.getElementById('leftSidebar');
+    if (sidebar && saved === 'true') {
+        sidebar.classList.add('sidebar-collapsed');
+    }
+}
+
+// Date Range Filter
+window.handleDateRangeChange = function(rangeVal) {
+    if (window.showToast) window.showToast(`Date Range Filter Applied: ${rangeVal.toUpperCase()}`);
+    fetchSummary();
+    fetchOrders();
+    fetchPayroll();
+    fetchVendors();
+    fetchCashFlow();
+};
+
+// Manual Data Refresh
+window.refreshCurrentDashboardData = function() {
+    const icon = document.getElementById('refreshIcon');
+    if (icon) icon.classList.add('animate-spin');
+    
+    fetchSummary();
+    fetchOrders();
+    fetchDiscrepancies();
+    fetchPayroll();
+    fetchVendors();
+    fetchCashFlow();
+    fetchMlIntelligence();
+
+    setTimeout(() => {
+        if (icon) icon.classList.remove('animate-spin');
+        if (window.showToast) window.showToast('All autonomous feeds synchronized!');
+    }, 600);
+};
+
 // AutoRecon AI : All-in-One Autonomous Accounting & Financial Operations OS
 // Multi-Tasking Client Controller: Gateway Recon, Payroll & Salary Delays, Vendor AP & MSME 43B(h), Cash Flow & AI Munimji
 
@@ -432,6 +512,20 @@ window.switchToTab = function(targetId) {
             v.classList.add('hidden');
         }
     });
+
+    
+    const breadcrumbTitles = {
+        'view-home': 'Operating Console',
+        'view-recon': 'Gateway Recon (3-Way Check)',
+        'view-payroll': 'Payroll & Salaries (IMPS / TDS 192)',
+        'view-vendors': 'Vendors MSME 43B(h) (45-Day Aging)',
+        'view-cashflow': 'Cash Compass (30-Day Forecast)',
+        'view-ml': 'ML Intelligence Lab'
+    };
+    const breadcrumbEl = document.getElementById('currentBreadcrumbTitle');
+    if (breadcrumbEl && breadcrumbTitles[targetId]) {
+        breadcrumbEl.textContent = breadcrumbTitles[targetId];
+    }
 
     if (targetId === 'view-recon') renderOrdersTable();
     if (targetId === 'view-payroll') renderPayrollTable();

@@ -1,44 +1,49 @@
 /* ==========================================================================
-   AutoRecon AI — Minimal, Calm & Modern Fintech Design System
-   Linear / Stripe / Vercel Visual Architecture
+   AutoRecon AI — Enterprise Fintech Design System
+   Color System: Navy #0B1F33, Surface #FFFFFF, Background #F6F8FB, Accent #2563EB, Teal #0F9D8A
+   Typography: Plus Jakarta Sans + Space Grotesk + JetBrains Mono
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-    /* Color Palette — Light Mode (Clean Neutral #FAFAFA) */
-    --rzp-bg: #FAFAFA;
-    --rzp-bg-secondary: #F4F4F5;
+    /* User-Specified Enterprise Fintech Palette */
+    --rzp-navy: #0B1F33;
+    --rzp-bg: #F6F8FB;
+    --rzp-bg-secondary: #EDF2F7;
     --rzp-surface: #FFFFFF;
     --rzp-surface-card: #FFFFFF;
-    --rzp-surface-card-hover: #FAFAFA;
+    --rzp-surface-card-hover: #F8FAFC;
     
-    --rzp-blue: #0066FF;
-    --rzp-blue-hover: #0052CC;
-    --rzp-blue-soft: rgba(0, 102, 255, 0.08);
+    --rzp-blue: #2563EB;
+    --rzp-blue-hover: #1D4ED8;
+    --rzp-blue-soft: rgba(37, 99, 235, 0.08);
+
+    --rzp-teal: #0F9D8A;
+    --rzp-teal-soft: rgba(15, 157, 138, 0.1);
     
-    --rzp-emerald: #10B981;
-    --rzp-emerald-soft: rgba(16, 185, 129, 0.1);
+    --rzp-emerald: #15803D;
+    --rzp-emerald-soft: rgba(21, 128, 61, 0.1);
     
-    --rzp-amber: #F59E0B;
-    --rzp-amber-soft: rgba(245, 158, 11, 0.1);
+    --rzp-amber: #B45309;
+    --rzp-amber-soft: rgba(180, 83, 9, 0.1);
     
-    --rzp-red: #EF4444;
-    --rzp-red-soft: rgba(239, 68, 68, 0.1);
+    --rzp-red: #DC2626;
+    --rzp-red-soft: rgba(220, 38, 38, 0.1);
     
-    --rzp-border: rgba(0, 0, 0, 0.08);
-    --rzp-border-hover: rgba(0, 0, 0, 0.15);
-    --rzp-border-glow: rgba(0, 102, 255, 0.15);
+    --rzp-border: #E2E8F0;
+    --rzp-border-hover: #CBD5E1;
+    --rzp-border-glow: rgba(37, 99, 235, 0.15);
     
-    --rzp-text-main: #09090B;
-    --rzp-text-body: #27272A;
-    --rzp-text-muted: #71717A;
-    --rzp-text-light: #A1A1AA;
+    --rzp-text-main: #172B4D;
+    --rzp-text-body: #334155;
+    --rzp-text-muted: #64748B;
+    --rzp-text-light: #94A3B8;
     
-    --rzp-grid-color: rgba(9, 9, 11, 0.02);
-    --rzp-header-bg: rgba(255, 255, 255, 0.85);
-    --rzp-row-hover: #F4F4F5;
-    --rzp-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+    --rzp-grid-color: rgba(23, 43, 77, 0.03);
+    --rzp-header-bg: rgba(255, 255, 255, 0.9);
+    --rzp-row-hover: #F8FAFC;
+    --rzp-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
     
     --rzp-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     --rzp-ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -443,4 +448,30 @@ body {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+}
+
+
+/* ---------------- SIDEBAR COLLAPSED & EXPANDED TRANSITIONS ---------------- */
+aside#leftSidebar {
+    transition: width 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+main {
+    transition: padding-left 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+aside.sidebar-collapsed {
+    width: 5rem !important; /* 80px */
+}
+aside.sidebar-collapsed .sidebar-label,
+aside.sidebar-collapsed .sidebar-section-title,
+aside.sidebar-collapsed .sidebar-hide-on-collapse {
+    display: none !important;
+}
+aside.sidebar-collapsed .sidebar-center-on-collapse {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+aside.sidebar-collapsed + main {
+    padding-left: 5rem !important;
 }

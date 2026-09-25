@@ -266,6 +266,40 @@
          ========================================================================= -->
     <main class="w-full lg:pl-64 bg-background reactbits-grid-pattern min-h-screen flex flex-col">
         <div class="flex flex-col w-full flex-1">
+            <!-- Desktop Top Bar Header (Breadcrumbs, Date Filter, Refresh, Search) -->
+            <header class="hidden lg:flex sticky top-0 z-30 w-full backdrop-blur-md bg-white/85 dark:bg-[#0B0B0F]/85 border-b border-black/[0.08] dark:border-white/[0.08] px-6 py-2.5 items-center justify-between select-none">
+                <!-- Left Breadcrumb & Sidebar Collapse Button -->
+                <div class="flex items-center gap-3">
+                    <button id="btnToggleSidebar" onclick="toggleSidebarCollapse()" class="p-1.5 rounded-md text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition cursor-pointer" title="Toggle Sidebar Width">
+                        <span class="material-symbols-outlined text-[18px]">view_sidebar</span>
+                    </button>
+                    <div class="flex items-center gap-1.5 text-xs font-mono text-zinc-500">
+                        <a href="#" onclick="switchToTab('view-home')" class="hover:underline text-zinc-600 dark:text-zinc-400">AutoRecon AI</a>
+                        <span>/</span>
+                        <span class="font-medium text-zinc-900 dark:text-zinc-100" id="currentBreadcrumbTitle">Operating Console</span>
+                    </div>
+                </div>
+
+                <!-- Right Actions Bar (Date Range, Refresh, Quick Actions) -->
+                <div class="flex items-center gap-3">
+                    <!-- Date Range Selector -->
+                    <div class="flex items-center gap-1.5 bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.08] rounded-[8px] px-2.5 py-1">
+                        <span class="material-symbols-outlined text-[16px] text-zinc-400">calendar_today</span>
+                        <select id="headerDateRangeSelect" onchange="handleDateRangeChange(this.value)" class="bg-transparent border-none outline-none font-mono text-xs text-zinc-800 dark:text-zinc-200 cursor-pointer">
+                            <option value="today" class="bg-white dark:bg-[#131318]">Today</option>
+                            <option value="7d" class="bg-white dark:bg-[#131318]">Last 7 Days</option>
+                            <option value="30d" selected class="bg-white dark:bg-[#131318]">Last 30 Days</option>
+                            <option value="custom" class="bg-white dark:bg-[#131318]">Custom Range</option>
+                        </select>
+                    </div>
+
+                    <!-- Refresh Button -->
+                    <button id="btnRefreshDashboard" onclick="refreshCurrentDashboardData()" title="Refresh Dashboard Data" class="btn btn-secondary px-2.5 py-1 text-xs flex items-center gap-1.5 cursor-pointer">
+                        <span class="material-symbols-outlined text-[16px] transition-transform" id="refreshIcon">refresh</span>
+                        <span>Sync</span>
+                    </button>
+                </div>
+            </header>
 
             <!-- Live Marquee Ticker Feed -->
             <div class="w-full border-b border-black/[0.08] dark:border-white/[0.08] bg-white/60 dark:bg-[#131318]/60 py-2.5 px-4 select-none">
@@ -625,6 +659,57 @@
                         </div>
                     </div>
 
+                                        <!-- Payroll Summary Cards -->
+                    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="spotlight-card p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Total Monthly Payroll</span>
+                                <span class="material-symbols-outlined text-blue-600 text-[18px]">payments</span>
+                            </div>
+                            <div class="mt-2 font-mono text-xl font-semibold text-zinc-900 dark:text-zinc-100">INR 6,93,000.00</div>
+                            <div class="mt-2 flex items-center justify-between text-xs text-zinc-500 font-mono">
+                                <span>Gross salary total</span>
+                                <span class="chip chip-neutral">Monthly</span>
+                            </div>
+                        </div>
+
+                        <div class="spotlight-card p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Headcount Audit</span>
+                                <span class="material-symbols-outlined text-emerald-600 text-[18px]">groups</span>
+                            </div>
+                            <div class="mt-2 font-mono text-xl font-semibold text-zinc-900 dark:text-zinc-100">8 Employees</div>
+                            <div class="mt-2 flex items-center justify-between text-xs text-zinc-500 font-mono">
+                                <span>100% Verified</span>
+                                <span class="chip chip-success">Active</span>
+                            </div>
+                        </div>
+
+                        <div class="spotlight-card p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Sec 192 TDS Withheld</span>
+                                <span class="material-symbols-outlined text-amber-600 text-[18px]">account_balance</span>
+                            </div>
+                            <div class="mt-2 font-mono text-xl font-semibold text-amber-600 dark:text-amber-400">INR 69,300.00</div>
+                            <div class="mt-2 flex items-center justify-between text-xs text-zinc-500 font-mono">
+                                <span>Tax Portal Ready</span>
+                                <span class="chip chip-warning">10% Rate</span>
+                            </div>
+                        </div>
+
+                        <div class="spotlight-card p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Net Disbursal SLA</span>
+                                <span class="material-symbols-outlined text-indigo-600 text-[18px]">electric_bolt</span>
+                            </div>
+                            <div class="mt-2 font-mono text-xl font-semibold text-zinc-900 dark:text-zinc-100">INR 5,94,900.00</div>
+                            <div class="mt-2 flex items-center justify-between text-xs text-zinc-500 font-mono">
+                                <span>Direct Bank IMPS</span>
+                                <span class="chip chip-success">Clearing</span>
+                            </div>
+                        </div>
+                    </section>
+
                     <!-- Payroll Table Card -->
                     <div class="card overflow-hidden">
                         <div class="w-full overflow-x-auto">
@@ -658,6 +743,57 @@
                             <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Live statutory payment clock for Micro &amp; Small vendor invoices to prevent tax disallowance penalties.</p>
                         </div>
                     </div>
+
+                                        <!-- Vendor AP Summary Cards -->
+                    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="spotlight-card p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Total Invoiced AP</span>
+                                <span class="material-symbols-outlined text-blue-600 text-[18px]">receipt</span>
+                            </div>
+                            <div class="mt-2 font-mono text-xl font-semibold text-zinc-900 dark:text-zinc-100" id="statVendTotalInvoiced">INR 2,21,000.00</div>
+                            <div class="mt-2 flex items-center justify-between text-xs text-zinc-500 font-mono" id="statVendBillCount">
+                                <span>5 Invoices Audited</span>
+                                <span class="chip chip-neutral">August</span>
+                            </div>
+                        </div>
+
+                        <div class="spotlight-card p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">GST ITC Claimable</span>
+                                <span class="material-symbols-outlined text-emerald-600 text-[18px]">verified</span>
+                            </div>
+                            <div class="mt-2 font-mono text-xl font-semibold text-emerald-600 dark:text-emerald-400" id="statVendGstItc">INR 39,780.00</div>
+                            <div class="mt-2 flex items-center justify-between text-xs text-zinc-500 font-mono">
+                                <span>GSTR-2B Matched</span>
+                                <span class="chip chip-success">Input Credit</span>
+                            </div>
+                        </div>
+
+                        <div class="spotlight-card p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">TDS Withheld (194C/J)</span>
+                                <span class="material-symbols-outlined text-amber-600 text-[18px]">account_balance_wallet</span>
+                            </div>
+                            <div class="mt-2 font-mono text-xl font-semibold text-amber-600 dark:text-amber-400" id="statVendTds">INR 6,455.00</div>
+                            <div class="mt-2 flex items-center justify-between text-xs text-zinc-500 font-mono">
+                                <span>Form 26Q Filing</span>
+                                <span class="chip chip-warning">Withheld</span>
+                            </div>
+                        </div>
+
+                        <div class="spotlight-card p-4 flex flex-col justify-between">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Sec 43B(h) Penalty Watch</span>
+                                <span class="material-symbols-outlined text-red-600 text-[18px]">timer</span>
+                            </div>
+                            <div class="mt-2 font-mono text-xl font-semibold text-red-600 dark:text-red-400" id="statVendUrgentCount">1 Critical MSME</div>
+                            <div class="mt-2 flex items-center justify-between text-xs text-zinc-500 font-mono">
+                                <span>45-Day statutory limit</span>
+                                <span class="chip chip-danger">Action Req</span>
+                            </div>
+                        </div>
+                    </section>
 
                     <!-- Vendors Table Card -->
                     <div class="card overflow-hidden">
