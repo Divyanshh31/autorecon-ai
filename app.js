@@ -626,6 +626,17 @@ function setupEventListeners() {
     if (simForm) simForm.addEventListener('submit', handleSimulateTransaction);
 
     // Live Search Filter for Reconciliation Table
+        // Global Search Input
+    const globalSearchInput = document.getElementById('globalSearchInput');
+    if (globalSearchInput) {
+        globalSearchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            renderOrdersTable(query);
+            renderPayrollTable(query);
+            renderVendorsTable(query);
+        });
+    }
+
     const searchInput = document.getElementById('tableSearchInput');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -1045,16 +1056,26 @@ async function fetchPayroll() {
     renderPayrollTable();
 }
 
-function renderPayrollTable() {
+function renderPayrollTable(searchQuery = '') {
     const tbody = document.getElementById('payrollTableBody');
     if (!tbody) return;
 
-    if (!currentPayroll || currentPayroll.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="py-8 px-4 text-center text-zinc-400">No payroll records found.</td></tr>`;
+    let dataset = currentPayroll;
+    if (searchQuery) {
+        dataset = currentPayroll.filter(e => 
+            (e.name && e.name.toLowerCase().includes(searchQuery)) ||
+            (e.empId && e.empId.toLowerCase().includes(searchQuery)) ||
+            (e.role && e.role.toLowerCase().includes(searchQuery)) ||
+            (e.department && e.department.toLowerCase().includes(searchQuery))
+        );
+    }
+
+    if (!dataset || dataset.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="py-8 px-4 text-center text-zinc-400 font-mono text-xs">No employee payroll records found matching filter.</td></tr>`;
         return;
     }
 
-    tbody.innerHTML = currentPayroll.map(emp => {
+    tbody.innerHTML = dataset.map(emp => {
         let statusBadge = '';
         let actionBtn = '';
 
@@ -1196,16 +1217,26 @@ function updateVendorDashboard(summary) {
     setTxt('statVendUrgentCount', `${summary.msmeUrgentBillsCount} MSME Bill Due in 2 Days`);
 }
 
-function renderVendorsTable() {
+function renderVendorsTable(searchQuery = '') {
     const tbody = document.getElementById('vendorsTableBody');
     if (!tbody) return;
 
-    if (currentVendors.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-slate-400">No vendor invoices found.</td></tr>`;
+    let dataset = currentVendors;
+    if (searchQuery) {
+        dataset = currentVendors.filter(v =>
+            (v.vendorName && v.vendorName.toLowerCase().includes(searchQuery)) ||
+            (v.invoiceNo && v.invoiceNo.toLowerCase().includes(searchQuery)) ||
+            (v.gstin && v.gstin.toLowerCase().includes(searchQuery)) ||
+            (v.category && v.category.toLowerCase().includes(searchQuery))
+        );
+    }
+
+    if (!dataset || dataset.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-8 text-center text-zinc-400 font-mono text-xs">No vendor invoices found matching filter.</td></tr>`;
         return;
     }
 
-    tbody.innerHTML = currentVendors.map(v => {
+    tbody.innerHTML = dataset.map(v => {
         let agingBadge = '';
         let actionBtn = '';
 
