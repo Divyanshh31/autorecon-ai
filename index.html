@@ -1634,29 +1634,49 @@ Zenith Retail India Pvt Ltd
                             <div>
                                 <h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
                                     <span>AI Munimji Copilot</span>
-                                    <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-mono-sm text-mono-sm font-bold">ONLINE</span>
+                                    <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono text-[10px] font-bold flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        FULL-TIME AI COPILOT
+                                    </span>
                                 </h3>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">Autonomous Financial Assistant &amp; Anomaly Resolver</p>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">24/7 Autonomous Financial Operations &amp; CA Assistant</p>
                             </div>
                         </div>
-                        <button onclick="closeCopilotDrawer()" class="text-on-surface-variant hover:text-on-surface p-1 cursor-pointer">
-                            <span class="material-symbols-outlined text-[20px]">close</span>
-                        </button>
+                        <div class="flex items-center gap-1">
+                            <button onclick="clearCopilotChat()" class="text-on-surface-variant hover:text-on-surface p-1.5 rounded-lg hover:bg-surface-container-high transition-colors cursor-pointer" title="Clear Chat History">
+                                <span class="material-symbols-outlined text-[18px]">delete_sweep</span>
+                            </button>
+                            <button onclick="closeCopilotDrawer()" class="text-on-surface-variant hover:text-on-surface p-1.5 rounded-lg hover:bg-surface-container-high transition-colors cursor-pointer" title="Close Drawer">
+                                <span class="material-symbols-outlined text-[20px]">close</span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Quick Prompt Chips -->
                     <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 shrink-0">
+                        <button onclick="sendCopilotPrompt('Hello! What is my financial status?')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                            💬 Hello!
+                        </button>
+                        <button onclick="sendCopilotPrompt('Audit my 3-way gateway settlements and UTR matching')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                            💳 Settlement Audit
+                        </button>
                         <button onclick="sendCopilotPrompt('Where is my biggest settlement fee leakage?')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
-                            🔍 Fee Leakage
+                            💰 Fee Overcharges
+                        </button>
+                        <button onclick="sendCopilotPrompt('Show payroll Sec 192 TDS tax portal summary')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                            👥 Payroll TDS
                         </button>
                         <button onclick="sendCopilotPrompt('Simulate MSME 45-day tax penalty disallowance')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
-                             MSME Tax Risk
+                            🧾 MSME 43B(h)
+                        </button>
+                        <button onclick="sendCopilotPrompt('How do I export vouchers to TallyPrime XML?')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
+                            📊 Export Tally XML
                         </button>
                         <button onclick="sendCopilotPrompt('Explain Isolation Forest Anomaly #ORD-91283')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
-                            🧠 Explain Anomaly
+                            🤖 ML Anomalies
                         </button>
                         <button onclick="sendCopilotPrompt('Predict 30-day cash balance under 5% RTO spike')" class="px-2.5 py-1 bg-surface-container-low border border-outline-variant hover:border-primary rounded-md font-body-sm text-body-sm text-on-surface whitespace-nowrap transition-colors cursor-pointer">
-                            📈 RTO Cash Forecast
+                            📈 Cash Forecast
                         </button>
                     </div>
 
@@ -1692,6 +1712,6 @@ Zenith Retail India Pvt Ltd
     <!-- Toast Notifications Container -->
     <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <script src="app.js?v=20260925_8.0"></script>
+    <script src="app.js?v=20260925_9.0"></script>
 </body>
 </html>
