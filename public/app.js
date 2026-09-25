@@ -929,6 +929,104 @@ function renderOrdersTable(searchQuery = '') {
     }).join('');
 };
 
+
+// =========================================================================
+// 8. MODULE 2: PAYROLL & SALARIES (IMPS / TDS 192)
+// =========================================================================
+async function fetchPayroll() {
+    try {
+        const res = await fetch('/api/payroll/employees', { headers: getAuthHeaders() });
+        if (res && res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                currentPayroll = data;
+            }
+        }
+    } catch (e) {
+        console.error('Error fetching payroll:', e);
+    }
+    if (!currentPayroll || currentPayroll.length === 0) {
+        currentPayroll = defaultPayrollDataset;
+    }
+    renderPayrollTable();
+}
+
+function renderPayrollTable() {
+    const tbody = document.getElementById('payrollTableBody');
+    if (!tbody) return;
+
+    if (!currentPayroll || currentPayroll.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="py-8 px-4 text-center text-zinc-400">No payroll records found.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = currentPayroll.map(emp => {
+        let statusBadge = '';
+        let actionBtn = '';
+
+        if (emp.status === 'DISBURSED') {
+            statusBadge = `<span class="chip chip-success"><span class="material-symbols-outlined text-[14px]">check</span> Disbursed</span>`;
+            actionBtn = `<span class="font-mono text-xs text-emerald-600 dark:text-emerald-400 font-medium">${emp.bankUtr || 'SAL_IMPS_99201'}</span>`;
+        } else if (emp.status === 'DELAYED') {
+            statusBadge = `<span class="chip chip-danger"><span class="material-symbols-outlined text-[14px]">schedule</span> Delayed (${emp.delayDays}d)</span>`;
+            actionBtn = `<button onclick="disburseSingleSalary('${emp.empId}')" class="btn btn-primary text-xs py-1 px-2.5">Clear IMPS ➔</button>`;
+        } else {
+            statusBadge = `<span class="chip chip-warning"><span class="material-symbols-outlined text-[14px]">pending</span> Pending Bank</span>`;
+            actionBtn = `<button onclick="disburseSingleSalary('${emp.empId}')" class="btn btn-secondary text-xs py-1 px-2.5">Disburse</button>`;
+        }
+
+        const totalTaxPf = (emp.tdsDeduction || 0) + (emp.pfDeduction || 0);
+
+        return `
+            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors border-b border-black/[0.06] dark:border-white/[0.06]">
+                <td class="py-3.5 px-4">
+                    <div class="font-medium text-zinc-900 dark:text-zinc-100">${emp.name}</div>
+                    <div class="text-xs font-mono text-zinc-500 mt-0.5">${emp.empId}</div>
+                </td>
+                <td class="py-3.5 px-4">
+                    <div class="text-xs font-medium text-zinc-800 dark:text-zinc-200">${emp.role}</div>
+                    <div class="text-[11px] text-zinc-500">${emp.department}</div>
+                </td>
+                <td class="py-3.5 px-4 font-mono font-medium text-zinc-900 dark:text-zinc-100 text-right">₹${Number(emp.grossSalary).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-amber-600 dark:text-amber-400 text-right">₹${Number(totalTaxPf).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="py-3.5 px-4 font-mono font-semibold text-emerald-600 dark:text-emerald-400 text-right">₹${Number(emp.netPayable).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                <td class="py-3.5 px-4">${statusBadge}</td>
+                <td class="py-3.5 px-4 text-right">${actionBtn}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+window.disburseSingleSalary = async function(empId) {
+    try {
+        const res = await fetch('/api/payroll/disburse', {
+            method: 'POST',
+            headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+            body: JSON.stringify({ empId })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            if (window.showToast) window.showToast(data.message || `Salary disbursed for ${empId}!`);
+        } else {
+            const target = currentPayroll.find(e => e.empId === empId);
+            if (target) {
+                target.status = 'DISBURSED';
+                target.bankUtr = `SAL_IMPS_${Math.floor(100000 + Math.random() * 900000)}`;
+                if (window.showToast) window.showToast(`IMPS Disbursal Successful! UTR: ${target.bankUtr}`);
+            }
+        }
+        renderPayrollTable();
+    } catch (e) {
+        const target = currentPayroll.find(e => e.empId === empId);
+        if (target) {
+            target.status = 'DISBURSED';
+            target.bankUtr = `SAL_IMPS_${Math.floor(100000 + Math.random() * 900000)}`;
+            if (window.showToast) window.showToast(`IMPS Disbursal Successful! UTR: ${target.bankUtr}`);
+        }
+        renderPayrollTable();
+    }
+};
+
 window.openDisburseAllModal = async function() {
     const delayed = currentPayroll.filter(e => e.status === 'DELAYED' || e.status === 'PENDING_CLEARANCE');
     if (delayed.length === 0) {

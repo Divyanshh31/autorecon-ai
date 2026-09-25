@@ -846,171 +846,175 @@
             <!-- =========================================================================
                  MODULE VIEW 6: ML INTELLIGENCE LAB VIEW
                  ========================================================================= -->
+            <!-- =========================================================================
+                 MODULE VIEW 6: ML INTELLIGENCE LAB VIEW (Clean & Spacious Layout)
+                 ========================================================================= -->
             <div id="view-ml" class="module-view flex-1 hidden">
-                <div class="w-full bg-surface-container-lowest px-grid-margin py-6 border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="font-headline-lg text-headline-lg text-on-surface">ML Intelligence Lab &amp; Audit Explainability</h2>
-                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                            Deterministic Bayesian inference &amp; Shapley feature attribution for zero-tolerance fee validation.
-                        </p>
+                <div class="max-w-7xl mx-auto w-full px-4 py-6 space-y-6">
+                    
+                    <!-- Module Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="chip chip-warning">Bayesian Engine</span>
+                                <h1 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">ML Lab &amp; Anomaly Intelligence</h1>
+                            </div>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Deterministic Bayesian inference &amp; Shapley feature attribution for zero-tolerance fee validation.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="runLiveMlScan()" id="btnRunMlScan" class="btn btn-primary text-xs">
+                                <span class="material-symbols-outlined text-[16px]">radar</span>
+                                <span>Run Instant ML Audit Scan</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="w-full px-grid-margin py-8 flex flex-col gap-8">
-                    <!-- SECTION 1: Three Explainability Pillars -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <!-- Pillar 1 -->
-                        <div class="relative bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 shadow-xs flex flex-col justify-between overflow-hidden stitch-hover-card">
-                            <div class="flex flex-col gap-2">
+                    <!-- 3 Un-clustered & Spacious Intelligence Cards -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        
+                        <!-- Card 1: Multi-Variate Anomaly Detection -->
+                        <div class="spotlight-card p-6 flex flex-col justify-between space-y-5">
+                            <div class="space-y-3">
                                 <div class="flex items-center justify-between">
-                                    <span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 01 // AUDIT DEFENSE</span>
-                                    <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-mono-sm text-mono-sm font-bold flex items-center gap-1">
-                                        <span class="h-1.5 w-1.5 rounded-md bg-primary animate-ping"></span> LIVE SCAN
-                                    </span>
+                                    <span class="font-mono text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">PILLAR 01 // AUDIT DEFENSE</span>
+                                    <span class="chip chip-success">LIVE SCAN</span>
                                 </div>
-                                <h2 class="font-headline-md text-headline-md text-on-surface mt-1">Multi-Variate Anomaly Detection</h2>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">Multi-Variate Anomaly Detection</h2>
+                                <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                                     Continuously monitors gateway interchange tiers, contract MDR schedules, and settlement latency drifts.
                                 </p>
                             </div>
-                            <div class="mt-6 pt-4 flex flex-col gap-4 border-t border-outline-variant/30">
+                            <div class="space-y-4 pt-4 border-t border-black/[0.08] dark:border-white/[0.08]">
                                 <div class="space-y-1.5">
-                                    <div class="flex justify-between items-center font-mono-sm text-mono-sm">
-                                        <span class="text-on-surface-variant">Isolation Forest Sensitivity:</span>
-                                        <span id="mlSensitivityLabel" class="text-primary font-bold">5% Sensitivity</span>
+                                    <div class="flex justify-between items-center text-xs font-mono">
+                                        <span class="text-zinc-500">Isolation Forest Sensitivity:</span>
+                                        <span id="mlSensitivityLabel" class="text-blue-600 dark:text-blue-400 font-semibold">5% Sensitivity</span>
                                     </div>
-                                    <input type="range" id="mlContaminationSlider" min="0.01" max="0.15" step="0.01" value="0.05" oninput="updateMlSensitivity(this.value)" class="w-full h-1.5 bg-surface-container-low rounded-lg appearance-none cursor-pointer accent-primary">
+                                    <input type="range" id="mlContaminationSlider" min="0.01" max="0.15" step="0.01" value="0.05" oninput="updateMlSensitivity(this.value)" class="w-full h-1.5 bg-black/[0.06] dark:bg-white/[0.1] rounded-lg appearance-none cursor-pointer accent-blue-600">
                                 </div>
-                                <div class="h-8 w-full bg-surface-container-low rounded-lg flex items-end px-1 gap-1 py-1 relative overflow-hidden" id="sparklineContainer">
-                                    <div class="bg-primary h-2 flex-1 rounded animate-bar-grow" style="animation-delay: 0.1s"></div>
-                                    <div class="bg-primary h-3 flex-1 rounded animate-bar-grow" style="animation-delay: 0.15s"></div>
-                                    <div class="bg-primary h-2 flex-1 rounded animate-bar-grow" style="animation-delay: 0.2s"></div>
-                                    <div class="bg-primary h-4 flex-1 rounded animate-bar-grow" style="animation-delay: 0.25s"></div>
-                                    <div class="bg-primary h-3 flex-1 rounded animate-bar-grow" style="animation-delay: 0.3s"></div>
-                                    <div class="bg-primary h-5 flex-1 rounded animate-bar-grow" style="animation-delay: 0.35s"></div>
-                                    <div class="bg-primary h-4 flex-1 rounded animate-bar-grow" style="animation-delay: 0.4s"></div>
-                                    <div class="bg-primary h-3 flex-1 rounded animate-bar-grow" style="animation-delay: 0.45s"></div>
-                                    <div class="bg-primary h-6 flex-1 rounded animate-bar-grow" style="animation-delay: 0.5s"></div>
-                                    <div class="bg-error h-8 flex-1 rounded animate-pulse"></div>
+                                <div class="h-10 w-full bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-lg flex items-end px-1 gap-1 py-1 relative overflow-hidden" id="sparklineContainer">
+                                    <div class="bg-blue-600 h-2 flex-1 rounded"></div>
+                                    <div class="bg-blue-600 h-3 flex-1 rounded"></div>
+                                    <div class="bg-blue-600 h-2 flex-1 rounded"></div>
+                                    <div class="bg-blue-600 h-4 flex-1 rounded"></div>
+                                    <div class="bg-blue-600 h-3 flex-1 rounded"></div>
+                                    <div class="bg-blue-600 h-5 flex-1 rounded"></div>
+                                    <div class="bg-blue-600 h-4 flex-1 rounded"></div>
+                                    <div class="bg-blue-600 h-3 flex-1 rounded"></div>
+                                    <div class="bg-blue-600 h-6 flex-1 rounded"></div>
+                                    <div class="bg-red-500 h-8 flex-1 rounded animate-pulse"></div>
                                 </div>
-                                <button onclick="runLiveMlScan()" id="btnRunMlScan" class="w-full py-2.5 px-4 bg-primary text-on-primary rounded-lg font-body-md text-body-md font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer active:scale-95">
-                                    <span class="material-symbols-outlined text-[18px]">radar</span>
-                                    <span>Run Instant ML Audit Scan</span>
-                                </button>
                             </div>
                         </div>
 
-                        <!-- Pillar 2 -->
-                        <div class="relative bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 shadow-xs flex flex-col justify-between overflow-hidden stitch-hover-card">
-                            <div class="flex flex-col gap-2">
+                        <!-- Card 2: Cash Flow Predictive Modeling -->
+                        <div class="spotlight-card p-6 flex flex-col justify-between space-y-5">
+                            <div class="space-y-3">
                                 <div class="flex items-center justify-between">
-                                    <span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 02 // LIQUIDITY FORESIGHT</span>
-                                    <span class="px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-mono-sm text-mono-sm font-bold">ARIMA + PROPHET</span>
+                                    <span class="font-mono text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">PILLAR 02 // LIQUIDITY FORESIGHT</span>
+                                    <span class="chip chip-success">ARIMA + PROPHET</span>
                                 </div>
-                                <h2 class="font-headline-md text-headline-md text-on-surface mt-1">Cash Flow Predictive Modeling</h2>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">Cash Flow Predictive Modeling</h2>
+                                <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                                     Forecasts settlement escrow liquidity by blending cart drop-off velocity, return (RTO) chargebacks, and bank holidays.
                                 </p>
                             </div>
-                            <div class="mt-6 pt-4 flex flex-col gap-4 border-t border-outline-variant/30">
+                            <div class="space-y-4 pt-4 border-t border-black/[0.08] dark:border-white/[0.08]">
                                 <div class="space-y-1.5">
-                                    <div class="flex justify-between items-center font-mono-sm text-mono-sm">
-                                        <span class="text-on-surface-variant">RTO Chargeback Rate Sim:</span>
-                                        <span id="rtoRateValue" class="text-tertiary font-bold">3.4% RTO Rate</span>
+                                    <div class="flex justify-between items-center text-xs font-mono">
+                                        <span class="text-zinc-500">RTO Chargeback Rate Sim:</span>
+                                        <span id="rtoRateValue" class="text-emerald-600 dark:text-emerald-400 font-semibold">3.4% RTO Rate</span>
                                     </div>
-                                    <input type="range" id="rtoRateSlider" min="1" max="15" step="0.5" value="3.4" oninput="updateCashFlowScenario()" class="w-full h-1.5 bg-surface-container-low rounded-lg appearance-none cursor-pointer accent-tertiary">
+                                    <input type="range" id="rtoRateSlider" min="1" max="15" step="0.5" value="3.4" oninput="updateCashFlowScenario()" class="w-full h-1.5 bg-black/[0.06] dark:bg-white/[0.1] rounded-lg appearance-none cursor-pointer accent-emerald-600">
                                 </div>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div class="p-3 rounded-lg bg-surface-container-low/50 border border-outline-variant/30">
-                                        <span class="font-mono-sm text-mono-sm text-on-surface-variant block">PROJECTED ESCROW:</span>
-                                        <span class="font-mono-kpi text-headline-sm text-on-surface font-bold" id="mlProjectedEscrow" data-counter="true" data-target="48290140">₹4,82,90,140</span>
+                                <div class="grid grid-cols-2 gap-3 font-mono text-xs">
+                                    <div class="p-3 rounded-lg bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06]">
+                                        <span class="text-zinc-500 block text-[11px]">PROJECTED ESCROW:</span>
+                                        <span class="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mt-0.5 block" id="mlProjectedEscrow" data-counter="true" data-target="48290140">₹4,82,90,140</span>
                                     </div>
-                                    <div class="p-3 rounded-lg bg-surface-container-low/50 border border-outline-variant/30">
-                                        <span class="font-mono-sm text-mono-sm text-on-surface-variant block">RTO VOLATILITY:</span>
-                                        <span class="font-mono-kpi text-headline-sm text-tertiary font-bold" id="mlRtoVolatility">3.41% σ</span>
+                                    <div class="p-3 rounded-lg bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06]">
+                                        <span class="text-zinc-500 block text-[11px]">RTO VOLATILITY:</span>
+                                        <span class="text-sm font-semibold text-amber-600 dark:text-amber-400 mt-0.5 block" id="mlRtoVolatility">3.41% σ</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pillar 3 -->
-                        <div class="relative bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 shadow-xs flex flex-col justify-between overflow-hidden stitch-hover-card">
-                            <div class="flex flex-col gap-2">
+                        <!-- Card 3: Feature Attribution Graph -->
+                        <div class="spotlight-card p-6 flex flex-col justify-between space-y-5">
+                            <div class="space-y-3">
                                 <div class="flex items-center justify-between">
-                                    <span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PILLAR 03 // CAUSAL ATTRIBUTION</span>
-                                    <span class="px-2 py-0.5 rounded bg-surface-container text-primary font-mono-sm text-mono-sm font-bold">TREE-SHAP</span>
+                                    <span class="font-mono text-xs font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">PILLAR 03 // CAUSAL ATTRIBUTION</span>
+                                    <span class="chip chip-neutral">TREE-SHAP</span>
                                 </div>
-                                <h2 class="font-headline-md text-headline-md text-on-surface mt-1">Feature Attribution Graph</h2>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">Feature Attribution Graph</h2>
+                                <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                                     Deconstructs fee overcharges down to mathematical feature attributions so controllers can contest vendor settlements.
                                 </p>
                             </div>
-                            <div class="mt-6 pt-4 flex flex-col gap-3 border-t border-outline-variant/30">
-                                <div class="space-y-2" id="shapWeightsContainer">
-                                    <div>
-                                        <div class="flex justify-between font-mono-sm text-mono-sm mb-1">
-                                            <span class="text-on-surface-variant">BIN Routing Category Error</span>
-                                            <span class="text-error font-bold" id="shapWeight1">φ = +0.584</span>
-                                        </div>
-                                        <div class="w-full bg-surface-container-low h-1.5 rounded-md overflow-hidden">
-                                            <div class="bg-error h-full rounded-md animate-bar-grow" id="shapBar1" style="width: 58.4%"></div>
-                                        </div>
+                            <div class="space-y-3 pt-4 border-t border-black/[0.08] dark:border-white/[0.08]" id="shapWeightsContainer">
+                                <div>
+                                    <div class="flex justify-between text-xs font-mono mb-1">
+                                        <span class="text-zinc-600 dark:text-zinc-400">BIN Routing Category Error</span>
+                                        <span class="text-red-600 dark:text-red-400 font-semibold" id="shapWeight1">φ = +0.584</span>
                                     </div>
-                                    <div>
-                                        <div class="flex justify-between font-mono-sm text-mono-sm mb-1">
-                                            <span class="text-on-surface-variant">Unwarranted GST Surcharge (18%)</span>
-                                            <span class="text-error font-bold" id="shapWeight2">φ = +0.261</span>
-                                        </div>
-                                        <div class="w-full bg-surface-container-low h-1.5 rounded-md overflow-hidden">
-                                            <div class="bg-tertiary h-full rounded-md animate-bar-grow" id="shapBar2" style="width: 26.1%"></div>
-                                        </div>
+                                    <div class="w-full bg-black/[0.06] dark:bg-white/[0.1] h-1.5 rounded-md overflow-hidden">
+                                        <div class="bg-red-500 h-full rounded-md" id="shapBar1" style="width: 58.4%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs font-mono mb-1">
+                                        <span class="text-zinc-600 dark:text-zinc-400">Unwarranted GST Surcharge (18%)</span>
+                                        <span class="text-amber-600 dark:text-amber-400 font-semibold" id="shapWeight2">φ = +0.261</span>
+                                    </div>
+                                    <div class="w-full bg-black/[0.06] dark:bg-white/[0.1] h-1.5 rounded-md overflow-hidden">
+                                        <div class="bg-amber-500 h-full rounded-md" id="shapBar2" style="width: 26.1%"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
-                    <!-- SECTION 2: Active Inspection Dossier Card -->
-                    <div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/30 shadow-xs flex flex-col gap-6" id="explainability-dossier">
-                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-outline-variant/30">
+                    <!-- Active Inspection Dossier Card -->
+                    <div class="spotlight-card p-6 space-y-4" id="explainability-dossier">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
                             <div class="flex items-center gap-3">
-                                <div class="h-10 w-10 rounded-xl bg-error/10 text-error flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-[22px]">gavel</span>
+                                <div class="w-10 h-10 rounded-lg bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 flex items-center justify-center border border-red-200 dark:border-red-900/50">
+                                    <span class="material-symbols-outlined text-[20px]">gavel</span>
                                 </div>
                                 <div>
                                     <div class="flex items-center gap-2">
-                                        <span class="font-mono-data text-mono-data uppercase text-error font-bold">DOSSIER DOS-2024-9182</span>
-                                        <span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-mono-sm text-mono-sm font-bold">CRITICAL SEVERITY</span>
+                                        <span class="font-mono text-xs font-bold text-red-600 dark:text-red-400">DOSSIER DOS-2024-9182</span>
+                                        <span class="chip chip-danger">CRITICAL SEVERITY</span>
                                     </div>
-                                    <h3 class="font-headline-md text-headline-md text-on-surface mt-0.5">Audit Explainability Dossier: ORD-91283 / pay_Nz93k81</h3>
+                                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 mt-0.5">Audit Explainability Dossier: ORD-91283 / pay_Nz93k81</h3>
                                 </div>
                             </div>
                         </div>
+
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                            <div class="lg:col-span-8 flex flex-col gap-2">
-                                <span class="font-mono-sm text-mono-sm text-primary uppercase font-bold tracking-wider">PLAIN-ENGLISH REGULATORY DIAGNOSIS</span>
-                                <p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
-                                    Razorpay incorrectly applied <span class="font-semibold text-error">"International Corporate Card" interchange tier (3.25% + INR 3)</span> to an Indian domestic RuPay Platinum debit transaction capped at <span class="font-semibold text-primary">0.00% by RBI mandate</span>.
+                            <div class="lg:col-span-8 space-y-1">
+                                <span class="font-mono text-[11px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">PLAIN-ENGLISH REGULATORY DIAGNOSIS</span>
+                                <p class="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                                    Razorpay incorrectly applied <span class="font-semibold text-red-600 dark:text-red-400">"International Corporate Card" interchange tier (3.25% + INR 3)</span> to an Indian domestic RuPay Platinum debit transaction capped at <span class="font-semibold text-emerald-600 dark:text-emerald-400">0.00% by RBI mandate</span>.
                                 </p>
                             </div>
-                            <div class="lg:col-span-4 p-5 bg-surface-container-low/50 rounded-xl border border-outline-variant/30 flex flex-col gap-4">
-                                <div class="flex justify-between items-center text-body-md text-error">
-                                    <span class="font-semibold">Total Fee Leakage:</span>
-                                    <span class="font-mono-kpi text-headline-sm font-bold text-error" data-counter="true" data-target="487.10">₹487.10</span>
+                            <div class="lg:col-span-4 p-4 bg-black/[0.02] dark:bg-white/[0.04] rounded-lg border border-black/[0.06] dark:border-white/[0.06] flex flex-col gap-3">
+                                <div class="flex justify-between items-center text-xs">
+                                    <span class="text-zinc-500 font-medium">Total Fee Leakage:</span>
+                                    <span class="font-mono text-lg font-bold text-red-600 dark:text-red-400" id="mlFeeLeakVal" data-counter="true" data-target="487.10">₹487.10</span>
                                 </div>
-                                <button onclick="openDisputeModal()" class="w-full py-2.5 px-4 rounded-lg bg-primary text-on-primary font-body-md text-body-md font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer">
-                                    <span class="material-symbols-outlined text-[18px]">send_and_archive</span>
+                                <button onclick="openDisputeModal()" class="btn btn-primary text-xs w-full">
+                                    <span class="material-symbols-outlined text-[16px]">send_and_archive</span>
                                     <span>File Dispute Ticket</span>
                                 </button>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
-
-        </div>
-    </main>
-
     <!-- =========================================================================
          FOOTER
          ========================================================================= -->
