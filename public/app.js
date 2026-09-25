@@ -277,6 +277,7 @@ window.handleLogout = async function() {
 
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
+    initSidebarState();
     initTheme();
     initAuth();
     initLiveBackground();
