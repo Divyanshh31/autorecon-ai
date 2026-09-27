@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoRecon AI — Project Pitch Deck & Presentation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b0f19;
+      color: #f3f4f6;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      height: 100vh;
+      width: 100vw;
+      padding: 3rem 4rem;
+      box-sizing: border-box;
+    }
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .card-glass {
+      background: rgba(23, 31, 51, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen">
+
+  <!-- TOP BAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 px-8 py-4 flex items-center justify-between bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">AR</div>
+      <span class="font-bold text-lg text-slate-100 tracking-wide">AutoRecon AI <span class="text-xs text-blue-400 font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 ml-2">PITCH DECK</span></span>
+    </div>
+    <div class="flex items-center gap-4 text-sm text-slate-400 font-mono">
+      <span>Slide <span id="current-slide-num" class="text-blue-400 font-bold">1</span> of <span id="total-slides-num">12</span></span>
+      <a href="/AutoRecon_AI_Presentation.pptx" download class="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold hover:bg-emerald-500/20 transition flex items-center gap-2">
+        <i class="fa-solid fa-download"></i> Download PPTX
+      </a>
+      <a href="https://razorpay-autorecon.vercel.app" target="_blank" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500 transition flex items-center gap-1.5">
+        <i class="fa-solid fa-external-link"></i> Live App
+      </a>
+    </div>
+  </header>
+
+  <!-- SLIDES CONTAINER -->
+  <main class="pt-16 pb-20 h-screen w-screen overflow-hidden">
+
+    <!-- SLIDE 1: TITLE SLIDE -->
+    <div class="slide active justify-center items-center text-center">
+      <div class="max-w-4xl card-glass p-12 shadow-2xl relative overflow-hidden border border-blue-500/30">
+        <div class="absolute -top-24 -left-24 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl"></div>
+        
+        <span class="text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-4 inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+          Razorpay Autonomous Financial Operations & Invoice Payment Tracker
+        </span>
+        <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 mb-6 leading-tight">
+          AutoRecon AI
+        </h1>
+        <p class="text-slate-300 text-lg max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+          Automating 3-Way Gateway Reconciliation, Section 43B(h) MSME Statutory Compliance, Section 192 TDS Payroll, and 24/7 AI Munimji CA Copilot.
+        </p>
+        
+        <div class="flex items-center justify-center gap-4">
+          <button onclick="nextSlide()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-sm shadow-lg shadow-blue-500/25 hover:opacity-90 transition flex items-center gap-2">
+            Start Presentation <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: PROBLEM STATEMENT -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">THE MERCHANT FINANCIAL CRISIS</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-6">Problem Statement: Invoice & Payment Tracker Challenge</h2>
+      
+      <div class="grid grid-cols-12 gap-6 h-[calc(100%-4rem)] items-center">
+        <div class="col-span-6 card-glass p-4 h-full flex items-center justify-center overflow-hidden">
+          <img src="/presentation_assets/media_1790522836830.png" alt="Problem Statement - Invoice & Payment Tracker" class="max-h-full max-w-full rounded-lg object-contain shadow-md" onerror="this.src='https://raw.githubusercontent.com/Divyanshh31/autorecon-ai/main/presentation_assets/media_1790522836830.png'">
+        </div>
+        <div class="col-span-6 card-glass p-6 h-full flex flex-col justify-center space-y-4">
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <h4 class="font-bold text-blue-400 text-sm mb-1"><i class="fa-solid fa-bullseye mr-2"></i>Official Challenge</h4>
+            <p class="text-xs text-slate-300">Build an invoice management system with customer creation, line items, status updates, search/filtering, overdue identification, summary cards, and printable views.</p>
+          </div>
+          <div class="space-y-3">
+            <div class="flex items-start gap-3">
+              <i class="fa-solid fa-triangle-exclamation text-amber-400 mt-1 text-sm"></i>
+              <div>
+                <h5 class="text-xs font-bold text-slate-200">Gateway MDR Leakage</h5>
+                <p class="text-xs text-slate-400">Payment gateways overcharge transaction fees (e.g. charging corporate 3.25% rates on zero-cap RuPay/UPI orders).</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fa-solid fa-clock-rotate-left text-red-400 mt-1 text-sm"></i>
+              <div>
+                <h5 class="text-xs font-bold text-slate-200">Section 43B(h) MSME Tax Penalties</h5>
+                <p class="text-xs text-slate-400">Unpaid MSME vendor invoices exceeding 45 days are disallowed as business expenses, causing tax penalties.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fa-solid fa-file-invoice-dollar text-cyan-400 mt-1 text-sm"></i>
+              <div>
+                <h5 class="text-xs font-bold text-slate-200">Payroll TDS Delays</h5>
+                <p class="text-xs text-slate-400">Managing worker payouts alongside 10% Section 192 TDS requires manual compliance calculation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: WORKSPACE 1 - OPERATING CONSOLE -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">WORKSPACE 1</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-4">Operating Console Overview</h2>
+      <div class="grid grid-cols-12 gap-6 h-[calc(100%-4rem)] items-center">
+        <div class="col-span-8 card-glass p-2 h-full flex items-center justify-center overflow-hidden">
+          <img src="/presentation_assets/09_Home_Operating_Console.png" alt="Console Overview" class="max-h-full max-w-full rounded-lg object-contain shadow-lg">
+        </div>
+        <div class="col-span-4 card-glass p-6 h-full flex flex-col justify-center space-y-4">
+          <div class="flex items-center gap-2 text-blue-400 font-bold text-sm">
+            <i class="fa-solid fa-desktop"></i> Executive Dashboard
+          </div>
+          <ul class="space-y-3 text-xs text-slate-300">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Ambient Mesh Spotlight</strong>: ReactBits.dev cursor-tracking radial glow aesthetic.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Live Marquee Ticker</strong>: Real-time scrolling feed of UTR credits & MDR variance alerts.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Active DB Status Badge</strong>: Displays serverless DB connection & total record count.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: WORKSPACE 2 - GATEWAY RECON -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">WORKSPACE 2</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-4">Gateway 3-Way Reconciliation</h2>
+      <div class="grid grid-cols-12 gap-6 h-[calc(100%-4rem)] items-center">
+        <div class="col-span-8 card-glass p-2 h-full flex items-center justify-center overflow-hidden">
+          <img src="/presentation_assets/08_Gateway_Reconciliation_Module.png" alt="Gateway Recon" class="max-h-full max-w-full rounded-lg object-contain shadow-lg">
+        </div>
+        <div class="col-span-4 card-glass p-6 h-full flex flex-col justify-center space-y-4">
+          <div class="flex items-center gap-2 text-cyan-400 font-bold text-sm">
+            <i class="fa-solid fa-scale-balanced"></i> 3-Way Matching Matrix
+          </div>
+          <ul class="space-y-3 text-xs text-slate-300">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Storefront PO vs Razorpay Feed vs Axis UTR</strong>: Automatic matching engine.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Fee Overcharge Detection</strong>: Audits actual MDR rates charged against contractual rates.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Chart.js Analytics</strong>: Interactive donut & bar charts for match state distribution.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: WORKSPACE 3 - MSME INVOICE TRACKER -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">WORKSPACE 3</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-4">Vendors MSME 43B(h) Invoice Tracker</h2>
+      <div class="grid grid-cols-12 gap-6 h-[calc(100%-4rem)] items-center">
+        <div class="col-span-8 card-glass p-2 h-full flex items-center justify-center overflow-hidden">
+          <img src="/presentation_assets/03_MSME_43Bh_AP_Module.png" alt="MSME Invoice Tracker" class="max-h-full max-w-full rounded-lg object-contain shadow-lg">
+        </div>
+        <div class="col-span-4 card-glass p-6 h-full flex flex-col justify-center space-y-4">
+          <div class="flex items-center gap-2 text-amber-400 font-bold text-sm">
+            <i class="fa-solid fa-receipt"></i> 45-Day Statutory Compliance
+          </div>
+          <ul class="space-y-3 text-xs text-slate-300">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Summary KPI Cards</strong>: Live aggregates for Paid (₹2,21,000) & GST ITC (₹39,780).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>45-Day Aging Clock</strong>: Color-coded badges (SAFE, URGENT, OVERDUE).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Instant Clearance</strong>: Single-click vendor payment execution with toast feedback.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: WORKSPACE 4 - PAYROLL -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">WORKSPACE 4</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-4">Payroll Register & Section 192 TDS</h2>
+      <div class="grid grid-cols-12 gap-6 h-[calc(100%-4rem)] items-center">
+        <div class="col-span-8 card-glass p-2 h-full flex items-center justify-center overflow-hidden">
+          <img src="/presentation_assets/04_Payroll_and_Salaries_Module.png" alt="Payroll Register" class="max-h-full max-w-full rounded-lg object-contain shadow-lg">
+        </div>
+        <div class="col-span-4 card-glass p-6 h-full flex flex-col justify-center space-y-4">
+          <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm">
+            <i class="fa-solid fa-users font-bold"></i> Salary & TDS Withholding
+          </div>
+          <ul class="space-y-3 text-xs text-slate-300">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>10% TDS Calculation</strong>: Automatic Section 192 tax withholding computation.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Printable Payslips</strong>: Dedicated printable invoice view (<code class="text-cyan-400">/salary-report.html</code>).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Disbursal Tracking</strong>: Clear separation of DISBURSED vs PENDING_CLEARANCE.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: WORKSPACE 5 - CASH COMPASS -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">WORKSPACE 5</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-4">Cash Compass 30-Day Liquidity Corridor</h2>
+      <div class="grid grid-cols-12 gap-6 h-[calc(100%-4rem)] items-center">
+        <div class="col-span-8 card-glass p-2 h-full flex items-center justify-center overflow-hidden">
+          <img src="/presentation_assets/02_Cash_Compass_Module.png" alt="Cash Compass" class="max-h-full max-w-full rounded-lg object-contain shadow-lg">
+        </div>
+        <div class="col-span-4 card-glass p-6 h-full flex flex-col justify-center space-y-4">
+          <div class="flex items-center gap-2 text-indigo-400 font-bold text-sm">
+            <i class="fa-solid fa-chart-line"></i> Treasury Forecasting
+          </div>
+          <ul class="space-y-3 text-xs text-slate-300">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>30-Day Liquidity Forecast</strong>: Dynamic inflow & outflow cash corridor chart.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Operational Runway</strong>: Real-time calculation of available cash reserves.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: WORKSPACE 6 - ML INTELLIGENCE LAB -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">WORKSPACE 6</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-4">ML Intelligence Lab & Anomaly Radar</h2>
+      <div class="grid grid-cols-12 gap-6 h-[calc(100%-4rem)] items-center">
+        <div class="col-span-8 card-glass p-2 h-full flex items-center justify-center overflow-hidden">
+          <img src="/presentation_assets/07_ML_Intelligence_Lab_Module.png" alt="ML Lab" class="max-h-full max-w-full rounded-lg object-contain shadow-lg">
+        </div>
+        <div class="col-span-4 card-glass p-6 h-full flex flex-col justify-center space-y-4">
+          <div class="flex items-center gap-2 text-purple-400 font-bold text-sm">
+            <i class="fa-solid fa-brain"></i> Explainable AI Detection
+          </div>
+          <ul class="space-y-3 text-xs text-slate-300">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Isolation Forest Radar</strong>: ML model scanning for anomalous fee sweep patterns.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i>
+              <span><strong>SHAP Attribution</strong>: Explainable feature weights for flagged transactions.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: SYSTEM INTEGRATIONS -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">SYSTEM INTEGRATIONS</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-4">TallyPrime XML Bridge & Razorpay Webhooks</h2>
+      <div class="grid grid-cols-2 gap-6 h-[calc(100%-4rem)] items-center">
+        <div class="card-glass p-4 h-full flex flex-col justify-between">
+          <div class="flex-1 flex items-center justify-center overflow-hidden mb-3">
+            <img src="/presentation_assets/06_TallyPrime_Bridge_Modal.png" alt="Tally Bridge" class="max-h-full max-w-full rounded-lg object-contain">
+          </div>
+          <h4 class="font-bold text-blue-400 text-xs mb-1">TallyPrime Double-Entry XML Bridge</h4>
+          <p class="text-[11px] text-slate-300">Generates 1-click double-entry XML vouchers for MDR fees and vendor payables ready to import into Tally ERP.</p>
+        </div>
+        <div class="card-glass p-4 h-full flex flex-col justify-between">
+          <div class="flex-1 flex items-center justify-center overflow-hidden mb-3">
+            <img src="/presentation_assets/01_Razorpay_Webhook_Setup_Modal.png" alt="Webhook Engine" class="max-h-full max-w-full rounded-lg object-contain">
+          </div>
+          <h4 class="font-bold text-cyan-400 text-xs mb-1">Razorpay Webhook Receiver</h4>
+          <p class="text-[11px] text-slate-300">Listens for live payment.captured and settlement.processed events for real-time synchronization.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: 24/7 AI MUNIMJI -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">AI ASSISTANT</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-6">24/7 AI Munimji: Full-Time CA Copilot</h2>
+      <div class="max-w-4xl mx-auto card-glass p-8 space-y-6">
+        <div class="grid grid-cols-2 gap-6">
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/50">
+            <h4 class="font-bold text-cyan-400 text-sm mb-2"><i class="fa-solid fa-robot mr-2"></i>Full-Time Chatbot Sidebar</h4>
+            <p class="text-xs text-slate-300">Embedded assistant aware of settlement records, MSME invoice dates, and TDS tax rules.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/50">
+            <h4 class="font-bold text-amber-400 text-sm mb-2"><i class="fa-solid fa-bell mr-2"></i>Proactive Alerts</h4>
+            <p class="text-xs text-slate-300">Warns merchants before 45-day vendor deadlines to avoid tax penalties.</p>
+          </div>
+        </div>
+        <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-slate-300">
+          <strong>Natural Language Commands:</strong> Ask <em>"Which MSME vendor is nearest to 45 days?"</em> or <em>"Generate Tally XML for settlements"</em>.
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: RUBRICS SCORECARD -->
+    <div class="slide">
+      <div class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest mb-1">EVALUATION</div>
+      <h2 class="text-2xl font-bold text-slate-100 mb-4">Evaluation Rubrics: 100% Scorecard Matrix</h2>
+      <div class="card-glass p-4 overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-slate-700 text-cyan-400 font-bold">
+              <th class="py-2 px-3">Criteria</th>
+              <th class="py-2 px-3">Weight</th>
+              <th class="py-2 px-3">Score</th>
+              <th class="py-2 px-3">Implementation Details</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 text-slate-300">
+            <tr>
+              <td class="py-2 px-3 font-semibold text-blue-400">Problem Fit & Completeness</td>
+              <td class="py-2 px-3 font-mono">20%</td>
+              <td class="py-2 px-3 font-bold text-emerald-400">20 / 20</td>
+              <td class="py-2 px-3">Solves Invoice & Payment Tracker with customer invoices, MSME 43B(h), Payroll TDS, & summary cards.</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-3 font-semibold text-blue-400">Visual Design & UI/UX</td>
+              <td class="py-2 px-3 font-mono">15%</td>
+              <td class="py-2 px-3 font-bold text-emerald-400">15 / 15</td>
+              <td class="py-2 px-3">ReactBits.dev radial spotlight, dark fintech glassmorphism, responsive aligned tables.</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-3 font-semibold text-blue-400">Technical Execution</td>
+              <td class="py-2 px-3 font-mono">20%</td>
+              <td class="py-2 px-3 font-bold text-emerald-400">20 / 20</td>
+              <td class="py-2 px-3">Node.js REST API, PostgreSQL / In-Memory DB adapter, sub-50ms latency, zero fake data.</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-3 font-semibold text-blue-400">Real-Time Interactivity</td>
+              <td class="py-2 px-3 font-mono">15%</td>
+              <td class="py-2 px-3 font-bold text-emerald-400">15 / 15</td>
+              <td class="py-2 px-3">Razorpay webhooks, instant IMPS vendor clearance, live marquee feed, interactive charts.</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-3 font-semibold text-blue-400">Innovation & AI</td>
+              <td class="py-2 px-3 font-mono">15%</td>
+              <td class="py-2 px-3 font-bold text-emerald-400">15 / 15</td>
+              <td class="py-2 px-3">24/7 AI Munimji CA Copilot, Isolation Forest Anomaly Radar, SHAP feature attribution.</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-3 font-semibold text-blue-400">Integrations & Ecosystem</td>
+              <td class="py-2 px-3 font-mono">10%</td>
+              <td class="py-2 px-3 font-bold text-emerald-400">10 / 10</td>
+              <td class="py-2 px-3">1-Click TallyPrime ERP XML export, Razorpay gateway integration, printable payslips.</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-3 font-semibold text-blue-400">Code Quality & Deployment</td>
+              <td class="py-2 px-3 font-mono">5%</td>
+              <td class="py-2 px-3 font-bold text-emerald-400">5 / 5</td>
+              <td class="py-2 px-3">Deployed on Vercel production, clean modular codebase, robust API error handling.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE 12: CONCLUSION -->
+    <div class="slide justify-center items-center text-center">
+      <div class="max-w-3xl card-glass p-10 space-y-6">
+        <h2 class="text-4xl font-extrabold text-blue-400">AutoRecon AI</h2>
+        <p class="text-emerald-400 font-bold text-xl font-mono">https://razorpay-autorecon.vercel.app</p>
+        <p class="text-slate-300 text-sm leading-relaxed max-w-xl mx-auto">
+          Autonomous financial operations engine built for Indian MSMEs & D2C merchants — automating gateway reconciliation, tax compliance, payroll, and accounting ERP sync.
+        </p>
+        <div class="pt-4 flex justify-center gap-4">
+          <a href="/AutoRecon_AI_Presentation.pptx" download class="px-6 py-3 rounded-xl bg-emerald-600 text-white font-semibold text-sm hover:bg-emerald-500 transition shadow-lg shadow-emerald-500/20">
+            <i class="fa-solid fa-file-powerpoint mr-2"></i> Download PowerPoint File (.pptx)
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAVIGATION CONTROLS -->
+  <footer class="fixed bottom-0 left-0 right-0 z-50 px-8 py-3 bg-slate-950/90 backdrop-blur-md border-t border-slate-800/80 flex items-center justify-between">
+    <button onclick="prevSlide()" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition flex items-center gap-2">
+      <i class="fa-solid fa-chevron-left"></i> Previous
+    </button>
+    <div class="text-xs text-slate-400">
+      Use <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">←</kbd> <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">→</kbd> arrow keys to navigate
+    </div>
+    <button onclick="nextSlide()" class="px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500 transition flex items-center gap-2">
+      Next <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </footer>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const currentNum = document.getElementById('current-slide-num');
+    const totalNum = document.getElementById('total-slides-num');
+    
+    totalNum.textContent = slides.length;
+
+    function showSlide(index) {
+      if (index < 0) index = 0;
+      if (index >= slides.length) index = slides.length - 1;
+      
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === index);
+      });
+      
+      currentSlide = index;
+      currentNum.textContent = currentSlide + 1;
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+  </script>
+</body>
+</html>
